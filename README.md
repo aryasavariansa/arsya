@@ -15,8 +15,8 @@
             --light: #f8f9fa;
             --gray: #6c757d;
             --light-gray: #e9ecef;
-            --sidebar-width: 20%;
-            --content-width: 80%;
+            --sidebar-width: 260px;
+            --content-width: calc(100% - 260px);
             --border-radius: 10px;
             --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
@@ -38,7 +38,7 @@
             min-height: 100vh;
         }
 
-        /* Sidebar Navigation - TERKUNCI */
+        /* Sidebar Navigation - TERKUNCI DI DESKTOP */
         .sidebar {
             width: var(--sidebar-width);
             background-color: var(--dark);
@@ -48,6 +48,7 @@
             overflow-y: auto;
             padding: 2rem 0;
             z-index: 1000;
+            transition: var(--transition);
         }
 
         .sidebar-header {
@@ -224,6 +225,7 @@
             margin-left: var(--sidebar-width);
             padding: 0;
             min-height: 100vh;
+            transition: var(--transition);
         }
 
         .content-header {
@@ -829,94 +831,157 @@
             color: var(--dark);
         }
 
-        /* Responsive Styles - SIDEBAR TERKUNCI DI SEMUA LAYAR */
-        @media (max-width: 1200px) {
-            :root {
-                --sidebar-width: 25%;
-                --content-width: 75%;
-            }
+        /* Mobile Menu Toggle Button */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.8rem 1rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1003;
+            transition: var(--transition);
         }
 
-        @media (max-width: 992px) {
+        /* Responsive Styles - OPTIMASI UNTUK HP DAN KOMPUTER */
+        
+        /* Tablet Landscape dan Desktop Kecil (768px - 1024px) */
+        @media (max-width: 1024px) {
             :root {
-                --sidebar-width: 30%;
-                --content-width: 70%;
+                --sidebar-width: 220px;
+                --content-width: calc(100% - 220px);
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
             }
             
             .about-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .contact-content {
-                grid-template-columns: 1fr;
+                gap: 2rem;
             }
         }
 
+        /* Tablet Portrait (576px - 768px) */
         @media (max-width: 768px) {
-            /* Sidebar tetap fixed di mobile */
+            /* Sidebar menjadi overlay di mobile */
             .sidebar {
-                width: 100%;
-                height: auto;
-                position: fixed; /* Tetap terkunci */
-                padding: 1rem 0;
-                top: 0;
-                z-index: 1000;
-                max-height: 80px; /* Hanya tampilkan header saja */
-                overflow: hidden;
-                transition: max-height 0.3s ease;
+                width: 280px;
+                transform: translateX(-100%);
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
             }
             
-            .sidebar.expanded {
-                max-height: 100vh; /* Tampilkan penuh saat di-expand */
-                overflow-y: auto;
-            }
-            
-            .sidebar-toggle {
-                display: block;
-                position: absolute;
-                top: 1rem;
-                right: 1rem;
-                background: none;
-                border: none;
-                color: white;
-                font-size: 1.5rem;
-                cursor: pointer;
+            .sidebar.active {
+                transform: translateX(0);
             }
             
             .main-content {
                 width: 100%;
                 margin-left: 0;
-                margin-top: 80px; /* Beri ruang untuk sidebar yang fixed */
             }
             
-            .nav-menu {
-                display: none;
-            }
-            
-            .sidebar.expanded .nav-menu {
+            .mobile-menu-toggle {
                 display: block;
             }
             
-            .admin-section {
-                display: none;
+            .content-header {
+                padding: 1rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
             }
             
-            .sidebar.expanded .admin-section {
-                display: block;
+            .page-title h2 {
+                font-size: 1.5rem;
             }
             
             .content-body {
+                padding: 1.5rem;
+            }
+            
+            .hero {
+                padding: 2rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .achievements-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid,
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .stat-card,
+            .dashboard-card {
+                padding: 1.5rem;
+            }
+            
+            .stat-number,
+            .dashboard-number {
+                font-size: 2rem;
+            }
+            
+            .chatroom-container {
+                max-width: 100%;
+            }
+            
+            .chatroom-messages {
+                height: 300px;
                 padding: 1rem;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .admin-panel {
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
             }
         }
 
+        /* HP Small (480px - 576px) */
         @media (max-width: 576px) {
             .content-body {
                 padding: 1rem;
             }
             
+            .hero {
+                padding: 1.5rem 1rem;
+            }
+            
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 0.95rem;
             }
             
             .stats-grid,
@@ -924,24 +989,201 @@
                 grid-template-columns: 1fr;
             }
             
-            .projects-grid,
-            .achievements-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .skill-category {
                 padding: 1rem;
+            }
+            
+            .skill-items {
+                gap: 0.5rem;
+            }
+            
+            .skill-item {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+            
+            .achievement-card,
+            .project-card {
+                padding: 1.5rem;
+            }
+            
+            .achievement-image-container {
+                height: 180px;
+            }
+            
+            .project-image {
+                height: 180px;
+            }
+            
+            .chatroom-input {
+                padding: 1rem;
+                flex-direction: column;
+            }
+            
+            .chatroom-input input {
+                width: 100%;
+            }
+            
+            .chatroom-input button {
+                width: 100%;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+            
+            .sidebar-header {
+                padding: 0 1.5rem 1.5rem;
+            }
+            
+            .nav-menu li a {
+                padding: 0.8rem 1rem;
+            }
+        }
+
+        /* HP Extra Small (di bawah 480px) */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .hero-badge {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+            
+            .about-text p {
+                font-size: 1rem;
+            }
+            
+            .achievement-card h3,
+            .project-content h3 {
+                font-size: 1.1rem;
+            }
+            
+            .contact-card {
+                padding: 1rem;
+            }
+            
+            .contact-icon {
+                font-size: 1.5rem;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                padding: 0.7rem;
+            }
+            
+            .mobile-menu-toggle {
+                top: 15px;
+                right: 15px;
+                padding: 0.6rem 0.8rem;
+                font-size: 1rem;
+            }
+            
+            .sidebar {
+                width: 100%;
+                max-width: 320px;
+            }
+        }
+
+        /* Desktop Besar (di atas 1200px) */
+        @media (min-width: 1200px) {
+            .main-content {
+                max-width: 1400px;
+                margin-left: auto;
+                margin-right: auto;
+                padding-left: var(--sidebar-width);
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .achievements-grid,
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+
+        /* High DPI Screens (Retina) */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .logo h1 {
+                font-weight: 800;
+            }
+            
+            .hero h1 {
+                font-weight: 700;
+            }
+            
+            .stat-number,
+            .dashboard-number {
+                font-weight: 800;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .sidebar,
+            .mobile-menu-toggle,
+            .admin-section,
+            .edit-btn,
+            .add-btn,
+            .upload-btn,
+            .notification,
+            .chatroom-input {
+                display: none !important;
+            }
+            
+            .main-content {
+                width: 100%;
+                margin-left: 0;
+            }
+            
+            body {
+                background-color: white;
+                color: black;
+            }
+            
+            .page {
+                break-inside: avoid;
+            }
+            
+            .hero {
+                background: none !important;
+                border: 1px solid #ddd;
+            }
+            
+            .stat-card,
+            .dashboard-card,
+            .achievement-card,
+            .project-card,
+            .skill-category,
+            .contact-card,
+            .contact-form {
+                box-shadow: none;
+                border: 1px solid #ddd;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Sidebar Navigation - TERKUNCI -->
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Sidebar Navigation -->
     <aside class="sidebar" id="sidebar">
-        <button class="sidebar-toggle" id="sidebarToggle">
-            <i class="fas fa-bars"></i>
-        </button>
-        
         <div class="sidebar-header">
             <div class="logo">
                 <h1>Arya<span>Savariansah</span></h1>
@@ -1571,11 +1813,14 @@
             // Setup contact form
             setupContactForm();
             
-            // Setup sidebar toggle untuk mobile
-            setupSidebarToggle();
+            // Setup mobile menu toggle
+            setupMobileMenu();
             
             // Setup image upload modal
             setupImageUploadModal();
+            
+            // Setup responsive behavior
+            setupResponsiveBehavior();
             
             // Render initial page
             renderPage(currentPage);
@@ -1624,44 +1869,67 @@
                     
                     // Di mobile, tutup sidebar setelah memilih halaman
                     if (window.innerWidth <= 768) {
-                        document.getElementById('sidebar').classList.remove('expanded');
+                        document.getElementById('sidebar').classList.remove('active');
+                        document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
                     }
                 });
             });
         }
 
-        // Setup sidebar toggle untuk mobile
-        function setupSidebarToggle() {
-            const sidebarToggle = document.getElementById('sidebarToggle');
+        // Setup mobile menu toggle
+        function setupMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
             const sidebar = document.getElementById('sidebar');
             
-            if (sidebarToggle && sidebar) {
-                sidebarToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('expanded');
-                    const icon = this.querySelector('i');
-                    if (sidebar.classList.contains('expanded')) {
-                        icon.className = 'fas fa-times';
+            if (mobileMenuToggle && sidebar) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                    
+                    // Ubah ikon toggle
+                    if (sidebar.classList.contains('active')) {
+                        this.innerHTML = '<i class="fas fa-times"></i>';
                     } else {
-                        icon.className = 'fas fa-bars';
+                        this.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+                
+                // Tutup sidebar saat klik di luar pada mobile
+                document.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        if (!sidebar.contains(e.target) && 
+                            !mobileMenuToggle.contains(e.target) &&
+                            sidebar.classList.contains('active')) {
+                            sidebar.classList.remove('active');
+                            mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
                     }
                 });
             }
-            
-            // Tutup sidebar saat klik di luar pada mobile
-            document.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    const sidebar = document.getElementById('sidebar');
-                    const sidebarToggle = document.getElementById('sidebarToggle');
-                    
-                    if (sidebar && sidebarToggle && 
-                        !sidebar.contains(e.target) && 
-                        !sidebarToggle.contains(e.target) &&
-                        sidebar.classList.contains('expanded')) {
-                        sidebar.classList.remove('expanded');
-                        sidebarToggle.querySelector('i').className = 'fas fa-bars';
-                    }
+        }
+
+        // Setup responsive behavior
+        function setupResponsiveBehavior() {
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                // Jika ukuran layar kembali ke desktop, pastikan sidebar terbuka
+                if (window.innerWidth > 768) {
+                    document.getElementById('sidebar').classList.add('active');
+                    document.getElementById('mobileMenuToggle').style.display = 'none';
+                } else {
+                    document.getElementById('sidebar').classList.remove('active');
+                    document.getElementById('mobileMenuToggle').style.display = 'block';
+                    document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
                 }
             });
+            
+            // Initial check
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('active');
+                document.getElementById('mobileMenuToggle').style.display = 'block';
+            } else {
+                document.getElementById('sidebar').classList.add('active');
+                document.getElementById('mobileMenuToggle').style.display = 'none';
+            }
         }
 
         // Setup image upload modal
@@ -1678,6 +1946,18 @@
             imageInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
+                    // Validasi ukuran file (maks 5MB)
+                    if (file.size > 5 * 1024 * 1024) {
+                        showNotification('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
+                        return;
+                    }
+                    
+                    // Validasi tipe file
+                    if (!file.type.match('image.*')) {
+                        showNotification('Hanya file gambar yang diperbolehkan.', 'error');
+                        return;
+                    }
+                    
                     const reader = new FileReader();
                     reader.onload = function(event) {
                         previewImage.src = event.target.result;
@@ -1983,6 +2263,14 @@
                     });
                 });
                 
+                // Setup event listeners untuk tombol edit
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const elementId = this.getAttribute('data-edit');
+                        editAchievement(elementId);
+                    });
+                });
+                
                 // Tambah tombol add achievement
                 const addButton = document.createElement('button');
                 addButton.className = 'add-btn';
@@ -2017,82 +2305,51 @@
             modal.classList.add('active');
         }
 
-        // Render projects page
-        function renderProjectsPage() {
-            const pageData = appData.pages.projects;
-            const container = document.getElementById('projectsContainer');
+        // Edit achievement - TANPA MENGEDIT FOTO (foto diedit via upload terpisah)
+        function editAchievement(achievementId) {
+            const achievement = appData.pages.achievements.items.find(item => item.id === achievementId);
+            if (!achievement) return;
             
-            if (!container) return;
+            const newTitle = prompt('Edit judul pencapaian:', achievement.title);
+            if (newTitle === null) return;
             
-            // Clear container
-            const existingProjects = container.querySelectorAll('.project-card');
-            for (let i = 3; i < existingProjects.length; i++) {
-                existingProjects[i].remove();
-            }
+            const newDate = prompt('Edit tanggal:', achievement.date);
+            if (newDate === null) return;
             
-            // Render projects
-            pageData.items.forEach((item, index) => {
-                let projectElement = document.getElementById(item.id);
-                
-                if (!projectElement && index >= 3) {
-                    // Create new project element
-                    projectElement = document.createElement('div');
-                    projectElement.className = 'project-card editable';
-                    projectElement.id = item.id;
-                    projectElement.innerHTML = `
-                        <div class="project-image">
-                            <i class="${item.icon}"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>${item.title}</h3>
-                            <p>${item.description}</p>
-                        </div>
-                        <button class="edit-btn" data-edit="${item.id}">Edit</button>
-                    `;
-                    
-                    // Insert before the add button
-                    const addButton = document.querySelector('[data-add="project"]');
-                    if (addButton) {
-                        container.insertBefore(projectElement, addButton);
-                    } else {
-                        container.appendChild(projectElement);
-                    }
-                } else if (projectElement) {
-                    // Update existing project
-                    projectElement.querySelector('h3').textContent = item.title;
-                    projectElement.querySelector('p').textContent = item.description;
-                    projectElement.querySelector('.project-image i').className = item.icon;
-                }
-            });
+            const newDescription = prompt('Edit deskripsi:', achievement.description);
+            if (newDescription === null) return;
+            
+            achievement.title = newTitle;
+            achievement.date = newDate;
+            achievement.description = newDescription;
+            
+            renderAchievementsPage();
+            showNotification('Pencapaian berhasil diperbarui!', 'success');
         }
 
-        // Render dashboard page
-        function renderDashboardPage() {
-            const pageData = appData.pages.dashboard;
+        // Add achievement
+        function addAchievement() {
+            const newTitle = prompt('Masukkan judul pencapaian baru:');
+            if (!newTitle) return;
             
-            // Update dashboard stats
-            pageData.stats.forEach((stat, index) => {
-                const statElement = document.getElementById(stat.id);
-                if (statElement) {
-                    statElement.querySelector('.dashboard-number').textContent = stat.number;
-                    statElement.querySelector('.dashboard-label').textContent = stat.label;
-                }
-            });
-        }
-
-        // Render contact page
-        function renderContactPage() {
-            const pageData = appData.pages.contact;
+            const newDate = prompt('Masukkan tanggal:');
+            if (!newDate) return;
             
-            // Update contact items
-            pageData.items.forEach(item => {
-                const contactElement = document.getElementById(item.id);
-                if (contactElement) {
-                    contactElement.querySelector('h3').textContent = item.label;
-                    contactElement.querySelector('p').textContent = item.value;
-                    contactElement.querySelector('.contact-icon i').className = item.icon;
-                }
-            });
+            const newDescription = prompt('Masukkan deskripsi:');
+            if (!newDescription) return;
+            
+            const newId = 'achievement' + (appData.pages.achievements.items.length + 1);
+            const newAchievement = {
+                id: newId,
+                title: newTitle,
+                date: newDate,
+                description: newDescription,
+                image: null
+            };
+            
+            appData.pages.achievements.items.push(newAchievement);
+            renderAchievementsPage();
+            showNotification('Pencapaian berhasil ditambahkan!', 'success');
         }
 
         // Setup admin panel
@@ -2128,6 +2385,12 @@
                     showNotification('Login admin berhasil!', 'success');
                     updateAdminUI();
                     adminPanel.classList.remove('active');
+                    
+                    // Di mobile, tutup sidebar setelah login
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebar').classList.remove('active');
+                        document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
+                    }
                 } else {
                     showNotification('Password salah!', 'error');
                 }
@@ -2361,53 +2624,6 @@
             appData.pages.about.experiences.push(newExperience);
             renderExperiences();
             showNotification('Pengalaman berhasil ditambahkan!', 'success');
-        }
-
-        // Edit achievement - TANPA MENGEDIT FOTO (foto diedit via upload terpisah)
-        function editAchievement(achievementId) {
-            const achievement = appData.pages.achievements.items.find(item => item.id === achievementId);
-            if (!achievement) return;
-            
-            const newTitle = prompt('Edit judul pencapaian:', achievement.title);
-            if (newTitle === null) return;
-            
-            const newDate = prompt('Edit tanggal:', achievement.date);
-            if (newDate === null) return;
-            
-            const newDescription = prompt('Edit deskripsi:', achievement.description);
-            if (newDescription === null) return;
-            
-            achievement.title = newTitle;
-            achievement.date = newDate;
-            achievement.description = newDescription;
-            
-            renderAchievementsPage();
-            showNotification('Pencapaian berhasil diperbarui!', 'success');
-        }
-
-        // Add achievement
-        function addAchievement() {
-            const newTitle = prompt('Masukkan judul pencapaian baru:');
-            if (!newTitle) return;
-            
-            const newDate = prompt('Masukkan tanggal:');
-            if (!newDate) return;
-            
-            const newDescription = prompt('Masukkan deskripsi:');
-            if (!newDescription) return;
-            
-            const newId = 'achievement' + (appData.pages.achievements.items.length + 1);
-            const newAchievement = {
-                id: newId,
-                title: newTitle,
-                date: newDate,
-                description: newDescription,
-                image: null
-            };
-            
-            appData.pages.achievements.items.push(newAchievement);
-            renderAchievementsPage();
-            showNotification('Pencapaian berhasil ditambahkan!', 'success');
         }
 
         // Edit project
