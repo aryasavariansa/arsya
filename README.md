@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +38,7 @@
             min-height: 100vh;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: var(--light);
-            overflow: hidden;
+            overflow: hidden; /* Tidak ada scroll di body */
             position: relative;
         }
 
@@ -55,20 +56,21 @@
             z-index: -1;
         }
 
-        /* ===== SIDEBAR ELEGAN ===== */
+        /* ===== SIDEBAR TETAP TANPA SCROLL ===== */
         .sidebar {
             width: var(--sidebar-width);
             background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
             color: var(--light);
-            height: 100vh;
-            position: fixed;
+            height: 100vh; /* Tinggi penuh viewport */
+            position: fixed; /* Posisi tetap */
             left: 0;
             top: 0;
             display: flex;
             flex-direction: column;
             box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
             z-index: 100;
-            overflow-y: auto;
+            overflow-y: hidden; /* TIDAK ADA SCROLL di sidebar */
+            overflow-x: hidden;
             transition: var(--transition);
             border-right: 1px solid rgba(255, 215, 0, 0.1);
         }
@@ -78,6 +80,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
+            flex-shrink: 0; /* Tidak mengecil */
         }
 
         .sidebar-header::after {
@@ -139,9 +142,12 @@
         .nav-menu {
             list-style: none;
             padding: 30px 0;
-            flex-grow: 1;
+            flex-grow: 1; /* Menggunakan semua ruang tersisa */
             position: relative;
             z-index: 2;
+            overflow-y: hidden; /* Tidak ada scroll */
+            display: flex;
+            flex-direction: column;
         }
 
         .nav-menu li {
@@ -223,6 +229,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             z-index: 2;
+            flex-shrink: 0; /* Tetap di posisi bawah */
         }
 
         .admin-toggle {
@@ -340,17 +347,20 @@
             text-align: center;
             position: relative;
             z-index: 2;
+            flex-shrink: 0; /* Tetap di posisi bawah */
         }
 
-        /* ===== KONTEN UTAMA DENGAN SCROLL ===== */
+        /* ===== KONTEN UTAMA DENGAN SCROLL PENUH ===== */
         .main-content {
             flex: 1;
             margin-left: var(--sidebar-width);
             min-height: 100vh;
             padding: 0;
-            overflow-y: auto;
+            overflow-y: auto; /* SCROLL HANYA DI SINI */
             position: relative;
             background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 26, 26, 0.98) 100%);
+            height: 100vh; /* Tinggi penuh viewport */
+            width: calc(100% - var(--sidebar-width)); /* Lebar penuh minus sidebar */
         }
 
         /* Header Konten */
@@ -366,6 +376,7 @@
             z-index: 99;
             backdrop-filter: blur(10px);
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+            flex-shrink: 0; /* Header tidak mengecil */
         }
 
         .page-title h2 {
@@ -409,7 +420,7 @@
         /* Body Konten dengan Scroll */
         .content-body {
             padding: 50px;
-            min-height: calc(100vh - 120px);
+            min-height: 100%; /* Gunakan 100% */
             position: relative;
         }
 
@@ -417,6 +428,7 @@
         .page {
             display: none;
             animation: fadeInUp 0.6s ease;
+            padding-bottom: 100px; /* Tambahkan padding agar ada ruang scroll */
         }
 
         @keyframes fadeInUp {
@@ -445,6 +457,10 @@
             overflow: hidden;
             border: 1px solid rgba(255, 215, 0, 0.1);
             box-shadow: var(--box-shadow);
+            min-height: 400px; /* Tinggi minimal */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero::before {
@@ -461,6 +477,7 @@
         .hero-content {
             position: relative;
             z-index: 1;
+            width: 100%;
         }
 
         .hero-badge {
@@ -562,6 +579,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 50px;
             margin-bottom: 50px;
+            min-height: 500px; /* Tinggi minimal */
         }
 
         .about-text p {
@@ -719,6 +737,7 @@
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 35px;
             margin-top: 30px;
+            margin-bottom: 50px;
         }
 
         .achievement-card {
@@ -836,6 +855,7 @@
             grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
             gap: 35px;
             margin-top: 30px;
+            margin-bottom: 50px;
         }
 
         .project-card {
@@ -956,6 +976,7 @@
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 30px;
             margin-bottom: 50px;
+            min-height: 200px; /* Tinggi minimal */
         }
 
         .dashboard-card {
@@ -1019,6 +1040,7 @@
             border: 1px solid rgba(255, 215, 0, 0.1);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             margin-bottom: 40px;
+            min-height: 450px; /* Tinggi minimal untuk chart */
         }
 
         .dashboard-chart h3 {
@@ -1037,6 +1059,9 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             max-width: 1000px;
             margin: 0 auto;
+            height: 70vh; /* Tinggi viewport untuk chatroom */
+            display: flex;
+            flex-direction: column;
         }
 
         .chatroom-header {
@@ -1059,7 +1084,7 @@
 
         .chatroom-messages {
             padding: 35px;
-            height: 450px;
+            flex-grow: 1; /* Isi space yang tersedia */
             overflow-y: auto;
             background: rgba(20, 20, 20, 0.8);
         }
@@ -1153,6 +1178,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
+            min-height: 500px; /* Tinggi minimal */
         }
 
         .contact-info {
@@ -1555,6 +1581,7 @@
             
             .main-content {
                 margin-left: 250px;
+                width: calc(100% - 250px);
             }
             
             .projects-grid {
@@ -1571,10 +1598,15 @@
             
             .hero {
                 padding: 40px;
+                min-height: 350px;
             }
             
             .hero h1 {
                 font-size: 2.8rem;
+            }
+            
+            .chatroom-container {
+                height: 65vh;
             }
         }
 
@@ -1585,6 +1617,12 @@
                 max-width: 320px;
                 transform: translateX(-100%);
                 transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                z-index: 1000;
+                overflow-y: auto; /* Di mobile, sidebar bisa discroll */
             }
             
             .sidebar.active {
@@ -1595,6 +1633,7 @@
             .main-content {
                 margin-left: 0;
                 width: 100%;
+                height: 100vh;
             }
             
             .mobile-menu-toggle {
@@ -1618,6 +1657,7 @@
             
             .hero {
                 padding: 30px 20px;
+                min-height: 300px;
             }
             
             .hero h1 {
@@ -1639,6 +1679,7 @@
             .about-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
+                min-height: auto;
             }
             
             .stats-grid,
@@ -1664,6 +1705,7 @@
             .contact-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
+                min-height: auto;
             }
             
             .contact-info {
@@ -1672,6 +1714,7 @@
             
             .chatroom-container {
                 max-width: 100%;
+                height: 60vh;
             }
             
             .chatroom-messages {
@@ -1750,6 +1793,10 @@
                 left: 20px;
                 max-width: none;
             }
+            
+            .chatroom-container {
+                height: 55vh;
+            }
         }
 
         /* Print Styles */
@@ -1800,7 +1847,7 @@
         <i class="fas fa-bars"></i>
     </button>
     
-    <!-- SIDEBAR ELEGAN -->
+    <!-- SIDEBAR ELEGAN (TETAP TANPA SCROLL) -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="profile-section">
@@ -1850,7 +1897,7 @@
         </div>
     </aside>
     
-    <!-- KONTEN UTAMA DENGAN SCROLL -->
+    <!-- KONTEN UTAMA DENGAN SCROLL PENUH -->
     <main class="main-content">
         <!-- Content Header -->
         <div class="content-header">
@@ -1863,7 +1910,7 @@
             </div>
         </div>
         
-        <!-- Content Body - Pages (SCROLLABLE) -->
+        <!-- Content Body - Pages (SCROLLABLE PENUH) -->
         <div class="content-body" id="contentBody">
             <!-- Home Page -->
             <div class="page active" id="homePage">
@@ -2492,12 +2539,55 @@
             // Update UI based on admin status
             updateAdminUI();
             
+            // Setup content height adjustment
+            setupContentHeight();
+            
             // Tambah animasi saat load
             setTimeout(() => {
                 document.body.style.opacity = 1;
                 document.body.style.transform = 'translateY(0)';
             }, 100);
         });
+
+        // Setup content height adjustment
+        function setupContentHeight() {
+            // Function to adjust content height dynamically
+            function adjustContentHeight() {
+                const mainContent = document.querySelector('.main-content');
+                const contentBody = document.querySelector('.content-body');
+                const activePage = document.querySelector('.page.active');
+                
+                if (mainContent && contentBody && activePage) {
+                    // Reset min-height
+                    contentBody.style.minHeight = 'auto';
+                    
+                    // Calculate available height
+                    const headerHeight = document.querySelector('.content-header').offsetHeight;
+                    const windowHeight = window.innerHeight;
+                    const pageHeight = activePage.offsetHeight;
+                    
+                    // If page content is shorter than available space, extend it
+                    if (pageHeight < (windowHeight - headerHeight - 100)) {
+                        const targetHeight = windowHeight - headerHeight - 100;
+                        contentBody.style.minHeight = targetHeight + 'px';
+                    }
+                }
+            }
+            
+            // Initial adjustment
+            setTimeout(adjustContentHeight, 300);
+            
+            // Adjust on window resize
+            window.addEventListener('resize', adjustContentHeight);
+            
+            // Adjust after page change
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    setTimeout(adjustContentHeight, 400); // After page transition
+                });
+            });
+        }
 
         // Load data dari localStorage
         function loadFromLocalStorage() {
@@ -2540,6 +2630,7 @@
                     if (window.innerWidth <= 768) {
                         document.getElementById('sidebar').classList.remove('active');
                         document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
+                        document.getElementById('mobileMenuToggle').style.transform = 'rotate(0deg)';
                     }
                 });
             });
@@ -2581,26 +2672,27 @@
 
         // Setup responsive behavior
         function setupResponsiveBehavior() {
-            window.addEventListener('resize', function() {
+            function handleResize() {
+                const sidebar = document.getElementById('sidebar');
+                const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+                
                 if (window.innerWidth > 768) {
-                    document.getElementById('sidebar').classList.add('active');
-                    document.getElementById('mobileMenuToggle').style.display = 'none';
+                    sidebar.classList.remove('active');
+                    sidebar.style.transform = 'translateX(0)';
+                    if (mobileMenuToggle) {
+                        mobileMenuToggle.style.display = 'none';
+                    }
                 } else {
-                    document.getElementById('sidebar').classList.remove('active');
-                    document.getElementById('mobileMenuToggle').style.display = 'block';
-                    document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
-                    document.getElementById('mobileMenuToggle').style.transform = 'rotate(0deg)';
+                    if (mobileMenuToggle) {
+                        mobileMenuToggle.style.display = 'block';
+                    }
                 }
-            });
+            }
+            
+            window.addEventListener('resize', handleResize);
             
             // Initial check
-            if (window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('active');
-                document.getElementById('mobileMenuToggle').style.display = 'block';
-            } else {
-                document.getElementById('sidebar').classList.add('active');
-                document.getElementById('mobileMenuToggle').style.display = 'none';
-            }
+            handleResize();
         }
 
         // Setup image upload modal
@@ -2735,6 +2827,9 @@
                     }
                     
                     renderPage(pageId);
+                    
+                    // Scroll to top of main content when changing pages
+                    document.querySelector('.main-content').scrollTop = 0;
                 }
             }, 300);
         }
@@ -2923,13 +3018,6 @@
                         editAchievement(elementId);
                     });
                 });
-                
-                const addButton = document.createElement('button');
-                addButton.className = 'add-btn';
-                addButton.setAttribute('data-add', 'achievement');
-                addButton.textContent = '+ Tambah Pencapaian';
-                addButton.addEventListener('click', addAchievement);
-                container.appendChild(addButton);
             }
         }
 
@@ -2939,14 +3027,19 @@
             const modal = document.getElementById('imageUploadModal');
             const modalTitle = document.getElementById('modalTitle');
             const removeImageBtn = document.getElementById('removeImageBtn');
+            const previewImage = document.getElementById('previewImage');
+            const imagePreview = document.getElementById('imagePreview');
             
             const achievement = appData.pages.achievements.items.find(a => a.id === achievementId);
             if (achievement) {
                 modalTitle.textContent = `Upload Foto untuk: ${achievement.title}`;
                 
                 if (achievement.image) {
+                    previewImage.src = achievement.image;
+                    imagePreview.style.display = 'block';
                     removeImageBtn.style.display = 'inline-block';
                 } else {
+                    imagePreview.style.display = 'none';
                     removeImageBtn.style.display = 'none';
                 }
             }
@@ -3046,13 +3139,6 @@
                         editProject(elementId);
                     });
                 });
-                
-                const addButton = document.createElement('button');
-                addButton.className = 'add-btn';
-                addButton.setAttribute('data-add', 'project');
-                addButton.textContent = '+ Tambah Proyek';
-                addButton.addEventListener('click', addProject);
-                container.appendChild(addButton);
             }
         }
 
@@ -3161,6 +3247,7 @@
                     if (window.innerWidth <= 768) {
                         document.getElementById('sidebar').classList.remove('active');
                         document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
+                        document.getElementById('mobileMenuToggle').style.transform = 'rotate(0deg)';
                     }
                 } else {
                     showNotification('Password salah!', 'error');
