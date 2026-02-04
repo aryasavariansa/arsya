@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -17,13 +18,16 @@
             --border-radius: 10px;
             --box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
-            --section-margin-left: 80px; /* Margin kiri untuk section */
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
         
         body {
@@ -66,6 +70,7 @@
             position: relative;
             width: 180px;
             height: 180px;
+            flex-shrink: 0;
         }
         
         .profile-img {
@@ -109,6 +114,11 @@
         
         .profile-img-container:hover .profile-img-upload {
             opacity: 1;
+        }
+        
+        .profile-info {
+            flex: 1;
+            min-width: 300px;
         }
         
         .profile-info h1 {
@@ -175,16 +185,17 @@
             padding: 1rem;
             width: 300px;
             display: none;
+            z-index: 1001;
+        }
+        
+        .admin-menu.active {
+            display: block;
         }
         
         .admin-menu h3 {
             margin-bottom: 1rem;
             color: var(--primary-dark);
             font-family: 'Poppins', sans-serif;
-        }
-        
-        .admin-menu.active {
-            display: block;
         }
         
         .admin-input {
@@ -222,13 +233,14 @@
             background-color: var(--dark);
         }
         
-        /* Navigation */
+        /* Navigation - Sticky */
         .nav-container {
             background-color: white;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
             z-index: 100;
+            width: 100%;
         }
         
         nav ul {
@@ -236,6 +248,8 @@
             list-style: none;
             justify-content: center;
             flex-wrap: wrap;
+            padding: 0;
+            margin: 0;
         }
         
         nav ul li {
@@ -248,6 +262,7 @@
             font-weight: 500;
             transition: var(--transition);
             position: relative;
+            display: inline-block;
         }
         
         nav ul li a:hover {
@@ -269,9 +284,11 @@
             border-radius: 3px;
         }
         
-        /* Main Content - dengan margin kiri */
+        /* Main Content - Layout tetap */
         main {
             padding: 3rem 0;
+            position: relative;
+            width: 100%;
         }
         
         .section {
@@ -281,8 +298,8 @@
             box-shadow: var(--box-shadow);
             padding: 2rem;
             transition: var(--transition);
-            margin-left: var(--section-margin-left); /* Margin kiri */
-            margin-right: 20px; /* Margin kanan lebih kecil */
+            position: relative;
+            overflow: hidden;
         }
         
         .section:hover {
@@ -296,6 +313,12 @@
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--light-gray);
+            position: sticky;
+            top: 70px; /* Sesuaikan dengan tinggi nav */
+            background-color: white;
+            z-index: 10;
+            padding-top: 10px;
+            margin-top: -10px;
         }
         
         .section-title {
@@ -309,6 +332,8 @@
         .summary-content {
             font-size: 1.1rem;
             line-height: 1.8;
+            position: relative;
+            z-index: 1;
         }
         
         /* Work Experience */
@@ -380,6 +405,8 @@
         
         .timeline-content li {
             margin-bottom: 0.5rem;
+            position: relative;
+            left: 0;
         }
         
         /* Skills Section */
@@ -412,6 +439,7 @@
             border-radius: 20px;
             font-size: 0.9rem;
             transition: var(--transition);
+            display: inline-block;
         }
         
         .skill-item:hover {
@@ -462,6 +490,7 @@
             padding: 1.5rem;
             border-radius: var(--border-radius);
             transition: var(--transition);
+            position: relative;
         }
         
         .certificate-card:hover {
@@ -481,8 +510,6 @@
             color: white;
             padding: 2rem 0;
             text-align: center;
-            margin-left: var(--section-margin-left); /* Margin kiri sama dengan section */
-            margin-right: 20px;
         }
         
         .footer-content {
@@ -509,75 +536,6 @@
             color: var(--secondary);
         }
         
-        /* Responsive */
-        @media (max-width: 992px) {
-            :root {
-                --section-margin-left: 40px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            :root {
-                --section-margin-left: 20px;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 1.5rem;
-            }
-            
-            .profile-section {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .skills-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .certificates-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-            }
-            
-            .section {
-                margin-left: 10px;
-                margin-right: 10px;
-            }
-            
-            footer {
-                margin-left: 10px;
-                margin-right: 10px;
-            }
-        }
-        
-        /* Print Styles */
-        @media print {
-            .admin-panel, nav, footer {
-                display: none !important;
-            }
-            
-            .section {
-                box-shadow: none;
-                border: 1px solid #ddd;
-                margin-left: 0;
-                break-inside: avoid;
-            }
-            
-            .profile-img-upload {
-                display: none;
-            }
-        }
-        
         /* Notification */
         .notification {
             position: fixed;
@@ -591,6 +549,7 @@
             z-index: 1000;
             display: none;
             animation: slideIn 0.3s ease;
+            max-width: 350px;
         }
         
         @keyframes slideIn {
@@ -601,6 +560,173 @@
             to {
                 transform: translateX(0);
                 opacity: 1;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 95%;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-img-container {
+                margin-bottom: 1.5rem;
+            }
+            
+            .contact-info {
+                justify-content: center;
+            }
+            
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-info h1 {
+                font-size: 2rem;
+            }
+            
+            .profile-info p {
+                font-size: 1rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .contact-item {
+                justify-content: center;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                padding: 0.5rem 0;
+            }
+            
+            nav ul li {
+                padding: 0.5rem 1rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                top: 60px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .timeline-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .timeline-date {
+                margin-top: 0.5rem;
+            }
+            
+            .admin-menu {
+                width: 280px;
+                right: -20px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .profile-info h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 1.2rem;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .timeline {
+                padding-left: 20px;
+            }
+            
+            .timeline-item {
+                padding-left: 20px;
+            }
+            
+            .timeline-item::before {
+                left: -28px;
+            }
+            
+            .skill-items {
+                gap: 0.5rem;
+            }
+            
+            .skill-item {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .admin-menu {
+                width: 250px;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .admin-panel, nav, .profile-img-upload, footer {
+                display: none !important;
+            }
+            
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+            
+            .section-header {
+                position: static;
             }
         }
     </style>
@@ -811,15 +937,24 @@
             ],
             skills: {
                 technical: [
-                    "AutoCAD", "SolidWorks (2D & 3D Drafting)", "Membaca & Membuat Gambar Teknik", 
-                    "Bubut, Milling, Molding, Assembly", "Production Planning & Stock Monitoring", 
-                    "Quality Control & Problem Solving", "Preventive Maintenance & Mold Management",
-                    "Microsoft Office (Excel, Word, PowerPoint)", "Basic ERP / Sistem Monitoring Produksi"
+                    "AutoCAD",
+                    "SolidWorks (2D & 3D Drafting)",
+                    "Membaca & Membuat Gambar Teknik",
+                    "Bubut, Milling, Molding, Assembly",
+                    "Production Planning & Stock Monitoring",
+                    "Quality Control & Problem Solving",
+                    "Preventive Maintenance & Mold Management",
+                    "Microsoft Office (Excel, Word, PowerPoint)",
+                    "Basic ERP / Sistem Monitoring Produksi"
                 ],
                 personal: [
-                    "Problem Solving & Berpikir Analitis", "Teamwork & Koordinasi Lintas Departemen",
-                    "Manajemen Waktu & Efisiensi Proses", "Detail-Oriented & Teliti dalam pekerjaan",
-                    "Disiplin & Tanggung Jawab", "Proaktif dan Cepat Beradaptasi", "Komunikasi Efektif"
+                    "Problem Solving & Berpikir Analitis",
+                    "Teamwork & Koordinasi Lintas Departemen",
+                    "Manajemen Waktu & Efisiensi Proses",
+                    "Detail-Oriented & Teliti dalam pekerjaan",
+                    "Disiplin & Tanggung Jawab",
+                    "Proaktif dan Cepat Beradaptasi",
+                    "Komunikasi Efektif"
                 ]
             },
             languages: [
@@ -840,7 +975,7 @@
         };
 
         // Konfigurasi Admin (password bisa diganti)
-        const ADMIN_PASSWORD = "arya2025"; // Ganti dengan password yang diinginkan
+        const ADMIN_PASSWORD = "arya2025";
         
         // Status Admin
         let isAdminLoggedIn = false;
@@ -861,6 +996,9 @@
             
             // Animate progress bars
             animateProgressBars();
+            
+            // Setup section header sticky behavior
+            setupStickyHeaders();
         });
         
         // Load data dari localStorage
@@ -993,8 +1131,16 @@
         // Setup event listeners
         function setupEventListeners() {
             // Admin Toggle
-            document.getElementById('adminToggle').addEventListener('click', function() {
+            document.getElementById('adminToggle').addEventListener('click', function(e) {
+                e.stopPropagation();
                 document.getElementById('adminMenu').classList.toggle('active');
+            });
+            
+            // Close admin menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.admin-panel')) {
+                    document.getElementById('adminMenu').classList.remove('active');
+                }
             });
             
             // Admin Login
@@ -1040,7 +1186,6 @@
                         cvData.summary = content;
                         break;
                     case 'experience':
-                        // Untuk pengalaman kerja, format khusus
                         try {
                             const expData = JSON.parse(content);
                             cvData.workExperience = expData;
@@ -1050,7 +1195,6 @@
                         }
                         break;
                     case 'skills':
-                        // Untuk skills, format khusus
                         try {
                             const skillsData = JSON.parse(content);
                             cvData.skills = skillsData;
@@ -1060,7 +1204,6 @@
                         }
                         break;
                     case 'languages':
-                        // Untuk bahasa, format khusus
                         try {
                             const langData = JSON.parse(content);
                             cvData.languages = langData;
@@ -1070,7 +1213,6 @@
                         }
                         break;
                     case 'certificates':
-                        // Untuk sertifikat, format khusus
                         try {
                             const certData = JSON.parse(content);
                             cvData.certificates = certData;
@@ -1111,7 +1253,7 @@
                             location: "Kosambi",
                             linkedin: "linkedin.com/in/arya-savariansah-a45539366/",
                             title: "Lulusan SMK Teknik Permesinan dengan pengalaman di bidang manufaktur dan produksi",
-                            profileImage: cvData.personalInfo.profileImage // Keep existing profile image
+                            profileImage: cvData.personalInfo.profileImage
                         },
                         summary: "Lulusan SMK Teknik Permesinan dengan pengalaman di bidang manufaktur dan produksi. Terbiasa menangani perencanaan produksi, quality control, manajemen stok & distribusi, hingga mechanical drafting. Memiliki kemampuan dalam meningkatkan efisiensi produksi, menurunkan tingkat reject, serta mendukung kelancaran proses manufaktur melalui desain teknis dan perencanaan yang sistematis.",
                         workExperience: [
@@ -1147,15 +1289,24 @@
                         ],
                         skills: {
                             technical: [
-                                "AutoCAD", "SolidWorks (2D & 3D Drafting)", "Membaca & Membuat Gambar Teknik", 
-                                "Bubut, Milling, Molding, Assembly", "Production Planning & Stock Monitoring", 
-                                "Quality Control & Problem Solving", "Preventive Maintenance & Mold Management",
-                                "Microsoft Office (Excel, Word, PowerPoint)", "Basic ERP / Sistem Monitoring Produksi"
+                                "AutoCAD",
+                                "SolidWorks (2D & 3D Drafting)",
+                                "Membaca & Membuat Gambar Teknik",
+                                "Bubut, Milling, Molding, Assembly",
+                                "Production Planning & Stock Monitoring",
+                                "Quality Control & Problem Solving",
+                                "Preventive Maintenance & Mold Management",
+                                "Microsoft Office (Excel, Word, PowerPoint)",
+                                "Basic ERP / Sistem Monitoring Produksi"
                             ],
                             personal: [
-                                "Problem Solving & Berpikir Analitis", "Teamwork & Koordinasi Lintas Departemen",
-                                "Manajemen Waktu & Efisiensi Proses", "Detail-Oriented & Teliti dalam pekerjaan",
-                                "Disiplin & Tanggung Jawab", "Proaktif dan Cepat Beradaptasi", "Komunikasi Efektif"
+                                "Problem Solving & Berpikir Analitis",
+                                "Teamwork & Koordinasi Lintas Departemen",
+                                "Manajemen Waktu & Efisiensi Proses",
+                                "Detail-Oriented & Teliti dalam pekerjaan",
+                                "Disiplin & Tanggung Jawab",
+                                "Proaktif dan Cepat Beradaptasi",
+                                "Komunikasi Efektif"
                             ]
                         },
                         languages: [
@@ -1208,6 +1359,12 @@
             document.getElementById('profileInput').addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
+                    // Validasi ukuran file (max 2MB)
+                    if (file.size > 2 * 1024 * 1024) {
+                        showNotification('Ukuran file maksimal 2MB', 'error');
+                        return;
+                    }
+                    
                     const reader = new FileReader();
                     reader.onload = function(event) {
                         cvData.personalInfo.profileImage = event.target.result;
@@ -1296,6 +1453,25 @@
             });
         }
         
+        // Setup sticky headers
+        function setupStickyHeaders() {
+            const sectionHeaders = document.querySelectorAll('.section-header');
+            
+            // Adjust sticky position based on screen size
+            function adjustStickyPosition() {
+                const navHeight = document.querySelector('.nav-container').offsetHeight;
+                sectionHeaders.forEach(header => {
+                    header.style.top = `${navHeight + 10}px`;
+                });
+            }
+            
+            // Initial adjustment
+            adjustStickyPosition();
+            
+            // Adjust on resize
+            window.addEventListener('resize', adjustStickyPosition);
+        }
+        
         // Animate progress bars
         function animateProgressBars() {
             const progressFillElements = document.querySelectorAll('.progress-fill');
@@ -1311,18 +1487,20 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        animateProgressBarsFunc();
+                        setTimeout(() => {
+                            animateProgressBarsFunc();
+                        }, 300);
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.5 });
+            }, { threshold: 0.3 });
             
             document.querySelectorAll('.language-progress').forEach(section => {
                 observer.observe(section);
             });
             
             // Initial animation
-            animateProgressBarsFunc();
+            setTimeout(animateProgressBarsFunc, 500);
         }
         
         // Show notification
