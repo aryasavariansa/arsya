@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -147,7 +146,7 @@
             gap: 0.5rem;
         }
         
-        /* Admin Panel (Tersembunyi) */
+        /* Admin Panel - Fixed Position */
         .admin-panel {
             position: fixed;
             top: 20px;
@@ -284,13 +283,14 @@
             border-radius: 3px;
         }
         
-        /* Main Content - Layout tetap */
+        /* Main Content */
         main {
             padding: 3rem 0;
             position: relative;
             width: 100%;
         }
         
+        /* Section dengan Auto-scroll Animation */
         .section {
             margin-bottom: 3rem;
             background-color: white;
@@ -300,6 +300,14 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .section:hover {
@@ -313,12 +321,6 @@
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--light-gray);
-            position: sticky;
-            top: 70px; /* Sesuaikan dengan tinggi nav */
-            background-color: white;
-            z-index: 10;
-            padding-top: 10px;
-            margin-top: -10px;
         }
         
         .section-title {
@@ -563,6 +565,18 @@
             }
         }
         
+        /* Scroll Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         /* Responsive Design */
         @media (max-width: 1200px) {
             .container {
@@ -636,7 +650,6 @@
             .section-header {
                 flex-direction: column;
                 align-items: flex-start;
-                top: 60px;
             }
             
             .section-title {
@@ -665,6 +678,18 @@
             
             .footer-links {
                 justify-content: center;
+            }
+            
+            /* Admin panel position untuk mobile */
+            .admin-panel {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .admin-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
             }
         }
         
@@ -723,6 +748,8 @@
                 box-shadow: none;
                 border: 1px solid #ddd;
                 break-inside: avoid;
+                opacity: 1 !important;
+                transform: none !important;
             }
             
             .section-header {
@@ -732,7 +759,7 @@
     </style>
 </head>
 <body>
-    <!-- Admin Panel (Tersembunyi) -->
+    <!-- Admin Panel (Fixed Position) -->
     <div class="admin-panel">
         <button class="admin-toggle" id="adminToggle">
             <i class="fas fa-user-lock"></i>
@@ -980,6 +1007,9 @@
         // Status Admin
         let isAdminLoggedIn = false;
         
+        // Track active section untuk auto-scroll
+        let activeSectionId = null;
+        
         // DOM Ready
         document.addEventListener('DOMContentLoaded', function() {
             // Load data dari localStorage jika ada
@@ -991,14 +1021,14 @@
             // Setup event listeners
             setupEventListeners();
             
-            // Setup navigasi
-            setupNavigation();
+            // Setup navigasi dengan auto-scroll
+            setupNavigationWithAutoScroll();
+            
+            // Setup scroll animation
+            setupScrollAnimation();
             
             // Animate progress bars
             animateProgressBars();
-            
-            // Setup section header sticky behavior
-            setupStickyHeaders();
         });
         
         // Load data dari localStorage
@@ -1405,71 +1435,115 @@
             });
         }
         
-        // Setup navigasi
-        function setupNavigation() {
+        // Setup navigasi dengan auto-scroll
+        function setupNavigationWithAutoScroll() {
             const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
             
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Hapus kelas active dari semua link
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    
-                    // Tambah kelas active ke link yang diklik
-                    this.classList.add('active');
-                    
-                    // Scroll ke bagian yang dituju
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-                    
-                    window.scrollTo({
-                        top: targetSection.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                });
-            });
-            
-            // Update navigasi active berdasarkan scroll
-            window.addEventListener('scroll', function() {
+            // Function untuk menandai section yang aktif
+            function setActiveSection() {
                 let current = '';
-                const sections = document.querySelectorAll('section');
                 
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
                     const sectionHeight = section.clientHeight;
+                    const scrollPosition = window.pageYOffset + 100; // Offset untuk nav
                     
-                    if (pageYOffset >= (sectionTop - 100)) {
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
                         current = section.getAttribute('id');
                     }
                 });
                 
+                // Update nav links
                 navLinks.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href') === `#${current}`) {
                         link.classList.add('active');
                     }
                 });
+                
+                // Update active section
+                if (current) {
+                    activeSectionId = current;
+                }
+            }
+            
+            // Event listener untuk nav links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        // Hapus kelas active dari semua link
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        
+                        // Tambah kelas active ke link yang diklik
+                        this.classList.add('active');
+                        
+                        // Scroll ke section dengan smooth behavior
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Trigger animation pada section
+                        triggerSectionAnimation(targetSection);
+                    }
+                });
             });
+            
+            // Update active section on scroll
+            window.addEventListener('scroll', setActiveSection);
+            
+            // Set active section on load
+            window.addEventListener('load', setActiveSection);
+            
+            // Initial call
+            setActiveSection();
         }
         
-        // Setup sticky headers
-        function setupStickyHeaders() {
-            const sectionHeaders = document.querySelectorAll('.section-header');
+        // Setup scroll animation untuk section
+        function setupScrollAnimation() {
+            const sections = document.querySelectorAll('.section');
             
-            // Adjust sticky position based on screen size
-            function adjustStickyPosition() {
-                const navHeight = document.querySelector('.nav-container').offsetHeight;
-                sectionHeaders.forEach(header => {
-                    header.style.top = `${navHeight + 10}px`;
+            // Function untuk check jika section terlihat di viewport
+            function checkVisibility() {
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    
+                    // Jika section terlihat di viewport (dengan threshold 100px dari bawah)
+                    if (rect.top < windowHeight - 100) {
+                        section.classList.add('visible');
+                    }
                 });
             }
             
-            // Initial adjustment
-            adjustStickyPosition();
+            // Check visibility on load
+            window.addEventListener('load', checkVisibility);
             
-            // Adjust on resize
-            window.addEventListener('resize', adjustStickyPosition);
+            // Check visibility on scroll
+            window.addEventListener('scroll', checkVisibility);
+            
+            // Initial check
+            setTimeout(checkVisibility, 300);
+        }
+        
+        // Trigger animation pada section tertentu
+        function triggerSectionAnimation(section) {
+            // Reset animation
+            section.classList.remove('visible');
+            
+            // Trigger reflow
+            void section.offsetWidth;
+            
+            // Add class kembali untuk trigger animation
+            setTimeout(() => {
+                section.classList.add('visible');
+            }, 50);
         }
         
         // Animate progress bars
