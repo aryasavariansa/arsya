@@ -5,150 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arya Savariansah - Portfolio Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2d5aa0;
-            --primary-dark: #1e3a6e;
-            --secondary: #00a86b;
-            --dark: #1a1a2e;
-            --light: #f8f9fa;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-            --sidebar-width: 260px;
-            --content-width: calc(100% - 260px);
-            --border-radius: 10px;
-            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
+            --primary: #1e3a8a;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --light-gray: #e5e7eb;
+            --sidebar-width: 320px;
+            --border-radius: 12px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            color: var(--dark);
-            background-color: var(--light);
-            line-height: 1.6;
-            overflow-x: hidden;
             display: flex;
             min-height: 100vh;
+            background-color: var(--light);
+            color: var(--dark);
         }
 
-        /* Sidebar Navigation - TERKUNCI DI DESKTOP */
+        /* ===== SIDEBAR PENUH DI KIRI ===== */
         .sidebar {
             width: var(--sidebar-width);
-            background-color: var(--dark);
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            position: fixed;
             height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
             overflow-y: auto;
-            padding: 2rem 0;
-            z-index: 1000;
-            transition: var(--transition);
         }
 
         .sidebar-header {
-            padding: 0 2rem 2rem;
-            border-bottom: 1px solid #2d3748;
-            margin-bottom: 2rem;
+            padding: 30px 25px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .logo {
+        .profile-section {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 1.5rem;
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
-        .logo h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .logo span {
-            color: var(--secondary);
-        }
-
-        .profile-mini {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .profile-mini-img {
-            width: 50px;
-            height: 50px;
+        .profile-img {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, #3b82f6, var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
             color: white;
-            font-size: 1.5rem;
+            flex-shrink: 0;
         }
 
-        .profile-mini-info h3 {
-            font-size: 1rem;
-            margin-bottom: 0.2rem;
+        .profile-info h2 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            font-weight: 600;
         }
 
-        .profile-mini-info p {
-            font-size: 0.8rem;
-            color: #adb5bd;
+        .profile-info p {
+            font-size: 0.9rem;
+            color: #dbeafe;
+            opacity: 0.9;
         }
 
+        /* Menu Navigasi Sidebar */
         .nav-menu {
             list-style: none;
-            padding: 0 1rem;
+            padding: 20px 0;
+            flex-grow: 1;
         }
 
         .nav-menu li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 5px;
         }
 
-        .nav-menu li a {
+        .nav-menu a {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            color: #adb5bd;
+            color: #dbeafe;
             text-decoration: none;
-            border-radius: 8px;
-            transition: var(--transition);
+            padding: 15px 25px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border-left: 4px solid transparent;
         }
 
-        .nav-menu li a:hover {
-            background-color: #2d3748;
+        .nav-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.05);
             color: white;
         }
 
-        .nav-menu li a.active {
-            background-color: var(--primary);
+        .nav-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
             color: white;
+            border-left-color: #60a5fa;
         }
 
-        .nav-menu li a i {
-            width: 20px;
+        .nav-menu a i {
+            width: 24px;
+            margin-right: 12px;
             text-align: center;
+            font-size: 1.1rem;
         }
 
+        /* Admin Panel di Sidebar */
         .admin-section {
-            margin-top: 3rem;
-            padding: 0 2rem;
-        }
-
-        .admin-section h3 {
-            font-size: 0.9rem;
-            color: #adb5bd;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
+            padding: 20px 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .admin-toggle {
@@ -156,247 +138,346 @@
             color: white;
             border: none;
             width: 100%;
-            padding: 0.8rem;
+            padding: 12px;
             border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 8px;
             font-weight: 500;
-            transition: var(--transition);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
 
         .admin-toggle:hover {
-            background-color: #00995c;
+            background-color: #0da271;
+            transform: translateY(-2px);
         }
 
         .admin-panel {
-            position: absolute;
-            bottom: 2rem;
-            left: 2rem;
-            right: 2rem;
             background-color: white;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            padding: 1.5rem;
+            padding: 20px;
+            margin-top: 15px;
             display: none;
-            z-index: 1001;
+            z-index: 101;
         }
 
         .admin-panel.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
 
         .admin-panel h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
             color: var(--dark);
+            font-size: 1.1rem;
         }
 
         .admin-input {
             width: 100%;
-            padding: 0.8rem;
-            margin-bottom: 1rem;
+            padding: 10px;
+            margin-bottom: 12px;
             border: 1px solid var(--light-gray);
-            border-radius: 5px;
-            font-family: 'Poppins', sans-serif;
+            border-radius: 6px;
+            font-size: 0.9rem;
         }
 
         .admin-btn {
             width: 100%;
-            padding: 0.8rem;
+            padding: 10px;
             background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
-            transition: var(--transition);
-            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
         }
 
         .admin-btn:hover {
             background-color: var(--primary-dark);
         }
 
-        /* Main Content */
-        .main-content {
-            width: var(--content-width);
-            margin-left: var(--sidebar-width);
-            padding: 0;
-            min-height: 100vh;
-            transition: var(--transition);
+        .admin-btn.secondary {
+            background-color: var(--gray);
         }
 
+        .admin-btn.danger {
+            background-color: var(--danger);
+        }
+
+        .sidebar-footer {
+            padding: 20px 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #93c5fd;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* ===== KONTEN UTAMA DI KANAN ===== */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            padding: 0;
+            background-color: var(--light);
+        }
+
+        /* Header Konten */
         .content-header {
             background-color: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px 40px;
+            border-bottom: 1px solid var(--light-gray);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 999;
+            z-index: 99;
         }
 
         .page-title h2 {
             font-size: 1.8rem;
-            color: var(--primary-dark);
+            color: var(--primary);
+            margin-bottom: 8px;
         }
 
         .page-title p {
             color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .edit-status {
+            color: var(--secondary);
             font-size: 0.9rem;
+            padding: 8px 15px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-radius: 20px;
+            display: none;
         }
 
+        .edit-status i {
+            margin-right: 5px;
+        }
+
+        /* Body Konten */
         .content-body {
-            padding: 2rem;
-            min-height: calc(100vh - 80px);
+            padding: 40px;
+            max-width: 1400px;
         }
 
-        /* Page Styles */
+        /* Page Container */
         .page {
             display: none;
         }
 
         .page.active {
             display: block;
+            animation: fadeIn 0.5s ease;
         }
 
-        /* Home Page */
+        /* ===== HOME PAGE ===== */
         .hero {
-            padding: 3rem 0;
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 40px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
             border-radius: var(--border-radius);
-            margin-bottom: 2rem;
+            margin-bottom: 40px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            color: var(--primary-dark);
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--gray);
-            max-width: 800px;
-            margin: 0 auto 2rem;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
         }
 
         .hero-badge {
             display: inline-block;
-            background: rgba(45, 90, 160, 0.1);
+            background-color: rgba(30, 64, 175, 0.1);
             color: var(--primary);
-            padding: 0.5rem 1rem;
+            padding: 10px 20px;
             border-radius: 50px;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
         }
 
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
         }
 
         .stat-card {
             background-color: white;
-            padding: 2rem;
+            padding: 30px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             text-align: center;
-            transition: var(--transition);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 10px;
         }
 
         .stat-label {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
-        /* About Page */
+        /* ===== ABOUT PAGE ===== */
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
         .about-text p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
             color: var(--gray);
-            line-height: 1.8;
+            line-height: 1.7;
         }
 
+        /* Skills */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
         }
 
         .skill-category {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 1.5rem;
+            padding: 25px;
             box-shadow: var(--box-shadow);
         }
 
         .skill-category h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--primary-dark);
-            padding-bottom: 0.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            padding-bottom: 10px;
             border-bottom: 2px solid var(--light-gray);
         }
 
         .skill-items {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
+            gap: 10px;
         }
 
         .skill-item {
-            background-color: var(--light-gray);
-            padding: 0.5rem 1rem;
+            background-color: #f0f9ff;
+            padding: 8px 16px;
             border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            border: 1px solid #dbeafe;
+        }
+
+        /* Experience */
+        .experience-timeline {
+            margin-top: 30px;
+        }
+
+        .experience-item {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .experience-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .experience-date {
+            color: var(--secondary);
+            font-weight: 500;
             font-size: 0.9rem;
         }
 
-        /* Achievement Page - DENGAN FOTO */
+        .experience-content ul {
+            padding-left: 20px;
+            color: var(--gray);
+        }
+
+        .experience-content li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        /* ===== ACHIEVEMENTS PAGE - DENGAN FOTO ===== */
         .achievements-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
         }
 
         .achievement-card {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 2rem;
+            padding: 25px;
             box-shadow: var(--box-shadow);
-            transition: var(--transition);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
         .achievement-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         .achievement-image-container {
@@ -404,7 +485,7 @@
             height: 200px;
             border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
             background-color: var(--light-gray);
             display: flex;
             align-items: center;
@@ -426,96 +507,150 @@
 
         .achievement-card h3 {
             font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-dark);
+            margin-bottom: 8px;
+            color: var(--primary);
         }
 
         .achievement-card .date {
-            color: var(--gray);
+            color: var(--secondary);
             font-weight: 500;
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
             font-size: 0.9rem;
+        }
+
+        .achievement-card p {
+            color: var(--gray);
+            line-height: 1.6;
         }
 
         .upload-btn {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            background-color: rgba(45, 90, 160, 0.8);
+            background-color: rgba(30, 64, 175, 0.85);
             color: white;
             border: none;
             border-radius: 5px;
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
+            padding: 8px 15px;
+            font-size: 0.85rem;
             cursor: pointer;
             display: none;
             z-index: 10;
+            transition: all 0.3s ease;
         }
 
-        .edit-mode .upload-btn {
-            display: block;
+        .upload-btn:hover {
+            background-color: var(--primary);
         }
 
-        /* Project Page */
+        /* ===== PROJECTS PAGE ===== */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
         }
 
         .project-card {
             background-color: white;
             border-radius: var(--border-radius);
-            overflow: hidden;
+            padding: 30px;
             box-shadow: var(--box-shadow);
-            transition: var(--transition);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid var(--primary);
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
-        .project-image {
-            height: 200px;
-            background-color: var(--light-gray);
+        .project-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 3rem;
+        }
+
+        .project-card h3 i {
+            margin-right: 10px;
             color: var(--primary);
         }
 
-        .project-content {
-            padding: 1.5rem;
+        .project-card p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1rem;
         }
 
-        .project-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-dark);
+        /* Project Stats */
+        .project-stats {
+            display: flex;
+            justify-content: space-between;
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid var(--light-gray);
         }
 
-        /* Dashboard Page */
+        .stat {
+            text-align: center;
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .improvement {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .reduction {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        /* ===== DASHBOARD PAGE ===== */
         .dashboard-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
         .dashboard-card {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 2rem;
+            padding: 25px;
             text-align: center;
             box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
         }
 
         .dashboard-number {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 10px;
         }
 
         .dashboard-label {
@@ -526,40 +661,47 @@
         .dashboard-chart {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 2rem;
+            padding: 30px;
             box-shadow: var(--box-shadow);
-            margin-bottom: 2rem;
+            margin-bottom: 30px;
         }
 
-        /* Chatroom Page */
+        .dashboard-chart h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        /* ===== CHATROOM PAGE ===== */
         .chatroom-container {
             background-color: white;
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--box-shadow);
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .chatroom-header {
             background-color: var(--primary);
             color: white;
-            padding: 1.5rem;
+            padding: 25px;
             text-align: center;
         }
 
         .chatroom-messages {
-            padding: 2rem;
+            padding: 30px;
             height: 400px;
             overflow-y: auto;
+            background-color: #f9fafb;
         }
 
         .message {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background-color: #f1f3f5;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
             border-radius: 10px;
             max-width: 80%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .message.user {
@@ -571,8 +713,9 @@
         .message-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            opacity: 0.8;
         }
 
         .message-content {
@@ -580,18 +723,19 @@
         }
 
         .chatroom-input {
-            padding: 1.5rem;
-            background-color: #f8f9fa;
+            padding: 20px;
+            background-color: white;
             display: flex;
-            gap: 1rem;
+            gap: 15px;
+            border-top: 1px solid var(--light-gray);
         }
 
         .chatroom-input input {
             flex: 1;
-            padding: 0.8rem 1rem;
-            border: 1px solid #ddd;
+            padding: 12px 20px;
+            border: 1px solid var(--light-gray);
             border-radius: 50px;
-            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
         }
 
         .chatroom-input button {
@@ -599,67 +743,97 @@
             color: white;
             border: none;
             border-radius: 50px;
-            padding: 0.8rem 2rem;
+            padding: 12px 30px;
             font-weight: 500;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
 
         .chatroom-input button:hover {
             background-color: var(--primary-dark);
         }
 
-        /* Contact Page */
+        /* ===== CONTACT PAGE ===== */
         .contact-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 40px;
         }
 
         .contact-info {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1.5rem;
+            gap: 20px;
         }
 
         .contact-card {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 1.5rem;
+            padding: 25px;
             box-shadow: var(--box-shadow);
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
         }
 
         .contact-icon {
             font-size: 2rem;
             color: var(--primary);
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .contact-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
         }
 
         .contact-form {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 2rem;
+            padding: 30px;
             box-shadow: var(--box-shadow);
         }
 
+        .contact-form h3 {
+            margin-bottom: 25px;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             font-weight: 500;
+            color: var(--dark);
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid #ddd;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
             border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
         }
 
         .form-group textarea {
@@ -672,27 +846,31 @@
             color: white;
             border: none;
             border-radius: 50px;
-            padding: 1rem 2.5rem;
+            padding: 14px 30px;
             font-weight: 500;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             width: 100%;
+            font-size: 1rem;
         }
 
         .submit-btn:hover {
             background-color: var(--primary-dark);
         }
 
-        /* Edit Mode */
+        /* ===== EDIT MODE STYLES ===== */
         .edit-mode .editable {
             position: relative;
-            border: 1px dashed #ccc;
-            padding: 0.5rem;
-            margin: 0.2rem 0;
+            border: 1px dashed #cbd5e1;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 6px;
+            transition: all 0.3s ease;
         }
 
         .edit-mode .editable:hover {
-            background-color: #f8f9fa;
+            background-color: #f8fafc;
+            border-color: var(--primary);
         }
 
         .edit-btn {
@@ -702,11 +880,17 @@
             background-color: var(--secondary);
             color: white;
             border: none;
-            border-radius: 3px;
-            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            padding: 5px 10px;
             font-size: 0.8rem;
             cursor: pointer;
             display: none;
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            background-color: #0da271;
         }
 
         .edit-mode .edit-btn {
@@ -717,25 +901,122 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 5px;
-            padding: 0.5rem 1rem;
-            margin: 1rem 0;
+            border-radius: 6px;
+            padding: 12px 20px;
+            margin: 20px 0;
             cursor: pointer;
             display: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background-color: var(--primary-dark);
         }
 
         .edit-mode .add-btn {
             display: inline-block;
         }
 
-        /* Notification */
+        .edit-mode .achievement-card .upload-btn {
+            display: block;
+        }
+
+        /* ===== MODAL UPLOAD FOTO ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-title {
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+            display: none;
+            border: 2px dashed var(--light-gray);
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .modal-btn.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .modal-btn.secondary {
+            background-color: var(--light-gray);
+            color: var(--dark);
+        }
+
+        .modal-btn.secondary:hover {
+            background-color: #d1d5db;
+        }
+
+        /* ===== NOTIFICATION ===== */
         .notification {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             background-color: var(--secondary);
             color: white;
-            padding: 1rem 1.5rem;
+            padding: 15px 25px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             z-index: 1002;
@@ -755,124 +1036,51 @@
             }
         }
 
-        /* Modal untuk Upload Foto */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--box-shadow);
-        }
-
-        .modal-title {
-            margin-bottom: 1.5rem;
-            color: var(--primary-dark);
-            text-align: center;
-        }
-
-        .image-preview {
-            width: 100%;
-            max-height: 300px;
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 1rem 0;
-            display: none;
-        }
-
-        .image-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .modal-btn {
-            flex: 1;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .modal-btn.primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .modal-btn.secondary {
-            background-color: var(--light-gray);
-            color: var(--dark);
-        }
-
-        /* Mobile Menu Toggle Button */
-        .mobile-menu-toggle {
-            display: none;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 0.8rem 1rem;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 1003;
-            transition: var(--transition);
-        }
-
-        /* Responsive Styles - OPTIMASI UNTUK HP DAN KOMPUTER */
+        /* ===== RESPONSIVE STYLES ===== */
         
-        /* Tablet Landscape dan Desktop Kecil (768px - 1024px) */
+        /* Tablet (768px - 1024px) */
         @media (max-width: 1024px) {
-            :root {
-                --sidebar-width: 220px;
-                --content-width: calc(100% - 220px);
+            .sidebar {
+                width: 280px;
             }
             
-            .hero h1 {
-                font-size: 2.5rem;
+            .main-content {
+                margin-left: 280px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
             }
             
             .about-content {
-                gap: 2rem;
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .content-body {
+                padding: 30px;
             }
         }
 
-        /* Tablet Portrait (576px - 768px) */
+        /* Mobile (≤ 768px) */
         @media (max-width: 768px) {
-            /* Sidebar menjadi overlay di mobile */
+            /* Sidebar menjadi overlay */
             .sidebar {
-                width: 280px;
+                width: 100%;
+                max-width: 320px;
                 transform: translateX(-100%);
-                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
             }
             
             .sidebar.active {
@@ -880,19 +1088,32 @@
             }
             
             .main-content {
-                width: 100%;
                 margin-left: 0;
+                width: 100%;
             }
             
+            /* Mobile Menu Toggle Button */
             .mobile-menu-toggle {
                 display: block;
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: var(--primary);
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 12px 15px;
+                font-size: 1.2rem;
+                cursor: pointer;
+                z-index: 101;
+                box-shadow: var(--box-shadow);
             }
             
             .content-header {
-                padding: 1rem;
+                padding: 20px;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 1rem;
+                gap: 15px;
             }
             
             .page-title h2 {
@@ -900,50 +1121,44 @@
             }
             
             .content-body {
-                padding: 1.5rem;
+                padding: 20px;
             }
             
             .hero {
-                padding: 2rem 1rem;
+                padding: 30px 20px;
             }
             
             .hero h1 {
                 font-size: 2rem;
             }
             
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .contact-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .achievements-grid,
             .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .achievements-grid {
                 grid-template-columns: 1fr;
             }
             
             .stats-grid,
             .dashboard-stats {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
+                gap: 15px;
             }
             
             .stat-card,
             .dashboard-card {
-                padding: 1.5rem;
+                padding: 20px;
             }
             
-            .stat-number,
-            .dashboard-number {
-                font-size: 2rem;
+            .project-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
             
             .chatroom-container {
@@ -952,71 +1167,15 @@
             
             .chatroom-messages {
                 height: 300px;
-                padding: 1rem;
+                padding: 20px;
             }
             
             .message {
                 max-width: 90%;
             }
             
-            .admin-panel {
-                left: 1rem;
-                right: 1rem;
-                bottom: 1rem;
-            }
-        }
-
-        /* HP Small (480px - 576px) */
-        @media (max-width: 576px) {
-            .content-body {
-                padding: 1rem;
-            }
-            
-            .hero {
-                padding: 1.5rem 1rem;
-            }
-            
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .hero p {
-                font-size: 0.95rem;
-            }
-            
-            .stats-grid,
-            .dashboard-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .skill-category {
-                padding: 1rem;
-            }
-            
-            .skill-items {
-                gap: 0.5rem;
-            }
-            
-            .skill-item {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.8rem;
-            }
-            
-            .achievement-card,
-            .project-card {
-                padding: 1.5rem;
-            }
-            
-            .achievement-image-container {
-                height: 180px;
-            }
-            
-            .project-image {
-                height: 180px;
-            }
-            
             .chatroom-input {
-                padding: 1rem;
+                padding: 15px;
                 flex-direction: column;
             }
             
@@ -1029,105 +1188,59 @@
             }
             
             .modal-content {
-                padding: 1.5rem;
+                padding: 20px;
+                width: 95%;
             }
             
             .modal-buttons {
                 flex-direction: column;
             }
-            
-            .sidebar-header {
-                padding: 0 1.5rem 1.5rem;
-            }
-            
-            .nav-menu li a {
-                padding: 0.8rem 1rem;
-            }
         }
 
-        /* HP Extra Small (di bawah 480px) */
+        /* Mobile Small (≤ 480px) */
         @media (max-width: 480px) {
             .hero h1 {
-                font-size: 1.6rem;
+                font-size: 1.8rem;
             }
             
-            .hero-badge {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
-            }
-            
-            .about-text p {
+            .hero p {
                 font-size: 1rem;
             }
             
-            .achievement-card h3,
-            .project-content h3 {
-                font-size: 1.1rem;
+            .stats-grid,
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .achievement-image-container {
+                height: 180px;
+            }
+            
+            .project-card {
+                padding: 20px;
+            }
+            
+            .skill-category {
+                padding: 20px;
+            }
+            
+            .skill-item {
+                font-size: 0.85rem;
+                padding: 6px 12px;
             }
             
             .contact-card {
-                padding: 1rem;
+                padding: 20px;
             }
             
             .contact-icon {
-                font-size: 1.5rem;
-            }
-            
-            .form-group input,
-            .form-group textarea {
-                padding: 0.7rem;
+                font-size: 1.8rem;
             }
             
             .mobile-menu-toggle {
                 top: 15px;
                 right: 15px;
-                padding: 0.6rem 0.8rem;
-                font-size: 1rem;
-            }
-            
-            .sidebar {
-                width: 100%;
-                max-width: 320px;
-            }
-        }
-
-        /* Desktop Besar (di atas 1200px) */
-        @media (min-width: 1200px) {
-            .main-content {
-                max-width: 1400px;
-                margin-left: auto;
-                margin-right: auto;
-                padding-left: var(--sidebar-width);
-                width: 100%;
-            }
-            
-            .hero h1 {
-                font-size: 3.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.3rem;
-            }
-            
-            .achievements-grid,
-            .projects-grid {
-                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            }
-        }
-
-        /* High DPI Screens (Retina) */
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .logo h1 {
-                font-weight: 800;
-            }
-            
-            .hero h1 {
-                font-weight: 700;
-            }
-            
-            .stat-number,
-            .dashboard-number {
-                font-weight: 800;
+                padding: 10px 12px;
             }
         }
 
@@ -1145,17 +1258,13 @@
             }
             
             .main-content {
-                width: 100%;
                 margin-left: 0;
+                width: 100%;
             }
             
             body {
                 background-color: white;
                 color: black;
-            }
-            
-            .page {
-                break-inside: avoid;
             }
             
             .hero {
@@ -1182,24 +1291,21 @@
         <i class="fas fa-bars"></i>
     </button>
     
-    <!-- Sidebar Navigation -->
+    <!-- SIDEBAR PENUH DI KIRI -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="logo">
-                <h1>Arya<span>Savariansah</span></h1>
-            </div>
-            
-            <div class="profile-mini">
-                <div class="profile-mini-img">
-                    <i class="fas fa-user-cog"></i>
+            <div class="profile-section">
+                <div class="profile-img">
+                    <i class="fas fa-user-tie"></i>
                 </div>
-                <div class="profile-mini-info">
-                    <h3>Arya Savariansah</h3>
+                <div class="profile-info">
+                    <h2>Arya Savariansah</h2>
                     <p>Spesialis Manufaktur</p>
                 </div>
             </div>
         </div>
         
+        <!-- Menu Navigasi -->
         <ul class="nav-menu">
             <li><a href="#home" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="#about" class="nav-link" data-page="about"><i class="fas fa-user"></i> About Me</a></li>
@@ -1210,27 +1316,32 @@
             <li><a href="#contact" class="nav-link" data-page="contact"><i class="fas fa-envelope"></i> Contact</a></li>
         </ul>
         
+        <!-- Admin Panel -->
         <div class="admin-section">
-            <h3>Admin Panel</h3>
             <button class="admin-toggle" id="adminToggle">
                 <i class="fas fa-user-lock"></i> Login Admin
             </button>
+            
+            <div class="admin-panel" id="adminPanel">
+                <h3>Login Admin</h3>
+                <input type="password" id="adminPassword" class="admin-input" placeholder="Password Admin">
+                <button class="admin-btn" id="adminLogin">Login</button>
+                
+                <div id="adminControls" style="display: none;">
+                    <h3>Edit Mode</h3>
+                    <button class="admin-btn" id="toggleEditMode">Aktifkan Edit Mode</button>
+                    <button class="admin-btn" id="saveAllData">Simpan Semua Data</button>
+                    <button class="admin-btn secondary" id="adminLogout">Logout</button>
+                </div>
+            </div>
         </div>
         
-        <div class="admin-panel" id="adminPanel">
-            <h3>Login Admin</h3>
-            <input type="password" id="adminPassword" class="admin-input" placeholder="Password Admin">
-            <button class="admin-btn" id="adminLogin">Login</button>
-            <div id="adminControls" style="display: none;">
-                <h3>Edit Mode</h3>
-                <button class="admin-btn" id="toggleEditMode">Aktifkan Edit Mode</button>
-                <button class="admin-btn" id="saveAllData">Simpan Semua Data</button>
-                <button class="admin-btn admin-btn-secondary" id="adminLogout">Logout</button>
-            </div>
+        <div class="sidebar-footer">
+            <p>© 2026 Arya Savariansah. All rights reserved.</p>
         </div>
     </aside>
     
-    <!-- Main Content Area -->
+    <!-- KONTEN UTAMA DI KANAN -->
     <main class="main-content">
         <!-- Content Header -->
         <div class="content-header">
@@ -1238,12 +1349,12 @@
                 <h2 id="currentPageTitle">Home</h2>
                 <p id="currentPageDesc">Selamat datang di portfolio Arya Savariansah</p>
             </div>
-            <div id="editStatus" style="color: var(--gray); font-size: 0.9rem; display: none;">
+            <div class="edit-status" id="editStatus">
                 <i class="fas fa-edit"></i> Edit Mode Aktif
             </div>
         </div>
         
-        <!-- Content Body - Pages will be loaded here -->
+        <!-- Content Body - Pages -->
         <div class="content-body" id="contentBody">
             <!-- Home Page -->
             <div class="page active" id="homePage">
@@ -1298,7 +1409,7 @@
             
             <!-- About Me Page -->
             <div class="page" id="aboutPage">
-                <h2 style="margin-bottom: 2rem; color: var(--primary-dark);">Tentang Saya</h2>
+                <h2 style="margin-bottom: 30px; color: var(--primary); font-size: 2rem;">Tentang Saya</h2>
                 
                 <div class="about-content">
                     <div>
@@ -1350,7 +1461,7 @@
                     </div>
                     
                     <div>
-                        <h3 style="margin-bottom: 1.5rem; color: var(--primary-dark);">Pengalaman Kerja</h3>
+                        <h3 style="margin-bottom: 25px; color: var(--primary); font-size: 1.5rem;">Pengalaman Kerja</h3>
                         
                         <div class="experience-timeline">
                             <div class="experience-item editable" id="experience1">
@@ -1391,7 +1502,7 @@
             
             <!-- Achievements Page - DENGAN UPLOAD FOTO -->
             <div class="page" id="achievementsPage">
-                <h2 style="margin-bottom: 2rem; color: var(--primary-dark);">Pencapaian & Sertifikat</h2>
+                <h2 style="margin-bottom: 30px; color: var(--primary); font-size: 2rem;">Pencapaian & Sertifikat</h2>
                 
                 <div class="achievements-grid" id="achievementsContainer">
                     <!-- Achievement cards akan di-render oleh JavaScript -->
@@ -1401,38 +1512,68 @@
             
             <!-- Projects Page -->
             <div class="page" id="projectsPage">
-                <h2 style="margin-bottom: 2rem; color: var(--primary-dark);">Proyek & Portofolio</h2>
+                <h2 style="margin-bottom: 30px; color: var(--primary); font-size: 2rem;">Proyek & Portofolio</h2>
                 
                 <div class="projects-grid" id="projectsContainer">
                     <div class="project-card editable" id="project1">
-                        <div class="project-image">
-                            <i class="fas fa-drafting-compass"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>Sistem Pendataan Molding</h3>
-                            <p>Membuat sistem pendataan molding beserta jangka waktu pakai (lifetime usage) untuk mendukung preventive maintenance dan mengurangi downtime produksi</p>
+                        <h3><i class="fas fa-drafting-compass"></i> Sistem Pendataan Molding</h3>
+                        <p>Membuat sistem pendataan molding beserta jangka waktu pakai (lifetime usage) untuk mendukung preventive maintenance dan mengurangi downtime produksi</p>
+                        
+                        <div class="project-stats">
+                            <div class="stat">
+                                <span class="stat-value">100%</span>
+                                <span class="stat-label">Data Manual</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value improvement">↓ 40%</span>
+                                <span class="stat-label">Downtime</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">15%</span>
+                                <span class="stat-label">Setup Time ↓</span>
+                            </div>
                         </div>
                         <button class="edit-btn" data-edit="project1">Edit</button>
                     </div>
                     
                     <div class="project-card editable" id="project2">
-                        <div class="project-image">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>Optimasi Produksi WIP</h3>
-                            <p>Meningkatkan productivity penggunaan bahan WIP dari 2 Ton menjadi 724,5 kg dengan monitoring Stock WIP dan planning item Produksi</p>
+                        <h3><i class="fas fa-chart-line"></i> Optimasi Produksi WIP</h3>
+                        <p>Meningkatkan productivity penggunaan bahan WIP dari 2 Ton menjadi 724,5 kg dengan monitoring Stock WIP dan planning item Produksi</p>
+                        
+                        <div class="project-stats">
+                            <div class="stat">
+                                <span class="stat-value">2 Ton</span>
+                                <span class="stat-label">Sebelum</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value improvement">↓ 63.8%</span>
+                                <span class="stat-label">Pengurangan</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">724.5 kg</span>
+                                <span class="stat-label">Sesudah</span>
+                            </div>
                         </div>
                         <button class="edit-btn" data-edit="project2">Edit</button>
                     </div>
                     
                     <div class="project-card editable" id="project3">
-                        <div class="project-image">
-                            <i class="fas fa-cogs"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>Reduksi Reject Mesin Spiral</h3>
-                            <p>Menurunkan reject Div. Produksi pada mesin spiral dari 8% menjadi 3% dengan cara melakukan TFT (Task force Team)</p>
+                        <h3><i class="fas fa-cogs"></i> Reduksi Reject Mesin Spiral</h3>
+                        <p>Menurunkan reject Div. Produksi pada mesin spiral dari 8% menjadi 3% dengan cara melakukan TFT (Task force Team)</p>
+                        
+                        <div class="project-stats">
+                            <div class="stat">
+                                <span class="stat-value">8%</span>
+                                <span class="stat-label">Sebelum</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value reduction">↓ 62.5%</span>
+                                <span class="stat-label">Penurunan</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">3%</span>
+                                <span class="stat-label">Sesudah</span>
+                            </div>
                         </div>
                         <button class="edit-btn" data-edit="project3">Edit</button>
                     </div>
@@ -1442,7 +1583,7 @@
             
             <!-- Dashboard Page -->
             <div class="page" id="dashboardPage">
-                <h2 style="margin-bottom: 2rem; color: var(--primary-dark);">Dashboard Statistik</h2>
+                <h2 style="margin-bottom: 30px; color: var(--primary); font-size: 2rem;">Dashboard Statistik</h2>
                 
                 <div class="dashboard-stats" id="dashboardStats">
                     <div class="dashboard-card editable" id="dashboardStat1">
@@ -1477,27 +1618,27 @@
                 </div>
                 
                 <div class="dashboard-chart editable" id="dashboardChart">
-                    <h3 style="margin-bottom: 1.5rem; color: var(--primary-dark);">Grafik Produktivitas</h3>
-                    <div style="height: 300px; background-color: #f8f9fa; border-radius: 8px; display: flex; align-items: flex-end; padding: 1rem;">
+                    <h3 style="margin-bottom: 20px; color: var(--primary);">Grafik Produktivitas</h3>
+                    <div style="height: 300px; background-color: #f8fafc; border-radius: 8px; display: flex; align-items: flex-end; padding: 20px; border: 1px solid var(--light-gray);">
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 200px; width: 40px; background-color: var(--primary); margin: 0 0.5rem;"></div>
-                            <div style="margin-top: 0.5rem;">Jan</div>
+                            <div style="height: 200px; width: 40px; background-color: var(--primary); margin: 0 10px; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 10px; color: var(--gray); font-weight: 500;">Jan</div>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 180px; width: 40px; background-color: var(--primary); margin: 0 0.5rem;"></div>
-                            <div style="margin-top: 0.5rem;">Feb</div>
+                            <div style="height: 180px; width: 40px; background-color: var(--primary); margin: 0 10px; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 10px; color: var(--gray); font-weight: 500;">Feb</div>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 220px; width: 40px; background-color: var(--primary); margin: 0 0.5rem;"></div>
-                            <div style="margin-top: 0.5rem;">Mar</div>
+                            <div style="height: 220px; width: 40px; background-color: var(--primary); margin: 0 10px; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 10px; color: var(--gray); font-weight: 500;">Mar</div>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 250px; width: 40px; background-color: var(--primary); margin: 0 0.5rem;"></div>
-                            <div style="margin-top: 0.5rem;">Apr</div>
+                            <div style="height: 250px; width: 40px; background-color: var(--primary); margin: 0 10px; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 10px; color: var(--gray); font-weight: 500;">Apr</div>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 300px; width: 40px; background-color: var(--primary); margin: 0 0.5rem;"></div>
-                            <div style="margin-top: 0.5rem;">Mei</div>
+                            <div style="height: 300px; width: 40px; background-color: var(--primary); margin: 0 10px; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 10px; color: var(--gray); font-weight: 500;">Mei</div>
                         </div>
                     </div>
                     <button class="edit-btn" data-edit="dashboardChart">Edit</button>
@@ -1506,8 +1647,8 @@
             
             <!-- Chatroom Page -->
             <div class="page" id="chatroomPage">
-                <h2 style="margin-bottom: 2rem; color: var(--primary-dark); text-align: center;">Chat Room</h2>
-                <p style="text-align: center; margin-bottom: 3rem; color: var(--gray); max-width: 800px; margin-left: auto; margin-right: auto;">
+                <h2 style="margin-bottom: 30px; color: var(--primary); font-size: 2rem; text-align: center;">Chat Room</h2>
+                <p style="text-align: center; margin-bottom: 40px; color: var(--gray); max-width: 800px; margin-left: auto; margin-right: auto; font-size: 1.1rem;">
                     Feel free to share your thoughts, suggestions, questions, or anything else!
                 </p>
                 
@@ -1558,7 +1699,7 @@
             
             <!-- Contact Page -->
             <div class="page" id="contactPage">
-                <h2 style="margin-bottom: 2rem; color: var(--primary-dark);">Hubungi Saya</h2>
+                <h2 style="margin-bottom: 30px; color: var(--primary); font-size: 2rem;">Hubungi Saya</h2>
                 <div class="contact-content">
                     <div class="contact-info">
                         <div class="contact-card editable" id="contactEmail">
@@ -1599,7 +1740,7 @@
                     </div>
                     
                     <div class="contact-form">
-                        <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Kirim Pesan</h3>
+                        <h3>Kirim Pesan</h3>
                         <form id="contactForm">
                             <div class="form-group">
                                 <label for="name">Nama</label>
@@ -1730,7 +1871,7 @@
                             title: "Health, Safety, Environment and Quality (HSEQ)",
                             date: "Sertifikasi Profesional",
                             description: "Sertifikasi profesional dalam bidang kesehatan, keselamatan, lingkungan, dan kualitas untuk industri manufaktur",
-                            image: null // null artinya belum ada foto
+                            image: null
                         },
                         {
                             id: "achievement2",
@@ -1749,19 +1890,31 @@
                             id: "project1",
                             title: "Sistem Pendataan Molding",
                             description: "Membuat sistem pendataan molding beserta jangka waktu pakai (lifetime usage) untuk mendukung preventive maintenance dan mengurangi downtime produksi",
-                            icon: "fas fa-drafting-compass"
+                            stats: [
+                                { value: "100%", label: "Data Manual" },
+                                { value: "↓ 40%", label: "Downtime", type: "improvement" },
+                                { value: "15%", label: "Setup Time ↓" }
+                            ]
                         },
                         {
                             id: "project2",
                             title: "Optimasi Produksi WIP",
                             description: "Meningkatkan productivity penggunaan bahan WIP dari 2 Ton menjadi 724,5 kg dengan monitoring Stock WIP dan planning item Produksi",
-                            icon: "fas fa-chart-line"
+                            stats: [
+                                { value: "2 Ton", label: "Sebelum" },
+                                { value: "↓ 63.8%", label: "Pengurangan", type: "improvement" },
+                                { value: "724.5 kg", label: "Sesudah" }
+                            ]
                         },
                         {
                             id: "project3",
                             title: "Reduksi Reject Mesin Spiral",
                             description: "Menurunkan reject Div. Produksi pada mesin spiral dari 8% menjadi 3% dengan cara melakukan TFT (Task force Team)",
-                            icon: "fas fa-cogs"
+                            stats: [
+                                { value: "8%", label: "Sebelum" },
+                                { value: "↓ 62.5%", label: "Penurunan", type: "reduction" },
+                                { value: "3%", label: "Sesudah" }
+                            ]
                         }
                     ]
                 },
@@ -1794,7 +1947,7 @@
         let isAdminLoggedIn = false;
         let isEditMode = false;
         let currentPage = "home";
-        let currentAchievementEditing = null; // Untuk menyimpan ID achievement yang sedang di-upload fotonya
+        let currentAchievementEditing = null;
 
         // DOM Ready
         document.addEventListener('DOMContentLoaded', function() {
@@ -1835,7 +1988,6 @@
             if (savedData) {
                 try {
                     const data = JSON.parse(savedData);
-                    // Merge dengan data default
                     Object.assign(appData, data);
                 } catch (e) {
                     console.error("Error loading data from localStorage:", e);
@@ -1909,9 +2061,7 @@
 
         // Setup responsive behavior
         function setupResponsiveBehavior() {
-            // Handle window resize
             window.addEventListener('resize', function() {
-                // Jika ukuran layar kembali ke desktop, pastikan sidebar terbuka
                 if (window.innerWidth > 768) {
                     document.getElementById('sidebar').classList.add('active');
                     document.getElementById('mobileMenuToggle').style.display = 'none';
@@ -1942,17 +2092,14 @@
             const removeImageBtn = document.getElementById('removeImageBtn');
             const modal = document.getElementById('imageUploadModal');
             
-            // Handle file input change
             imageInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
-                    // Validasi ukuran file (maks 5MB)
                     if (file.size > 5 * 1024 * 1024) {
                         showNotification('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
                         return;
                     }
                     
-                    // Validasi tipe file
                     if (!file.type.match('image.*')) {
                         showNotification('Hanya file gambar yang diperbolehkan.', 'error');
                         return;
@@ -1968,17 +2115,12 @@
                 }
             });
             
-            // Save image button
             saveImageBtn.addEventListener('click', function() {
                 if (currentAchievementEditing && previewImage.src) {
-                    // Simpan gambar ke data achievement
                     const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementEditing);
                     if (achievement) {
                         achievement.image = previewImage.src;
-                        
-                        // Update tampilan achievement
                         renderAchievementsPage();
-                        
                         showNotification('Foto berhasil diupload!', 'success');
                         modal.classList.remove('active');
                         
@@ -1992,7 +2134,6 @@
                 }
             });
             
-            // Cancel button
             cancelImageBtn.addEventListener('click', function() {
                 modal.classList.remove('active');
                 
@@ -2004,17 +2145,12 @@
                 currentAchievementEditing = null;
             });
             
-            // Remove image button
             removeImageBtn.addEventListener('click', function() {
                 if (currentAchievementEditing) {
-                    // Hapus gambar dari data achievement
                     const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementEditing);
                     if (achievement) {
                         achievement.image = null;
-                        
-                        // Update tampilan achievement
                         renderAchievementsPage();
-                        
                         showNotification('Foto berhasil dihapus!', 'success');
                         modal.classList.remove('active');
                         
@@ -2028,7 +2164,6 @@
                 }
             });
             
-            // Close modal when clicking outside
             modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
                     modal.classList.remove('active');
@@ -2045,25 +2180,21 @@
 
         // Change page
         function changePage(pageId) {
-            // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
             
-            // Show selected page
             const pageElement = document.getElementById(pageId + 'Page');
             if (pageElement) {
                 pageElement.classList.add('active');
                 currentPage = pageId;
                 
-                // Update page title
                 const pageData = appData.pages[pageId];
                 if (pageData) {
                     document.getElementById('currentPageTitle').textContent = pageData.title;
                     document.getElementById('currentPageDesc').textContent = pageData.description;
                 }
                 
-                // Render page content
                 renderPage(pageId);
             }
         }
@@ -2099,13 +2230,11 @@
         function renderHomePage() {
             const pageData = appData.pages.home;
             
-            // Update text elements
             document.getElementById('homeBadge').textContent = pageData.badge;
             document.getElementById('homeTitle').textContent = pageData.mainTitle;
             document.getElementById('homeSubtitle').textContent = pageData.subtitle;
             document.getElementById('homeDescription').textContent = pageData.descriptionText;
             
-            // Update stats
             pageData.stats.forEach((stat, index) => {
                 const statNum = document.getElementById(`stat${index + 1}Number`);
                 const statLabel = document.getElementById(`stat${index + 1}Label`);
@@ -2119,7 +2248,6 @@
         function renderAboutPage() {
             const pageData = appData.pages.about;
             
-            // Update about text
             pageData.sections.forEach(section => {
                 const element = document.getElementById(section.id);
                 if (element) {
@@ -2127,10 +2255,7 @@
                 }
             });
             
-            // Update skills
             renderSkills();
-            
-            // Update experiences
             renderExperiences();
         }
 
@@ -2138,7 +2263,6 @@
         function renderSkills() {
             const pageData = appData.pages.about;
             
-            // Technical skills
             const techSkillsContainer = document.querySelector('#technicalSkills .skill-items');
             if (techSkillsContainer) {
                 techSkillsContainer.innerHTML = pageData.skills.technical.map(skill => 
@@ -2146,7 +2270,6 @@
                 ).join('');
             }
             
-            // Personal skills
             const personalSkillsContainer = document.querySelector('#personalSkills .skill-items');
             if (personalSkillsContainer) {
                 personalSkillsContainer.innerHTML = pageData.skills.personal.map(skill => 
@@ -2162,18 +2285,15 @@
             
             if (!timeline) return;
             
-            // Clear existing experiences except the first two (default)
             const existingExperiences = timeline.querySelectorAll('.experience-item');
             for (let i = 2; i < existingExperiences.length; i++) {
                 existingExperiences[i].remove();
             }
             
-            // Render experiences
             pageData.experiences.forEach((exp, index) => {
                 let expElement = document.getElementById(exp.id);
                 
                 if (!expElement && index >= 2) {
-                    // Create new experience element
                     expElement = document.createElement('div');
                     expElement.className = 'experience-item editable';
                     expElement.id = exp.id;
@@ -2190,7 +2310,6 @@
                         <button class="edit-btn" data-edit="${exp.id}">Edit</button>
                     `;
                     
-                    // Insert before the add button
                     const addButton = timeline.querySelector('[data-add="experience"]');
                     if (addButton) {
                         timeline.insertBefore(expElement, addButton);
@@ -2198,7 +2317,6 @@
                         timeline.appendChild(expElement);
                     }
                 } else if (expElement) {
-                    // Update existing experience
                     expElement.querySelector('.experience-title').textContent = exp.title;
                     expElement.querySelector('.experience-date').textContent = exp.date;
                     expElement.querySelector('.experience-content ul').innerHTML = 
@@ -2214,16 +2332,13 @@
             
             if (!container) return;
             
-            // Clear container
             container.innerHTML = '';
             
-            // Render achievements
             pageData.items.forEach((item) => {
                 const achievementElement = document.createElement('div');
                 achievementElement.className = 'achievement-card editable';
                 achievementElement.id = item.id;
                 
-                // Buat HTML untuk gambar jika ada
                 let imageHTML = '';
                 if (item.image) {
                     imageHTML = `
@@ -2254,7 +2369,6 @@
                 container.appendChild(achievementElement);
             });
             
-            // Setup event listeners untuk tombol upload foto
             if (isEditMode) {
                 document.querySelectorAll('.upload-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
@@ -2263,7 +2377,6 @@
                     });
                 });
                 
-                // Setup event listeners untuk tombol edit
                 document.querySelectorAll('.edit-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const elementId = this.getAttribute('data-edit');
@@ -2271,7 +2384,6 @@
                     });
                 });
                 
-                // Tambah tombol add achievement
                 const addButton = document.createElement('button');
                 addButton.className = 'add-btn';
                 addButton.setAttribute('data-add', 'achievement');
@@ -2288,12 +2400,10 @@
             const modalTitle = document.getElementById('modalTitle');
             const removeImageBtn = document.getElementById('removeImageBtn');
             
-            // Set modal title
             const achievement = appData.pages.achievements.items.find(a => a.id === achievementId);
             if (achievement) {
                 modalTitle.textContent = `Upload Foto untuk: ${achievement.title}`;
                 
-                // Tampilkan tombol hapus jika sudah ada foto
                 if (achievement.image) {
                     removeImageBtn.style.display = 'inline-block';
                 } else {
@@ -2301,11 +2411,10 @@
                 }
             }
             
-            // Show modal
             modal.classList.add('active');
         }
 
-        // Edit achievement - TANPA MENGEDIT FOTO (foto diedit via upload terpisah)
+        // Edit achievement
         function editAchievement(achievementId) {
             const achievement = appData.pages.achievements.items.find(item => item.id === achievementId);
             if (!achievement) return;
@@ -2352,6 +2461,132 @@
             showNotification('Pencapaian berhasil ditambahkan!', 'success');
         }
 
+        // Render projects page
+        function renderProjectsPage() {
+            const pageData = appData.pages.projects;
+            const container = document.getElementById('projectsContainer');
+            
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            pageData.items.forEach((item) => {
+                const projectElement = document.createElement('div');
+                projectElement.className = 'project-card editable';
+                projectElement.id = item.id;
+                
+                let statsHTML = '';
+                if (item.stats) {
+                    statsHTML = `
+                        <div class="project-stats">
+                            ${item.stats.map(stat => `
+                                <div class="stat">
+                                    <span class="stat-value ${stat.type || ''}">${stat.value}</span>
+                                    <span class="stat-label">${stat.label}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+                
+                projectElement.innerHTML = `
+                    <h3><i class="fas fa-project-diagram"></i> ${item.title}</h3>
+                    <p>${item.description}</p>
+                    ${statsHTML}
+                    <button class="edit-btn" data-edit="${item.id}">Edit</button>
+                `;
+                
+                container.appendChild(projectElement);
+            });
+            
+            if (isEditMode) {
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const elementId = this.getAttribute('data-edit');
+                        editProject(elementId);
+                    });
+                });
+                
+                const addButton = document.createElement('button');
+                addButton.className = 'add-btn';
+                addButton.setAttribute('data-add', 'project');
+                addButton.textContent = '+ Tambah Proyek';
+                addButton.addEventListener('click', addProject);
+                container.appendChild(addButton);
+            }
+        }
+
+        // Edit project
+        function editProject(projectId) {
+            const project = appData.pages.projects.items.find(item => item.id === projectId);
+            if (!project) return;
+            
+            const newTitle = prompt('Edit judul proyek:', project.title);
+            if (newTitle === null) return;
+            
+            const newDescription = prompt('Edit deskripsi:', project.description);
+            if (newDescription === null) return;
+            
+            project.title = newTitle;
+            project.description = newDescription;
+            
+            renderProjectsPage();
+            showNotification('Proyek berhasil diperbarui!', 'success');
+        }
+
+        // Add project
+        function addProject() {
+            const newTitle = prompt('Masukkan judul proyek baru:');
+            if (!newTitle) return;
+            
+            const newDescription = prompt('Masukkan deskripsi:');
+            if (!newDescription) return;
+            
+            const newId = 'project' + (appData.pages.projects.items.length + 1);
+            const newProject = {
+                id: newId,
+                title: newTitle,
+                description: newDescription,
+                stats: [
+                    { value: "0%", label: "Sebelum" },
+                    { value: "↓ 0%", label: "Perubahan", type: "improvement" },
+                    { value: "0%", label: "Sesudah" }
+                ]
+            };
+            
+            appData.pages.projects.items.push(newProject);
+            renderProjectsPage();
+            showNotification('Proyek berhasil ditambahkan!', 'success');
+        }
+
+        // Render dashboard page
+        function renderDashboardPage() {
+            const pageData = appData.pages.dashboard;
+            
+            pageData.stats.forEach((stat) => {
+                const statElement = document.getElementById(stat.id);
+                if (statElement) {
+                    const numberElement = statElement.querySelector('.dashboard-number');
+                    const labelElement = statElement.querySelector('.dashboard-label');
+                    
+                    if (numberElement) numberElement.textContent = stat.number;
+                    if (labelElement) labelElement.textContent = stat.label;
+                }
+            });
+        }
+
+        // Render contact page
+        function renderContactPage() {
+            const pageData = appData.pages.contact;
+            
+            pageData.items.forEach(item => {
+                const element = document.getElementById(item.id);
+                if (element) {
+                    element.querySelector('p').textContent = item.value;
+                }
+            });
+        }
+
         // Setup admin panel
         function setupAdminPanel() {
             const adminToggle = document.getElementById('adminToggle');
@@ -2361,20 +2596,17 @@
             const toggleEditMode = document.getElementById('toggleEditMode');
             const saveAllData = document.getElementById('saveAllData');
             
-            // Toggle admin panel
             adminToggle.addEventListener('click', function(e) {
                 e.stopPropagation();
                 adminPanel.classList.toggle('active');
             });
             
-            // Close admin panel when clicking outside
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('.admin-panel') && !e.target.closest('.admin-toggle')) {
                     adminPanel.classList.remove('active');
                 }
             });
             
-            // Admin login
             adminLogin.addEventListener('click', function() {
                 const password = document.getElementById('adminPassword').value;
                 
@@ -2386,7 +2618,6 @@
                     updateAdminUI();
                     adminPanel.classList.remove('active');
                     
-                    // Di mobile, tutup sidebar setelah login
                     if (window.innerWidth <= 768) {
                         document.getElementById('sidebar').classList.remove('active');
                         document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
@@ -2396,7 +2627,6 @@
                 }
             });
             
-            // Admin logout
             adminLogout.addEventListener('click', function() {
                 isAdminLoggedIn = false;
                 isEditMode = false;
@@ -2407,7 +2637,6 @@
                 updateAdminUI();
             });
             
-            // Toggle edit mode
             toggleEditMode.addEventListener('click', function() {
                 if (!isAdminLoggedIn) {
                     showNotification('Silakan login sebagai admin terlebih dahulu', 'error');
@@ -2422,14 +2651,15 @@
                 if (isEditMode) {
                     setupEditMode();
                 } else {
-                    // Saat edit mode dinonaktifkan, render ulang halaman achievements
                     if (currentPage === 'achievements') {
                         renderAchievementsPage();
+                    }
+                    if (currentPage === 'projects') {
+                        renderProjectsPage();
                     }
                 }
             });
             
-            // Save all data
             saveAllData.addEventListener('click', function() {
                 if (!isAdminLoggedIn) {
                     showNotification('Silakan login sebagai admin terlebih dahulu', 'error');
@@ -2442,14 +2672,12 @@
 
         // Setup edit mode
         function setupEditMode() {
-            // Setup edit buttons
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const elementId = this.getAttribute('data-edit');
                     const element = document.getElementById(elementId);
                     
                     if (element) {
-                        // Determine element type and content
                         if (element.classList.contains('skill-category')) {
                             editSkills(elementId);
                         } else if (element.classList.contains('experience-item')) {
@@ -2466,14 +2694,12 @@
                         } else if (element.classList.contains('contact-card')) {
                             editContact(elementId);
                         } else {
-                            // Default text edit
                             editText(elementId);
                         }
                     }
                 });
             });
             
-            // Setup add buttons
             document.querySelectorAll('.add-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const type = this.getAttribute('data-add');
@@ -2508,9 +2734,7 @@
             if (newText !== null && newText !== currentText) {
                 element.textContent = newText;
                 
-                // Update appData based on element type
                 if (elementId.startsWith('stat')) {
-                    // Update home stats
                     const statIndex = parseInt(elementId.replace('stat', '').replace('Number', '').replace('Label', '')) - 1;
                     if (elementId.includes('Number')) {
                         appData.pages.home.stats[statIndex].number = newText;
@@ -2626,45 +2850,6 @@
             showNotification('Pengalaman berhasil ditambahkan!', 'success');
         }
 
-        // Edit project
-        function editProject(projectId) {
-            const project = appData.pages.projects.items.find(item => item.id === projectId);
-            if (!project) return;
-            
-            const newTitle = prompt('Edit judul proyek:', project.title);
-            if (newTitle === null) return;
-            
-            const newDescription = prompt('Edit deskripsi:', project.description);
-            if (newDescription === null) return;
-            
-            project.title = newTitle;
-            project.description = newDescription;
-            
-            renderProjectsPage();
-            showNotification('Proyek berhasil diperbarui!', 'success');
-        }
-
-        // Add project
-        function addProject() {
-            const newTitle = prompt('Masukkan judul proyek baru:');
-            if (!newTitle) return;
-            
-            const newDescription = prompt('Masukkan deskripsi:');
-            if (!newDescription) return;
-            
-            const newId = 'project' + (appData.pages.projects.items.length + 1);
-            const newProject = {
-                id: newId,
-                title: newTitle,
-                description: newDescription,
-                icon: 'fas fa-project-diagram'
-            };
-            
-            appData.pages.projects.items.push(newProject);
-            renderProjectsPage();
-            showNotification('Proyek berhasil ditambahkan!', 'success');
-        }
-
         // Edit stat
         function editStat(statId) {
             const element = document.getElementById(statId);
@@ -2694,7 +2879,6 @@
             numberElement.textContent = newNumber;
             labelElement.textContent = newLabel;
             
-            // Update appData
             if (statId.startsWith('dashboardStat')) {
                 const stat = appData.pages.dashboard.stats.find(s => s.id === statId);
                 if (stat) {
@@ -2771,10 +2955,8 @@
                 chatMessages.appendChild(messageDiv);
                 chatInput.value = '';
                 
-                // Auto scroll to bottom
                 chatMessages.scrollTop = chatMessages.scrollHeight;
                 
-                // Simulate a reply after 1 second
                 setTimeout(() => {
                     const replies = [
                         "Thanks for your message!",
@@ -2815,7 +2997,6 @@
                     
                     alert(`Thank you ${name}! Your message has been sent successfully. I'll get back to you at ${email} soon.`);
                     
-                    // Reset form
                     contactForm.reset();
                 });
             }
@@ -2827,7 +3008,7 @@
             
             if (isAdminLoggedIn) {
                 adminToggle.innerHTML = '<i class="fas fa-user-check"></i> Admin Mode';
-                adminToggle.style.backgroundColor = '#00a86b';
+                adminToggle.style.backgroundColor = '#10b981';
             } else {
                 adminToggle.innerHTML = '<i class="fas fa-user-lock"></i> Login Admin';
                 adminToggle.style.backgroundColor = 'var(--secondary)';
@@ -2839,20 +3020,18 @@
             const notification = document.getElementById('notification');
             notification.textContent = message;
             
-            // Set color based on type
             if (type === 'success') {
-                notification.style.backgroundColor = '#00a86b';
+                notification.style.backgroundColor = '#10b981';
             } else if (type === 'error') {
-                notification.style.backgroundColor = '#f44336';
+                notification.style.backgroundColor = '#ef4444';
             } else if (type === 'warning') {
-                notification.style.backgroundColor = '#ff9800';
+                notification.style.backgroundColor = '#f59e0b';
             } else {
-                notification.style.backgroundColor = '#2196f3';
+                notification.style.backgroundColor = '#3b82f6';
             }
             
             notification.style.display = 'block';
             
-            // Hide after 3 seconds
             setTimeout(() => {
                 notification.style.display = 'none';
             }, 3000);
