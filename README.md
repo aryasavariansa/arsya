@@ -38,7 +38,7 @@
             min-height: 100vh;
         }
 
-        /* Sidebar Navigation */
+        /* Sidebar Navigation - TERKUNCI */
         .sidebar {
             width: var(--sidebar-width);
             background-color: var(--dark);
@@ -376,7 +376,7 @@
             font-size: 0.9rem;
         }
 
-        /* Achievement Page */
+        /* Achievement Page - DENGAN FOTO */
         .achievements-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -390,10 +390,36 @@
             box-shadow: var(--box-shadow);
             transition: var(--transition);
             position: relative;
+            overflow: hidden;
         }
 
         .achievement-card:hover {
             transform: translateY(-5px);
+        }
+
+        .achievement-image-container {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .achievement-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .achievement-image-placeholder {
+            font-size: 3rem;
+            color: var(--gray);
         }
 
         .achievement-card h3 {
@@ -407,6 +433,25 @@
             font-weight: 500;
             margin-bottom: 1rem;
             font-size: 0.9rem;
+        }
+
+        .upload-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(45, 90, 160, 0.8);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: none;
+            z-index: 10;
+        }
+
+        .edit-mode .upload-btn {
+            display: block;
         }
 
         /* Project Page */
@@ -708,7 +753,83 @@
             }
         }
 
-        /* Responsive Styles */
+        /* Modal untuk Upload Foto */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--box-shadow);
+        }
+
+        .modal-title {
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .modal-btn.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background-color: var(--light-gray);
+            color: var(--dark);
+        }
+
+        /* Responsive Styles - SIDEBAR TERKUNCI DI SEMUA LAYAR */
         @media (max-width: 1200px) {
             :root {
                 --sidebar-width: 25%;
@@ -732,44 +853,60 @@
         }
 
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-            
+            /* Sidebar tetap fixed di mobile */
             .sidebar {
                 width: 100%;
                 height: auto;
-                position: relative;
+                position: fixed; /* Tetap terkunci */
                 padding: 1rem 0;
+                top: 0;
+                z-index: 1000;
+                max-height: 80px; /* Hanya tampilkan header saja */
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            .sidebar.expanded {
+                max-height: 100vh; /* Tampilkan penuh saat di-expand */
+                overflow-y: auto;
+            }
+            
+            .sidebar-toggle {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
             }
             
             .main-content {
                 width: 100%;
                 margin-left: 0;
+                margin-top: 80px; /* Beri ruang untuk sidebar yang fixed */
             }
             
             .nav-menu {
-                display: flex;
-                overflow-x: auto;
-                padding: 0 1rem;
+                display: none;
             }
             
-            .nav-menu li {
-                margin-bottom: 0;
-                flex-shrink: 0;
-            }
-            
-            .nav-menu li a {
-                padding: 0.8rem 1rem;
+            .sidebar.expanded .nav-menu {
+                display: block;
             }
             
             .admin-section {
                 display: none;
             }
             
-            .profile-mini {
-                justify-content: center;
-                text-align: center;
+            .sidebar.expanded .admin-section {
+                display: block;
+            }
+            
+            .content-body {
+                padding: 1rem;
             }
         }
 
@@ -799,8 +936,12 @@
     </style>
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar">
+    <!-- Sidebar Navigation - TERKUNCI -->
+    <aside class="sidebar" id="sidebar">
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
         <div class="sidebar-header">
             <div class="logo">
                 <h1>Arya<span>Savariansah</span></h1>
@@ -1006,24 +1147,12 @@
                 </div>
             </div>
             
-            <!-- Achievements Page -->
+            <!-- Achievements Page - DENGAN UPLOAD FOTO -->
             <div class="page" id="achievementsPage">
                 <h2 style="margin-bottom: 2rem; color: var(--primary-dark);">Pencapaian & Sertifikat</h2>
                 
                 <div class="achievements-grid" id="achievementsContainer">
-                    <div class="achievement-card editable" id="achievement1">
-                        <h3>Health, Safety, Environment and Quality (HSEQ)</h3>
-                        <div class="date">Sertifikasi Profesional</div>
-                        <p>Sertifikasi profesional dalam bidang kesehatan, keselamatan, lingkungan, dan kualitas untuk industri manufaktur</p>
-                        <button class="edit-btn" data-edit="achievement1">Edit</button>
-                    </div>
-                    
-                    <div class="achievement-card editable" id="achievement2">
-                        <h3>Introduction to Information Security Course</h3>
-                        <div class="date">Sertifikasi Keamanan Informasi</div>
-                        <p>Sertifikasi dasar keamanan informasi untuk memahami prinsip-prinsip keamanan data dalam sistem produksi</p>
-                        <button class="edit-btn" data-edit="achievement2">Edit</button>
-                    </div>
+                    <!-- Achievement cards akan di-render oleh JavaScript -->
                 </div>
                 <button class="add-btn" data-add="achievement">+ Tambah Pencapaian</button>
             </div>
@@ -1253,11 +1382,29 @@
         </div>
     </main>
     
+    <!-- Modal untuk Upload Foto Achievement -->
+    <div class="modal" id="imageUploadModal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modalTitle">Upload Foto Achievement</h3>
+            <div class="form-group">
+                <input type="file" id="imageInput" accept="image/*" class="admin-input">
+            </div>
+            <div class="image-preview" id="imagePreview">
+                <img id="previewImage" src="" alt="Preview">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="saveImageBtn">Simpan Foto</button>
+                <button class="modal-btn secondary" id="cancelImageBtn">Batal</button>
+                <button class="modal-btn secondary" id="removeImageBtn" style="display: none;">Hapus Foto</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Notification -->
     <div class="notification" id="notification"></div>
 
     <script>
-        // Data aplikasi
+        // Data aplikasi - DENGAN FITUR FOTO UNTUK ACHIEVEMENTS
         const appData = {
             user: {
                 name: "Arya Savariansah",
@@ -1340,13 +1487,15 @@
                             id: "achievement1",
                             title: "Health, Safety, Environment and Quality (HSEQ)",
                             date: "Sertifikasi Profesional",
-                            description: "Sertifikasi profesional dalam bidang kesehatan, keselamatan, lingkungan, dan kualitas untuk industri manufaktur"
+                            description: "Sertifikasi profesional dalam bidang kesehatan, keselamatan, lingkungan, dan kualitas untuk industri manufaktur",
+                            image: null // null artinya belum ada foto
                         },
                         {
                             id: "achievement2",
                             title: "Introduction to Information Security Course",
                             date: "Sertifikasi Keamanan Informasi",
-                            description: "Sertifikasi dasar keamanan informasi untuk memahami prinsip-prinsip keamanan data dalam sistem produksi"
+                            description: "Sertifikasi dasar keamanan informasi untuk memahami prinsip-prinsip keamanan data dalam sistem produksi",
+                            image: null
                         }
                     ]
                 },
@@ -1403,6 +1552,7 @@
         let isAdminLoggedIn = false;
         let isEditMode = false;
         let currentPage = "home";
+        let currentAchievementEditing = null; // Untuk menyimpan ID achievement yang sedang di-upload fotonya
 
         // DOM Ready
         document.addEventListener('DOMContentLoaded', function() {
@@ -1420,6 +1570,12 @@
             
             // Setup contact form
             setupContactForm();
+            
+            // Setup sidebar toggle untuk mobile
+            setupSidebarToggle();
+            
+            // Setup image upload modal
+            setupImageUploadModal();
             
             // Render initial page
             renderPage(currentPage);
@@ -1465,7 +1621,145 @@
                     
                     // Change page
                     changePage(pageId);
+                    
+                    // Di mobile, tutup sidebar setelah memilih halaman
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebar').classList.remove('expanded');
+                    }
                 });
+            });
+        }
+
+        // Setup sidebar toggle untuk mobile
+        function setupSidebarToggle() {
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('expanded');
+                    const icon = this.querySelector('i');
+                    if (sidebar.classList.contains('expanded')) {
+                        icon.className = 'fas fa-times';
+                    } else {
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+            }
+            
+            // Tutup sidebar saat klik di luar pada mobile
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    const sidebar = document.getElementById('sidebar');
+                    const sidebarToggle = document.getElementById('sidebarToggle');
+                    
+                    if (sidebar && sidebarToggle && 
+                        !sidebar.contains(e.target) && 
+                        !sidebarToggle.contains(e.target) &&
+                        sidebar.classList.contains('expanded')) {
+                        sidebar.classList.remove('expanded');
+                        sidebarToggle.querySelector('i').className = 'fas fa-bars';
+                    }
+                }
+            });
+        }
+
+        // Setup image upload modal
+        function setupImageUploadModal() {
+            const imageInput = document.getElementById('imageInput');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImage = document.getElementById('previewImage');
+            const saveImageBtn = document.getElementById('saveImageBtn');
+            const cancelImageBtn = document.getElementById('cancelImageBtn');
+            const removeImageBtn = document.getElementById('removeImageBtn');
+            const modal = document.getElementById('imageUploadModal');
+            
+            // Handle file input change
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        previewImage.src = event.target.result;
+                        imagePreview.style.display = 'block';
+                        removeImageBtn.style.display = 'inline-block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Save image button
+            saveImageBtn.addEventListener('click', function() {
+                if (currentAchievementEditing && previewImage.src) {
+                    // Simpan gambar ke data achievement
+                    const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementEditing);
+                    if (achievement) {
+                        achievement.image = previewImage.src;
+                        
+                        // Update tampilan achievement
+                        renderAchievementsPage();
+                        
+                        showNotification('Foto berhasil diupload!', 'success');
+                        modal.classList.remove('active');
+                        
+                        // Reset modal
+                        imageInput.value = '';
+                        imagePreview.style.display = 'none';
+                        previewImage.src = '';
+                        removeImageBtn.style.display = 'none';
+                        currentAchievementEditing = null;
+                    }
+                }
+            });
+            
+            // Cancel button
+            cancelImageBtn.addEventListener('click', function() {
+                modal.classList.remove('active');
+                
+                // Reset modal
+                imageInput.value = '';
+                imagePreview.style.display = 'none';
+                previewImage.src = '';
+                removeImageBtn.style.display = 'none';
+                currentAchievementEditing = null;
+            });
+            
+            // Remove image button
+            removeImageBtn.addEventListener('click', function() {
+                if (currentAchievementEditing) {
+                    // Hapus gambar dari data achievement
+                    const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementEditing);
+                    if (achievement) {
+                        achievement.image = null;
+                        
+                        // Update tampilan achievement
+                        renderAchievementsPage();
+                        
+                        showNotification('Foto berhasil dihapus!', 'success');
+                        modal.classList.remove('active');
+                        
+                        // Reset modal
+                        imageInput.value = '';
+                        imagePreview.style.display = 'none';
+                        previewImage.src = '';
+                        removeImageBtn.style.display = 'none';
+                        currentAchievementEditing = null;
+                    }
+                }
+            });
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    
+                    // Reset modal
+                    imageInput.value = '';
+                    imagePreview.style.display = 'none';
+                    previewImage.src = '';
+                    removeImageBtn.style.display = 'none';
+                    currentAchievementEditing = null;
+                }
             });
         }
 
@@ -1633,7 +1927,7 @@
             });
         }
 
-        // Render achievements page
+        // Render achievements page - DENGAN FOTO
         function renderAchievementsPage() {
             const pageData = appData.pages.achievements;
             const container = document.getElementById('achievementsContainer');
@@ -1641,41 +1935,86 @@
             if (!container) return;
             
             // Clear container
-            const existingAchievements = container.querySelectorAll('.achievement-card');
-            for (let i = 2; i < existingAchievements.length; i++) {
-                existingAchievements[i].remove();
-            }
+            container.innerHTML = '';
             
             // Render achievements
-            pageData.items.forEach((item, index) => {
-                let achievementElement = document.getElementById(item.id);
+            pageData.items.forEach((item) => {
+                const achievementElement = document.createElement('div');
+                achievementElement.className = 'achievement-card editable';
+                achievementElement.id = item.id;
                 
-                if (!achievementElement && index >= 2) {
-                    // Create new achievement element
-                    achievementElement = document.createElement('div');
-                    achievementElement.className = 'achievement-card editable';
-                    achievementElement.id = item.id;
-                    achievementElement.innerHTML = `
-                        <h3>${item.title}</h3>
-                        <div class="date">${item.date}</div>
-                        <p>${item.description}</p>
-                        <button class="edit-btn" data-edit="${item.id}">Edit</button>
+                // Buat HTML untuk gambar jika ada
+                let imageHTML = '';
+                if (item.image) {
+                    imageHTML = `
+                        <div class="achievement-image-container">
+                            <img src="${item.image}" alt="${item.title}" class="achievement-image">
+                            <button class="upload-btn" data-upload="${item.id}">Ganti Foto</button>
+                        </div>
                     `;
-                    
-                    // Insert before the add button
-                    const addButton = document.querySelector('[data-add="achievement"]');
-                    if (addButton) {
-                        container.insertBefore(achievementElement, addButton);
-                    } else {
-                        container.appendChild(achievementElement);
-                    }
-                } else if (achievementElement) {
-                    // Update existing achievement
-                    achievementElement.querySelector('h3').textContent = item.title;
-                    achievementElement.querySelector('.date').textContent = item.date;
-                    achievementElement.querySelector('p').textContent = item.description;
+                } else {
+                    imageHTML = `
+                        <div class="achievement-image-container">
+                            <div class="achievement-image-placeholder">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <button class="upload-btn" data-upload="${item.id}">Upload Foto</button>
+                        </div>
+                    `;
                 }
+                
+                achievementElement.innerHTML = `
+                    ${imageHTML}
+                    <h3>${item.title}</h3>
+                    <div class="date">${item.date}</div>
+                    <p>${item.description}</p>
+                    <button class="edit-btn" data-edit="${item.id}">Edit</button>
+                `;
+                
+                container.appendChild(achievementElement);
             });
+            
+            // Setup event listeners untuk tombol upload foto
+            if (isEditMode) {
+                document.querySelectorAll('.upload-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const achievementId = this.getAttribute('data-upload');
+                        openImageUploadModal(achievementId);
+                    });
+                });
+                
+                // Tambah tombol add achievement
+                const addButton = document.createElement('button');
+                addButton.className = 'add-btn';
+                addButton.setAttribute('data-add', 'achievement');
+                addButton.textContent = '+ Tambah Pencapaian';
+                addButton.addEventListener('click', addAchievement);
+                container.appendChild(addButton);
+            }
+        }
+
+        // Open image upload modal
+        function openImageUploadModal(achievementId) {
+            currentAchievementEditing = achievementId;
+            const modal = document.getElementById('imageUploadModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const removeImageBtn = document.getElementById('removeImageBtn');
+            
+            // Set modal title
+            const achievement = appData.pages.achievements.items.find(a => a.id === achievementId);
+            if (achievement) {
+                modalTitle.textContent = `Upload Foto untuk: ${achievement.title}`;
+                
+                // Tampilkan tombol hapus jika sudah ada foto
+                if (achievement.image) {
+                    removeImageBtn.style.display = 'inline-block';
+                } else {
+                    removeImageBtn.style.display = 'none';
+                }
+            }
+            
+            // Show modal
+            modal.classList.add('active');
         }
 
         // Render projects page
@@ -1819,6 +2158,11 @@
                 
                 if (isEditMode) {
                     setupEditMode();
+                } else {
+                    // Saat edit mode dinonaktifkan, render ulang halaman achievements
+                    if (currentPage === 'achievements') {
+                        renderAchievementsPage();
+                    }
                 }
             });
             
@@ -2019,7 +2363,7 @@
             showNotification('Pengalaman berhasil ditambahkan!', 'success');
         }
 
-        // Edit achievement
+        // Edit achievement - TANPA MENGEDIT FOTO (foto diedit via upload terpisah)
         function editAchievement(achievementId) {
             const achievement = appData.pages.achievements.items.find(item => item.id === achievementId);
             if (!achievement) return;
@@ -2057,7 +2401,8 @@
                 id: newId,
                 title: newTitle,
                 date: newDate,
-                description: newDescription
+                description: newDescription,
+                image: null
             };
             
             appData.pages.achievements.items.push(newAchievement);
