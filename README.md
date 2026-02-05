@@ -694,18 +694,33 @@
             background: linear-gradient(135deg, #1e1e1e 0%, #2e2e2e 100%);
         }
 
+        /* PERBAIKAN CSS UNTUK GAMBAR ACHIEVEMENT */
         .achievement-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none;
+            display: block !important;
+            transition: transform 0.3s ease;
+        }
+
+        .achievement-image-container:hover .achievement-image {
+            transform: scale(1.05);
         }
 
         .achievement-image-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
             font-size: 4rem;
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .achievement-image-placeholder i {
+            display: block;
         }
 
         .achievement-upload-overlay {
@@ -1197,6 +1212,51 @@
             display: block;
         }
 
+        /* Tombol Delete */
+        .delete-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: none;
+            z-index: 5;
+            transition: var(--transition);
+            font-weight: 700;
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+        }
+
+        .admin-mode .delete-btn {
+            display: block;
+        }
+
+        /* Susunan tombol edit dan delete */
+        .editable {
+            position: relative;
+            padding-bottom: 50px;
+        }
+
+        .edit-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .delete-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+
         .add-btn {
             background: var(--gradient-gold);
             color: #000;
@@ -1315,6 +1375,157 @@
 
         .modal-btn.secondary:hover {
             transform: translateY(-3px);
+        }
+
+        /* Modal Zoom untuk Gambar */
+        .zoom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .zoom-modal.active {
+            display: flex;
+        }
+
+        .zoom-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.4s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .zoomed-image {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+            border: 2px solid var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .zoomed-image.loaded {
+            opacity: 1;
+        }
+
+        .close-zoom {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--gradient-gold);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 10000;
+        }
+
+        .close-zoom:hover {
+            transform: scale(1.1);
+        }
+
+        .zoom-caption {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            backdrop-filter: blur(10px);
+            flex-direction: column;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Progress Bar untuk Upload */
+        .upload-progress {
+            width: 80%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-gold);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .upload-percentage {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: none;
         }
 
         /* ===== NOTIFICATION ===== */
@@ -1496,6 +1707,15 @@
             .chatroom-input {
                 flex-direction: column;
             }
+            
+            .zoom-caption {
+                font-size: 1rem;
+            }
+            
+            .close-zoom {
+                top: -40px;
+                right: 10px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1520,6 +1740,15 @@
             .content-body {
                 padding: 15px;
                 min-height: calc(100vh - 110px);
+            }
+            
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .zoom-caption {
+                font-size: 0.9rem;
+                margin-top: 10px;
             }
         }
     </style>
@@ -1725,6 +1954,7 @@
                                     </ul>
                                 </div>
                                 <button class="edit-btn" data-edit="experience1">Edit</button>
+                                <button class="delete-btn" data-delete="experience1" data-type="experience">Hapus</button>
                             </div>
                             
                             <div class="experience-item editable" id="experience2">
@@ -1741,6 +1971,7 @@
                                     </ul>
                                 </div>
                                 <button class="edit-btn" data-edit="experience2">Edit</button>
+                                <button class="delete-btn" data-delete="experience2" data-type="experience">Hapus</button>
                             </div>
                         </div>
                         <button class="add-btn" data-add="experience">+ Tambah Pengalaman</button>
@@ -1782,6 +2013,7 @@
                             </div>
                         </div>
                         <button class="edit-btn" data-edit="project1">Edit</button>
+                        <button class="delete-btn" data-delete="project1" data-type="project">Hapus</button>
                     </div>
                     
                     <div class="project-card editable" id="project2">
@@ -1803,6 +2035,7 @@
                             </div>
                         </div>
                         <button class="edit-btn" data-edit="project2">Edit</button>
+                        <button class="delete-btn" data-delete="project2" data-type="project">Hapus</button>
                     </div>
                     
                     <div class="project-card editable" id="project3">
@@ -1824,6 +2057,7 @@
                             </div>
                         </div>
                         <button class="edit-btn" data-edit="project3">Edit</button>
+                        <button class="delete-btn" data-delete="project3" data-type="project">Hapus</button>
                     </div>
                 </div>
                 <button class="add-btn" data-add="project">+ Tambah Proyek</button>
@@ -2021,6 +2255,27 @@
         </div>
     </div>
     
+    <!-- Modal Zoom untuk Gambar -->
+    <div class="modal zoom-modal" id="zoomModal">
+        <button class="close-zoom" id="closeZoom">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="zoom-content">
+            <img id="zoomedImage" class="zoomed-image" src="" alt="Zoomed Image">
+            <div class="zoom-caption" id="zoomCaption"></div>
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text" id="loadingText">Loading...</div>
+        <div class="upload-progress" id="uploadProgress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="upload-percentage" id="uploadPercentage">0%</div>
+    </div>
+    
     <!-- Notification -->
     <div class="notification" id="notification"></div>
 
@@ -2198,11 +2453,19 @@
             setupContactForm();
             setupMobileMenu();
             setupImageUploadModal();
+            setupZoomModal();
             setupResponsiveBehavior();
             renderPage(currentPage);
             updateAdminUI();
             setupContentHeight();
             renderProfileImage();
+            
+            // Tambahkan event listener untuk gambar profile (zoom)
+            document.getElementById('profileImg').addEventListener('click', function() {
+                if (appData.user.profileImage) {
+                    openZoom(appData.user.profileImage, 'Profile Picture');
+                }
+            });
         });
 
         // Setup content height adjustment
@@ -2347,6 +2610,106 @@
             }
         }
 
+        // Setup modal zoom
+        function setupZoomModal() {
+            const zoomModal = document.getElementById('zoomModal');
+            const closeZoom = document.getElementById('closeZoom');
+            const zoomedImage = document.getElementById('zoomedImage');
+            const zoomCaption = document.getElementById('zoomCaption');
+            
+            // Event listener untuk close zoom
+            closeZoom.addEventListener('click', function() {
+                zoomModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close saat klik di luar gambar
+            zoomModal.addEventListener('click', function(e) {
+                if (e.target === zoomModal) {
+                    zoomModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close dengan ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && zoomModal.classList.contains('active')) {
+                    zoomModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Fungsi universal untuk membuka zoom
+        function openZoom(imageSrc, caption = '') {
+            if (!imageSrc) return;
+            
+            const zoomModal = document.getElementById('zoomModal');
+            const zoomedImage = document.getElementById('zoomedImage');
+            const zoomCaption = document.getElementById('zoomCaption');
+            
+            showLoading('Memuat gambar...');
+            
+            // Preload gambar
+            const img = new Image();
+            img.onload = function() {
+                zoomedImage.src = imageSrc;
+                zoomCaption.textContent = caption;
+                zoomedImage.classList.add('loaded');
+                
+                setTimeout(() => {
+                    zoomModal.classList.add('active');
+                    hideLoading();
+                    document.body.style.overflow = 'hidden';
+                }, 300);
+            };
+            img.onerror = function() {
+                hideLoading();
+                showNotification('Gagal memuat gambar', 'error');
+            };
+            img.src = imageSrc;
+        }
+
+        // Fungsi untuk menampilkan loading
+        function showLoading(text = 'Loading...') {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            
+            loadingText.textContent = text;
+            loadingOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fungsi untuk menyembunyikan loading
+        function hideLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Reset progress bar
+            hideProgress();
+        }
+
+        // Fungsi untuk menampilkan progress bar
+        function showProgress() {
+            document.getElementById('uploadProgress').style.display = 'block';
+            document.getElementById('uploadPercentage').style.display = 'block';
+        }
+
+        // Fungsi untuk menyembunyikan progress bar
+        function hideProgress() {
+            document.getElementById('uploadProgress').style.display = 'none';
+            document.getElementById('uploadPercentage').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('uploadPercentage').textContent = '0%';
+        }
+
+        // Fungsi untuk update progress bar
+        function updateProgress(percentage) {
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('uploadPercentage').textContent = Math.round(percentage) + '%';
+        }
+
         // Setup image upload modal
         function setupImageUploadModal() {
             const profileUploadBtn = document.getElementById('profileUploadBtn');
@@ -2358,14 +2721,17 @@
             const removeImageBtn = document.getElementById('removeImageBtn');
             const modal = document.getElementById('imageUploadModal');
             
-            // Event listener untuk upload foto profile - HANYA JIKA ADMIN
+            // Event listener untuk upload foto profile
             if (profileUploadBtn) {
                 profileUploadBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     if (isAdminLoggedIn || isEditMode) {
                         openImageUploadModal('profile');
                     } else {
-                        showNotification('Silakan login sebagai admin untuk mengupload foto', 'error');
+                        // Jika bukan admin, zoom gambar profile jika ada
+                        if (appData.user.profileImage) {
+                            openZoom(appData.user.profileImage, 'Profile Picture');
+                        }
                     }
                 });
             }
@@ -2374,6 +2740,7 @@
             imageInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
+                    // Validasi file
                     if (file.size > 5 * 1024 * 1024) {
                         showNotification('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
                         return;
@@ -2384,34 +2751,47 @@
                         return;
                     }
                     
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        previewImage.src = event.target.result;
-                        imagePreview.style.display = 'block';
-                        removeImageBtn.style.display = 'inline-block';
-                    };
-                    reader.readAsDataURL(file);
+                    // Simulasi upload dengan progress
+                    simulateUploadWithProgress(file, previewImage, imagePreview);
                 }
             });
             
             // Event listener untuk save button
             saveImageBtn.addEventListener('click', function() {
                 if (previewImage.src) {
-                    if (currentUploadType === 'profile') {
-                        appData.user.profileImage = previewImage.src;
-                        renderProfileImage();
-                        showNotification('Foto profile berhasil diupload!', 'success');
-                    } else if (currentUploadType === 'achievement' && currentAchievementId) {
-                        const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementId);
-                        if (achievement) {
-                            achievement.image = previewImage.src;
-                            renderAchievementsPage();
-                            showNotification('Foto achievement berhasil diupload!', 'success');
-                        }
-                    }
+                    showLoading('Menyimpan gambar...');
+                    showProgress();
                     
-                    modal.classList.remove('active');
-                    resetUploadModal();
+                    // Simulasi proses save dengan progress
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += 10;
+                        updateProgress(progress);
+                        
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            
+                            // Save data
+                            if (currentUploadType === 'profile') {
+                                appData.user.profileImage = previewImage.src;
+                                renderProfileImage();
+                                showNotification('Foto profile berhasil diupload!', 'success');
+                            } else if (currentUploadType === 'achievement' && currentAchievementId) {
+                                const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementId);
+                                if (achievement) {
+                                    achievement.image = previewImage.src;
+                                    renderAchievementsPage();
+                                    showNotification('Foto achievement berhasil diupload!', 'success');
+                                }
+                            }
+                            
+                            setTimeout(() => {
+                                modal.classList.remove('active');
+                                resetUploadModal();
+                                hideLoading();
+                            }, 300);
+                        }
+                    }, 100);
                 }
             });
             
@@ -2423,21 +2803,26 @@
             
             // Event listener untuk remove button
             removeImageBtn.addEventListener('click', function() {
-                if (currentUploadType === 'profile') {
-                    appData.user.profileImage = null;
-                    renderProfileImage();
-                    showNotification('Foto profile berhasil dihapus!', 'success');
-                } else if (currentUploadType === 'achievement' && currentAchievementId) {
-                    const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementId);
-                    if (achievement) {
-                        achievement.image = null;
-                        renderAchievementsPage();
-                        showNotification('Foto achievement berhasil dihapus!', 'success');
-                    }
-                }
+                showLoading('Menghapus gambar...');
                 
-                modal.classList.remove('active');
-                resetUploadModal();
+                setTimeout(() => {
+                    if (currentUploadType === 'profile') {
+                        appData.user.profileImage = null;
+                        renderProfileImage();
+                        showNotification('Foto profile berhasil dihapus!', 'success');
+                    } else if (currentUploadType === 'achievement' && currentAchievementId) {
+                        const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementId);
+                        if (achievement) {
+                            achievement.image = null;
+                            renderAchievementsPage();
+                            showNotification('Foto achievement berhasil dihapus!', 'success');
+                        }
+                    }
+                    
+                    modal.classList.remove('active');
+                    resetUploadModal();
+                    hideLoading();
+                }, 500);
             });
             
             // Event listener untuk klik di luar modal
@@ -2447,6 +2832,33 @@
                     resetUploadModal();
                 }
             });
+        }
+
+        // Fungsi untuk simulasi upload dengan progress bar
+        function simulateUploadWithProgress(file, previewImage, imagePreview) {
+            showLoading('Mengupload gambar...');
+            showProgress();
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 20;
+                updateProgress(progress);
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Baca file sebagai Data URL
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        previewImage.src = event.target.result;
+                        imagePreview.style.display = 'block';
+                        removeImageBtn.style.display = 'inline-block';
+                        hideLoading();
+                        showNotification('Gambar berhasil diupload!', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }, 100);
         }
 
         // Reset upload modal
@@ -2671,6 +3083,7 @@
                             </ul>
                         </div>
                         <button class="edit-btn" data-edit="${exp.id}">Edit</button>
+                        <button class="delete-btn" data-delete="${exp.id}" data-type="experience">Hapus</button>
                     `;
                     
                     const addButton = timeline.querySelector('[data-add="experience"]');
@@ -2679,6 +3092,9 @@
                     } else {
                         timeline.appendChild(expElement);
                     }
+                    
+                    // Setup event listeners untuk edit dan delete
+                    setupExperienceEventListeners(expElement, exp.id);
                 } else if (expElement) {
                     expElement.querySelector('.experience-title').textContent = exp.title;
                     expElement.querySelector('.experience-date').textContent = exp.date;
@@ -2686,6 +3102,24 @@
                         exp.items.map(item => `<li>${item}</li>`).join('');
                 }
             });
+        }
+
+        // Setup event listeners untuk experience
+        function setupExperienceEventListeners(element, experienceId) {
+            const editBtn = element.querySelector('.edit-btn');
+            const deleteBtn = element.querySelector('.delete-btn');
+            
+            if (editBtn) {
+                editBtn.addEventListener('click', function() {
+                    editExperience(experienceId);
+                });
+            }
+            
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function() {
+                    deleteExperience(experienceId);
+                });
+            }
         }
 
         // Render achievements page
@@ -2706,11 +3140,12 @@
                 if (item.image) {
                     imageHTML = `
                         <div class="achievement-image-container" data-upload="${item.id}">
-                            <img src="${item.image}" alt="${item.title}" class="achievement-image">
+                            <img src="${item.image}" alt="${item.title}" class="achievement-image" 
+                                 onclick="openZoom('${item.image}', '${item.title}')">
                             <div class="achievement-upload-overlay">
                                 <div>
                                     <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                                    Klik untuk ganti foto
+                                    ${isAdminLoggedIn || isEditMode ? 'Klik untuk ganti foto' : 'Klik untuk zoom'}
                                 </div>
                             </div>
                         </div>
@@ -2724,7 +3159,7 @@
                             <div class="achievement-upload-overlay">
                                 <div>
                                     <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                                    Klik untuk upload foto
+                                    ${isAdminLoggedIn || isEditMode ? 'Klik untuk upload foto' : 'No image available'}
                                 </div>
                             </div>
                         </div>
@@ -2737,31 +3172,41 @@
                     <div class="date">${item.date}</div>
                     <p>${item.description}</p>
                     <button class="edit-btn" data-edit="${item.id}">Edit</button>
+                    <button class="delete-btn" data-delete="${item.id}" data-type="achievement">Hapus</button>
                 `;
                 
                 container.appendChild(achievementElement);
             });
             
-            // Setup event listeners untuk upload foto achievements - HANYA UNTUK ADMIN
+            // Setup event listeners untuk upload foto achievements
             document.querySelectorAll('.achievement-image-container').forEach(container => {
-                container.addEventListener('click', function() {
+                container.addEventListener('click', function(e) {
+                    // Jika klik langsung pada gambar, biarkan fungsi zoom yang menangani
+                    if (e.target.classList.contains('achievement-image')) {
+                        return;
+                    }
+                    
                     if (isAdminLoggedIn || isEditMode) {
                         const achievementId = this.getAttribute('data-upload');
                         openImageUploadModal('achievement', achievementId);
                     } else {
-                        showNotification('Silakan login sebagai admin untuk mengupload foto', 'error');
+                        // Jika bukan admin, coba zoom jika ada gambar
+                        const img = this.querySelector('.achievement-image');
+                        if (img && img.src) {
+                            const title = this.closest('.achievement-card').querySelector('h3').textContent;
+                            openZoom(img.src, title);
+                        }
                     }
                 });
             });
             
-            if (isAdminLoggedIn || isEditMode) {
-                document.querySelectorAll('.edit-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const elementId = this.getAttribute('data-edit');
-                        editAchievement(elementId);
-                    });
+            // Setup event listener untuk tombol delete
+            document.querySelectorAll('.delete-btn[data-type="achievement"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const elementId = this.getAttribute('data-delete');
+                    deleteAchievement(elementId);
                 });
-            }
+            });
         }
 
         // Edit achievement
@@ -2784,6 +3229,27 @@
             
             renderAchievementsPage();
             showNotification('Pencapaian berhasil diperbarui!', 'success');
+        }
+
+        // Fungsi untuk menghapus achievement
+        function deleteAchievement(achievementId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus pencapaian ini?')) {
+                return;
+            }
+            
+            showLoading('Menghapus pencapaian...');
+            
+            // Simulasi delay untuk efek loading
+            setTimeout(() => {
+                const index = appData.pages.achievements.items.findIndex(item => item.id === achievementId);
+                if (index !== -1) {
+                    appData.pages.achievements.items.splice(index, 1);
+                    renderAchievementsPage();
+                    saveToLocalStorage();
+                    showNotification('Pencapaian berhasil dihapus!', 'success');
+                }
+                hideLoading();
+            }, 500);
         }
 
         // Add achievement
@@ -2844,19 +3310,19 @@
                     <p>${item.description}</p>
                     ${statsHTML}
                     <button class="edit-btn" data-edit="${item.id}">Edit</button>
+                    <button class="delete-btn" data-delete="${item.id}" data-type="project">Hapus</button>
                 `;
                 
                 container.appendChild(projectElement);
             });
             
-            if (isAdminLoggedIn || isEditMode) {
-                document.querySelectorAll('.edit-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const elementId = this.getAttribute('data-edit');
-                        editProject(elementId);
-                    });
+            // Setup event listener untuk tombol delete
+            document.querySelectorAll('.delete-btn[data-type="project"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const elementId = this.getAttribute('data-delete');
+                    deleteProject(elementId);
                 });
-            }
+            });
         }
 
         // Edit project
@@ -2877,6 +3343,26 @@
             showNotification('Proyek berhasil diperbarui!', 'success');
         }
 
+        // Fungsi untuk menghapus project
+        function deleteProject(projectId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus proyek ini?')) {
+                return;
+            }
+            
+            showLoading('Menghapus proyek...');
+            
+            setTimeout(() => {
+                const index = appData.pages.projects.items.findIndex(item => item.id === projectId);
+                if (index !== -1) {
+                    appData.pages.projects.items.splice(index, 1);
+                    renderProjectsPage();
+                    saveToLocalStorage();
+                    showNotification('Proyek berhasil dihapus!', 'success');
+                }
+                hideLoading();
+            }, 500);
+        }
+
         // Add project
         function addProject() {
             const newTitle = prompt('Masukkan judul proyek baru:');
@@ -2886,20 +3372,99 @@
             if (!newDescription) return;
             
             const newId = 'project' + (appData.pages.projects.items.length + 1);
+            
+            // Tanya statistik baru
+            const stat1Value = prompt('Masukkan nilai statistik 1 (misal: 2 Ton):', '0%');
+            const stat1Label = prompt('Masukkan label statistik 1:', 'Sebelum');
+            
+            const stat2Value = prompt('Masukkan nilai statistik 2 (misal: ↓ 0%):', '↓ 0%');
+            const stat2Label = prompt('Masukkan label statistik 2:', 'Perubahan');
+            
+            const stat3Value = prompt('Masukkan nilai statistik 3 (misal: 0%):', '0%');
+            const stat3Label = prompt('Masukkan label statistik 3:', 'Sesudah');
+            
             const newProject = {
                 id: newId,
                 title: newTitle,
                 description: newDescription,
                 stats: [
-                    { value: "0%", label: "Sebelum" },
-                    { value: "↓ 0%", label: "Perubahan", type: "improvement" },
-                    { value: "0%", label: "Sesudah" }
+                    { value: stat1Value, label: stat1Label },
+                    { value: stat2Value, label: stat2Label, type: "improvement" },
+                    { value: stat3Value, label: stat3Label }
                 ]
             };
             
             appData.pages.projects.items.push(newProject);
             renderProjectsPage();
+            saveToLocalStorage();
             showNotification('Proyek berhasil ditambahkan!', 'success');
+        }
+
+        // Fungsi untuk menghapus experience
+        function deleteExperience(experienceId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus pengalaman ini?')) {
+                return;
+            }
+            
+            showLoading('Menghapus pengalaman...');
+            
+            setTimeout(() => {
+                const index = appData.pages.about.experiences.findIndex(exp => exp.id === experienceId);
+                if (index !== -1) {
+                    appData.pages.about.experiences.splice(index, 1);
+                    renderExperiences();
+                    saveToLocalStorage();
+                    showNotification('Pengalaman berhasil dihapus!', 'success');
+                }
+                hideLoading();
+            }, 500);
+        }
+
+        // Edit experience
+        function editExperience(experienceId) {
+            const experience = appData.pages.about.experiences.find(exp => exp.id === experienceId);
+            if (!experience) return;
+            
+            const newTitle = prompt('Edit judul pengalaman:', experience.title);
+            if (newTitle === null) return;
+            
+            const newDate = prompt('Edit periode:', experience.date);
+            if (newDate === null) return;
+            
+            const currentItems = experience.items.join('\n');
+            const newItemsText = prompt('Edit poin-poin (satu per baris):', currentItems);
+            if (newItemsText === null) return;
+            
+            experience.title = newTitle;
+            experience.date = newDate;
+            experience.items = newItemsText.split('\n').filter(item => item.trim() !== '');
+            
+            renderExperiences();
+            showNotification('Pengalaman berhasil diperbarui!', 'success');
+        }
+
+        // Add experience
+        function addExperience() {
+            const newTitle = prompt('Masukkan judul pengalaman baru:');
+            if (!newTitle) return;
+            
+            const newDate = prompt('Masukkan periode:');
+            if (!newDate) return;
+            
+            const itemsText = prompt('Masukkan poin-poin (satu per baris):');
+            if (!itemsText) return;
+            
+            const newId = 'experience' + (appData.pages.about.experiences.length + 1);
+            const newExperience = {
+                id: newId,
+                title: newTitle,
+                date: newDate,
+                items: itemsText.split('\n').filter(item => item.trim() !== '')
+            };
+            
+            appData.pages.about.experiences.push(newExperience);
+            renderExperiences();
+            showNotification('Pengalaman berhasil ditambahkan!', 'success');
         }
 
         // Render dashboard page
@@ -3009,7 +3574,12 @@
                     return;
                 }
                 
-                saveToLocalStorage();
+                showLoading('Menyimpan data...');
+                
+                setTimeout(() => {
+                    saveToLocalStorage();
+                    hideLoading();
+                }, 500);
             });
         }
 
@@ -3144,53 +3714,6 @@
                 renderSkills();
                 showNotification('Skill berhasil ditambahkan!', 'success');
             }
-        }
-
-        // Edit experience
-        function editExperience(experienceId) {
-            const experience = appData.pages.about.experiences.find(exp => exp.id === experienceId);
-            if (!experience) return;
-            
-            const newTitle = prompt('Edit judul pengalaman:', experience.title);
-            if (newTitle === null) return;
-            
-            const newDate = prompt('Edit periode:', experience.date);
-            if (newDate === null) return;
-            
-            const currentItems = experience.items.join('\n');
-            const newItemsText = prompt('Edit poin-poin (satu per baris):', currentItems);
-            if (newItemsText === null) return;
-            
-            experience.title = newTitle;
-            experience.date = newDate;
-            experience.items = newItemsText.split('\n').filter(item => item.trim() !== '');
-            
-            renderExperiences();
-            showNotification('Pengalaman berhasil diperbarui!', 'success');
-        }
-
-        // Add experience
-        function addExperience() {
-            const newTitle = prompt('Masukkan judul pengalaman baru:');
-            if (!newTitle) return;
-            
-            const newDate = prompt('Masukkan periode:');
-            if (!newDate) return;
-            
-            const itemsText = prompt('Masukkan poin-poin (satu per baris):');
-            if (!itemsText) return;
-            
-            const newId = 'experience' + (appData.pages.about.experiences.length + 1);
-            const newExperience = {
-                id: newId,
-                title: newTitle,
-                date: newDate,
-                items: itemsText.split('\n').filter(item => item.trim() !== '')
-            };
-            
-            appData.pages.about.experiences.push(newExperience);
-            renderExperiences();
-            showNotification('Pengalaman berhasil ditambahkan!', 'success');
         }
 
         // Edit stat
@@ -3338,9 +3861,13 @@
                     const email = document.getElementById('email').value;
                     const message = document.getElementById('message').value;
                     
-                    alert(`Thank you ${name}! Your message has been sent successfully. I'll get back to you at ${email} soon.`);
+                    showLoading('Mengirim pesan...');
                     
-                    contactForm.reset();
+                    setTimeout(() => {
+                        alert(`Thank you ${name}! Your message has been sent successfully. I'll get back to you at ${email} soon.`);
+                        contactForm.reset();
+                        hideLoading();
+                    }, 1000);
                 });
             }
         }
