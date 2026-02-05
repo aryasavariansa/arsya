@@ -296,7 +296,7 @@
             flex-shrink: 0;
         }
 
-        /* ===== KONTEN UTAMA DENGAN SCROLL PENUH ===== */
+        /* ===== KONTEN UTAMA DENGAN SCROLL DI POJOK KANAN ===== */
         .main-content {
             flex: 1;
             margin-left: var(--sidebar-width);
@@ -306,6 +306,33 @@
             background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 26, 26, 0.98) 100%);
             height: 100vh;
             width: calc(100% - var(--sidebar-width));
+            position: fixed;
+            right: 0;
+            top: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Scrollbar seperti Google/Apps Modern */
+        .main-content::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: var(--gradient-gold);
+            border-radius: 10px;
+            border: 3px solid transparent;
+            background-clip: content-box;
+        }
+
+        .main-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #ffcc00 0%, #ffed4e 100%);
+            background-clip: content-box;
         }
 
         /* Header Konten */
@@ -321,6 +348,7 @@
             z-index: 99;
             backdrop-filter: blur(10px);
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
         }
 
         .page-title h2 {
@@ -352,7 +380,8 @@
         /* Body Konten dengan Scroll */
         .content-body {
             padding: 50px;
-            min-height: 100%;
+            min-height: calc(100vh - 140px);
+            width: 100%;
         }
 
         /* Page Container */
@@ -360,6 +389,7 @@
             display: none;
             animation: fadeInUp 0.6s ease;
             padding-bottom: 100px;
+            width: 100%;
         }
 
         @keyframes fadeInUp {
@@ -392,6 +422,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
         }
 
         .hero-badge {
@@ -436,6 +467,7 @@
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 30px;
             margin: 60px 0;
+            width: 100%;
         }
 
         .stat-card {
@@ -490,6 +522,7 @@
             gap: 50px;
             margin-bottom: 50px;
             min-height: 500px;
+            width: 100%;
         }
 
         .about-text p {
@@ -505,6 +538,7 @@
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
             margin-top: 40px;
+            width: 100%;
         }
 
         .skill-category {
@@ -546,6 +580,7 @@
         /* Experience */
         .experience-timeline {
             margin-top: 40px;
+            width: 100%;
         }
 
         .experience-item {
@@ -615,6 +650,7 @@
             gap: 35px;
             margin-top: 30px;
             margin-bottom: 50px;
+            width: 100%;
         }
 
         .achievement-card {
@@ -741,6 +777,7 @@
             gap: 35px;
             margin-top: 30px;
             margin-bottom: 50px;
+            width: 100%;
         }
 
         .project-card {
@@ -855,6 +892,7 @@
             gap: 30px;
             margin-bottom: 50px;
             min-height: 200px;
+            width: 100%;
         }
 
         .dashboard-card {
@@ -897,7 +935,7 @@
             overflow: hidden;
             border: 1px solid rgba(255, 215, 0, 0.1);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            max-width: 1000px;
+            width: 100%;
             margin: 0 auto;
             height: 70vh;
             display: flex;
@@ -1007,6 +1045,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 50px;
             min-height: 500px;
+            width: 100%;
         }
 
         .contact-info {
@@ -1321,7 +1360,7 @@
             padding: 15px;
             font-size: 1.4rem;
             cursor: pointer;
-            z-index: 1003;
+            z-index: 1004;
             transition: var(--transition);
         }
 
@@ -1384,6 +1423,9 @@
                 margin-left: 0;
                 width: 100%;
                 height: 100vh;
+                position: fixed;
+                left: 0;
+                right: 0;
             }
             
             .mobile-menu-toggle {
@@ -1403,6 +1445,7 @@
             
             .content-body {
                 padding: 20px;
+                min-height: calc(100vh - 120px);
             }
             
             .hero {
@@ -1473,6 +1516,11 @@
                 font-size: 0.9rem;
                 padding: 10px 18px;
             }
+            
+            .content-body {
+                padding: 15px;
+                min-height: calc(100vh - 110px);
+            }
         }
     </style>
 </head>
@@ -1539,8 +1587,8 @@
         </div>
     </aside>
     
-    <!-- KONTEN UTAMA DENGAN SCROLL PENUH -->
-    <main class="main-content">
+    <!-- KONTEN UTAMA DENGAN SCROLL DI POJOK KANAN -->
+    <main class="main-content" id="mainContent">
         <!-- Content Header -->
         <div class="content-header">
             <div class="page-title">
@@ -2163,17 +2211,15 @@
                 const mainContent = document.querySelector('.main-content');
                 const contentBody = document.querySelector('.content-body');
                 const activePage = document.querySelector('.page.active');
+                const contentHeader = document.querySelector('.content-header');
                 
-                if (mainContent && contentBody && activePage) {
-                    contentBody.style.minHeight = 'auto';
-                    const headerHeight = document.querySelector('.content-header').offsetHeight;
+                if (mainContent && contentBody && activePage && contentHeader) {
+                    const headerHeight = contentHeader.offsetHeight;
                     const windowHeight = window.innerHeight;
                     const pageHeight = activePage.offsetHeight;
                     
-                    if (pageHeight < (windowHeight - headerHeight - 100)) {
-                        const targetHeight = windowHeight - headerHeight - 100;
-                        contentBody.style.minHeight = targetHeight + 'px';
-                    }
+                    // Set minimum height untuk content body
+                    contentBody.style.minHeight = Math.max(pageHeight, windowHeight - headerHeight) + 'px';
                 }
             }
             
@@ -2183,9 +2229,51 @@
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function() {
-                    setTimeout(adjustContentHeight, 400);
+                    setTimeout(adjustContentHeight, 500);
                 });
             });
+            
+            // Initial adjustment
+            adjustContentHeight();
+        }
+
+        // Setup responsive behavior
+        function setupResponsiveBehavior() {
+            function handleResize() {
+                const sidebar = document.getElementById('sidebar');
+                const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+                const mainContent = document.getElementById('mainContent');
+                
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('active');
+                    sidebar.style.transform = 'translateX(0)';
+                    if (mobileMenuToggle) {
+                        mobileMenuToggle.style.display = 'none';
+                    }
+                    if (mainContent) {
+                        mainContent.style.position = 'fixed';
+                        mainContent.style.right = '0';
+                        mainContent.style.left = 'auto';
+                        mainContent.style.width = 'calc(100% - ' + (sidebar.offsetWidth || 280) + 'px)';
+                    }
+                } else {
+                    if (mobileMenuToggle) {
+                        mobileMenuToggle.style.display = 'block';
+                    }
+                    if (mainContent) {
+                        mainContent.style.position = 'fixed';
+                        mainContent.style.left = '0';
+                        mainContent.style.right = '0';
+                        mainContent.style.width = '100%';
+                    }
+                }
+                
+                // Recalculate content height
+                setTimeout(setupContentHeight, 100);
+            }
+            
+            window.addEventListener('resize', handleResize);
+            handleResize();
         }
 
         // Load data dari localStorage
@@ -2257,29 +2345,6 @@
                     }
                 });
             }
-        }
-
-        // Setup responsive behavior
-        function setupResponsiveBehavior() {
-            function handleResize() {
-                const sidebar = document.getElementById('sidebar');
-                const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-                
-                if (window.innerWidth > 768) {
-                    sidebar.classList.remove('active');
-                    sidebar.style.transform = 'translateX(0)';
-                    if (mobileMenuToggle) {
-                        mobileMenuToggle.style.display = 'none';
-                    }
-                } else {
-                    if (mobileMenuToggle) {
-                        mobileMenuToggle.style.display = 'block';
-                    }
-                }
-            }
-            
-            window.addEventListener('resize', handleResize);
-            handleResize();
         }
 
         // Setup image upload modal
@@ -2492,6 +2557,7 @@
                     
                     renderPage(pageId);
                     document.querySelector('.main-content').scrollTop = 0;
+                    setupContentHeight();
                 }
             }, 300);
         }
