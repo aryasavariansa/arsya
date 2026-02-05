@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -38,22 +37,7 @@
             min-height: 100vh;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: var(--light);
-            overflow: hidden; /* Tidak ada scroll di body */
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.03) 0%, transparent 20%),
-                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 30%);
-            z-index: -1;
+            overflow: hidden;
         }
 
         /* ===== SIDEBAR TETAP TANPA SCROLL ===== */
@@ -61,16 +45,15 @@
             width: var(--sidebar-width);
             background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
             color: var(--light);
-            height: 100vh; /* Tinggi penuh viewport */
-            position: fixed; /* Posisi tetap */
+            height: 100vh;
+            position: fixed;
             left: 0;
             top: 0;
             display: flex;
             flex-direction: column;
             box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
             z-index: 100;
-            overflow-y: hidden; /* TIDAK ADA SCROLL di sidebar */
-            overflow-x: hidden;
+            overflow-y: hidden;
             transition: var(--transition);
             border-right: 1px solid rgba(255, 215, 0, 0.1);
         }
@@ -78,19 +61,8 @@
         .sidebar-header {
             padding: 40px 30px 30px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
             position: relative;
-            overflow: hidden;
-            flex-shrink: 0; /* Tidak mengecil */
-        }
-
-        .sidebar-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 10%;
-            width: 80%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
         }
 
         .profile-section {
@@ -99,7 +71,16 @@
             gap: 20px;
             margin-bottom: 30px;
             position: relative;
-            z-index: 2;
+        }
+
+        .profile-img-container {
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .profile-img-container:hover {
+            transform: scale(1.05);
         }
 
         .profile-img {
@@ -112,15 +93,53 @@
             justify-content: center;
             font-size: 28px;
             color: #000;
-            flex-shrink: 0;
             box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
             border: 3px solid rgba(255, 215, 0, 0.5);
-            transition: var(--transition);
+            overflow: hidden;
+            object-fit: cover;
+            background-color: #000;
         }
 
-        .profile-img:hover {
-            transform: scale(1.05) rotate(5deg);
-            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.4);
+        .profile-img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-gold);
+        }
+
+        .profile-img-upload {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: var(--gradient-gold);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .profile-img-container:hover .profile-img-upload {
+            display: flex;
+        }
+
+        .admin-mode .profile-img-upload {
+            display: flex;
+        }
+
+        .profile-img-upload:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
         }
 
         .profile-info h2 {
@@ -133,19 +152,14 @@
         .profile-info p {
             font-size: 0.9rem;
             color: var(--primary);
-            opacity: 0.9;
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
         /* Menu Navigasi Sidebar */
         .nav-menu {
             list-style: none;
             padding: 30px 0;
-            flex-grow: 1; /* Menggunakan semua ruang tersisa */
-            position: relative;
-            z-index: 2;
-            overflow-y: hidden; /* Tidak ada scroll */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
@@ -153,23 +167,6 @@
         .nav-menu li {
             margin-bottom: 5px;
             position: relative;
-        }
-
-        .nav-menu li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 3px;
-            height: 0;
-            background: var(--gradient-gold);
-            transition: var(--transition);
-            border-radius: 0 3px 3px 0;
-        }
-
-        .nav-menu li:hover::before {
-            height: 70%;
         }
 
         .nav-menu a {
@@ -181,23 +178,6 @@
             transition: var(--transition);
             font-size: 1rem;
             font-weight: 500;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-menu a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 0;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
-            transition: width 0.3s ease;
-        }
-
-        .nav-menu a:hover::before {
-            width: 100%;
         }
 
         .nav-menu a:hover {
@@ -210,26 +190,17 @@
             background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
         }
 
-        .nav-menu a.active i {
-            color: var(--primary);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
         .nav-menu a i {
             width: 24px;
             margin-right: 15px;
-            text-align: center;
             font-size: 1.2rem;
-            transition: var(--transition);
         }
 
         /* Admin Panel di Sidebar */
         .admin-section {
             padding: 25px 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            z-index: 2;
-            flex-shrink: 0; /* Tetap di posisi bawah */
+            flex-shrink: 0;
         }
 
         .admin-toggle {
@@ -247,12 +218,10 @@
             font-weight: 600;
             transition: var(--transition);
             font-size: 0.95rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .admin-toggle:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
             border-color: var(--primary);
         }
 
@@ -263,7 +232,6 @@
             padding: 25px;
             margin-top: 20px;
             display: none;
-            z-index: 101;
             border: 1px solid rgba(255, 215, 0, 0.1);
             animation: slideDown 0.3s ease;
         }
@@ -281,13 +249,6 @@
 
         .admin-panel.active {
             display: block;
-        }
-
-        .admin-panel h3 {
-            margin-bottom: 20px;
-            color: var(--primary);
-            font-size: 1.1rem;
-            font-weight: 600;
         }
 
         .admin-input {
@@ -320,23 +281,10 @@
             transition: var(--transition);
             margin-bottom: 10px;
             font-size: 0.95rem;
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
         }
 
         .admin-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.4);
-        }
-
-        .admin-btn.secondary {
-            background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
-            color: var(--light);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .admin-btn.danger {
-            background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
-            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
         }
 
         .sidebar-footer {
@@ -345,9 +293,7 @@
             color: var(--gray);
             font-size: 0.85rem;
             text-align: center;
-            position: relative;
-            z-index: 2;
-            flex-shrink: 0; /* Tetap di posisi bawah */
+            flex-shrink: 0;
         }
 
         /* ===== KONTEN UTAMA DENGAN SCROLL PENUH ===== */
@@ -356,11 +302,10 @@
             margin-left: var(--sidebar-width);
             min-height: 100vh;
             padding: 0;
-            overflow-y: auto; /* SCROLL HANYA DI SINI */
-            position: relative;
+            overflow-y: auto;
             background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 26, 26, 0.98) 100%);
-            height: 100vh; /* Tinggi penuh viewport */
-            width: calc(100% - var(--sidebar-width)); /* Lebar penuh minus sidebar */
+            height: 100vh;
+            width: calc(100% - var(--sidebar-width));
         }
 
         /* Header Konten */
@@ -376,7 +321,6 @@
             z-index: 99;
             backdrop-filter: blur(10px);
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
-            flex-shrink: 0; /* Header tidak mengecil */
         }
 
         .page-title h2 {
@@ -386,7 +330,6 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
             font-weight: 800;
-            letter-spacing: -0.5px;
         }
 
         .page-title p {
@@ -406,29 +349,17 @@
             font-weight: 600;
         }
 
-        .edit-status i {
-            margin-right: 8px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
-        }
-
         /* Body Konten dengan Scroll */
         .content-body {
             padding: 50px;
-            min-height: 100%; /* Gunakan 100% */
-            position: relative;
+            min-height: 100%;
         }
 
         /* Page Container */
         .page {
             display: none;
             animation: fadeInUp 0.6s ease;
-            padding-bottom: 100px; /* Tambahkan padding agar ada ruang scroll */
+            padding-bottom: 100px;
         }
 
         @keyframes fadeInUp {
@@ -446,7 +377,7 @@
             display: block;
         }
 
-        /* ===== HOME PAGE - BLACK & GOLD DESIGN ===== */
+        /* ===== HOME PAGE ===== */
         .hero {
             padding: 60px;
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
@@ -457,27 +388,10 @@
             overflow: hidden;
             border: 1px solid rgba(255, 215, 0, 0.1);
             box-shadow: var(--box-shadow);
-            min-height: 400px; /* Tinggi minimal */
+            min-height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
-            z-index: 0;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            width: 100%;
         }
 
         .hero-badge {
@@ -505,9 +419,7 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
             font-weight: 800;
-            letter-spacing: -1px;
             line-height: 1.2;
-            text-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
         }
 
         .hero p {
@@ -516,7 +428,6 @@
             max-width: 800px;
             margin: 0 auto 40px;
             line-height: 1.7;
-            font-weight: 400;
         }
 
         /* Stats Grid */
@@ -551,7 +462,6 @@
 
         .stat-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.1);
             border-color: rgba(255, 215, 0, 0.3);
         }
 
@@ -579,7 +489,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 50px;
             margin-bottom: 50px;
-            min-height: 500px; /* Tinggi minimal */
+            min-height: 500px;
         }
 
         .about-text p {
@@ -607,18 +517,6 @@
             overflow: hidden;
         }
 
-        .skill-category::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-gold);
-            opacity: 0.02;
-            z-index: 0;
-        }
-
         .skill-category h3 {
             font-size: 1.4rem;
             margin-bottom: 25px;
@@ -626,16 +524,12 @@
             padding-bottom: 15px;
             border-bottom: 2px solid rgba(255, 215, 0, 0.1);
             font-weight: 700;
-            position: relative;
-            z-index: 1;
         }
 
         .skill-items {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            position: relative;
-            z-index: 1;
         }
 
         .skill-item {
@@ -647,12 +541,6 @@
             border: 1px solid rgba(255, 215, 0, 0.2);
             transition: var(--transition);
             font-weight: 500;
-        }
-
-        .skill-item:hover {
-            transform: translateY(-3px);
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.1) 100%);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.15);
         }
 
         /* Experience */
@@ -674,7 +562,6 @@
 
         .experience-item:hover {
             transform: translateX(10px);
-            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.1);
             border-color: rgba(255, 215, 0, 0.3);
         }
 
@@ -719,16 +606,6 @@
         .experience-content li {
             margin-bottom: 12px;
             line-height: 1.6;
-            position: relative;
-        }
-
-        .experience-content li::before {
-            content: '▶';
-            color: var(--primary);
-            font-weight: bold;
-            position: absolute;
-            left: -20px;
-            font-size: 0.8rem;
         }
 
         /* ===== ACHIEVEMENTS PAGE ===== */
@@ -753,24 +630,7 @@
 
         .achievement-card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 30px 60px rgba(255, 215, 0, 0.1);
             border-color: rgba(255, 215, 0, 0.3);
-        }
-
-        .achievement-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-gold);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .achievement-card:hover::before {
-            opacity: 0.03;
         }
 
         .achievement-image-container {
@@ -783,8 +643,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
             border: 2px dashed rgba(255, 215, 0, 0.2);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .admin-mode .achievement-image-container {
+            cursor: pointer;
+        }
+
+        .achievement-image-container:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, #1e1e1e 0%, #2e2e2e 100%);
         }
 
         .achievement-image {
@@ -801,13 +672,33 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .achievement-upload-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .admin-mode .achievement-image-container:hover .achievement-upload-overlay {
+            display: flex;
+        }
+
         .achievement-card h3 {
             font-size: 1.4rem;
             margin-bottom: 10px;
             color: var(--primary);
             font-weight: 700;
-            position: relative;
-            z-index: 1;
         }
 
         .achievement-card .date {
@@ -815,15 +706,11 @@
             font-weight: 600;
             margin-bottom: 20px;
             font-size: 1rem;
-            position: relative;
-            z-index: 1;
         }
 
         .achievement-card p {
             color: var(--gray);
             line-height: 1.7;
-            position: relative;
-            z-index: 1;
         }
 
         .upload-btn {
@@ -841,12 +728,10 @@
             z-index: 10;
             transition: var(--transition);
             font-weight: 700;
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
         }
 
         .upload-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.4);
         }
 
         /* ===== PROJECTS PAGE ===== */
@@ -881,7 +766,6 @@
 
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(255, 215, 0, 0.1);
             border-color: rgba(255, 215, 0, 0.3);
         }
 
@@ -958,12 +842,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .stat-value:not(.improvement):not(.reduction) {
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .stat-label {
             font-size: 0.9rem;
             color: var(--gray);
@@ -976,7 +854,7 @@
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 30px;
             margin-bottom: 50px;
-            min-height: 200px; /* Tinggi minimal */
+            min-height: 200px;
         }
 
         .dashboard-card {
@@ -991,25 +869,8 @@
             overflow: hidden;
         }
 
-        .dashboard-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-gold);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .dashboard-card:hover::before {
-            opacity: 0.03;
-        }
-
         .dashboard-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.1);
             border-color: rgba(255, 215, 0, 0.3);
         }
 
@@ -1021,33 +882,12 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
             line-height: 1;
-            position: relative;
-            z-index: 1;
         }
 
         .dashboard-label {
             color: var(--gray);
             font-weight: 500;
             font-size: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .dashboard-chart {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            margin-bottom: 40px;
-            min-height: 450px; /* Tinggi minimal untuk chart */
-        }
-
-        .dashboard-chart h3 {
-            margin-bottom: 30px;
-            color: var(--primary);
-            font-size: 1.5rem;
-            font-weight: 700;
         }
 
         /* ===== CHATROOM PAGE ===== */
@@ -1059,7 +899,7 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             max-width: 1000px;
             margin: 0 auto;
-            height: 70vh; /* Tinggi viewport untuk chatroom */
+            height: 70vh;
             display: flex;
             flex-direction: column;
         }
@@ -1077,14 +917,9 @@
             font-weight: 800;
         }
 
-        .chatroom-header p {
-            opacity: 0.8;
-            font-size: 1.1rem;
-        }
-
         .chatroom-messages {
             padding: 35px;
-            flex-grow: 1; /* Isi space yang tersedia */
+            flex-grow: 1;
             overflow-y: auto;
             background: rgba(20, 20, 20, 0.8);
         }
@@ -1102,7 +937,6 @@
 
         .message:hover {
             transform: translateX(5px);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.1);
             border-color: rgba(255, 215, 0, 0.3);
         }
 
@@ -1118,10 +952,6 @@
             margin-bottom: 12px;
             font-size: 0.9rem;
             opacity: 0.8;
-        }
-
-        .message.user .message-info {
-            opacity: 0.9;
         }
 
         .message-content {
@@ -1165,12 +995,10 @@
             cursor: pointer;
             transition: var(--transition);
             font-size: 1rem;
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
         }
 
         .chatroom-input button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.4);
         }
 
         /* ===== CONTACT PAGE ===== */
@@ -1178,7 +1006,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
-            min-height: 500px; /* Tinggi minimal */
+            min-height: 500px;
         }
 
         .contact-info {
@@ -1201,7 +1029,6 @@
 
         .contact-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.1);
             border-color: rgba(255, 215, 0, 0.3);
         }
 
@@ -1273,11 +1100,6 @@
             box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
         }
 
-        .form-group textarea {
-            height: 180px;
-            resize: vertical;
-        }
-
         .submit-btn {
             background: var(--gradient-gold);
             color: #000;
@@ -1289,33 +1111,14 @@
             transition: var(--transition);
             width: 100%;
             font-size: 1.1rem;
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
-            position: relative;
-            overflow: hidden;
         }
 
         .submit-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.4);
-        }
-
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .submit-btn:hover::before {
-            left: 100%;
         }
 
         /* ===== EDIT MODE STYLES ===== */
-        .edit-mode .editable {
+        .admin-mode .editable {
             position: relative;
             border: 2px dashed rgba(255, 215, 0, 0.3);
             padding: 15px;
@@ -1325,10 +1128,9 @@
             background: rgba(255, 215, 0, 0.03);
         }
 
-        .edit-mode .editable:hover {
+        .admin-mode .editable:hover {
             background: rgba(255, 215, 0, 0.08);
             border-color: var(--primary);
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.1);
         }
 
         .edit-btn {
@@ -1346,15 +1148,13 @@
             z-index: 5;
             transition: var(--transition);
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
         }
 
         .edit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
         }
 
-        .edit-mode .edit-btn {
+        .admin-mode .edit-btn {
             display: block;
         }
 
@@ -1370,20 +1170,14 @@
             font-weight: 700;
             transition: var(--transition);
             font-size: 1rem;
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
         }
 
         .add-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.4);
         }
 
-        .edit-mode .add-btn {
+        .admin-mode .add-btn {
             display: inline-block;
-        }
-
-        .edit-mode .achievement-card .upload-btn {
-            display: block;
         }
 
         /* ===== MODAL UPLOAD FOTO ===== */
@@ -1463,7 +1257,6 @@
             font-weight: 700;
             transition: var(--transition);
             font-size: 1rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .modal-btn.primary {
@@ -1473,7 +1266,6 @@
 
         .modal-btn.primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.4);
         }
 
         .modal-btn.secondary {
@@ -1484,7 +1276,6 @@
 
         .modal-btn.secondary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.2);
         }
 
         /* ===== NOTIFICATION ===== */
@@ -1532,48 +1323,9 @@
             cursor: pointer;
             z-index: 1003;
             transition: var(--transition);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .mobile-menu-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
-        }
-
-        /* ===== CUSTOM SCROLLBAR ===== */
-        .main-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .main-content::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .main-content::-webkit-scrollbar-thumb {
-            background: var(--gradient-gold);
-            border-radius: 4px;
-        }
-
-        .main-content::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
-        }
-
-        .chatroom-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .chatroom-messages::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .chatroom-messages::-webkit-scrollbar-thumb {
-            background: var(--gradient-gold);
-            border-radius: 3px;
         }
 
         /* ===== RESPONSIVE STYLES ===== */
-        
-        /* Tablet (768px - 1024px) */
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
@@ -1610,7 +1362,6 @@
             }
         }
 
-        /* Mobile (≤ 768px) */
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
@@ -1622,12 +1373,11 @@
                 left: 0;
                 height: 100vh;
                 z-index: 1000;
-                overflow-y: auto; /* Di mobile, sidebar bisa discroll */
+                overflow-y: auto;
             }
             
             .sidebar.active {
                 transform: translateX(0);
-                box-shadow: 10px 0 50px rgba(0, 0, 0, 0.8);
             }
             
             .main-content {
@@ -1664,10 +1414,6 @@
                 font-size: 2.2rem;
             }
             
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
             .projects-grid {
                 grid-template-columns: 1fr;
             }
@@ -1679,7 +1425,6 @@
             .about-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
-                min-height: auto;
             }
             
             .stats-grid,
@@ -1688,24 +1433,9 @@
                 gap: 20px;
             }
             
-            .stat-card,
-            .dashboard-card {
-                padding: 25px;
-            }
-            
-            .stat-number {
-                font-size: 2.5rem;
-            }
-            
-            .project-stats {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
             .contact-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
-                min-height: auto;
             }
             
             .contact-info {
@@ -1713,13 +1443,7 @@
             }
             
             .chatroom-container {
-                max-width: 100%;
                 height: 60vh;
-            }
-            
-            .chatroom-messages {
-                height: 350px;
-                padding: 20px;
             }
             
             .message {
@@ -1727,28 +1451,13 @@
             }
             
             .chatroom-input {
-                padding: 20px;
-                flex-direction: column;
-            }
-            
-            .modal-content {
-                padding: 25px;
-                width: 95%;
-            }
-            
-            .modal-buttons {
                 flex-direction: column;
             }
         }
 
-        /* Mobile Small (≤ 480px) */
         @media (max-width: 480px) {
             .hero h1 {
                 font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
             }
             
             .stats-grid,
@@ -1760,83 +1469,9 @@
                 height: 200px;
             }
             
-            .project-card {
-                padding: 25px;
-            }
-            
-            .skill-category {
-                padding: 25px;
-            }
-            
             .skill-item {
                 font-size: 0.9rem;
                 padding: 10px 18px;
-            }
-            
-            .contact-card {
-                padding: 25px;
-            }
-            
-            .contact-icon {
-                font-size: 2rem;
-            }
-            
-            .mobile-menu-toggle {
-                top: 20px;
-                right: 20px;
-                padding: 12px;
-            }
-            
-            .notification {
-                bottom: 20px;
-                right: 20px;
-                left: 20px;
-                max-width: none;
-            }
-            
-            .chatroom-container {
-                height: 55vh;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            .sidebar,
-            .mobile-menu-toggle,
-            .admin-section,
-            .edit-btn,
-            .add-btn,
-            .upload-btn,
-            .notification,
-            .chatroom-input {
-                display: none !important;
-            }
-            
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-            }
-            
-            body {
-                background: white !important;
-                color: black !important;
-            }
-            
-            .hero {
-                background: none !important;
-                border: 2px solid #ddd;
-            }
-            
-            .stat-card,
-            .dashboard-card,
-            .achievement-card,
-            .project-card,
-            .skill-category,
-            .contact-card,
-            .contact-form {
-                box-shadow: none !important;
-                border: 1px solid #ddd !important;
-                background: white !important;
             }
         }
     </style>
@@ -1851,8 +1486,15 @@
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="profile-section">
-                <div class="profile-img">
-                    <i class="fas fa-user-tie"></i>
+                <div class="profile-img-container" id="profileImgContainer">
+                    <div class="profile-img" id="profileImg">
+                        <div class="profile-img-placeholder">
+                            <i class="fas fa-user-tie" id="profileIcon"></i>
+                        </div>
+                    </div>
+                    <button class="profile-img-upload" id="profileUploadBtn" title="Upload Foto Profile">
+                        <i class="fas fa-camera"></i>
+                    </button>
                 </div>
                 <div class="profile-info">
                     <h2>Arya Savariansah</h2>
@@ -1887,7 +1529,7 @@
                     <h3>Edit Mode</h3>
                     <button class="admin-btn" id="toggleEditMode">Aktifkan Edit Mode</button>
                     <button class="admin-btn" id="saveAllData">Simpan Semua Data</button>
-                    <button class="admin-btn secondary" id="adminLogout">Logout</button>
+                    <button class="admin-btn" id="adminLogout">Logout</button>
                 </div>
             </div>
         </div>
@@ -2179,23 +1821,23 @@
                     <h3>Grafik Produktivitas</h3>
                     <div style="height: 350px; background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%); border-radius: 12px; display: flex; align-items: flex-end; padding: 25px; border: 1px solid rgba(255, 215, 0, 0.1);">
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 220px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0; box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);"></div>
+                            <div style="height: 220px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
                             <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Jan</div>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 180px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0; box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);"></div>
+                            <div style="height: 180px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
                             <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Feb</div>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 250px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0; box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);"></div>
+                            <div style="height: 250px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
                             <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Mar</div>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 280px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0; box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);"></div>
+                            <div style="height: 280px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
                             <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Apr</div>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 320px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0; box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);"></div>
+                            <div style="height: 320px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
                             <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Mei</div>
                         </div>
                     </div>
@@ -2234,16 +1876,6 @@
                             </div>
                             <div class="message-content">
                                 Halo mas! Awesome portfolio website!
-                            </div>
-                        </div>
-                        
-                        <div class="message">
-                            <div class="message-info">
-                                <span class="message-user">Rufa Resto Ramadhani</span>
-                                <span class="message-time">01/04/2025, 16:37</span>
-                            </div>
-                            <div class="message-content">
-                                Test - checking out the chat functionality
                             </div>
                         </div>
                     </div>
@@ -2323,10 +1955,10 @@
         </div>
     </main>
     
-    <!-- Modal untuk Upload Foto Achievement -->
+    <!-- Modal untuk Upload Foto -->
     <div class="modal" id="imageUploadModal">
         <div class="modal-content">
-            <h3 class="modal-title" id="modalTitle">Upload Foto Achievement</h3>
+            <h3 class="modal-title" id="modalTitle">Upload Foto</h3>
             <div class="form-group">
                 <input type="file" id="imageInput" accept="image/*" class="admin-input">
             </div>
@@ -2345,7 +1977,7 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // Data aplikasi - DENGAN FITUR FOTO UNTUK ACHIEVEMENTS
+        // Data aplikasi dengan fitur foto
         const appData = {
             user: {
                 name: "Arya Savariansah",
@@ -2353,7 +1985,8 @@
                 email: "aryasavarinasah@gmail.com",
                 phone: "089520336532",
                 location: "Kosambi, Indonesia",
-                linkedin: "linkedin.com/in/arya-savariansah"
+                linkedin: "linkedin.com/in/arya-savariansah",
+                profileImage: null
             },
             pages: {
                 home: {
@@ -2505,68 +2138,38 @@
         let isAdminLoggedIn = false;
         let isEditMode = false;
         let currentPage = "home";
-        let currentAchievementEditing = null;
+        let currentUploadType = null; // "profile" atau "achievement"
+        let currentAchievementId = null;
 
         // DOM Ready
         document.addEventListener('DOMContentLoaded', function() {
-            // Load data dari localStorage jika ada
             loadFromLocalStorage();
-            
-            // Setup navigation
             setupNavigation();
-            
-            // Setup admin panel
             setupAdminPanel();
-            
-            // Setup chat functionality
             setupChat();
-            
-            // Setup contact form
             setupContactForm();
-            
-            // Setup mobile menu toggle
             setupMobileMenu();
-            
-            // Setup image upload modal
             setupImageUploadModal();
-            
-            // Setup responsive behavior
             setupResponsiveBehavior();
-            
-            // Render initial page
             renderPage(currentPage);
-            
-            // Update UI based on admin status
             updateAdminUI();
-            
-            // Setup content height adjustment
             setupContentHeight();
-            
-            // Tambah animasi saat load
-            setTimeout(() => {
-                document.body.style.opacity = 1;
-                document.body.style.transform = 'translateY(0)';
-            }, 100);
+            renderProfileImage();
         });
 
         // Setup content height adjustment
         function setupContentHeight() {
-            // Function to adjust content height dynamically
             function adjustContentHeight() {
                 const mainContent = document.querySelector('.main-content');
                 const contentBody = document.querySelector('.content-body');
                 const activePage = document.querySelector('.page.active');
                 
                 if (mainContent && contentBody && activePage) {
-                    // Reset min-height
                     contentBody.style.minHeight = 'auto';
-                    
-                    // Calculate available height
                     const headerHeight = document.querySelector('.content-header').offsetHeight;
                     const windowHeight = window.innerHeight;
                     const pageHeight = activePage.offsetHeight;
                     
-                    // If page content is shorter than available space, extend it
                     if (pageHeight < (windowHeight - headerHeight - 100)) {
                         const targetHeight = windowHeight - headerHeight - 100;
                         contentBody.style.minHeight = targetHeight + 'px';
@@ -2574,17 +2177,13 @@
                 }
             }
             
-            // Initial adjustment
             setTimeout(adjustContentHeight, 300);
-            
-            // Adjust on window resize
             window.addEventListener('resize', adjustContentHeight);
             
-            // Adjust after page change
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function() {
-                    setTimeout(adjustContentHeight, 400); // After page transition
+                    setTimeout(adjustContentHeight, 400);
                 });
             });
         }
@@ -2616,21 +2215,16 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     
-                    // Get page id
                     const pageId = this.getAttribute('data-page');
                     
-                    // Update active nav link
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Change page
                     changePage(pageId);
                     
-                    // Di mobile, tutup sidebar setelah memilih halaman
                     if (window.innerWidth <= 768) {
                         document.getElementById('sidebar').classList.remove('active');
                         document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
-                        document.getElementById('mobileMenuToggle').style.transform = 'rotate(0deg)';
                     }
                 });
             });
@@ -2645,17 +2239,13 @@
                 mobileMenuToggle.addEventListener('click', function() {
                     sidebar.classList.toggle('active');
                     
-                    // Ubah ikon toggle
                     if (sidebar.classList.contains('active')) {
                         this.innerHTML = '<i class="fas fa-times"></i>';
-                        this.style.transform = 'rotate(90deg)';
                     } else {
                         this.innerHTML = '<i class="fas fa-bars"></i>';
-                        this.style.transform = 'rotate(0deg)';
                     }
                 });
                 
-                // Tutup sidebar saat klik di luar pada mobile
                 document.addEventListener('click', function(e) {
                     if (window.innerWidth <= 768) {
                         if (!sidebar.contains(e.target) && 
@@ -2663,7 +2253,6 @@
                             sidebar.classList.contains('active')) {
                             sidebar.classList.remove('active');
                             mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                            mobileMenuToggle.style.transform = 'rotate(0deg)';
                         }
                     }
                 });
@@ -2690,13 +2279,12 @@
             }
             
             window.addEventListener('resize', handleResize);
-            
-            // Initial check
             handleResize();
         }
 
         // Setup image upload modal
         function setupImageUploadModal() {
+            const profileUploadBtn = document.getElementById('profileUploadBtn');
             const imageInput = document.getElementById('imageInput');
             const imagePreview = document.getElementById('imagePreview');
             const previewImage = document.getElementById('previewImage');
@@ -2705,6 +2293,19 @@
             const removeImageBtn = document.getElementById('removeImageBtn');
             const modal = document.getElementById('imageUploadModal');
             
+            // Event listener untuk upload foto profile - HANYA JIKA ADMIN
+            if (profileUploadBtn) {
+                profileUploadBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (isAdminLoggedIn || isEditMode) {
+                        openImageUploadModal('profile');
+                    } else {
+                        showNotification('Silakan login sebagai admin untuk mengupload foto', 'error');
+                    }
+                });
+            }
+            
+            // Event listener untuk file input change
             imageInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
@@ -2728,72 +2329,135 @@
                 }
             });
             
+            // Event listener untuk save button
             saveImageBtn.addEventListener('click', function() {
-                if (currentAchievementEditing && previewImage.src) {
-                    const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementEditing);
-                    if (achievement) {
-                        achievement.image = previewImage.src;
-                        renderAchievementsPage();
-                        showNotification('Foto berhasil diupload!', 'success');
-                        modal.classList.remove('active');
-                        
-                        // Reset modal
-                        imageInput.value = '';
-                        imagePreview.style.display = 'none';
-                        previewImage.src = '';
-                        removeImageBtn.style.display = 'none';
-                        currentAchievementEditing = null;
+                if (previewImage.src) {
+                    if (currentUploadType === 'profile') {
+                        appData.user.profileImage = previewImage.src;
+                        renderProfileImage();
+                        showNotification('Foto profile berhasil diupload!', 'success');
+                    } else if (currentUploadType === 'achievement' && currentAchievementId) {
+                        const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementId);
+                        if (achievement) {
+                            achievement.image = previewImage.src;
+                            renderAchievementsPage();
+                            showNotification('Foto achievement berhasil diupload!', 'success');
+                        }
                     }
+                    
+                    modal.classList.remove('active');
+                    resetUploadModal();
                 }
             });
             
+            // Event listener untuk cancel button
             cancelImageBtn.addEventListener('click', function() {
                 modal.classList.remove('active');
-                
-                // Reset modal
-                imageInput.value = '';
-                imagePreview.style.display = 'none';
-                previewImage.src = '';
-                removeImageBtn.style.display = 'none';
-                currentAchievementEditing = null;
+                resetUploadModal();
             });
             
+            // Event listener untuk remove button
             removeImageBtn.addEventListener('click', function() {
-                if (currentAchievementEditing) {
-                    const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementEditing);
+                if (currentUploadType === 'profile') {
+                    appData.user.profileImage = null;
+                    renderProfileImage();
+                    showNotification('Foto profile berhasil dihapus!', 'success');
+                } else if (currentUploadType === 'achievement' && currentAchievementId) {
+                    const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementId);
                     if (achievement) {
                         achievement.image = null;
                         renderAchievementsPage();
-                        showNotification('Foto berhasil dihapus!', 'success');
-                        modal.classList.remove('active');
-                        
-                        // Reset modal
-                        imageInput.value = '';
-                        imagePreview.style.display = 'none';
-                        previewImage.src = '';
-                        removeImageBtn.style.display = 'none';
-                        currentAchievementEditing = null;
+                        showNotification('Foto achievement berhasil dihapus!', 'success');
                     }
                 }
+                
+                modal.classList.remove('active');
+                resetUploadModal();
             });
             
+            // Event listener untuk klik di luar modal
             modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
                     modal.classList.remove('active');
-                    
-                    // Reset modal
-                    imageInput.value = '';
-                    imagePreview.style.display = 'none';
-                    previewImage.src = '';
-                    removeImageBtn.style.display = 'none';
-                    currentAchievementEditing = null;
+                    resetUploadModal();
                 }
             });
         }
 
+        // Reset upload modal
+        function resetUploadModal() {
+            const imageInput = document.getElementById('imageInput');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImage = document.getElementById('previewImage');
+            const removeImageBtn = document.getElementById('removeImageBtn');
+            
+            imageInput.value = '';
+            imagePreview.style.display = 'none';
+            previewImage.src = '';
+            removeImageBtn.style.display = 'none';
+            currentUploadType = null;
+            currentAchievementId = null;
+        }
+
+        // Open image upload modal
+        function openImageUploadModal(type, achievementId = null) {
+            // PERIKSA APAKAH USER ADALAH ADMIN
+            if (!isAdminLoggedIn && !isEditMode) {
+                showNotification('Silakan login sebagai admin untuk mengupload foto', 'error');
+                return;
+            }
+            
+            currentUploadType = type;
+            currentAchievementId = achievementId;
+            
+            const modal = document.getElementById('imageUploadModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const removeImageBtn = document.getElementById('removeImageBtn');
+            const previewImage = document.getElementById('previewImage');
+            const imagePreview = document.getElementById('imagePreview');
+            
+            let currentImage = null;
+            
+            if (type === 'profile') {
+                modalTitle.textContent = 'Upload Foto Profile';
+                currentImage = appData.user.profileImage;
+            } else if (type === 'achievement' && achievementId) {
+                const achievement = appData.pages.achievements.items.find(a => a.id === achievementId);
+                if (achievement) {
+                    modalTitle.textContent = `Upload Foto untuk: ${achievement.title}`;
+                    currentImage = achievement.image;
+                }
+            }
+            
+            if (currentImage) {
+                previewImage.src = currentImage;
+                imagePreview.style.display = 'block';
+                removeImageBtn.style.display = 'inline-block';
+            } else {
+                imagePreview.style.display = 'none';
+                removeImageBtn.style.display = 'none';
+            }
+            
+            modal.classList.add('active');
+        }
+
+        // Render profile image
+        function renderProfileImage() {
+            const profileImg = document.getElementById('profileImg');
+            const profileIcon = document.getElementById('profileIcon');
+            
+            if (appData.user.profileImage) {
+                profileImg.style.background = 'none';
+                profileImg.innerHTML = `<img src="${appData.user.profileImage}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">`;
+                profileIcon.style.display = 'none';
+            } else {
+                profileImg.style.background = 'var(--gradient-gold)';
+                profileImg.innerHTML = `<div class="profile-img-placeholder"><i class="fas fa-user-tie" id="profileIcon"></i></div>`;
+            }
+        }
+
         // Change page
         function changePage(pageId) {
-            // Animasi fade out
             document.querySelectorAll('.page').forEach(page => {
                 if (page.classList.contains('active')) {
                     page.style.opacity = '0';
@@ -2827,8 +2491,6 @@
                     }
                     
                     renderPage(pageId);
-                    
-                    // Scroll to top of main content when changing pages
                     document.querySelector('.main-content').scrollTop = 0;
                 }
             }, 300);
@@ -2977,18 +2639,28 @@
                 let imageHTML = '';
                 if (item.image) {
                     imageHTML = `
-                        <div class="achievement-image-container">
+                        <div class="achievement-image-container" data-upload="${item.id}">
                             <img src="${item.image}" alt="${item.title}" class="achievement-image">
-                            <button class="upload-btn" data-upload="${item.id}">Ganti Foto</button>
+                            <div class="achievement-upload-overlay">
+                                <div>
+                                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                                    Klik untuk ganti foto
+                                </div>
+                            </div>
                         </div>
                     `;
                 } else {
                     imageHTML = `
-                        <div class="achievement-image-container">
+                        <div class="achievement-image-container" data-upload="${item.id}">
                             <div class="achievement-image-placeholder">
                                 <i class="fas fa-trophy"></i>
                             </div>
-                            <button class="upload-btn" data-upload="${item.id}">Upload Foto</button>
+                            <div class="achievement-upload-overlay">
+                                <div>
+                                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                                    Klik untuk upload foto
+                                </div>
+                            </div>
                         </div>
                     `;
                 }
@@ -3004,14 +2676,19 @@
                 container.appendChild(achievementElement);
             });
             
-            if (isEditMode) {
-                document.querySelectorAll('.upload-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
+            // Setup event listeners untuk upload foto achievements - HANYA UNTUK ADMIN
+            document.querySelectorAll('.achievement-image-container').forEach(container => {
+                container.addEventListener('click', function() {
+                    if (isAdminLoggedIn || isEditMode) {
                         const achievementId = this.getAttribute('data-upload');
-                        openImageUploadModal(achievementId);
-                    });
+                        openImageUploadModal('achievement', achievementId);
+                    } else {
+                        showNotification('Silakan login sebagai admin untuk mengupload foto', 'error');
+                    }
                 });
-                
+            });
+            
+            if (isAdminLoggedIn || isEditMode) {
                 document.querySelectorAll('.edit-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const elementId = this.getAttribute('data-edit');
@@ -3019,32 +2696,6 @@
                     });
                 });
             }
-        }
-
-        // Open image upload modal
-        function openImageUploadModal(achievementId) {
-            currentAchievementEditing = achievementId;
-            const modal = document.getElementById('imageUploadModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const removeImageBtn = document.getElementById('removeImageBtn');
-            const previewImage = document.getElementById('previewImage');
-            const imagePreview = document.getElementById('imagePreview');
-            
-            const achievement = appData.pages.achievements.items.find(a => a.id === achievementId);
-            if (achievement) {
-                modalTitle.textContent = `Upload Foto untuk: ${achievement.title}`;
-                
-                if (achievement.image) {
-                    previewImage.src = achievement.image;
-                    imagePreview.style.display = 'block';
-                    removeImageBtn.style.display = 'inline-block';
-                } else {
-                    imagePreview.style.display = 'none';
-                    removeImageBtn.style.display = 'none';
-                }
-            }
-            
-            modal.classList.add('active');
         }
 
         // Edit achievement
@@ -3132,7 +2783,7 @@
                 container.appendChild(projectElement);
             });
             
-            if (isEditMode) {
+            if (isAdminLoggedIn || isEditMode) {
                 document.querySelectorAll('.edit-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const elementId = this.getAttribute('data-edit');
@@ -3247,7 +2898,6 @@
                     if (window.innerWidth <= 768) {
                         document.getElementById('sidebar').classList.remove('active');
                         document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
-                        document.getElementById('mobileMenuToggle').style.transform = 'rotate(0deg)';
                     }
                 } else {
                     showNotification('Password salah!', 'error');
@@ -3258,7 +2908,7 @@
                 isAdminLoggedIn = false;
                 isEditMode = false;
                 document.getElementById('adminControls').style.display = 'none';
-                document.body.classList.remove('edit-mode');
+                document.body.classList.remove('admin-mode');
                 document.getElementById('editStatus').style.display = 'none';
                 showNotification('Logout berhasil', 'info');
                 updateAdminUI();
@@ -3271,7 +2921,7 @@
                 }
                 
                 isEditMode = !isEditMode;
-                document.body.classList.toggle('edit-mode', isEditMode);
+                document.body.classList.toggle('admin-mode', isEditMode);
                 document.getElementById('editStatus').style.display = isEditMode ? 'block' : 'none';
                 toggleEditMode.textContent = isEditMode ? 'Nonaktifkan Edit Mode' : 'Aktifkan Edit Mode';
                 
@@ -3637,10 +3287,12 @@
                 adminToggle.innerHTML = '<i class="fas fa-user-check"></i> Admin Mode';
                 adminToggle.style.background = 'var(--gradient-gold)';
                 adminToggle.style.color = '#000';
+                document.body.classList.add('admin-mode');
             } else {
                 adminToggle.innerHTML = '<i class="fas fa-user-lock"></i> Login Admin';
                 adminToggle.style.background = 'linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%)';
                 adminToggle.style.color = 'var(--primary)';
+                document.body.classList.remove('admin-mode');
             }
         }
 
