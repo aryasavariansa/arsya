@@ -11,6 +11,7 @@
             --primary-light: #fff8e1;
             --secondary: #00ffff;
             --danger: #ff4757;
+            --success: #2ed573;
             --dark: #121212;
             --dark-light: #1e1e1e;
             --dark-lighter: #2a2a2a;
@@ -23,6 +24,8 @@
             --gradient-gold: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
             --gradient-cyan: linear-gradient(135deg, #00ffff 0%, #00bcd4 100%);
             --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --gradient-success: linear-gradient(135deg, #2ed573 0%, #7bed9f 100%);
+            --gradient-purple: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
         }
 
         * {
@@ -515,6 +518,490 @@
             margin: 0 auto;
         }
 
+        /* ===== DASHBOARD PAGE - UPDATED ===== */
+        .dashboard-periods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .period-section {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(26, 26, 26, 0.7) 100%);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .period-section::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 8px;
+            height: 100%;
+            background: var(--gradient-gold);
+        }
+
+        .period-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .period-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .period-date {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .period-date i {
+            font-size: 1rem;
+        }
+
+        .period-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 25px;
+        }
+
+        .period-stat {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.8) 0%, rgba(30, 30, 30, 0.6) 100%);
+            border-radius: 12px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 215, 0, 0.05);
+        }
+
+        .period-stat:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .period-stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .period-stat-value.staff {
+            background: var(--gradient-success);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .period-stat-value.drafter {
+            background: var(--gradient-purple);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .period-stat-label {
+            color: var(--gray);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* ===== DAILY ME PAGE ===== */
+        .dailyme-intro {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .dailyme-intro h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .dailyme-intro p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        /* Upload Form */
+        .upload-form-container {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .upload-form h3 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .upload-form h3 i {
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--light);
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 16px 20px;
+            background: #0f0f0f;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            color: var(--light);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #0a0a0a;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+        }
+
+        .image-preview-container {
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            background: rgba(255, 215, 0, 0.02);
+            transition: var(--transition);
+            margin-bottom: 30px;
+            cursor: pointer;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .image-preview-container:hover {
+            border-color: var(--primary);
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .image-preview-container.dragover {
+            border-color: var(--primary);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .image-preview-placeholder {
+            text-align: center;
+            color: var(--gray);
+        }
+
+        .image-preview-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+            color: var(--primary);
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-preview.active {
+            display: block;
+        }
+
+        .upload-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .upload-btn {
+            padding: 16px 35px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .upload-btn.primary {
+            background: var(--gradient-gold);
+            color: #000;
+        }
+
+        .upload-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .upload-btn.secondary {
+            background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+            color: var(--light);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .upload-btn.secondary:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        /* Gallery Grid */
+        .dailyme-gallery {
+            margin-top: 50px;
+        }
+
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .gallery-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .filter-select {
+            background: #0f0f0f;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: var(--light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-item {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-image-container {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.9));
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gradient-gold);
+            color: #000;
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .gallery-content {
+            padding: 25px;
+        }
+
+        .gallery-date {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gallery-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .gallery-notes {
+            color: var(--gray);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            max-height: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .gallery-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn.edit {
+            background: var(--gradient-gold);
+            color: #000;
+        }
+
+        .action-btn.delete {
+            background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+            color: #fff;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .empty-gallery {
+            text-align: center;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
+            border-radius: var(--border-radius);
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+        }
+
+        .empty-gallery i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .empty-gallery h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .empty-gallery p {
+            color: var(--gray);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
         /* ===== ABOUT PAGE ===== */
         .about-content {
             display: grid;
@@ -898,49 +1385,6 @@
             font-size: 0.9rem;
             color: var(--gray);
             font-weight: 500;
-        }
-
-        /* ===== DASHBOARD PAGE ===== */
-        .dashboard-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-            min-height: 200px;
-            width: 100%;
-        }
-
-        .dashboard-card {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            padding: 35px;
-            text-align: center;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dashboard-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 215, 0, 0.3);
-        }
-
-        .dashboard-number {
-            font-size: 3rem;
-            font-weight: 800;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-            line-height: 1;
-        }
-
-        .dashboard-label {
-            color: var(--gray);
-            font-weight: 500;
-            font-size: 1rem;
         }
 
         /* ===== CHATROOM PAGE ===== */
@@ -1610,6 +2054,14 @@
             .chatroom-container {
                 height: 65vh;
             }
+            
+            .dashboard-periods {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
         }
 
         @media (max-width: 768px) {
@@ -1716,6 +2168,14 @@
                 top: -40px;
                 right: 10px;
             }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1749,6 +2209,18 @@
             .zoom-caption {
                 font-size: 0.9rem;
                 margin-top: 10px;
+            }
+            
+            .period-section {
+                padding: 25px;
+            }
+            
+            .period-stat {
+                padding: 15px;
+            }
+            
+            .period-stat-value {
+                font-size: 2rem;
             }
         }
     </style>
@@ -1784,6 +2256,7 @@
         <ul class="nav-menu">
             <li><a href="#home" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="#about" class="nav-link" data-page="about"><i class="fas fa-user"></i> About Me</a></li>
+            <li><a href="#daily-me" class="nav-link" data-page="daily-me"><i class="fas fa-images"></i> Daily Me</a></li>
             <li><a href="#achievements" class="nav-link" data-page="achievements"><i class="fas fa-trophy"></i> Achievements</a></li>
             <li><a href="#projects" class="nav-link" data-page="projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
             <li><a href="#dashboard" class="nav-link" data-page="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
@@ -1979,6 +2452,98 @@
                 </div>
             </div>
             
+            <!-- Daily Me Page -->
+            <div class="page" id="dailyMePage">
+                <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Daily Me</h2>
+                
+                <div class="dailyme-intro">
+                    <h3>Dokumentasi Kegiatan Kerja Harian</h3>
+                    <p>Bagian ini merupakan dokumentasi visual dari aktivitas kerja saya sebagai Mechanical Drafter dan Staff Produksi. Setiap gambar dilengkapi dengan catatan untuk menjelaskan konteks dan pembelajaran dari setiap kegiatan.</p>
+                    <p>Kategori: <span class="gallery-category" style="display: inline-block; margin: 0 5px; padding: 5px 12px;">Staff Production</span> <span class="gallery-category" style="display: inline-block; margin: 0 5px; padding: 5px 12px;">Drafter</span> <span class="gallery-category" style="display: inline-block; margin: 0 5px; padding: 5px 12px;">Achievement</span></p>
+                </div>
+                
+                <!-- Upload Form -->
+                <div class="upload-form-container editable" id="uploadFormContainer">
+                    <form class="upload-form" id="dailyMeUploadForm">
+                        <h3><i class="fas fa-cloud-upload-alt"></i> Upload Kegiatan Baru</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dailyMeTitle">Judul Kegiatan</label>
+                                <input type="text" id="dailyMeTitle" placeholder="Contoh: Optimasi Proses Molding" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dailyMeCategory">Kategori</label>
+                                <select id="dailyMeCategory" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Staff Production">Staff Production</option>
+                                    <option value="Drafter">Drafter</option>
+                                    <option value="Achievement">Achievement</option>
+                                    <option value="Training">Training</option>
+                                    <option value="Other">Lainnya</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dailyMeNotes">Catatan / Deskripsi</label>
+                            <textarea id="dailyMeNotes" placeholder="Deskripsikan kegiatan ini, apa yang dikerjakan, tantangan, dan hasilnya..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Upload Gambar</label>
+                            <div class="image-preview-container" id="dailyMeImagePreviewContainer">
+                                <div class="image-preview-placeholder" id="dailyMeImagePlaceholder">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Drag & drop gambar di sini atau klik untuk memilih</p>
+                                    <p style="font-size: 0.9rem; margin-top: 10px; color: var(--gray);">Format: JPG, PNG, GIF (Maks. 5MB)</p>
+                                </div>
+                                <img class="image-preview" id="dailyMeImagePreview" alt="Preview">
+                                <input type="file" id="dailyMeImageInput" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                        
+                        <div class="upload-actions">
+                            <button type="button" class="upload-btn secondary" id="cancelUpload">Batal</button>
+                            <button type="submit" class="upload-btn primary" id="submitDailyMe">Upload Kegiatan</button>
+                        </div>
+                    </form>
+                    <button class="add-btn" data-add="dailyMe">+ Tambah Kegiatan Manual</button>
+                </div>
+                
+                <!-- Gallery -->
+                <div class="dailyme-gallery" id="dailyMeGallery">
+                    <div class="gallery-header">
+                        <h3 style="color: var(--primary); font-size: 1.5rem;">Galeri Kegiatan</h3>
+                        <div class="gallery-controls">
+                            <select class="filter-select" id="galleryFilter">
+                                <option value="all">Semua Kategori</option>
+                                <option value="Staff Production">Staff Production</option>
+                                <option value="Drafter">Drafter</option>
+                                <option value="Achievement">Achievement</option>
+                                <option value="Training">Training</option>
+                                <option value="Other">Lainnya</option>
+                            </select>
+                            <select class="filter-select" id="gallerySort">
+                                <option value="newest">Terbaru</option>
+                                <option value="oldest">Terlama</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-grid" id="dailyMeGalleryGrid">
+                        <!-- Gallery items akan di-render oleh JavaScript -->
+                    </div>
+                    
+                    <div class="empty-gallery" id="emptyGallery" style="display: none;">
+                        <i class="fas fa-images"></i>
+                        <h3>Belum ada kegiatan yang diupload</h3>
+                        <p>Mulailah dengan mengupload dokumentasi kegiatan kerja Anda menggunakan form di atas.</p>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Achievements Page -->
             <div class="page" id="achievementsPage">
                 <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Pencapaian & Sertifikat</h2>
@@ -2067,60 +2632,96 @@
             <div class="page" id="dashboardPage">
                 <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Dashboard Statistik</h2>
                 
-                <div class="dashboard-stats" id="dashboardStats">
-                    <div class="dashboard-card editable" id="dashboardStat1">
-                        <div class="dashboard-number">15%</div>
-                        <div class="dashboard-label">Pengurangan Waktu Setup</div>
-                        <button class="edit-btn" data-edit="dashboardStat1">Edit</button>
+                <div class="dashboard-periods">
+                    <!-- Staff Production Period -->
+                    <div class="period-section editable" id="staffPeriod">
+                        <div class="period-header">
+                            <h2 class="period-title">Staff Production</h2>
+                            <div class="period-date">
+                                <i class="far fa-calendar"></i> Jun 2024 - Jun 2025
+                            </div>
+                        </div>
+                        
+                        <div class="period-stats">
+                            <div class="period-stat editable" id="staffStat1">
+                                <div class="period-stat-value staff">60%</div>
+                                <div class="period-stat-label">Penurunan Reject Material</div>
+                                <button class="edit-btn" data-edit="staffStat1">Edit</button>
+                            </div>
+                            
+                            <div class="period-stat editable" id="staffStat2">
+                                <div class="period-stat-value staff">63.8%</div>
+                                <div class="period-stat-label">Pengurangan WIP Inventory</div>
+                                <button class="edit-btn" data-edit="staffStat2">Edit</button>
+                            </div>
+                            
+                            <div class="period-stat editable" id="staffStat3">
+                                <div class="period-stat-value staff">62.5%</div>
+                                <div class="period-stat-label">Penurunan Reject Mesin Spiral</div>
+                                <button class="edit-btn" data-edit="staffStat3">Edit</button>
+                            </div>
+                            
+                            <div class="period-stat editable" id="staffStat4">
+                                <div class="period-stat-value staff">90%</div>
+                                <div class="period-stat-label">Kesesuaian Dokumen (KPH)</div>
+                                <button class="edit-btn" data-edit="staffStat4">Edit</button>
+                            </div>
+                        </div>
+                        <button class="edit-btn" data-edit="staffPeriod">Edit</button>
                     </div>
                     
-                    <div class="dashboard-card editable" id="dashboardStat2">
-                        <div class="dashboard-number">60%</div>
-                        <div class="dashboard-label">Penurunan Reject Material</div>
-                        <button class="edit-btn" data-edit="dashboardStat2">Edit</button>
-                    </div>
-                    
-                    <div class="dashboard-card editable" id="dashboardStat3">
-                        <div class="dashboard-number">20%</div>
-                        <div class="dashboard-label">Peningkatan Efisiensi</div>
-                        <button class="edit-btn" data-edit="dashboardStat3">Edit</button>
-                    </div>
-                    
-                    <div class="dashboard-card editable" id="dashboardStat4">
-                        <div class="dashboard-number">67%</div>
-                        <div class="dashboard-label">Pengurangan Lead Time</div>
-                        <button class="edit-btn" data-edit="dashboardStat4">Edit</button>
-                    </div>
-                    
-                    <div class="dashboard-card editable" id="dashboardStat5">
-                        <div class="dashboard-number">90%</div>
-                        <div class="dashboard-label">Kesesuaian Dokumen (KPH)</div>
-                        <button class="edit-btn" data-edit="dashboardStat5">Edit</button>
+                    <!-- Drafter Period -->
+                    <div class="period-section editable" id="drafterPeriod">
+                        <div class="period-header">
+                            <h2 class="period-title">Mechanical Drafter</h2>
+                            <div class="period-date">
+                                <i class="far fa-calendar"></i> Jun 2025 - Sekarang
+                            </div>
+                        </div>
+                        
+                        <div class="period-stats">
+                            <div class="period-stat editable" id="drafterStat1">
+                                <div class="period-stat-value drafter">15%</div>
+                                <div class="period-stat-label">Pengurangan Waktu Setup</div>
+                                <button class="edit-btn" data-edit="drafterStat1">Edit</button>
+                            </div>
+                            
+                            <div class="period-stat editable" id="drafterStat2">
+                                <div class="period-stat-value drafter">40%</div>
+                                <div class="period-stat-label">Pengurangan Downtime</div>
+                                <button class="edit-btn" data-edit="drafterStat2">Edit</button>
+                            </div>
+                            
+                            <div class="period-stat editable" id="drafterStat3">
+                                <div class="period-stat-value drafter">67%</div>
+                                <div class="period-stat-label">Pengurangan Lead Time</div>
+                                <button class="edit-btn" data-edit="drafterStat3">Edit</button>
+                            </div>
+                            
+                            <div class="period-stat editable" id="drafterStat4">
+                                <div class="period-stat-value drafter">100%</div>
+                                <div class="period-stat-label">Standarisasi Molding Setting</div>
+                                <button class="edit-btn" data-edit="drafterStat4">Edit</button>
+                            </div>
+                        </div>
+                        <button class="edit-btn" data-edit="drafterPeriod">Edit</button>
                     </div>
                 </div>
                 
                 <div class="dashboard-chart editable" id="dashboardChart">
-                    <h3>Grafik Produktivitas</h3>
+                    <h3>Grafik Perbandingan Performa</h3>
                     <div style="height: 350px; background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%); border-radius: 12px; display: flex; align-items: flex-end; padding: 25px; border: 1px solid rgba(255, 215, 0, 0.1);">
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 220px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
-                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Jan</div>
+                            <div style="height: 180px; width: 50px; background: var(--gradient-success); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
+                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Staff</div>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 180px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
-                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Feb</div>
-                        </div>
-                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 250px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
-                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Mar</div>
+                            <div style="height: 220px; width: 50px; background: var(--gradient-purple); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
+                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Drafter</div>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
                             <div style="height: 280px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
-                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Apr</div>
-                        </div>
-                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 320px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
-                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Mei</div>
+                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Total</div>
                         </div>
                     </div>
                     <button class="edit-btn" data-edit="dashboardChart">Edit</button>
@@ -2280,7 +2881,7 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // Data aplikasi dengan fitur foto
+        // Data aplikasi dengan fitur foto dan Daily Me
         const appData = {
             user: {
                 name: "Arya Savariansah",
@@ -2356,6 +2957,37 @@
                         }
                     ]
                 },
+                dailyMe: {
+                    title: "Daily Me",
+                    description: "Dokumentasi kegiatan kerja harian",
+                    items: [
+                        {
+                            id: "dailyMe1",
+                            title: "Optimasi Molding Setting",
+                            date: "15/03/2025",
+                            category: "Drafter",
+                            notes: "Standarisasi variasi pengaturan molding dari berbagai variasi menjadi 1 standar variasi untuk mengurangi risiko kesalahan setting oleh operator.",
+                            image: null
+                        },
+                        {
+                            id: "dailyMe2",
+                            title: "Monitoring WIP Inventory",
+                            date: "20/02/2025",
+                            category: "Staff Production",
+                            notes: "Membuat sistem monitoring stock WIP dan planning item produksi untuk meningkatkan productivity penggunaan bahan dari 2 Ton menjadi 724,5 kg.",
+                            image: null
+                        },
+                        {
+                            id: "dailyMe3",
+                            title: "Reduksi Reject Mesin Spiral",
+                            date: "10/01/2025",
+                            category: "Staff Production",
+                            notes: "Melakukan TFT (Task Force Team) untuk menurunkan reject dari 8% menjadi 3% pada mesin spiral melalui analisis akar masalah dan perbaikan proses.",
+                            image: null
+                        }
+                    ],
+                    categories: ["Staff Production", "Drafter", "Achievement", "Training", "Other"]
+                },
                 achievements: {
                     title: "Achievements",
                     description: "Pencapaian dan sertifikat profesional",
@@ -2415,12 +3047,29 @@
                 dashboard: {
                     title: "Dashboard",
                     description: "Statistik dan metrik performa",
-                    stats: [
-                        { id: "dashboardStat1", number: "15%", label: "Pengurangan Waktu Setup" },
-                        { id: "dashboardStat2", number: "60%", label: "Penurunan Reject Material" },
-                        { id: "dashboardStat3", number: "20%", label: "Peningkatan Efisiensi" },
-                        { id: "dashboardStat4", number: "67%", label: "Pengurangan Lead Time" },
-                        { id: "dashboardStat5", number: "90%", label: "Kesesuaian Dokumen (KPH)" }
+                    periods: [
+                        {
+                            id: "staffPeriod",
+                            title: "Staff Production",
+                            date: "Jun 2024 - Jun 2025",
+                            stats: [
+                                { id: "staffStat1", value: "60%", label: "Penurunan Reject Material" },
+                                { id: "staffStat2", value: "63.8%", label: "Pengurangan WIP Inventory" },
+                                { id: "staffStat3", value: "62.5%", label: "Penurunan Reject Mesin Spiral" },
+                                { id: "staffStat4", value: "90%", label: "Kesesuaian Dokumen (KPH)" }
+                            ]
+                        },
+                        {
+                            id: "drafterPeriod",
+                            title: "Mechanical Drafter",
+                            date: "Jun 2025 - Sekarang",
+                            stats: [
+                                { id: "drafterStat1", value: "15%", label: "Pengurangan Waktu Setup" },
+                                { id: "drafterStat2", value: "40%", label: "Pengurangan Downtime" },
+                                { id: "drafterStat3", value: "67%", label: "Pengurangan Lead Time" },
+                                { id: "drafterStat4", value: "100%", label: "Standarisasi Molding Setting" }
+                            ]
+                        }
                     ]
                 },
                 contact: {
@@ -2455,6 +3104,7 @@
             setupImageUploadModal();
             setupZoomModal();
             setupResponsiveBehavior();
+            setupDailyMeUpload();
             renderPage(currentPage);
             updateAdminUI();
             setupContentHeight();
@@ -2537,6 +3187,137 @@
             
             window.addEventListener('resize', handleResize);
             handleResize();
+        }
+
+        // Setup Daily Me upload functionality
+        function setupDailyMeUpload() {
+            const form = document.getElementById('dailyMeUploadForm');
+            const imageInput = document.getElementById('dailyMeImageInput');
+            const imagePreviewContainer = document.getElementById('dailyMeImagePreviewContainer');
+            const imagePreview = document.getElementById('dailyMeImagePreview');
+            const imagePlaceholder = document.getElementById('dailyMeImagePlaceholder');
+            const cancelBtn = document.getElementById('cancelUpload');
+            
+            // Click pada container untuk trigger file input
+            imagePreviewContainer.addEventListener('click', function(e) {
+                if (e.target !== imagePreview) {
+                    imageInput.click();
+                }
+            });
+            
+            // Drag and drop functionality
+            imagePreviewContainer.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+            
+            imagePreviewContainer.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+            
+            imagePreviewContainer.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleImageUpload(files[0]);
+                }
+            });
+            
+            // File input change
+            imageInput.addEventListener('change', function(e) {
+                if (this.files.length > 0) {
+                    handleImageUpload(this.files[0]);
+                }
+            });
+            
+            // Form submit
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!isAdminLoggedIn && !isEditMode) {
+                    showNotification('Silakan login sebagai admin untuk menambah kegiatan', 'error');
+                    return;
+                }
+                
+                const title = document.getElementById('dailyMeTitle').value;
+                const category = document.getElementById('dailyMeCategory').value;
+                const notes = document.getElementById('dailyMeNotes').value;
+                const imageSrc = imagePreview.src || null;
+                
+                if (!title || !category || !notes) {
+                    showNotification('Harap isi semua field yang diperlukan', 'error');
+                    return;
+                }
+                
+                const newId = 'dailyMe' + (appData.pages.dailyMe.items.length + 1);
+                const date = new Date().toLocaleDateString('id-ID', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+                
+                const newItem = {
+                    id: newId,
+                    title: title,
+                    date: date,
+                    category: category,
+                    notes: notes,
+                    image: imageSrc
+                };
+                
+                appData.pages.dailyMe.items.push(newItem);
+                renderDailyMePage();
+                
+                // Reset form
+                form.reset();
+                imagePreview.src = '';
+                imagePreview.classList.remove('active');
+                imagePlaceholder.style.display = 'block';
+                
+                showNotification('Kegiatan berhasil ditambahkan!', 'success');
+            });
+            
+            // Cancel button
+            cancelBtn.addEventListener('click', function() {
+                form.reset();
+                imagePreview.src = '';
+                imagePreview.classList.remove('active');
+                imagePlaceholder.style.display = 'block';
+                showNotification('Form dibatalkan', 'info');
+            });
+            
+            // Filter and sort functionality
+            const filterSelect = document.getElementById('galleryFilter');
+            const sortSelect = document.getElementById('gallerySort');
+            
+            filterSelect.addEventListener('change', renderDailyMeGallery);
+            sortSelect.addEventListener('change', renderDailyMeGallery);
+            
+            // Function to handle image upload
+            function handleImageUpload(file) {
+                // Validasi file
+                if (!file.type.match('image.*')) {
+                    showNotification('Hanya file gambar yang diperbolehkan', 'error');
+                    return;
+                }
+                
+                if (file.size > 5 * 1024 * 1024) {
+                    showNotification('Ukuran file terlalu besar. Maksimal 5MB', 'error');
+                    return;
+                }
+                
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.add('active');
+                    imagePlaceholder.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
         // Load data dari localStorage
@@ -2986,6 +3767,9 @@
                 case 'about':
                     renderAboutPage();
                     break;
+                case 'daily-me':
+                    renderDailyMePage();
+                    break;
                 case 'achievements':
                     renderAchievementsPage();
                     break;
@@ -3120,6 +3904,211 @@
                     deleteExperience(experienceId);
                 });
             }
+        }
+
+        // Render Daily Me page
+        function renderDailyMePage() {
+            renderDailyMeGallery();
+        }
+
+        // Render Daily Me gallery
+        function renderDailyMeGallery() {
+            const pageData = appData.pages.dailyMe;
+            const galleryGrid = document.getElementById('dailyMeGalleryGrid');
+            const emptyGallery = document.getElementById('emptyGallery');
+            const filterSelect = document.getElementById('galleryFilter');
+            const sortSelect = document.getElementById('gallerySort');
+            
+            if (!galleryGrid) return;
+            
+            // Filter items
+            let filteredItems = [...pageData.items];
+            const filterValue = filterSelect ? filterSelect.value : 'all';
+            
+            if (filterValue !== 'all') {
+                filteredItems = filteredItems.filter(item => item.category === filterValue);
+            }
+            
+            // Sort items
+            const sortValue = sortSelect ? sortSelect.value : 'newest';
+            filteredItems.sort((a, b) => {
+                const dateA = parseDate(a.date);
+                const dateB = parseDate(b.date);
+                
+                if (sortValue === 'newest') {
+                    return dateB - dateA;
+                } else {
+                    return dateA - dateB;
+                }
+            });
+            
+            // Clear gallery
+            galleryGrid.innerHTML = '';
+            
+            // Show empty message if no items
+            if (filteredItems.length === 0) {
+                if (emptyGallery) emptyGallery.style.display = 'block';
+                return;
+            } else {
+                if (emptyGallery) emptyGallery.style.display = 'none';
+            }
+            
+            // Render gallery items
+            filteredItems.forEach(item => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item editable';
+                galleryItem.id = item.id;
+                
+                let imageHTML = '';
+                if (item.image) {
+                    imageHTML = `
+                        <div class="gallery-image-container" onclick="openZoom('${item.image}', '${item.title}')">
+                            <img src="${item.image}" alt="${item.title}" class="gallery-image">
+                            <div class="gallery-overlay">
+                                <div style="color: var(--primary); font-weight: 600;">
+                                    <i class="fas fa-search-plus"></i> Klik untuk zoom
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    imageHTML = `
+                        <div class="gallery-image-container" onclick="showNotification('Tidak ada gambar untuk kegiatan ini', 'info')">
+                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%); display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-image" style="font-size: 3rem; color: rgba(255, 215, 0, 0.3);"></i>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                galleryItem.innerHTML = `
+                    <div class="gallery-category">${item.category}</div>
+                    ${imageHTML}
+                    <div class="gallery-content">
+                        <div class="gallery-date">
+                            <i class="far fa-calendar"></i> ${item.date}
+                        </div>
+                        <h3 class="gallery-title">${item.title}</h3>
+                        <p class="gallery-notes">${item.notes}</p>
+                        <div class="gallery-actions">
+                            <button class="action-btn edit" data-edit="${item.id}">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="action-btn delete" data-delete="${item.id}" data-type="dailyMe">
+                                <i class="fas fa-trash"></i> Hapus
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                galleryGrid.appendChild(galleryItem);
+            });
+            
+            // Setup event listeners for edit and delete buttons
+            setupDailyMeEventListeners();
+        }
+
+        // Setup event listeners for Daily Me items
+        function setupDailyMeEventListeners() {
+            // Edit buttons
+            document.querySelectorAll('.action-btn.edit').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = this.getAttribute('data-edit');
+                    editDailyMeItem(itemId);
+                });
+            });
+            
+            // Delete buttons
+            document.querySelectorAll('.action-btn.delete[data-type="dailyMe"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = this.getAttribute('data-delete');
+                    deleteDailyMeItem(itemId);
+                });
+            });
+        }
+
+        // Helper function to parse date string
+        function parseDate(dateStr) {
+            const parts = dateStr.split('/');
+            if (parts.length === 3) {
+                return new Date(parts[2], parts[1] - 1, parts[0]);
+            }
+            return new Date();
+        }
+
+        // Edit Daily Me item
+        function editDailyMeItem(itemId) {
+            const item = appData.pages.dailyMe.items.find(i => i.id === itemId);
+            if (!item) return;
+            
+            const newTitle = prompt('Edit judul kegiatan:', item.title);
+            if (newTitle === null) return;
+            
+            const newDate = prompt('Edit tanggal (format: DD/MM/YYYY):', item.date);
+            if (newDate === null) return;
+            
+            const newCategory = prompt('Edit kategori (Staff Production, Drafter, Achievement, Training, Other):', item.category);
+            if (newCategory === null) return;
+            
+            const newNotes = prompt('Edit catatan/deskripsi:', item.notes);
+            if (newNotes === null) return;
+            
+            item.title = newTitle;
+            item.date = newDate;
+            item.category = newCategory;
+            item.notes = newNotes;
+            
+            renderDailyMePage();
+            showNotification('Kegiatan berhasil diperbarui!', 'success');
+        }
+
+        // Delete Daily Me item
+        function deleteDailyMeItem(itemId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus kegiatan ini?')) {
+                return;
+            }
+            
+            showLoading('Menghapus kegiatan...');
+            
+            setTimeout(() => {
+                const index = appData.pages.dailyMe.items.findIndex(item => item.id === itemId);
+                if (index !== -1) {
+                    appData.pages.dailyMe.items.splice(index, 1);
+                    renderDailyMePage();
+                    saveToLocalStorage();
+                    showNotification('Kegiatan berhasil dihapus!', 'success');
+                }
+                hideLoading();
+            }, 500);
+        }
+
+        // Add Daily Me item manually
+        function addDailyMeItem() {
+            const newTitle = prompt('Masukkan judul kegiatan baru:');
+            if (!newTitle) return;
+            
+            const newDate = prompt('Masukkan tanggal (format: DD/MM/YYYY):');
+            if (!newDate) return;
+            
+            const newCategory = prompt('Masukkan kategori (Staff Production, Drafter, Achievement, Training, Other):');
+            if (!newCategory) return;
+            
+            const newNotes = prompt('Masukkan catatan/deskripsi:');
+            if (!newNotes) return;
+            
+            const newId = 'dailyMe' + (appData.pages.dailyMe.items.length + 1);
+            const newItem = {
+                id: newId,
+                title: newTitle,
+                date: newDate,
+                category: newCategory,
+                notes: newNotes,
+                image: null
+            };
+            
+            appData.pages.dailyMe.items.push(newItem);
+            renderDailyMePage();
+            showNotification('Kegiatan berhasil ditambahkan!', 'success');
         }
 
         // Render achievements page
@@ -3400,6 +4389,41 @@
             showNotification('Proyek berhasil ditambahkan!', 'success');
         }
 
+        // Render dashboard page
+        function renderDashboardPage() {
+            const pageData = appData.pages.dashboard;
+            
+            // Render periods
+            pageData.periods.forEach(period => {
+                const periodElement = document.getElementById(period.id);
+                if (periodElement) {
+                    periodElement.querySelector('.period-title').textContent = period.title;
+                    periodElement.querySelector('.period-date').innerHTML = `<i class="far fa-calendar"></i> ${period.date}`;
+                    
+                    // Render stats
+                    period.stats.forEach(stat => {
+                        const statElement = document.getElementById(stat.id);
+                        if (statElement) {
+                            const valueElement = statElement.querySelector('.period-stat-value');
+                            const labelElement = statElement.querySelector('.period-stat-label');
+                            
+                            if (valueElement) valueElement.textContent = stat.value;
+                            if (labelElement) labelElement.textContent = stat.label;
+                            
+                            // Add appropriate class based on period
+                            if (period.id === 'staffPeriod') {
+                                valueElement.classList.add('staff');
+                                valueElement.classList.remove('drafter');
+                            } else if (period.id === 'drafterPeriod') {
+                                valueElement.classList.add('drafter');
+                                valueElement.classList.remove('staff');
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
         // Fungsi untuk menghapus experience
         function deleteExperience(experienceId) {
             if (!confirm('Apakah Anda yakin ingin menghapus pengalaman ini?')) {
@@ -3465,22 +4489,6 @@
             appData.pages.about.experiences.push(newExperience);
             renderExperiences();
             showNotification('Pengalaman berhasil ditambahkan!', 'success');
-        }
-
-        // Render dashboard page
-        function renderDashboardPage() {
-            const pageData = appData.pages.dashboard;
-            
-            pageData.stats.forEach((stat) => {
-                const statElement = document.getElementById(stat.id);
-                if (statElement) {
-                    const numberElement = statElement.querySelector('.dashboard-number');
-                    const labelElement = statElement.querySelector('.dashboard-label');
-                    
-                    if (numberElement) numberElement.textContent = stat.number;
-                    if (labelElement) labelElement.textContent = stat.label;
-                }
-            });
         }
 
         // Render contact page
@@ -3565,6 +4573,9 @@
                     if (currentPage === 'projects') {
                         renderProjectsPage();
                     }
+                    if (currentPage === 'daily-me') {
+                        renderDailyMePage();
+                    }
                 }
             });
             
@@ -3602,10 +4613,14 @@
                         } else if (element.classList.contains('dashboard-card') || 
                                    element.classList.contains('stat-card') || 
                                    element.id.startsWith('dashboardStat') || 
-                                   element.id.startsWith('stat')) {
+                                   element.id.startsWith('stat') ||
+                                   element.id.startsWith('staffStat') ||
+                                   element.id.startsWith('drafterStat')) {
                             editStat(elementId);
                         } else if (element.classList.contains('contact-card')) {
                             editContact(elementId);
+                        } else if (element.classList.contains('period-section')) {
+                            editPeriod(elementId);
                         } else {
                             editText(elementId);
                         }
@@ -3630,6 +4645,9 @@
                             break;
                         case 'project':
                             addProject();
+                            break;
+                        case 'dailyMe':
+                            addDailyMeItem();
                             break;
                     }
                 });
@@ -3670,6 +4688,24 @@
                 
                 showNotification('Teks berhasil diperbarui!', 'success');
             }
+        }
+
+        // Edit period (dashboard)
+        function editPeriod(periodId) {
+            const period = appData.pages.dashboard.periods.find(p => p.id === periodId);
+            if (!period) return;
+            
+            const newTitle = prompt('Edit judul periode:', period.title);
+            if (newTitle === null) return;
+            
+            const newDate = prompt('Edit rentang tanggal:', period.date);
+            if (newDate === null) return;
+            
+            period.title = newTitle;
+            period.date = newDate;
+            
+            renderDashboardPage();
+            showNotification('Periode berhasil diperbarui!', 'success');
         }
 
         // Edit skills
@@ -3723,12 +4759,20 @@
             
             let numberElement, labelElement;
             
-            if (element.classList.contains('dashboard-card')) {
-                numberElement = element.querySelector('.dashboard-number');
-                labelElement = element.querySelector('.dashboard-label');
-            } else if (element.classList.contains('stat-card')) {
-                numberElement = element.querySelector('.stat-number');
-                labelElement = element.querySelector('.stat-label');
+            if (element.classList.contains('dashboard-card') || 
+                element.classList.contains('stat-card') ||
+                element.classList.contains('period-stat')) {
+                
+                if (element.classList.contains('period-stat')) {
+                    numberElement = element.querySelector('.period-stat-value');
+                    labelElement = element.querySelector('.period-stat-label');
+                } else if (element.classList.contains('dashboard-card')) {
+                    numberElement = element.querySelector('.dashboard-number');
+                    labelElement = element.querySelector('.dashboard-label');
+                } else if (element.classList.contains('stat-card')) {
+                    numberElement = element.querySelector('.stat-number');
+                    labelElement = element.querySelector('.stat-label');
+                }
             }
             
             if (!numberElement || !labelElement) return;
@@ -3745,6 +4789,7 @@
             numberElement.textContent = newNumber;
             labelElement.textContent = newLabel;
             
+            // Update data based on element type
             if (statId.startsWith('dashboardStat')) {
                 const stat = appData.pages.dashboard.stats.find(s => s.id === statId);
                 if (stat) {
@@ -3757,6 +4802,18 @@
                     appData.pages.home.stats[statIndex].number = newNumber;
                 } else {
                     appData.pages.home.stats[statIndex].label = newLabel;
+                }
+            } else if (statId.startsWith('staffStat') || statId.startsWith('drafterStat')) {
+                // Find the period that contains this stat
+                const period = appData.pages.dashboard.periods.find(p => 
+                    p.stats.some(s => s.id === statId)
+                );
+                if (period) {
+                    const stat = period.stats.find(s => s.id === statId);
+                    if (stat) {
+                        stat.value = newNumber;
+                        stat.label = newLabel;
+                    }
                 }
             }
             
