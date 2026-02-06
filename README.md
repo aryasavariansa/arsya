@@ -416,6 +416,525 @@
             display: flex;
         }
 
+        /* ===== EFEK RAIN ELEGAN UNTUK ABOUT PAGE ===== */
+        .rain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            display: none;
+            overflow: hidden;
+        }
+
+        .rain-drop {
+            position: absolute;
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(0, 255, 255, 0.8) 30%,
+                rgba(0, 255, 255, 0.6) 70%,
+                transparent 100%);
+            animation: rain-fall 2s linear infinite;
+            filter: blur(0.5px);
+            opacity: 0;
+        }
+
+        .rain-drop::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -1px;
+            width: 3px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+
+        .rain-drop::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -1px;
+            width: 2px;
+            height: 4px;
+            background: rgba(0, 255, 255, 0.9);
+            border-radius: 50%;
+            filter: blur(0.5px);
+        }
+
+        @keyframes rain-fall {
+            0% {
+                transform: translateY(-100px) translateX(-10px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(100vh) translateX(10px);
+                opacity: 0;
+            }
+        }
+
+        /* Efek ripple yang lebih halus */
+        .rain-ripple {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: ripple-elegant 1.5s ease-out;
+            opacity: 0;
+            box-shadow: 
+                0 0 10px rgba(0, 255, 255, 0.3),
+                inset 0 0 5px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes ripple-elegant {
+            0% {
+                transform: scale(0);
+                opacity: 0.6;
+                border-width: 1px;
+            }
+            50% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(8);
+                opacity: 0;
+                border-width: 0.5px;
+            }
+        }
+
+        /* Efek cahaya dari tetesan hujan */
+        .rain-light {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, 
+                rgba(0, 255, 255, 0.3) 0%, 
+                rgba(0, 255, 255, 0.1) 40%,
+                transparent 70%);
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: light-fade 0.5s ease-out;
+        }
+
+        @keyframes light-fade {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            30% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.5);
+            }
+        }
+
+        /* ===== EFEK STARFALL ELEGAN UNTUK CHAT ROOM ===== */
+        .starfall-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            display: none;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, 
+                transparent 0%,
+                rgba(10, 10, 10, 0.1) 40%,
+                rgba(10, 10, 10, 0.3) 100%);
+        }
+
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            animation: star-fall-elegant 4s linear infinite;
+            opacity: 0;
+        }
+
+        .star::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            filter: blur(3px);
+            opacity: 0.7;
+        }
+
+        .star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200%;
+            height: 200%;
+            background: inherit;
+            filter: blur(10px);
+            opacity: 0.3;
+        }
+
+        @keyframes star-fall-elegant {
+            0% {
+                transform: translateY(-100px) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.9;
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            30% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(100vh) rotate(180deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Efek jejak bintang */
+        .star-trail {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 215, 0, 0.1) 30%,
+                rgba(255, 215, 0, 0.05) 70%,
+                transparent 100%);
+            transform-origin: left center;
+            animation: trail-fade 1s ease-out;
+            opacity: 0;
+            filter: blur(2px);
+        }
+
+        @keyframes trail-fade {
+            0% {
+                opacity: 0;
+                transform: scaleX(0) rotate(var(--trail-angle));
+            }
+            30% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: scaleX(1) rotate(var(--trail-angle));
+            }
+        }
+
+        /* Efek burst yang lebih halus */
+        .star-burst {
+            position: absolute;
+            border-radius: 50%;
+            animation: burst-elegant 1.2s ease-out forwards;
+            opacity: 0;
+            box-shadow: 
+                0 0 20px currentColor,
+                0 0 40px currentColor,
+                0 0 60px currentColor;
+        }
+
+        @keyframes burst-elegant {
+            0% {
+                transform: scale(0);
+                opacity: 0.9;
+                filter: blur(0);
+            }
+            50% {
+                opacity: 1;
+                filter: blur(1px);
+            }
+            100% {
+                transform: scale(5);
+                opacity: 0;
+                filter: blur(3px);
+            }
+        }
+
+        /* Efek partikel kecil setelah burst */
+        .star-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            animation: particle-scatter 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes particle-scatter {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: 
+                    translate(
+                        calc(var(--particle-x) * 50px),
+                        calc(var(--particle-y) * 50px)
+                    ) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* ===== BACKGROUND OVERLAY ELEGAN ===== */
+        .effect-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .effect-overlay.active {
+            opacity: 1;
+        }
+
+        /* Background khusus untuk rain effect */
+        .rain-overlay {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 50, 100, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 100, 150, 0.05) 0%, transparent 50%),
+                linear-gradient(135deg, 
+                    rgba(10, 20, 40, 0.3) 0%,
+                    rgba(15, 30, 60, 0.1) 50%,
+                    rgba(20, 40, 80, 0.2) 100%);
+        }
+
+        /* Background khusus untuk starfall effect */
+        .starfall-overlay {
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 70% 80%, rgba(255, 100, 0, 0.03) 0%, transparent 40%),
+                linear-gradient(135deg, 
+                    rgba(40, 20, 0, 0.2) 0%,
+                    rgba(60, 30, 0, 0.1) 50%,
+                    rgba(80, 40, 0, 0.15) 100%);
+        }
+
+        /* ===== ANIMASI HALUS UNTUK ELEMEN HOVER ===== */
+        #aboutPage.rain-active .experience-item:hover {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 
+                0 20px 50px rgba(0, 255, 255, 0.2),
+                0 0 30px rgba(0, 255, 255, 0.1),
+                inset 0 0 20px rgba(0, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #aboutPage.rain-active .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 30px rgba(0, 255, 255, 0.15),
+                0 0 20px rgba(0, 255, 255, 0.1);
+            background: linear-gradient(135deg, 
+                rgba(0, 255, 255, 0.2) 0%, 
+                rgba(0, 200, 255, 0.15) 100%);
+        }
+
+        #chatroomPage.starfall-active .message:hover {
+            transform: translateX(5px) scale(1.03);
+            box-shadow: 
+                0 20px 50px rgba(255, 215, 0, 0.25),
+                0 0 30px rgba(255, 215, 0, 0.15),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        #chatroomPage.starfall-active .chatroom-header {
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.8) 0%,
+                rgba(255, 200, 0, 0.6) 50%,
+                rgba(255, 185, 0, 0.4) 100%);
+            animation: golden-shimmer 3s infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #chatroomPage.starfall-active .chatroom-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent);
+            animation: header-shine 3s infinite;
+        }
+
+        @keyframes header-shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes golden-shimmer {
+            0%, 100% {
+                background-position: 0% 50%;
+                box-shadow: 
+                    0 10px 40px rgba(255, 215, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+            50% {
+                background-position: 100% 50%;
+                box-shadow: 
+                    0 15px 50px rgba(255, 215, 0, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        #chatroomPage.starfall-active .message.user {
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.85) 0%,
+                rgba(255, 200, 0, 0.7) 100%);
+            animation: golden-pulse 3s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #chatroomPage.starfall-active .message.user::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent);
+            animation: message-shine 4s infinite;
+        }
+
+        @keyframes message-shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes golden-pulse {
+            0%, 100% {
+                box-shadow: 
+                    0 10px 40px rgba(255, 215, 0, 0.25),
+                    0 0 20px rgba(255, 215, 0, 0.15);
+            }
+            50% {
+                box-shadow: 
+                    0 15px 50px rgba(255, 215, 0, 0.35),
+                    0 0 30px rgba(255, 215, 0, 0.25);
+            }
+        }
+
+        /* ===== TOMBOL TOGGLE EFEK ===== */
+        .effect-toggle {
+            position: fixed;
+            bottom: 100px;
+            right: 40px;
+            background: var(--gradient-gold);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            z-index: 999;
+        }
+
+        .effect-toggle:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.4);
+        }
+
+        .effect-toggle i {
+            font-size: 1.1rem;
+        }
+
+        /* Responsif untuk tombol efek */
+        @media (max-width: 768px) {
+            .effect-toggle {
+                bottom: 80px;
+                right: 20px;
+                padding: 10px 20px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Update posisi tombol floating-add-btn dan effect-toggle */
+        .floating-add-btn {
+            position: fixed;
+            top: 100px;
+            right: 40px;
+        }
+
+        .effect-toggle {
+            position: fixed;
+            bottom: 100px;
+            right: 40px;
+        }
+
+        /* Atur posisi untuk mobile */
+        @media (max-width: 768px) {
+            .floating-add-btn {
+                top: auto;
+                bottom: 30px;
+                right: 20px;
+            }
+            
+            .effect-toggle {
+                bottom: 80px;
+                right: 20px;
+            }
+        }
+
+        /* Jika kedua tombol tampil bersamaan (admin mode + efek aktif) */
+        .admin-mode .floating-add-btn.active + .effect-toggle {
+            bottom: 180px;
+        }
+
+        @media (max-width: 768px) {
+            .admin-mode .floating-add-btn.active + .effect-toggle {
+                bottom: 130px;
+            }
+        }
+
         /* Responsif untuk tombol floating */
         @media (max-width: 768px) {
             .floating-add-btn {
@@ -2660,6 +3179,24 @@
         <i class="fas fa-plus-circle"></i> Tambah Work
     </button>
 
+    <!-- Tombol Toggle Efek -->
+    <button class="effect-toggle" id="effectToggle">
+        <i class="fas fa-magic" id="effectIcon"></i>
+        <span id="effectText">Aktifkan Efek</span>
+    </button>
+
+    <!-- Container Efek Rain untuk About Page -->
+    <div class="rain-container" id="rainContainer"></div>
+
+    <!-- Container Efek Starfall untuk Chat Room -->
+    <div class="starfall-container" id="starfallContainer"></div>
+
+    <!-- Overlay untuk efek rain -->
+    <div class="effect-overlay rain-overlay" id="rainOverlay" style="display: none;"></div>
+
+    <!-- Overlay untuk efek starfall -->
+    <div class="effect-overlay starfall-overlay" id="starfallOverlay" style="display: none;"></div>
+
     <!-- SIDEBAR ELEGAN (TETAP TANPA SCROLL) -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -3628,6 +4165,11 @@
         let currentImageFile = null;
         let currentImageUrl = null;
 
+        // Variables untuk efek
+        let rainEffectActive = false;
+        let starfallEffectActive = false;
+        let currentEffectPage = null;
+
         // DOM Ready
         document.addEventListener('DOMContentLoaded', function() {
             loadFromLocalStorage();
@@ -3645,6 +4187,9 @@
             setupContentHeight();
             renderProfileImage();
             centerHeroContent(); // Panggil fungsi untuk center konten
+            
+            // Setup efek
+            setupEffects();
             
             // Tambahkan event listener untuk gambar profile (zoom)
             document.getElementById('profileImg').addEventListener('click', function() {
@@ -3741,6 +4286,7 @@
                 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
                 const mainContent = document.getElementById('mainContent');
                 const floatingAddBtn = document.getElementById('floatingAddBtn');
+                const effectToggle = document.getElementById('effectToggle');
                 
                 if (window.innerWidth > 768) {
                     sidebar.classList.remove('active');
@@ -3760,6 +4306,12 @@
                         floatingAddBtn.style.right = '40px';
                         floatingAddBtn.style.bottom = 'auto';
                     }
+                    // Position effect button
+                    if (effectToggle && (currentPage === 'about' || currentPage === 'chatroom')) {
+                        effectToggle.style.bottom = '100px';
+                        effectToggle.style.right = '40px';
+                        effectToggle.style.top = 'auto';
+                    }
                 } else {
                     if (mobileMenuToggle) {
                         mobileMenuToggle.style.display = 'block';
@@ -3775,6 +4327,12 @@
                         floatingAddBtn.style.top = 'auto';
                         floatingAddBtn.style.bottom = '30px';
                         floatingAddBtn.style.right = '20px';
+                    }
+                    // Position effect button untuk mobile
+                    if (effectToggle && (currentPage === 'about' || currentPage === 'chatroom')) {
+                        effectToggle.style.top = 'auto';
+                        effectToggle.style.bottom = '80px';
+                        effectToggle.style.right = '20px';
                     }
                 }
                 
@@ -3815,6 +4373,552 @@
                     }
                 });
             }
+        }
+
+        // Setup efek
+        function setupEffects() {
+            const effectToggle = document.getElementById('effectToggle');
+            
+            if (effectToggle) {
+                effectToggle.addEventListener('click', function() {
+                    toggleEffects();
+                });
+            }
+            
+            // Setup untuk halaman About
+            const aboutPage = document.getElementById('aboutPage');
+            if (aboutPage) {
+                aboutPage.addEventListener('mouseenter', function() {
+                    if (currentPage === 'about' && !rainEffectActive) {
+                        showEffectToggle('Rain Effect', 'fas fa-cloud-rain');
+                    }
+                });
+                
+                aboutPage.addEventListener('mouseleave', function() {
+                    if (!rainEffectActive) {
+                        hideEffectToggle();
+                    }
+                });
+            }
+            
+            // Setup untuk halaman Chat Room
+            const chatroomPage = document.getElementById('chatroomPage');
+            if (chatroomPage) {
+                chatroomPage.addEventListener('mouseenter', function() {
+                    if (currentPage === 'chatroom' && !starfallEffectActive) {
+                        showEffectToggle('Starfall Effect', 'fas fa-star');
+                    }
+                });
+                
+                chatroomPage.addEventListener('mouseleave', function() {
+                    if (!starfallEffectActive) {
+                        hideEffectToggle();
+                    }
+                });
+            }
+        }
+
+        // Fungsi untuk menampilkan tombol efek
+        function showEffectToggle(text, iconClass) {
+            const effectToggle = document.getElementById('effectToggle');
+            const effectText = document.getElementById('effectText');
+            const effectIcon = document.getElementById('effectIcon');
+            
+            if (effectToggle && effectText && effectIcon) {
+                effectText.textContent = text;
+                effectIcon.className = iconClass;
+                effectToggle.style.display = 'flex';
+                currentEffectPage = currentPage;
+            }
+        }
+
+        // Fungsi untuk menyembunyikan tombol efek
+        function hideEffectToggle() {
+            const effectToggle = document.getElementById('effectToggle');
+            if (effectToggle) {
+                effectToggle.style.display = 'none';
+                currentEffectPage = null;
+            }
+        }
+
+        // Fungsi untuk toggle efek
+        function toggleEffects() {
+            if (currentEffectPage === 'about') {
+                toggleRainEffect();
+            } else if (currentEffectPage === 'chatroom') {
+                toggleStarfallEffect();
+            }
+        }
+
+        // Fungsi untuk toggle efek rain
+        function toggleRainEffect() {
+            rainEffectActive = !rainEffectActive;
+            const rainContainer = document.getElementById('rainContainer');
+            const rainOverlay = document.getElementById('rainOverlay');
+            const starfallOverlay = document.getElementById('starfallOverlay');
+            const effectToggle = document.getElementById('effectToggle');
+            const effectText = document.getElementById('effectText');
+            
+            if (rainEffectActive) {
+                // Matikan efek starfall jika aktif
+                if (starfallEffectActive) {
+                    toggleStarfallEffect();
+                }
+                
+                // Aktifkan efek rain
+                rainContainer.style.display = 'block';
+                rainOverlay.style.display = 'block';
+                setTimeout(() => {
+                    rainOverlay.style.opacity = '1';
+                }, 10);
+                
+                effectText.textContent = 'Matikan Rain Effect';
+                
+                // Buat efek rain yang lebih elegan
+                createElegantRainDrops();
+                
+                // Tambahkan class khusus untuk about page
+                document.getElementById('aboutPage').classList.add('rain-active');
+                
+                // Ubah warna teks dan ikon untuk feedback visual
+                effectToggle.style.background = 'linear-gradient(135deg, #00bcd4 0%, #00ffff 100%)';
+                effectToggle.style.color = '#000';
+                
+                showNotification('Rain Effect diaktifkan! Suasana hujan yang menenangkan.', 'success');
+            } else {
+                // Matikan efek rain
+                rainContainer.style.display = 'none';
+                rainOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    rainOverlay.style.display = 'none';
+                }, 1000);
+                effectText.textContent = 'Aktifkan Rain Effect';
+                
+                // Reset tombol effect
+                effectToggle.style.background = 'var(--gradient-gold)';
+                effectToggle.style.color = '#000';
+                
+                // Hapus class khusus untuk about page
+                document.getElementById('aboutPage').classList.remove('rain-active');
+                
+                showNotification('Rain Effect dimatikan.', 'info');
+                hideEffectToggle();
+            }
+        }
+
+        // Fungsi untuk membuat rain drops yang lebih elegan
+        function createElegantRainDrops() {
+            const rainContainer = document.getElementById('rainContainer');
+            if (!rainContainer || !rainEffectActive) return;
+            
+            // Clear existing rain drops
+            rainContainer.innerHTML = '';
+            
+            // Tambahkan background glow
+            const backgroundGlow = document.createElement('div');
+            backgroundGlow.style.position = 'absolute';
+            backgroundGlow.style.top = '0';
+            backgroundGlow.style.left = '0';
+            backgroundGlow.style.width = '100%';
+            backgroundGlow.style.height = '100%';
+            backgroundGlow.style.background = 'radial-gradient(circle at center, rgba(0, 100, 200, 0.05) 0%, transparent 70%)';
+            backgroundGlow.style.filter = 'blur(20px)';
+            rainContainer.appendChild(backgroundGlow);
+            
+            // Buat 80 rain drops dengan variasi
+            for (let i = 0; i < 80; i++) {
+                setTimeout(() => {
+                    if (!rainEffectActive) return;
+                    
+                    createSingleRainDrop(i);
+                    
+                }, i * 30);
+            }
+            
+            // Buat rain drops secara kontinu
+            if (rainEffectActive) {
+                setTimeout(createElegantRainDrops, 5000);
+            }
+        }
+
+        // Fungsi untuk membuat single rain drop elegan
+        function createSingleRainDrop(index) {
+            const rainContainer = document.getElementById('rainContainer');
+            
+            const rainDrop = document.createElement('div');
+            rainDrop.className = 'rain-drop';
+            
+            // Random position
+            const left = 10 + Math.random() * 80;
+            rainDrop.style.left = `${left}%`;
+            
+            // Random animation delay
+            const delay = Math.random() * 3;
+            rainDrop.style.animationDelay = `${delay}s`;
+            
+            // Random animation duration
+            const duration = 1.5 + Math.random() * 1;
+            rainDrop.style.animationDuration = `${duration}s`;
+            
+            // Random opacity
+            const opacity = 0.5 + Math.random() * 0.5;
+            rainDrop.style.opacity = opacity;
+            
+            // Random color variation
+            const colors = [
+                'rgba(0, 255, 255, 0.8)',
+                'rgba(0, 200, 255, 0.7)',
+                'rgba(0, 150, 255, 0.6)',
+                'rgba(100, 200, 255, 0.7)'
+            ];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            rainDrop.style.background = `linear-gradient(to bottom, 
+                transparent 0%, 
+                ${randomColor} 30%,
+                rgba(0, 255, 255, 0.5) 70%,
+                transparent 100%)`;
+            
+            rainContainer.appendChild(rainDrop);
+            
+            // Buat efek ripple saat rain drop "jatuh"
+            setTimeout(() => {
+                if (rainEffectActive) {
+                    createElegantRipple(left, 90 + Math.random() * 10);
+                    
+                    // Tambahkan efek cahaya kecil
+                    createRainLight(left, 90 + Math.random() * 10, randomColor);
+                }
+            }, duration * 1000 - 500);
+        }
+
+        // Fungsi untuk membuat efek ripple yang elegan
+        function createElegantRipple(left, top) {
+            if (!rainEffectActive) return;
+            
+            const rainContainer = document.getElementById('rainContainer');
+            const ripple = document.createElement('div');
+            ripple.className = 'rain-ripple';
+            
+            ripple.style.left = `${left}%`;
+            ripple.style.top = `${top}%`;
+            
+            // Random size
+            const size = 4 + Math.random() * 8;
+            ripple.style.width = `${size}px`;
+            ripple.style.height = `${size}px`;
+            
+            // Random color variation
+            const colors = ['rgba(0, 255, 255, 0.4)', 'rgba(0, 200, 255, 0.3)', 'rgba(100, 220, 255, 0.35)'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            ripple.style.borderColor = randomColor;
+            
+            // Random animation duration
+            const duration = 0.8 + Math.random() * 0.7;
+            ripple.style.animationDuration = `${duration}s`;
+            
+            rainContainer.appendChild(ripple);
+            
+            // Hapus ripple setelah animasi selesai
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, duration * 1000);
+        }
+
+        // Fungsi untuk membuat efek cahaya rain
+        function createRainLight(left, top, color) {
+            if (!rainEffectActive) return;
+            
+            const rainContainer = document.getElementById('rainContainer');
+            const light = document.createElement('div');
+            light.className = 'rain-light';
+            
+            light.style.left = `${left}%`;
+            light.style.top = `${top}%`;
+            
+            // Extract base color
+            light.style.background = `radial-gradient(circle, 
+                ${color.replace('0.8', '0.3').replace('0.7', '0.25').replace('0.6', '0.2')} 0%, 
+                rgba(0, 255, 255, 0.1) 40%,
+                transparent 70%)`;
+            
+            rainContainer.appendChild(light);
+            
+            // Hapus light setelah animasi selesai
+            setTimeout(() => {
+                if (light.parentNode) {
+                    light.parentNode.removeChild(light);
+                }
+            }, 500);
+        }
+
+        // Fungsi untuk toggle efek starfall yang lebih elegan
+        function toggleStarfallEffect() {
+            starfallEffectActive = !starfallEffectActive;
+            const starfallContainer = document.getElementById('starfallContainer');
+            const starfallOverlay = document.getElementById('starfallOverlay');
+            const rainOverlay = document.getElementById('rainOverlay');
+            const effectToggle = document.getElementById('effectToggle');
+            const effectText = document.getElementById('effectText');
+            
+            if (starfallEffectActive) {
+                // Matikan efek rain jika aktif
+                if (rainEffectActive) {
+                    toggleRainEffect();
+                }
+                
+                // Aktifkan efek starfall
+                starfallContainer.style.display = 'block';
+                starfallOverlay.style.display = 'block';
+                setTimeout(() => {
+                    starfallOverlay.style.opacity = '1';
+                }, 10);
+                
+                effectText.textContent = 'Matikan Starfall Effect';
+                
+                // Buat efek starfall yang lebih elegan
+                createElegantStars();
+                
+                // Tambahkan class khusus untuk chatroom
+                document.getElementById('chatroomPage').classList.add('starfall-active');
+                
+                // Ubah warna tombol
+                effectToggle.style.background = 'linear-gradient(135deg, #ff9500 0%, #ffcc00 100%)';
+                effectToggle.style.color = '#000';
+                
+                showNotification('Starfall Effect diaktifkan! Galaksi bintang yang memukau.', 'success');
+            } else {
+                // Matikan efek starfall
+                starfallContainer.style.display = 'none';
+                starfallOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    starfallOverlay.style.display = 'none';
+                }, 1000);
+                effectText.textContent = 'Aktifkan Starfall Effect';
+                
+                // Reset tombol effect
+                effectToggle.style.background = 'var(--gradient-gold)';
+                effectToggle.style.color = '#000';
+                
+                // Hapus class khusus untuk chatroom
+                document.getElementById('chatroomPage').classList.remove('starfall-active');
+                
+                showNotification('Starfall Effect dimatikan.', 'info');
+                hideEffectToggle();
+            }
+        }
+
+        // Fungsi untuk membuat stars yang lebih elegan
+        function createElegantStars() {
+            const starfallContainer = document.getElementById('starfallContainer');
+            if (!starfallContainer || !starfallEffectActive) return;
+            
+            // Clear existing stars
+            starfallContainer.innerHTML = '';
+            
+            // Tambahkan background nebula
+            const nebula = document.createElement('div');
+            nebula.style.position = 'absolute';
+            nebula.style.top = '0';
+            nebula.style.left = '0';
+            nebula.style.width = '100%';
+            nebula.style.height = '100%';
+            nebula.style.background = `
+                radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(255, 100, 0, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(200, 150, 0, 0.01) 0%, transparent 50%)
+            `;
+            nebula.style.filter = 'blur(15px)';
+            starfallContainer.appendChild(nebula);
+            
+            // Buat 40 stars dengan variasi
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    if (!starfallEffectActive) return;
+                    
+                    createSingleStar(i);
+                    
+                }, i * 100);
+            }
+            
+            // Buat stars secara kontinu
+            if (starfallEffectActive) {
+                setTimeout(createElegantStars, 6000);
+            }
+        }
+
+        // Fungsi untuk membuat single star elegan
+        function createSingleStar(index) {
+            const starfallContainer = document.getElementById('starfallContainer');
+            
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            // Random position
+            const left = Math.random() * 100;
+            star.style.left = `${left}%`;
+            
+            // Random size
+            const size = 2 + Math.random() * 6;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            // Random animation delay
+            const delay = Math.random() * 5;
+            star.style.animationDelay = `${delay}s`;
+            
+            // Random animation duration
+            const duration = 3 + Math.random() * 4;
+            star.style.animationDuration = `${duration}s`;
+            
+            // Random gradient color
+            const gradients = [
+                'radial-gradient(circle, rgba(255, 215, 0, 0.9) 0%, rgba(255, 200, 0, 0.7) 100%)',
+                'radial-gradient(circle, rgba(255, 100, 0, 0.8) 0%, rgba(255, 150, 0, 0.6) 100%)',
+                'radial-gradient(circle, rgba(255, 255, 200, 0.9) 0%, rgba(255, 255, 150, 0.7) 100%)',
+                'radial-gradient(circle, rgba(200, 255, 255, 0.8) 0%, rgba(150, 255, 255, 0.6) 100%)'
+            ];
+            const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+            star.style.background = randomGradient;
+            
+            // Random opacity
+            const opacity = 0.6 + Math.random() * 0.4;
+            star.style.opacity = opacity;
+            
+            // Random rotation
+            const rotate = Math.random() * 360;
+            star.style.setProperty('--star-rotation', `${rotate}deg`);
+            
+            starfallContainer.appendChild(star);
+            
+            // Buat efek trail
+            createStarTrail(left, 0, randomGradient);
+            
+            // Buat efek burst saat star "jatuh"
+            setTimeout(() => {
+                if (starfallEffectActive) {
+                    const top = 90 + Math.random() * 10;
+                    createElegantStarBurst(left, top, randomGradient);
+                    
+                    // Hapus star setelah burst
+                    setTimeout(() => {
+                        if (star.parentNode) {
+                            star.parentNode.removeChild(star);
+                        }
+                    }, 500);
+                }
+            }, duration * 1000 - 1000);
+        }
+
+        // Fungsi untuk membuat efek trail bintang
+        function createStarTrail(left, top, gradient) {
+            if (!starfallEffectActive) return;
+            
+            const starfallContainer = document.getElementById('starfallContainer');
+            const trail = document.createElement('div');
+            trail.className = 'star-trail';
+            
+            trail.style.left = `${left}%`;
+            trail.style.top = `${top}%`;
+            
+            // Random angle
+            const angle = -30 + Math.random() * 60;
+            trail.style.setProperty('--trail-angle', `${angle}deg`);
+            
+            // Random length
+            const length = 50 + Math.random() * 100;
+            trail.style.width = `${length}px`;
+            
+            // Color based on gradient
+            let trailColor = 'rgba(255, 215, 0, 0.1)';
+            if (gradient.includes('255, 100, 0')) trailColor = 'rgba(255, 100, 0, 0.08)';
+            if (gradient.includes('255, 255, 200')) trailColor = 'rgba(255, 255, 200, 0.1)';
+            if (gradient.includes('200, 255, 255')) trailColor = 'rgba(200, 255, 255, 0.08)';
+            
+            trail.style.background = `linear-gradient(90deg, 
+                transparent 0%, 
+                ${trailColor} 30%,
+                rgba(255, 215, 0, 0.05) 70%,
+                transparent 100%)`;
+            
+            starfallContainer.appendChild(trail);
+            
+            // Hapus trail setelah animasi selesai
+            setTimeout(() => {
+                if (trail.parentNode) {
+                    trail.parentNode.removeChild(trail);
+                }
+            }, 1000);
+        }
+
+        // Fungsi untuk membuat efek burst yang elegan
+        function createElegantStarBurst(left, top, gradient) {
+            if (!starfallEffectActive) return;
+            
+            const starfallContainer = document.getElementById('starfallContainer');
+            
+            // Buat burst utama
+            const burst = document.createElement('div');
+            burst.className = 'star-burst';
+            
+            burst.style.left = `${left}%`;
+            burst.style.top = `${top}%`;
+            
+            // Extract color dari gradient
+            let burstColor = '#ffd700';
+            if (gradient.includes('255, 100, 0')) burstColor = '#ff6400';
+            else if (gradient.includes('255, 255, 200')) burstColor = '#ffffc8';
+            else if (gradient.includes('200, 255, 255')) burstColor = '#c8ffff';
+            
+            burst.style.color = burstColor;
+            burst.style.background = `radial-gradient(circle, ${burstColor} 0%, transparent 70%)`;
+            
+            // Random size
+            const size = 10 + Math.random() * 20;
+            burst.style.width = `${size}px`;
+            burst.style.height = `${size}px`;
+            
+            starfallContainer.appendChild(burst);
+            
+            // Buat partikel kecil
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'star-particle';
+                    
+                    particle.style.left = `${left}%`;
+                    particle.style.top = `${top}%`;
+                    
+                    // Random angle untuk partikel
+                    const angle = (i * 30) + Math.random() * 15;
+                    const rad = angle * (Math.PI / 180);
+                    const x = Math.cos(rad);
+                    const y = Math.sin(rad);
+                    
+                    particle.style.setProperty('--particle-x', x);
+                    particle.style.setProperty('--particle-y', y);
+                    
+                    particle.style.background = burstColor;
+                    particle.style.boxShadow = `0 0 5px ${burstColor}`;
+                    
+                    starfallContainer.appendChild(particle);
+                    
+                    // Hapus partikel setelah animasi
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 1000);
+                }, i * 30);
+            }
+            
+            // Hapus burst setelah animasi selesai
+            setTimeout(() => {
+                if (burst.parentNode) {
+                    burst.parentNode.removeChild(burst);
+                }
+            }, 1200);
         }
 
         // Setup modal zoom
@@ -4513,6 +5617,15 @@
 
         // Change page
         function changePage(pageId) {
+            // Matikan semua efek saat berpindah halaman
+            if (rainEffectActive) {
+                toggleRainEffect();
+            }
+            if (starfallEffectActive) {
+                toggleStarfallEffect();
+            }
+            hideEffectToggle();
+            
             document.querySelectorAll('.page').forEach(page => {
                 if (page.classList.contains('active')) {
                     page.style.opacity = '0';
@@ -4556,6 +5669,16 @@
                     if (pageId === 'home') {
                         createParticles();
                         setTimeout(centerHeroContent, 100); // Center konten setelah halaman home dimuat
+                    }
+                    
+                    // Setup efek untuk halaman tertentu
+                    if (pageId === 'about' || pageId === 'chatroom') {
+                        setTimeout(() => {
+                            showEffectToggle(
+                                pageId === 'about' ? 'Rain Effect' : 'Starfall Effect',
+                                pageId === 'about' ? 'fas fa-cloud-rain' : 'fas fa-star'
+                            );
+                        }, 500);
                     }
                 }
             }, 300);
