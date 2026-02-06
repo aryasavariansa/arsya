@@ -381,7 +381,7 @@
             font-weight: 600;
         }
 
-        /* ===== TOMBOL TAMBAH FOTO DI POJOK KANAN ATAS ===== */
+        /* ===== TOMBOL TAMBAH WORK DI POJOK KANAN ATAS ===== */
         .floating-add-btn {
             position: fixed;
             top: 100px;
@@ -806,42 +806,8 @@
             }
         }
 
-        /* ===== DAILY ME PAGE - DIPERBAIKI SEPERTI ACHIEVEMENTS ===== */
-        .dailyMe-intro {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dailyMe-intro::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient-gold);
-        }
-
-        .dailyMe-intro h2 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.8rem;
-        }
-
-        .dailyMe-intro p {
-            color: var(--gray);
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
-
-        /* Daily Me Grid - SAMA SEPERTI ACHIEVEMENTS */
-        .dailyMe-grid {
+        /* ===== WORK PAGE - DUPLIKAT DARI ACHIEVEMENTS ===== */
+        .work-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 35px;
@@ -850,7 +816,7 @@
             width: 100%;
         }
 
-        .dailyMe-card {
+        .work-card {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
             border-radius: var(--border-radius);
             padding: 35px;
@@ -861,12 +827,12 @@
             overflow: hidden;
         }
 
-        .dailyMe-card:hover {
+        .work-card:hover {
             transform: translateY(-10px) scale(1.02);
             border-color: rgba(255, 215, 0, 0.3);
         }
 
-        .dailyMe-image-container {
+        .work-image-container {
             width: 100%;
             height: 250px;
             border-radius: 12px;
@@ -882,29 +848,28 @@
             transition: var(--transition);
         }
 
-        .admin-mode .dailyMe-image-container {
+        .admin-mode .work-image-container {
             cursor: pointer;
         }
 
-        .dailyMe-image-container:hover {
+        .work-image-container:hover {
             border-color: rgba(255, 215, 0, 0.3);
             background: linear-gradient(135deg, #1e1e1e 0%, #2e2e2e 100%);
         }
 
-        .dailyMe-image {
+        .work-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block !important;
             transition: transform 0.3s ease;
-            cursor: pointer;
         }
 
-        .dailyMe-image-container:hover .dailyMe-image {
+        .work-image-container:hover .work-image {
             transform: scale(1.05);
         }
 
-        .dailyMe-image-placeholder {
+        .work-image-placeholder {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -916,38 +881,11 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .dailyMe-image-placeholder i {
+        .work-image-placeholder i {
             display: block;
         }
 
-        .dailyMe-image-zoom {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: var(--primary);
-            border: none;
-            border-radius: 5px;
-            padding: 8px 12px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            gap: 5px;
-            z-index: 5;
-            transition: var(--transition);
-        }
-
-        .dailyMe-image-container:hover .dailyMe-image-zoom {
-            display: flex;
-        }
-
-        .dailyMe-image-zoom:hover {
-            background: rgba(0, 0, 0, 0.9);
-        }
-
-        /* Admin-only overlay untuk Daily Me cards */
-        .dailyMe-admin-overlay {
+        .work-upload-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -955,80 +893,37 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
             display: none;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
             border-radius: 12px;
-            z-index: 4;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
-        .admin-mode .dailyMe-image-container:hover .dailyMe-admin-overlay {
+        .admin-mode .work-image-container:hover .work-upload-overlay {
             display: flex;
-            opacity: 1;
         }
 
-        .dailyMe-admin-btn {
-            background: var(--gradient-gold);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .dailyMe-admin-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-        }
-
-        /* Category badge */
-        .dailyMe-category {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--gradient-gold);
-            color: #000;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            z-index: 2;
-        }
-
-        .dailyMe-card h3 {
+        .work-card h3 {
             font-size: 1.4rem;
             margin-bottom: 10px;
             color: var(--primary);
             font-weight: 700;
         }
 
-        .dailyMe-card .date {
+        .work-card .date {
             color: var(--secondary);
             font-weight: 600;
             margin-bottom: 20px;
             font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .dailyMe-card .date i {
-            font-size: 0.9rem;
-        }
-
-        .dailyMe-card p {
+        .work-card p {
             color: var(--gray);
             line-height: 1.7;
-            font-size: 1.05rem;
         }
 
         /* ===== DASHBOARD PAGE - UPDATED ===== */
@@ -1829,7 +1724,7 @@
             display: inline-block;
         }
 
-        /* Upload Card untuk Daily Me */
+        /* Upload Card untuk Work */
         .upload-card {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
             border-radius: var(--border-radius);
@@ -2543,7 +2438,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .dailyMe-grid,
+            .work-grid,
             .achievements-grid {
                 grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             }
@@ -2617,7 +2512,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .dailyMe-grid,
+            .work-grid,
             .achievements-grid {
                 grid-template-columns: 1fr;
             }
@@ -2698,7 +2593,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .dailyMe-image-container,
+            .work-image-container,
             .achievement-image-container {
                 height: 200px;
             }
@@ -2738,9 +2633,9 @@
         <i class="fas fa-bars"></i>
     </button>
     
-    <!-- Tombol Tambah Foto di Pojok Kanan Atas -->
+    <!-- Tombol Tambah Work di Pojok Kanan Atas -->
     <button class="floating-add-btn" id="floatingAddBtn">
-        <i class="fas fa-plus-circle"></i> Tambah Daily Me
+        <i class="fas fa-plus-circle"></i> Tambah Work
     </button>
 
     <!-- SIDEBAR ELEGAN (TETAP TANPA SCROLL) -->
@@ -2768,7 +2663,7 @@
         <ul class="nav-menu">
             <li><a href="#home" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="#about" class="nav-link" data-page="about"><i class="fas fa-user"></i> About Me</a></li>
-            <li><a href="#daily-me" class="nav-link" data-page="daily-me"><i class="fas fa-images"></i> Daily Me</a></li>
+            <li><a href="#work" class="nav-link" data-page="work"><i class="fas fa-briefcase"></i> Work</a></li>
             <li><a href="#achievements" class="nav-link" data-page="achievements"><i class="fas fa-trophy"></i> Achievements</a></li>
             <li><a href="#projects" class="nav-link" data-page="projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
             <li><a href="#dashboard" class="nav-link" data-page="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
@@ -2885,12 +2780,12 @@
                 <div class="quick-links">
                     <h3>Akses Cepat</h3>
                     <div class="links-grid">
-                        <div class="link-card" onclick="changePage('daily-me')">
+                        <div class="link-card" onclick="changePage('work')">
                             <div class="link-icon">
-                                <i class="fas fa-images"></i>
+                                <i class="fas fa-briefcase"></i>
                             </div>
-                            <h4>Daily Me</h4>
-                            <p>Dokumentasi kegiatan kerja harian dan pencapaian</p>
+                            <h4>Work</h4>
+                            <p>Dokumentasi pekerjaan dan proyek yang telah dikerjakan</p>
                         </div>
                         
                         <div class="link-card" onclick="changePage('projects')">
@@ -3015,25 +2910,23 @@
                 </div>
             </div>
             
-            <!-- Daily Me Page - DIPERBAIKI SEPERTI ACHIEVEMENTS -->
-            <div class="page" id="dailyMePage">
-                <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Daily Me</h2>
+            <!-- Work Page - DUPLIKAT DARI ACHIEVEMENTS -->
+            <div class="page" id="workPage">
+                <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Work</h2>
                 
-                <div class="dailyMe-intro editable" id="dailyMeIntro">
-                    <h2>Dokumentasi Harian Kerja</h2>
-                    <p>Koleksi foto dokumentasi aktivitas kerja sehari-hari sebagai Mechanical Drafter dan Staff Produksi. 
-                    Setiap foto menceritakan proses, tantangan, dan pencapaian dalam pekerjaan.</p>
-                    <p><strong>Kategori:</strong> Staff Production, Drafter, Achievement, Training, Daily Activity</p>
-                    <button class="edit-btn" data-edit="dailyMeIntro">Edit</button>
+                <div style="background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%); border-radius: var(--border-radius); padding: 40px; margin-bottom: 40px; border: 1px solid rgba(255, 215, 0, 0.1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden;">
+                    <h2 style="color: var(--primary); margin-bottom: 15px; font-size: 1.8rem;">Dokumentasi Pekerjaan</h2>
+                    <p style="color: var(--gray); line-height: 1.7; margin-bottom: 15px;">Koleksi foto dokumentasi pekerjaan dan proyek yang telah dikerjakan sebagai Mechanical Drafter dan Staff Produksi.</p>
+                    <p style="color: var(--gray); line-height: 1.7;"><strong>Kategori:</strong> Mechanical Drafting, Production Work, Quality Control, Process Improvement</p>
                 </div>
                 
-                <!-- Daily Me Grid -->
-                <div class="dailyMe-grid" id="dailyMeContainer">
-                    <!-- Daily Me items akan di-render oleh JavaScript -->
+                <!-- Work Grid -->
+                <div class="work-grid" id="workContainer">
+                    <!-- Work items akan di-render oleh JavaScript -->
                 </div>
                 
-                <!-- Tombol Add untuk Daily Me -->
-                <button class="add-btn" data-add="dailyMe" id="addDailyMeBtn">+ Tambah Kegiatan Harian</button>
+                <!-- Tombol Add untuk Work -->
+                <button class="add-btn" data-add="work" id="addWorkBtn">+ Tambah Work</button>
             </div>
             
             <!-- Achievements Page -->
@@ -3348,47 +3241,47 @@
         </div>
     </div>
 
-    <!-- Modal Upload Daily Me -->
-    <div class="modal upload-modal" id="dailyMeUploadModal">
+    <!-- Modal Upload Work -->
+    <div class="modal upload-modal" id="workUploadModal">
         <div class="upload-modal-content">
             <button class="upload-modal-close" id="closeUploadModal">
                 <i class="fas fa-times"></i>
             </button>
             
             <div class="upload-modal-header">
-                <h2 class="upload-modal-title">Tambah Daily Me Baru</h2>
-                <p class="upload-modal-subtitle">Tambahkan dokumentasi kegiatan kerja harian Anda</p>
+                <h2 class="upload-modal-title">Tambah Work Baru</h2>
+                <p class="upload-modal-subtitle">Tambahkan dokumentasi pekerjaan Anda</p>
             </div>
             
-            <form class="upload-form" id="dailyMeUploadForm">
+            <form class="upload-form" id="workUploadForm">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="dailyMeTitle"><i class="fas fa-heading"></i> Judul Kegiatan</label>
-                        <input type="text" id="dailyMeTitle" placeholder="Contoh: Standarisasi Molding Setting" required>
+                        <label for="workTitle"><i class="fas fa-heading"></i> Judul Pekerjaan</label>
+                        <input type="text" id="workTitle" placeholder="Contoh: Standarisasi Molding Setting" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="dailyMeDate"><i class="far fa-calendar"></i> Tanggal</label>
-                        <input type="text" id="dailyMeDate" placeholder="DD/MM/YYYY" required>
+                        <label for="workDate"><i class="far fa-calendar"></i> Tanggal</label>
+                        <input type="text" id="workDate" placeholder="DD/MM/YYYY" required>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="dailyMeCategory"><i class="fas fa-tag"></i> Kategori</label>
-                        <select id="dailyMeCategory" required>
+                        <label for="workCategory"><i class="fas fa-tag"></i> Kategori</label>
+                        <select id="workCategory" required>
                             <option value="">Pilih Kategori</option>
-                            <option value="Staff Production">Staff Production</option>
-                            <option value="Drafter">Drafter</option>
-                            <option value="Achievement">Achievement</option>
-                            <option value="Training">Training</option>
-                            <option value="Daily Activity">Daily Activity</option>
+                            <option value="Mechanical Drafting">Mechanical Drafting</option>
+                            <option value="Production Work">Production Work</option>
+                            <option value="Quality Control">Quality Control</option>
+                            <option value="Process Improvement">Process Improvement</option>
+                            <option value="Maintenance">Maintenance</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="dailyMeDescription"><i class="fas fa-align-left"></i> Deskripsi Singkat</label>
-                        <input type="text" id="dailyMeDescription" placeholder="Jelaskan kegiatan ini secara singkat" required>
+                        <label for="workDescription"><i class="fas fa-align-left"></i> Deskripsi Singkat</label>
+                        <input type="text" id="workDescription" placeholder="Jelaskan pekerjaan ini secara singkat" required>
                     </div>
                 </div>
                 
@@ -3423,8 +3316,8 @@
                 </div>
                 
                 <div class="upload-modal-buttons">
-                    <button type="submit" class="upload-modal-btn primary" id="saveDailyMeBtn">
-                        <i class="fas fa-save"></i> Simpan Daily Me
+                    <button type="submit" class="upload-modal-btn primary" id="saveWorkBtn">
+                        <i class="fas fa-save"></i> Simpan Work
                     </button>
                     <button type="button" class="upload-modal-btn secondary" id="cancelUploadBtn">
                         <i class="fas fa-times"></i> Batal
@@ -3459,7 +3352,7 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // Data aplikasi dengan fitur foto dan Daily Me
+        // Data aplikasi dengan fitur foto dan Work
         const appData = {
             user: {
                 name: "Arya Savariansah",
@@ -3535,60 +3428,60 @@
                         }
                     ]
                 },
-                dailyMe: {
-                    title: "Daily Me",
-                    description: "Dokumentasi kegiatan kerja harian",
+                work: {
+                    title: "Work",
+                    description: "Dokumentasi pekerjaan dan proyek",
                     items: [
                         {
-                            id: "dailyMe1",
+                            id: "work1",
                             title: "Standarisasi Molding Setting",
                             date: "15/03/2025",
-                            category: "Drafter",
+                            category: "Mechanical Drafting",
                             description: "Menyatukan berbagai variasi pengaturan molding menjadi 1 standar variasi, sehingga mempermudah operator dan menekan risiko kesalahan setting",
                             image: "https://images.unsplash.com/photo-1579226905180-636c76d14d1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         },
                         {
-                            id: "dailyMe2",
+                            id: "work2",
                             title: "Monitoring WIP Inventory",
                             date: "20/02/2025",
-                            category: "Staff Production",
+                            category: "Production Work",
                             description: "Membuat sistem monitoring stock WIP dan planning item produksi untuk meningkatkan productivity penggunaan bahan dari 2 Ton menjadi 724,5 kg",
                             image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         },
                         {
-                            id: "dailyMe3",
+                            id: "work3",
                             title: "Reduksi Reject Mesin Spiral",
                             date: "10/01/2025",
-                            category: "Staff Production",
+                            category: "Quality Control",
                             description: "Melakukan TFT (Task Force Team) untuk menurunkan reject dari 8% menjadi 3% pada mesin spiral melalui analisis akar masalah dan perbaikan proses",
                             image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         },
                         {
-                            id: "dailyMe4",
+                            id: "work4",
                             title: "Optimasi Material Management",
                             date: "05/04/2025",
-                            category: "Training",
+                            category: "Process Improvement",
                             description: "Pelatihan manajemen material untuk mengurangi overconsumption dan meningkatkan efisiensi penggunaan bahan produksi",
                             image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         },
                         {
-                            id: "dailyMe5",
+                            id: "work5",
                             title: "Preventive Maintenance System",
                             date: "25/03/2025",
-                            category: "Drafter",
+                            category: "Maintenance",
                             description: "Implementasi sistem preventive maintenance berdasarkan lifetime usage molding untuk mengurangi downtime produksi",
                             image: "https://images.unsplash.com/photo-1579226905180-636c76d14d1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         },
                         {
-                            id: "dailyMe6",
-                            title: "Daily Production Meeting",
+                            id: "work6",
+                            title: "Production Planning Meeting",
                             date: "12/04/2025",
-                            category: "Daily Activity",
-                            description: "Rutinitas meeting produksi harian untuk koordinasi tim dan evaluasi progress pekerjaan",
+                            category: "Production Work",
+                            description: "Rutinitas meeting perencanaan produksi untuk koordinasi tim dan evaluasi progress pekerjaan",
                             image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         }
                     ],
-                    categories: ["Staff Production", "Drafter", "Achievement", "Training", "Daily Activity"]
+                    categories: ["Mechanical Drafting", "Production Work", "Quality Control", "Process Improvement", "Maintenance"]
                 },
                 achievements: {
                     title: "Achievements",
@@ -3706,10 +3599,10 @@
         let isAdminLoggedIn = false;
         let isEditMode = false;
         let currentPage = "home";
-        let currentUploadType = null; // "profile", "achievement", atau "dailyMe"
+        let currentUploadType = null; // "profile", "achievement", atau "work"
         let currentItemId = null;
 
-        // Variables untuk modal upload Daily Me
+        // Variables untuk modal upload Work
         let currentImageFile = null;
         let currentImageUrl = null;
 
@@ -3722,7 +3615,7 @@
             setupContactForm();
             setupMobileMenu();
             setupImageUploadModal();
-            setupDailyMeUploadModal();
+            setupWorkUploadModal();
             setupZoomModal();
             setupResponsiveBehavior();
             renderPage(currentPage);
@@ -3737,12 +3630,12 @@
                 }
             });
             
-            // Setup event listener untuk tombol add Daily Me
-            document.getElementById('addDailyMeBtn').addEventListener('click', function() {
+            // Setup event listener untuk tombol add Work
+            document.getElementById('addWorkBtn').addEventListener('click', function() {
                 if (isAdminLoggedIn || isEditMode) {
-                    openDailyMeUploadModal();
+                    openWorkUploadModal();
                 } else {
-                    showNotification('Silakan login sebagai admin untuk menambah kegiatan', 'error');
+                    showNotification('Silakan login sebagai admin untuk menambah work', 'error');
                 }
             });
             
@@ -3751,9 +3644,9 @@
             if (floatingAddBtn) {
                 floatingAddBtn.addEventListener('click', function() {
                     if (isAdminLoggedIn || isEditMode) {
-                        openDailyMeUploadModal();
+                        openWorkUploadModal();
                     } else {
-                        showNotification('Silakan login sebagai admin untuk menambah Daily Me', 'error');
+                        showNotification('Silakan login sebagai admin untuk menambah Work', 'error');
                     }
                 });
             }
@@ -3815,7 +3708,7 @@
                         mainContent.style.width = 'calc(100% - ' + (sidebar.offsetWidth || 280) + 'px)';
                     }
                     // Position floating button
-                    if (floatingAddBtn && isAdminLoggedIn && currentPage === 'daily-me') {
+                    if (floatingAddBtn && isAdminLoggedIn && currentPage === 'work') {
                         floatingAddBtn.style.top = '100px';
                         floatingAddBtn.style.right = '40px';
                         floatingAddBtn.style.bottom = 'auto';
@@ -3831,7 +3724,7 @@
                         mainContent.style.width = '100%';
                     }
                     // Position floating button untuk mobile
-                    if (floatingAddBtn && isAdminLoggedIn && currentPage === 'daily-me') {
+                    if (floatingAddBtn && isAdminLoggedIn && currentPage === 'work') {
                         floatingAddBtn.style.top = 'auto';
                         floatingAddBtn.style.bottom = '30px';
                         floatingAddBtn.style.right = '20px';
@@ -3933,9 +3826,9 @@
             img.src = imageSrc;
         }
 
-        // Setup Daily Me Upload Modal
-        function setupDailyMeUploadModal() {
-            const modal = document.getElementById('dailyMeUploadModal');
+        // Setup Work Upload Modal
+        function setupWorkUploadModal() {
+            const modal = document.getElementById('workUploadModal');
             const closeBtn = document.getElementById('closeUploadModal');
             const cancelBtn = document.getElementById('cancelUploadBtn');
             const browseBtn = document.getElementById('browseImageBtn');
@@ -3946,16 +3839,16 @@
             const imageActions = document.getElementById('imageActions');
             const changeImageBtn = document.getElementById('changeImageBtn');
             const removeImageBtn = document.getElementById('removeImageBtn');
-            const form = document.getElementById('dailyMeUploadForm');
-            const saveBtn = document.getElementById('saveDailyMeBtn');
+            const form = document.getElementById('workUploadForm');
+            const saveBtn = document.getElementById('saveWorkBtn');
             const progressContainer = document.getElementById('uploadProgressContainer');
             const progressBar = document.getElementById('uploadProgressBar');
             const percentage = document.getElementById('uploadPercentage');
 
             // Open modal
-            window.openDailyMeUploadModal = function(editItemId = null) {
+            window.openWorkUploadModal = function(editItemId = null) {
                 if (!isAdminLoggedIn && !isEditMode) {
-                    showNotification('Silakan login sebagai admin untuk menambah Daily Me', 'error');
+                    showNotification('Silakan login sebagai admin untuk menambah work', 'error');
                     return;
                 }
                 
@@ -3963,12 +3856,12 @@
                 
                 // Jika edit mode, isi form dengan data yang ada
                 if (editItemId) {
-                    const item = appData.pages.dailyMe.items.find(i => i.id === editItemId);
+                    const item = appData.pages.work.items.find(i => i.id === editItemId);
                     if (item) {
-                        document.getElementById('dailyMeTitle').value = item.title;
-                        document.getElementById('dailyMeDate').value = item.date;
-                        document.getElementById('dailyMeCategory').value = item.category;
-                        document.getElementById('dailyMeDescription').value = item.description;
+                        document.getElementById('workTitle').value = item.title;
+                        document.getElementById('workDate').value = item.date;
+                        document.getElementById('workCategory').value = item.category;
+                        document.getElementById('workDescription').value = item.description;
                         
                         if (item.image) {
                             currentImageUrl = item.image;
@@ -3978,21 +3871,21 @@
                         }
                         
                         // Ubah teks tombol
-                        saveBtn.innerHTML = '<i class="fas fa-save"></i> Update Daily Me';
+                        saveBtn.innerHTML = '<i class="fas fa-save"></i> Update Work';
                         saveBtn.dataset.editId = editItemId;
                         
                         // Update modal title
-                        document.querySelector('.upload-modal-title').textContent = 'Edit Daily Me';
-                        document.querySelector('.upload-modal-subtitle').textContent = 'Edit dokumentasi kegiatan kerja harian';
+                        document.querySelector('.upload-modal-title').textContent = 'Edit Work';
+                        document.querySelector('.upload-modal-subtitle').textContent = 'Edit dokumentasi pekerjaan';
                     }
                 } else {
                     // Reset untuk mode add
-                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Daily Me';
+                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Work';
                     delete saveBtn.dataset.editId;
                     
                     // Reset modal title
-                    document.querySelector('.upload-modal-title').textContent = 'Tambah Daily Me Baru';
-                    document.querySelector('.upload-modal-subtitle').textContent = 'Tambahkan dokumentasi kegiatan kerja harian Anda';
+                    document.querySelector('.upload-modal-title').textContent = 'Tambah Work Baru';
+                    document.querySelector('.upload-modal-subtitle').textContent = 'Tambahkan dokumentasi pekerjaan Anda';
                 }
                 
                 modal.classList.add('active');
@@ -4143,14 +4036,14 @@
                 e.preventDefault();
                 
                 if (!isAdminLoggedIn && !isEditMode) {
-                    showNotification('Silakan login sebagai admin untuk menambah Daily Me', 'error');
+                    showNotification('Silakan login sebagai admin untuk menambah work', 'error');
                     return;
                 }
                 
-                const title = document.getElementById('dailyMeTitle').value.trim();
-                const date = document.getElementById('dailyMeDate').value.trim();
-                const category = document.getElementById('dailyMeCategory').value;
-                const description = document.getElementById('dailyMeDescription').value.trim();
+                const title = document.getElementById('workTitle').value.trim();
+                const date = document.getElementById('workDate').value.trim();
+                const category = document.getElementById('workCategory').value;
+                const description = document.getElementById('workDescription').value.trim();
                 
                 if (!title || !date || !category || !description) {
                     showNotification('Harap isi semua field yang wajib diisi', 'error');
@@ -4165,7 +4058,7 @@
                 }
                 
                 // Tampilkan loading
-                showLoading('Menyimpan Daily Me...');
+                showLoading('Menyimpan Work...');
                 
                 // Simulasi delay untuk efek loading
                 setTimeout(() => {
@@ -4173,7 +4066,7 @@
                     
                     if (editId) {
                         // Edit mode
-                        const item = appData.pages.dailyMe.items.find(i => i.id === editId);
+                        const item = appData.pages.work.items.find(i => i.id === editId);
                         if (item) {
                             item.title = title;
                             item.date = date;
@@ -4181,16 +4074,16 @@
                             item.description = description;
                             item.image = currentImageUrl;
                             
-                            renderDailyMePage();
+                            renderWorkPage();
                             saveToLocalStorage();
                             closeUploadModal();
                             hideLoading();
                             
-                            showNotification('Daily Me berhasil diperbarui!', 'success');
+                            showNotification('Work berhasil diperbarui!', 'success');
                         }
                     } else {
                         // Add mode
-                        const newId = 'dailyMe' + (appData.pages.dailyMe.items.length + 1);
+                        const newId = 'work' + (appData.pages.work.items.length + 1);
                         const newItem = {
                             id: newId,
                             title: title,
@@ -4200,17 +4093,17 @@
                             image: currentImageUrl
                         };
                         
-                        appData.pages.dailyMe.items.unshift(newItem); // Tambah di awal array
+                        appData.pages.work.items.unshift(newItem); // Tambah di awal array
                         
-                        renderDailyMePage();
+                        renderWorkPage();
                         saveToLocalStorage();
                         closeUploadModal();
                         hideLoading();
                         
                         // Scroll ke atas untuk melihat item baru
-                        document.querySelector('.main-content').scrollTop = document.getElementById('dailyMePage').offsetTop;
+                        document.querySelector('.main-content').scrollTop = document.getElementById('workPage').offsetTop;
                         
-                        showNotification('Daily Me berhasil ditambahkan!', 'success');
+                        showNotification('Work berhasil ditambahkan!', 'success');
                     }
                 }, 1000);
             });
@@ -4238,7 +4131,7 @@
 
         // Reset upload form
         function resetUploadForm() {
-            const form = document.getElementById('dailyMeUploadForm');
+            const form = document.getElementById('workUploadForm');
             const imagePreview = document.getElementById('imagePreview');
             const previewContainer = document.getElementById('imagePreviewContainer');
             const imageActions = document.getElementById('imageActions');
@@ -4327,12 +4220,12 @@
                                     renderAchievementsPage();
                                     showNotification('Foto achievement berhasil diupload!', 'success');
                                 }
-                            } else if (currentUploadType === 'dailyMe' && currentItemId) {
-                                const dailyMe = appData.pages.dailyMe.items.find(d => d.id === currentItemId);
-                                if (dailyMe) {
-                                    dailyMe.image = previewImage.src;
-                                    renderDailyMePage();
-                                    showNotification('Foto Daily Me berhasil diupload!', 'success');
+                            } else if (currentUploadType === 'work' && currentItemId) {
+                                const work = appData.pages.work.items.find(d => d.id === currentItemId);
+                                if (work) {
+                                    work.image = previewImage.src;
+                                    renderWorkPage();
+                                    showNotification('Foto Work berhasil diupload!', 'success');
                                 }
                             }
                             
@@ -4368,12 +4261,12 @@
                             renderAchievementsPage();
                             showNotification('Foto achievement berhasil dihapus!', 'success');
                         }
-                    } else if (currentUploadType === 'dailyMe' && currentItemId) {
-                        const dailyMe = appData.pages.dailyMe.items.find(d => d.id === currentItemId);
-                        if (dailyMe) {
-                            dailyMe.image = null;
-                            renderDailyMePage();
-                            showNotification('Foto Daily Me berhasil dihapus!', 'success');
+                    } else if (currentUploadType === 'work' && currentItemId) {
+                        const work = appData.pages.work.items.find(d => d.id === currentItemId);
+                        if (work) {
+                            work.image = null;
+                            renderWorkPage();
+                            showNotification('Foto Work berhasil dihapus!', 'success');
                         }
                     }
                     
@@ -4465,12 +4358,12 @@
                     currentImage = achievement.image;
                     itemTitle = achievement.title;
                 }
-            } else if (type === 'dailyMe' && itemId) {
-                const dailyMe = appData.pages.dailyMe.items.find(d => d.id === itemId);
-                if (dailyMe) {
-                    modalTitle.textContent = `Upload Foto untuk: ${dailyMe.title}`;
-                    currentImage = dailyMe.image;
-                    itemTitle = dailyMe.title;
+            } else if (type === 'work' && itemId) {
+                const work = appData.pages.work.items.find(d => d.id === itemId);
+                if (work) {
+                    modalTitle.textContent = `Upload Foto untuk: ${work.title}`;
+                    currentImage = work.image;
+                    itemTitle = work.title;
                 }
             }
             
@@ -4630,8 +4523,8 @@
                 case 'about':
                     renderAboutPage();
                     break;
-                case 'daily-me':
-                    renderDailyMePage();
+                case 'work':
+                    renderWorkPage();
                     break;
                 case 'achievements':
                     renderAchievementsPage();
@@ -4769,10 +4662,10 @@
             }
         }
 
-        // Render Daily Me page
-        function renderDailyMePage() {
-            const pageData = appData.pages.dailyMe;
-            const container = document.getElementById('dailyMeContainer');
+        // Render Work page
+        function renderWorkPage() {
+            const pageData = appData.pages.work;
+            const container = document.getElementById('workContainer');
             
             if (!container) return;
             
@@ -4788,66 +4681,59 @@
             
             // Render existing items
             sortedItems.forEach((item) => {
-                const dailyMeElement = createDailyMeCard(item);
-                container.appendChild(dailyMeElement);
+                const workElement = createWorkCard(item);
+                container.appendChild(workElement);
             });
             
             // Show/hide tombol add berdasarkan admin mode
-            const addBtn = document.getElementById('addDailyMeBtn');
+            const addBtn = document.getElementById('addWorkBtn');
             if (addBtn) {
                 addBtn.style.display = (isAdminLoggedIn || isEditMode) ? 'inline-block' : 'none';
             }
             
             // Setup event listeners
-            setupDailyMeEventListeners();
+            setupWorkEventListeners();
         }
 
-        // Fungsi untuk membuat card Daily Me
-        function createDailyMeCard(item) {
-            const dailyMeElement = document.createElement('div');
-            dailyMeElement.className = 'dailyMe-card editable';
-            dailyMeElement.id = item.id;
-            dailyMeElement.dataset.id = item.id;
+        // Fungsi untuk membuat card Work
+        function createWorkCard(item) {
+            const workElement = document.createElement('div');
+            workElement.className = 'work-card editable';
+            workElement.id = item.id;
+            workElement.dataset.id = item.id;
             
             let imageHTML = '';
             if (item.image) {
                 imageHTML = `
-                    <div class="dailyMe-image-container">
-                        <img src="${item.image}" alt="${item.title}" class="dailyMe-image">
-                        <button class="dailyMe-image-zoom" onclick="openZoom('${item.image}', '${item.title}')">
-                            <i class="fas fa-search-plus"></i> Zoom
-                        </button>
-                        <div class="dailyMe-admin-overlay">
-                            <button class="dailyMe-admin-btn" onclick="editDailyMeImage('${item.id}')">
-                                <i class="fas fa-camera"></i> Ganti Foto
-                            </button>
-                            <button class="dailyMe-admin-btn" onclick="editDailyMeItem('${item.id}')">
-                                <i class="fas fa-edit"></i> Edit Detail
-                            </button>
+                    <div class="work-image-container">
+                        <img src="${item.image}" alt="${item.title}" class="work-image">
+                        <div class="work-upload-overlay">
+                            <div>
+                                <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                                ${isAdminLoggedIn || isEditMode ? 'Klik untuk ganti foto' : 'Klik untuk zoom'}
+                            </div>
                         </div>
-                        <div class="dailyMe-category">${item.category}</div>
+                        <div style="position: absolute; top: 20px; right: 20px; background: var(--gradient-gold); color: #000; padding: 8px 20px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; z-index: 2;">${item.category}</div>
                     </div>
                 `;
             } else {
                 imageHTML = `
-                    <div class="dailyMe-image-container">
-                        <div class="dailyMe-image-placeholder">
+                    <div class="work-image-container">
+                        <div class="work-image-placeholder">
                             <i class="fas fa-camera"></i>
                         </div>
-                        <div class="dailyMe-admin-overlay">
-                            <button class="dailyMe-admin-btn" onclick="editDailyMeImage('${item.id}')">
-                                <i class="fas fa-camera"></i> Upload Foto
-                            </button>
-                            <button class="dailyMe-admin-btn" onclick="editDailyMeItem('${item.id}')">
-                                <i class="fas fa-edit"></i> Edit Detail
-                            </button>
+                        <div class="work-upload-overlay">
+                            <div>
+                                <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                                ${isAdminLoggedIn || isEditMode ? 'Klik untuk upload foto' : 'No image available'}
+                            </div>
                         </div>
-                        <div class="dailyMe-category">${item.category}</div>
+                        <div style="position: absolute; top: 20px; right: 20px; background: var(--gradient-gold); color: #000; padding: 8px 20px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; z-index: 2;">${item.category}</div>
                     </div>
                 `;
             }
             
-            dailyMeElement.innerHTML = `
+            workElement.innerHTML = `
                 ${imageHTML}
                 <h3>${item.title}</h3>
                 <div class="date">
@@ -4856,76 +4742,91 @@
                 <p>${item.description}</p>
                 ${isAdminLoggedIn || isEditMode ? `
                     <button class="edit-btn" data-edit="${item.id}">Edit</button>
-                    <button class="delete-btn" data-delete="${item.id}" data-type="dailyMe">Hapus</button>
+                    <button class="delete-btn" data-delete="${item.id}" data-type="work">Hapus</button>
                 ` : ''}
             `;
             
-            return dailyMeElement;
+            return workElement;
         }
 
-        // Edit Daily Me image
-        window.editDailyMeImage = function(itemId) {
+        // Edit Work image
+        window.editWorkImage = function(itemId) {
             if (!isAdminLoggedIn && !isEditMode) {
                 showNotification('Silakan login sebagai admin untuk mengedit foto', 'error');
                 return;
             }
             
-            openImageUploadModal('dailyMe', itemId);
+            openImageUploadModal('work', itemId);
         };
 
-        // Edit Daily Me item
-        window.editDailyMeItem = function(itemId) {
+        // Edit Work item
+        window.editWorkItem = function(itemId) {
             if (!isAdminLoggedIn && !isEditMode) {
-                showNotification('Silakan login sebagai admin untuk mengedit kegiatan', 'error');
+                showNotification('Silakan login sebagai admin untuk mengedit pekerjaan', 'error');
                 return;
             }
             
-            openDailyMeUploadModal(itemId);
+            openWorkUploadModal(itemId);
         };
 
-        // Setup Daily Me event listeners
-        function setupDailyMeEventListeners() {
+        // Setup Work event listeners
+        function setupWorkEventListeners() {
             // Edit buttons
-            document.querySelectorAll('.edit-btn[data-edit^="dailyMe"]').forEach(btn => {
+            document.querySelectorAll('.edit-btn[data-edit^="work"]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const itemId = this.getAttribute('data-edit');
-                    editDailyMeItem(itemId);
+                    editWorkItem(itemId);
                 });
             });
             
             // Delete buttons
-            document.querySelectorAll('.delete-btn[data-type="dailyMe"]').forEach(btn => {
+            document.querySelectorAll('.delete-btn[data-type="work"]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const itemId = this.getAttribute('data-delete');
-                    deleteDailyMeItem(itemId);
+                    deleteWorkItem(itemId);
                 });
             });
             
-            // Zoom gambar saat diklik
-            document.querySelectorAll('.dailyMe-image').forEach(img => {
-                img.addEventListener('click', function() {
-                    const card = this.closest('.dailyMe-card');
-                    const title = card.querySelector('h3').textContent;
-                    openZoom(this.src, title);
+            // Upload overlay dan zoom
+            document.querySelectorAll('.work-image-container').forEach(container => {
+                container.addEventListener('click', function(e) {
+                    // Jika klik langsung pada gambar, biarkan fungsi zoom yang menangani
+                    if (e.target.classList.contains('work-image')) {
+                        const title = this.closest('.work-card').querySelector('h3').textContent;
+                        openZoom(e.target.src, title);
+                        return;
+                    }
+                    
+                    if (isAdminLoggedIn || isEditMode) {
+                        const workId = this.closest('.work-card').id;
+                        editWorkImage(workId);
+                    } else {
+                        // Jika bukan admin, coba zoom jika ada gambar
+                        const img = this.querySelector('.work-image');
+                        if (img && img.src) {
+                            const title = this.closest('.work-card').querySelector('h3').textContent;
+                            openZoom(img.src, title);
+                        }
+                    }
                 });
             });
         }
 
-        // Hapus Daily Me item
-        function deleteDailyMeItem(itemId) {
-            if (!confirm('Apakah Anda yakin ingin menghapus kegiatan ini?')) {
+        // Hapus Work item
+        function deleteWorkItem(itemId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus pekerjaan ini?')) {
                 return;
             }
             
-            showLoading('Menghapus kegiatan...');
+            showLoading('Menghapus pekerjaan...');
             
             setTimeout(() => {
-                const index = appData.pages.dailyMe.items.findIndex(item => item.id === itemId);
+                const index = appData.pages.work.items.findIndex(item => item.id === itemId);
                 if (index !== -1) {
-                    appData.pages.dailyMe.items.splice(index, 1);
-                    renderDailyMePage();
+                    appData.pages.work.items.splice(index, 1);
+                    renderWorkPage();
                     saveToLocalStorage();
-                    showNotification('Kegiatan berhasil dihapus!', 'success');
+                    showNotification('Pekerjaan berhasil dihapus!', 'success');
                 }
                 hideLoading();
             }, 500);
@@ -5435,8 +5336,8 @@
                             editContact(elementId);
                         } else if (element.classList.contains('period-section')) {
                             editPeriod(elementId);
-                        } else if (element.classList.contains('dailyMe-card')) {
-                            editDailyMeItem(elementId);
+                        } else if (element.classList.contains('work-card')) {
+                            editWorkItem(elementId);
                         } else {
                             editText(elementId);
                         }
@@ -5462,8 +5363,8 @@
                         case 'project':
                             addProject();
                             break;
-                        case 'dailyMe':
-                            openDailyMeUploadModal();
+                        case 'work':
+                            openWorkUploadModal();
                             break;
                     }
                 });
@@ -5500,12 +5401,6 @@
                     appData.pages.about.sections[0].content = newText;
                 } else if (elementId === 'aboutText2') {
                     appData.pages.about.sections[1].content = newText;
-                } else if (elementId === 'dailyMeIntro') {
-                    // Handle dailyMeIntro edit
-                    const introElement = document.querySelector('#dailyMeIntro h2');
-                    if (introElement) {
-                        introElement.textContent = newText;
-                    }
                 }
                 
                 showNotification('Teks berhasil diperbarui!', 'success');
@@ -5762,8 +5657,8 @@
                 adminToggle.style.color = '#000';
                 document.body.classList.add('admin-mode');
                 
-                // Tampilkan floating button hanya di halaman Daily Me
-                if (currentPage === 'daily-me') {
+                // Tampilkan floating button hanya di halaman Work
+                if (currentPage === 'work') {
                     floatingAddBtn.style.display = 'flex';
                 } else {
                     floatingAddBtn.style.display = 'none';
