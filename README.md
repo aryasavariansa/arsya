@@ -410,35 +410,99 @@
             display: block;
         }
 
-        /* ===== HOME PAGE ===== */
-        .hero {
-            padding: 60px;
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            margin-bottom: 50px;
-            text-align: center;
+        /* ===== HOME PAGE - UPDATED & MORE AESTHETIC ===== */
+        .home-hero {
             position: relative;
+            padding: 80px 60px;
+            background: linear-gradient(135deg, 
+                rgba(10, 10, 10, 0.95) 0%, 
+                rgba(26, 26, 26, 0.9) 50%,
+                rgba(40, 40, 40, 0.8) 100%);
+            border-radius: var(--border-radius);
+            margin-bottom: 60px;
             overflow: hidden;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            box-shadow: var(--box-shadow);
-            min-height: 400px;
+            min-height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .home-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-gold);
+            z-index: 1;
+        }
+
+        .home-hero::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(
+                circle at center,
+                rgba(255, 215, 0, 0.05) 0%,
+                rgba(255, 215, 0, 0.02) 30%,
+                transparent 70%
+            );
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
         }
 
         .hero-badge {
             display: inline-block;
             background: var(--gradient-gold);
             color: #000;
-            padding: 12px 25px;
+            padding: 14px 28px;
             border-radius: 50px;
             font-weight: 700;
             margin-bottom: 30px;
-            font-size: 1rem;
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+            font-size: 1.1rem;
+            box-shadow: 
+                0 10px 25px rgba(255, 215, 0, 0.3),
+                0 5px 15px rgba(0, 0, 0, 0.2);
             animation: float 6s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-badge::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         @keyframes float {
@@ -446,43 +510,78 @@
             50% { transform: translateY(-10px); }
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
+        .hero-title {
+            font-size: 4rem;
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
             font-weight: 800;
-            line-height: 1.2;
+            line-height: 1.1;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: inline-block;
         }
 
-        .hero p {
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: var(--gradient-gold);
+            border-radius: 3px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 30px;
+            font-weight: 600;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .hero-description {
             font-size: 1.3rem;
-            color: var(--gray);
+            color: #ddd;
             max-width: 800px;
             margin: 0 auto 40px;
-            line-height: 1.7;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease 0.5s both;
         }
 
-        /* Stats Grid */
+        /* Stats Grid Updated */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
             margin: 60px 0;
-            width: 100%;
         }
 
         .stat-card {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            padding: 40px;
+            background: linear-gradient(135deg, 
+                rgba(30, 30, 30, 0.9) 0%, 
+                rgba(26, 26, 26, 0.8) 100%);
+            padding: 45px 35px;
             border-radius: var(--border-radius);
             text-align: center;
             transition: var(--transition);
             border: 1px solid rgba(255, 215, 0, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(255, 215, 0, 0.1);
         }
 
         .stat-card::before {
@@ -495,27 +594,387 @@
             background: var(--gradient-gold);
         }
 
-        .stat-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 215, 0, 0.3);
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                transparent,
+                rgba(255, 215, 0, 0.03),
+                transparent
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover::after {
+            opacity: 1;
         }
 
         .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
+            font-size: 3.5rem;
+            font-weight: 900;
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 15px;
             line-height: 1;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-number::after {
+            content: '+';
+            position: absolute;
+            top: -10px;
+            right: -20px;
+            font-size: 2rem;
+            color: var(--secondary);
+            opacity: 0.7;
         }
 
         .stat-label {
-            color: var(--gray);
-            font-size: 1rem;
+            color: #ddd;
+            font-size: 1.1rem;
             font-weight: 500;
             max-width: 200px;
             margin: 0 auto;
+            line-height: 1.5;
+            padding: 0 10px;
+        }
+
+        /* Quick Links Section */
+        .quick-links {
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .quick-links h3 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .link-card {
+            background: linear-gradient(135deg, 
+                rgba(30, 30, 30, 0.8) 0%, 
+                rgba(26, 26, 26, 0.6) 100%);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(255, 215, 0, 0.1);
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-gold);
+        }
+
+        .link-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .link-card h4 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .link-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Floating particles efek */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: floatParticle 15s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(50px, 50px);
+            }
+            50% {
+                transform: translate(0, 100px);
+            }
+            75% {
+                transform: translate(-50px, 50px);
+            }
+        }
+
+        /* ===== DAILY ME PAGE - UPDATED LIKE ACHIEVEMENTS ===== */
+        .dailyMe-intro {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dailyMe-intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-gold);
+        }
+
+        .dailyMe-intro h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .dailyMe-intro p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        /* Daily Me Grid */
+        .dailyMe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 35px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .dailyMe-card {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
+            border-radius: var(--border-radius);
+            padding: 35px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dailyMe-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .dailyMe-image-container {
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(255, 215, 0, 0.2);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .admin-mode .dailyMe-image-container {
+            cursor: pointer;
+        }
+
+        .dailyMe-image-container:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, #1e1e1e 0%, #2e2e2e 100%);
+        }
+
+        .dailyMe-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block !important;
+            transition: transform 0.3s ease;
+        }
+
+        .dailyMe-image-container:hover .dailyMe-image {
+            transform: scale(1.05);
+        }
+
+        .dailyMe-image-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 4rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dailyMe-image-placeholder i {
+            display: block;
+        }
+
+        .dailyMe-upload-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .admin-mode .dailyMe-image-container:hover .dailyMe-upload-overlay {
+            display: flex;
+        }
+
+        .dailyMe-category {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-gold);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .dailyMe-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .dailyMe-card .date {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dailyMe-card .date i {
+            font-size: 0.9rem;
+        }
+
+        .dailyMe-card p {
+            color: var(--gray);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        /* Upload Card untuk Daily Me */
+        .upload-card {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.5);
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(26, 26, 26, 0.7) 100%);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .upload-text {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .upload-subtext {
+            color: var(--gray);
+            font-size: 1rem;
+            max-width: 300px;
         }
 
         /* ===== DASHBOARD PAGE - UPDATED ===== */
@@ -615,391 +1074,6 @@
             color: var(--gray);
             font-size: 0.95rem;
             font-weight: 500;
-        }
-
-        /* ===== DAILY ME PAGE ===== */
-        .dailyme-intro {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .dailyme-intro h3 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-
-        .dailyme-intro p {
-            color: var(--gray);
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
-
-        /* Upload Form */
-        .upload-form-container {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .upload-form h3 {
-            color: var(--primary);
-            margin-bottom: 30px;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .upload-form h3 i {
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 12px;
-            font-weight: 600;
-            color: var(--light);
-            font-size: 1rem;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 16px 20px;
-            background: #0f0f0f;
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: var(--transition);
-            color: var(--light);
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: #0a0a0a;
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
-        }
-
-        .image-preview-container {
-            border: 2px dashed rgba(255, 215, 0, 0.3);
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            background: rgba(255, 215, 0, 0.02);
-            transition: var(--transition);
-            margin-bottom: 30px;
-            cursor: pointer;
-            min-height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .image-preview-container:hover {
-            border-color: var(--primary);
-            background: rgba(255, 215, 0, 0.05);
-        }
-
-        .image-preview-container.dragover {
-            border-color: var(--primary);
-            background: rgba(255, 215, 0, 0.1);
-        }
-
-        .image-preview-placeholder {
-            text-align: center;
-            color: var(--gray);
-        }
-
-        .image-preview-placeholder i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            display: block;
-            color: var(--primary);
-        }
-
-        .image-preview {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 8px;
-            display: none;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .image-preview.active {
-            display: block;
-        }
-
-        .upload-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: flex-end;
-            margin-top: 30px;
-        }
-
-        .upload-btn {
-            padding: 16px 35px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-        }
-
-        .upload-btn.primary {
-            background: var(--gradient-gold);
-            color: #000;
-        }
-
-        .upload-btn.primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-        }
-
-        .upload-btn.secondary {
-            background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
-            color: var(--light);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .upload-btn.secondary:hover {
-            transform: translateY(-3px);
-            border-color: rgba(255, 215, 0, 0.4);
-        }
-
-        /* Gallery Grid */
-        .dailyme-gallery {
-            margin-top: 50px;
-        }
-
-        .gallery-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .gallery-controls {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .filter-select {
-            background: #0f0f0f;
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            padding: 10px 20px;
-            color: var(--light);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .gallery-item {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: rgba(255, 215, 0, 0.3);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-        }
-
-        .gallery-image-container {
-            height: 250px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .gallery-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery-item:hover .gallery-image {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.9));
-            display: flex;
-            align-items: flex-end;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-category {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--gradient-gold);
-            color: #000;
-            padding: 6px 15px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            z-index: 2;
-        }
-
-        .gallery-content {
-            padding: 25px;
-        }
-
-        .gallery-date {
-            color: var(--secondary);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .gallery-title {
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        .gallery-notes {
-            color: var(--gray);
-            line-height: 1.6;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            max-height: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }
-
-        .gallery-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .action-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .action-btn.edit {
-            background: var(--gradient-gold);
-            color: #000;
-        }
-
-        .action-btn.delete {
-            background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
-            color: #fff;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .empty-gallery {
-            text-align: center;
-            padding: 60px;
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            border: 2px dashed rgba(255, 215, 0, 0.3);
-        }
-
-        .empty-gallery i {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .empty-gallery h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        .empty-gallery p {
-            color: var(--gray);
-            max-width: 500px;
-            margin: 0 auto;
-            line-height: 1.6;
         }
 
         /* ===== ABOUT PAGE ===== */
@@ -2042,13 +2116,13 @@
                 padding: 25px 30px;
             }
             
-            .hero {
-                padding: 40px;
-                min-height: 350px;
+            .home-hero {
+                padding: 60px 40px;
+                min-height: 450px;
             }
             
-            .hero h1 {
-                font-size: 2.8rem;
+            .hero-title {
+                font-size: 3.2rem;
             }
             
             .chatroom-container {
@@ -2059,8 +2133,9 @@
                 grid-template-columns: 1fr;
             }
             
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            .dailyMe-grid,
+            .achievements-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             }
         }
 
@@ -2111,19 +2186,28 @@
                 min-height: calc(100vh - 120px);
             }
             
-            .hero {
-                padding: 30px 20px;
-                min-height: 300px;
+            .home-hero {
+                padding: 40px 20px;
+                min-height: 380px;
             }
             
-            .hero h1 {
-                font-size: 2.2rem;
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .hero-description {
+                font-size: 1.1rem;
             }
             
             .projects-grid {
                 grid-template-columns: 1fr;
             }
             
+            .dailyMe-grid,
             .achievements-grid {
                 grid-template-columns: 1fr;
             }
@@ -2133,10 +2217,17 @@
                 gap: 30px;
             }
             
-            .stats-grid,
-            .dashboard-stats {
+            .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 20px;
+            }
+            
+            .stat-card {
+                padding: 30px 20px;
+            }
+            
+            .stat-number {
+                font-size: 2.8rem;
             }
             
             .contact-content {
@@ -2168,26 +2259,36 @@
                 top: -40px;
                 right: 10px;
             }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         @media (max-width: 480px) {
-            .hero h1 {
+            .home-hero {
+                padding: 30px 15px;
+                min-height: 350px;
+            }
+            
+            .hero-title {
                 font-size: 2rem;
             }
             
-            .stats-grid,
-            .dashboard-stats {
+            .hero-badge {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
             
+            .dailyMe-image-container,
             .achievement-image-container {
                 height: 200px;
             }
@@ -2200,10 +2301,6 @@
             .content-body {
                 padding: 15px;
                 min-height: calc(100vh - 110px);
-            }
-            
-            .achievements-grid {
-                grid-template-columns: 1fr;
             }
             
             .zoom-caption {
@@ -2304,25 +2401,39 @@
         
         <!-- Content Body - Pages (SCROLLABLE PENUH) -->
         <div class="content-body" id="contentBody">
-            <!-- Home Page -->
+            <!-- Home Page - UPDATED -->
             <div class="page active" id="homePage">
-                <div class="hero">
+                <div class="home-hero">
+                    <div class="particles" id="particles"></div>
                     <div class="hero-content">
                         <div class="hero-badge editable">
-                            <span id="homeBadge">Lulusan SMK Teknik Permesinan</span>
+                            <span id="homeBadge">✨ Lulusan SMK Teknik Permesinan ✨</span>
                             <button class="edit-btn" data-edit="homeBadge">Edit</button>
                         </div>
-                        <h1 class="editable" id="homeTitle">Arya Savariansah</h1>
-                        <p class="editable" id="homeSubtitle">Spesialis Manufaktur & Produksi</p>
+                        
+                        <h1 class="hero-title editable" id="homeTitle">ARYA SAVARIANSAH</h1>
                         <button class="edit-btn" data-edit="homeTitle">Edit</button>
+                        
+                        <div class="hero-subtitle editable" id="homeSubtitle">
+                            <i class="fas fa-star" style="color: var(--primary); margin-right: 10px;"></i>
+                            Spesialis Manufaktur & Produksi
+                            <i class="fas fa-star" style="color: var(--primary); margin-left: 10px;"></i>
+                        </div>
                         <button class="edit-btn" data-edit="homeSubtitle">Edit</button>
                         
-                        <p class="editable" id="homeDescription">
+                        <p class="hero-description editable" id="homeDescription">
                             Lulusan SMK Teknik Permesinan dengan pengalaman di bidang manufaktur dan produksi. 
                             Terbiasa menangani perencanaan produksi, quality control, manajemen stok & distribusi, 
                             hingga mechanical drafting.
                         </p>
                         <button class="edit-btn" data-edit="homeDescription">Edit</button>
+                        
+                        <div style="margin-top: 40px;">
+                            <button class="upload-btn primary" onclick="changePage('about')" 
+                                    style="padding: 18px 40px; font-size: 1.1rem;">
+                                <i class="fas fa-user"></i> Lihat Profil Lengkap
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
@@ -2353,6 +2464,43 @@
                         <div class="stat-label" id="stat4Label">Pengurangan Lead Time</div>
                         <button class="edit-btn" data-edit="stat4Number">Edit</button>
                         <button class="edit-btn" data-edit="stat4Label">Edit</button>
+                    </div>
+                </div>
+                
+                <div class="quick-links">
+                    <h3>Akses Cepat</h3>
+                    <div class="links-grid">
+                        <div class="link-card" onclick="changePage('daily-me')">
+                            <div class="link-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <h4>Daily Me</h4>
+                            <p>Dokumentasi kegiatan kerja harian dan pencapaian</p>
+                        </div>
+                        
+                        <div class="link-card" onclick="changePage('projects')">
+                            <div class="link-icon">
+                                <i class="fas fa-project-diagram"></i>
+                            </div>
+                            <h4>Projects</h4>
+                            <p>Proyek dan portofolio pekerjaan terbaik</p>
+                        </div>
+                        
+                        <div class="link-card" onclick="changePage('achievements')">
+                            <div class="link-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h4>Achievements</h4>
+                            <p>Sertifikat dan pencapaian profesional</p>
+                        </div>
+                        
+                        <div class="link-card" onclick="changePage('contact')">
+                            <div class="link-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h4>Contact</h4>
+                            <p>Hubungi saya untuk kolaborasi dan kerja sama</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2452,95 +2600,21 @@
                 </div>
             </div>
             
-            <!-- Daily Me Page -->
+            <!-- Daily Me Page - UPDATED -->
             <div class="page" id="dailyMePage">
                 <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Daily Me</h2>
                 
-                <div class="dailyme-intro">
-                    <h3>Dokumentasi Kegiatan Kerja Harian</h3>
-                    <p>Bagian ini merupakan dokumentasi visual dari aktivitas kerja saya sebagai Mechanical Drafter dan Staff Produksi. Setiap gambar dilengkapi dengan catatan untuk menjelaskan konteks dan pembelajaran dari setiap kegiatan.</p>
-                    <p>Kategori: <span class="gallery-category" style="display: inline-block; margin: 0 5px; padding: 5px 12px;">Staff Production</span> <span class="gallery-category" style="display: inline-block; margin: 0 5px; padding: 5px 12px;">Drafter</span> <span class="gallery-category" style="display: inline-block; margin: 0 5px; padding: 5px 12px;">Achievement</span></p>
+                <div class="dailyMe-intro editable" id="dailyMeIntro">
+                    <h2>Dokumentasi Harian Kerja</h2>
+                    <p>Koleksi foto dokumentasi aktivitas kerja sehari-hari sebagai Mechanical Drafter dan Staff Produksi. 
+                    Setiap foto menceritakan proses, tantangan, dan pencapaian dalam pekerjaan.</p>
+                    <p><strong>Kategori:</strong> Staff Production, Drafter, Achievement, Training, Daily Activity</p>
+                    <button class="edit-btn" data-edit="dailyMeIntro">Edit</button>
                 </div>
                 
-                <!-- Upload Form -->
-                <div class="upload-form-container editable" id="uploadFormContainer">
-                    <form class="upload-form" id="dailyMeUploadForm">
-                        <h3><i class="fas fa-cloud-upload-alt"></i> Upload Kegiatan Baru</h3>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="dailyMeTitle">Judul Kegiatan</label>
-                                <input type="text" id="dailyMeTitle" placeholder="Contoh: Optimasi Proses Molding" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="dailyMeCategory">Kategori</label>
-                                <select id="dailyMeCategory" required>
-                                    <option value="">Pilih Kategori</option>
-                                    <option value="Staff Production">Staff Production</option>
-                                    <option value="Drafter">Drafter</option>
-                                    <option value="Achievement">Achievement</option>
-                                    <option value="Training">Training</option>
-                                    <option value="Other">Lainnya</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="dailyMeNotes">Catatan / Deskripsi</label>
-                            <textarea id="dailyMeNotes" placeholder="Deskripsikan kegiatan ini, apa yang dikerjakan, tantangan, dan hasilnya..." required></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Upload Gambar</label>
-                            <div class="image-preview-container" id="dailyMeImagePreviewContainer">
-                                <div class="image-preview-placeholder" id="dailyMeImagePlaceholder">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <p>Drag & drop gambar di sini atau klik untuk memilih</p>
-                                    <p style="font-size: 0.9rem; margin-top: 10px; color: var(--gray);">Format: JPG, PNG, GIF (Maks. 5MB)</p>
-                                </div>
-                                <img class="image-preview" id="dailyMeImagePreview" alt="Preview">
-                                <input type="file" id="dailyMeImageInput" accept="image/*" style="display: none;">
-                            </div>
-                        </div>
-                        
-                        <div class="upload-actions">
-                            <button type="button" class="upload-btn secondary" id="cancelUpload">Batal</button>
-                            <button type="submit" class="upload-btn primary" id="submitDailyMe">Upload Kegiatan</button>
-                        </div>
-                    </form>
-                    <button class="add-btn" data-add="dailyMe">+ Tambah Kegiatan Manual</button>
-                </div>
-                
-                <!-- Gallery -->
-                <div class="dailyme-gallery" id="dailyMeGallery">
-                    <div class="gallery-header">
-                        <h3 style="color: var(--primary); font-size: 1.5rem;">Galeri Kegiatan</h3>
-                        <div class="gallery-controls">
-                            <select class="filter-select" id="galleryFilter">
-                                <option value="all">Semua Kategori</option>
-                                <option value="Staff Production">Staff Production</option>
-                                <option value="Drafter">Drafter</option>
-                                <option value="Achievement">Achievement</option>
-                                <option value="Training">Training</option>
-                                <option value="Other">Lainnya</option>
-                            </select>
-                            <select class="filter-select" id="gallerySort">
-                                <option value="newest">Terbaru</option>
-                                <option value="oldest">Terlama</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-grid" id="dailyMeGalleryGrid">
-                        <!-- Gallery items akan di-render oleh JavaScript -->
-                    </div>
-                    
-                    <div class="empty-gallery" id="emptyGallery" style="display: none;">
-                        <i class="fas fa-images"></i>
-                        <h3>Belum ada kegiatan yang diupload</h3>
-                        <p>Mulailah dengan mengupload dokumentasi kegiatan kerja Anda menggunakan form di atas.</p>
-                    </div>
+                <!-- Daily Me Grid -->
+                <div class="dailyMe-grid" id="dailyMeContainer">
+                    <!-- Daily Me items akan di-render oleh JavaScript -->
                 </div>
             </div>
             
@@ -2896,8 +2970,8 @@
                 home: {
                     title: "Home",
                     description: "Selamat datang di portfolio Arya Savariansah",
-                    badge: "Lulusan SMK Teknik Permesinan",
-                    mainTitle: "Arya Savariansah",
+                    badge: "✨ Lulusan SMK Teknik Permesinan ✨",
+                    mainTitle: "ARYA SAVARIANSAH",
                     subtitle: "Spesialis Manufaktur & Produksi",
                     descriptionText: "Lulusan SMK Teknik Permesinan dengan pengalaman di bidang manufaktur dan produksi. Terbiasa menangani perencanaan produksi, quality control, manajemen stok & distribusi, hingga mechanical drafting.",
                     stats: [
@@ -2966,7 +3040,7 @@
                             title: "Optimasi Molding Setting",
                             date: "15/03/2025",
                             category: "Drafter",
-                            notes: "Standarisasi variasi pengaturan molding dari berbagai variasi menjadi 1 standar variasi untuk mengurangi risiko kesalahan setting oleh operator.",
+                            description: "Standarisasi variasi pengaturan molding dari berbagai variasi menjadi 1 standar variasi untuk mengurangi risiko kesalahan setting oleh operator.",
                             image: null
                         },
                         {
@@ -2974,7 +3048,7 @@
                             title: "Monitoring WIP Inventory",
                             date: "20/02/2025",
                             category: "Staff Production",
-                            notes: "Membuat sistem monitoring stock WIP dan planning item produksi untuk meningkatkan productivity penggunaan bahan dari 2 Ton menjadi 724,5 kg.",
+                            description: "Membuat sistem monitoring stock WIP dan planning item produksi untuk meningkatkan productivity penggunaan bahan dari 2 Ton menjadi 724,5 kg.",
                             image: null
                         },
                         {
@@ -2982,11 +3056,11 @@
                             title: "Reduksi Reject Mesin Spiral",
                             date: "10/01/2025",
                             category: "Staff Production",
-                            notes: "Melakukan TFT (Task Force Team) untuk menurunkan reject dari 8% menjadi 3% pada mesin spiral melalui analisis akar masalah dan perbaikan proses.",
+                            description: "Melakukan TFT (Task Force Team) untuk menurunkan reject dari 8% menjadi 3% pada mesin spiral melalui analisis akar masalah dan perbaikan proses.",
                             image: null
                         }
                     ],
-                    categories: ["Staff Production", "Drafter", "Achievement", "Training", "Other"]
+                    categories: ["Staff Production", "Drafter", "Achievement", "Training", "Daily Activity"]
                 },
                 achievements: {
                     title: "Achievements",
@@ -3090,7 +3164,7 @@
         let isAdminLoggedIn = false;
         let isEditMode = false;
         let currentPage = "home";
-        let currentUploadType = null; // "profile" atau "achievement"
+        let currentUploadType = null; // "profile", "achievement", atau "dailyMe"
         let currentAchievementId = null;
 
         // DOM Ready
@@ -3104,7 +3178,6 @@
             setupImageUploadModal();
             setupZoomModal();
             setupResponsiveBehavior();
-            setupDailyMeUpload();
             renderPage(currentPage);
             updateAdminUI();
             setupContentHeight();
@@ -3116,6 +3189,9 @@
                     openZoom(appData.user.profileImage, 'Profile Picture');
                 }
             });
+            
+            // Buat efek partikel
+            createParticles();
         });
 
         // Setup content height adjustment
@@ -3189,179 +3265,6 @@
             handleResize();
         }
 
-        // Setup Daily Me upload functionality
-        function setupDailyMeUpload() {
-            const form = document.getElementById('dailyMeUploadForm');
-            const imageInput = document.getElementById('dailyMeImageInput');
-            const imagePreviewContainer = document.getElementById('dailyMeImagePreviewContainer');
-            const imagePreview = document.getElementById('dailyMeImagePreview');
-            const imagePlaceholder = document.getElementById('dailyMeImagePlaceholder');
-            const cancelBtn = document.getElementById('cancelUpload');
-            
-            // Click pada container untuk trigger file input
-            imagePreviewContainer.addEventListener('click', function(e) {
-                if (e.target !== imagePreview) {
-                    imageInput.click();
-                }
-            });
-            
-            // Drag and drop functionality
-            imagePreviewContainer.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                this.classList.add('dragover');
-            });
-            
-            imagePreviewContainer.addEventListener('dragleave', function(e) {
-                e.preventDefault();
-                this.classList.remove('dragover');
-            });
-            
-            imagePreviewContainer.addEventListener('drop', function(e) {
-                e.preventDefault();
-                this.classList.remove('dragover');
-                
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    handleImageUpload(files[0]);
-                }
-            });
-            
-            // File input change
-            imageInput.addEventListener('change', function(e) {
-                if (this.files.length > 0) {
-                    handleImageUpload(this.files[0]);
-                }
-            });
-            
-            // Form submit
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                if (!isAdminLoggedIn && !isEditMode) {
-                    showNotification('Silakan login sebagai admin untuk menambah kegiatan', 'error');
-                    return;
-                }
-                
-                const title = document.getElementById('dailyMeTitle').value;
-                const category = document.getElementById('dailyMeCategory').value;
-                const notes = document.getElementById('dailyMeNotes').value;
-                const imageSrc = imagePreview.src || null;
-                
-                if (!title || !category || !notes) {
-                    showNotification('Harap isi semua field yang diperlukan', 'error');
-                    return;
-                }
-                
-                const newId = 'dailyMe' + (appData.pages.dailyMe.items.length + 1);
-                const date = new Date().toLocaleDateString('id-ID', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric'
-                });
-                
-                const newItem = {
-                    id: newId,
-                    title: title,
-                    date: date,
-                    category: category,
-                    notes: notes,
-                    image: imageSrc
-                };
-                
-                appData.pages.dailyMe.items.push(newItem);
-                renderDailyMePage();
-                
-                // Reset form
-                form.reset();
-                imagePreview.src = '';
-                imagePreview.classList.remove('active');
-                imagePlaceholder.style.display = 'block';
-                
-                showNotification('Kegiatan berhasil ditambahkan!', 'success');
-            });
-            
-            // Cancel button
-            cancelBtn.addEventListener('click', function() {
-                form.reset();
-                imagePreview.src = '';
-                imagePreview.classList.remove('active');
-                imagePlaceholder.style.display = 'block';
-                showNotification('Form dibatalkan', 'info');
-            });
-            
-            // Filter and sort functionality
-            const filterSelect = document.getElementById('galleryFilter');
-            const sortSelect = document.getElementById('gallerySort');
-            
-            filterSelect.addEventListener('change', renderDailyMeGallery);
-            sortSelect.addEventListener('change', renderDailyMeGallery);
-            
-            // Function to handle image upload
-            function handleImageUpload(file) {
-                // Validasi file
-                if (!file.type.match('image.*')) {
-                    showNotification('Hanya file gambar yang diperbolehkan', 'error');
-                    return;
-                }
-                
-                if (file.size > 5 * 1024 * 1024) {
-                    showNotification('Ukuran file terlalu besar. Maksimal 5MB', 'error');
-                    return;
-                }
-                
-                // Preview image
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.classList.add('active');
-                    imagePlaceholder.style.display = 'none';
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // Load data dari localStorage
-        function loadFromLocalStorage() {
-            const savedData = localStorage.getItem('portfolioData');
-            if (savedData) {
-                try {
-                    const data = JSON.parse(savedData);
-                    Object.assign(appData, data);
-                } catch (e) {
-                    console.error("Error loading data from localStorage:", e);
-                }
-            }
-        }
-
-        // Save data ke localStorage
-        function saveToLocalStorage() {
-            localStorage.setItem('portfolioData', JSON.stringify(appData));
-            showNotification('Data berhasil disimpan!', 'success');
-        }
-
-        // Setup navigation
-        function setupNavigation() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const pageId = this.getAttribute('data-page');
-                    
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    changePage(pageId);
-                    
-                    if (window.innerWidth <= 768) {
-                        document.getElementById('sidebar').classList.remove('active');
-                        document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
-                    }
-                });
-            });
-        }
-
         // Setup mobile menu toggle
         function setupMobileMenu() {
             const mobileMenuToggle = document.getElementById('mobileMenuToggle');
@@ -3395,8 +3298,6 @@
         function setupZoomModal() {
             const zoomModal = document.getElementById('zoomModal');
             const closeZoom = document.getElementById('closeZoom');
-            const zoomedImage = document.getElementById('zoomedImage');
-            const zoomCaption = document.getElementById('zoomCaption');
             
             // Event listener untuk close zoom
             closeZoom.addEventListener('click', function() {
@@ -3564,6 +3465,13 @@
                                     renderAchievementsPage();
                                     showNotification('Foto achievement berhasil diupload!', 'success');
                                 }
+                            } else if (currentUploadType === 'dailyMe' && currentAchievementId) {
+                                const dailyMe = appData.pages.dailyMe.items.find(d => d.id === currentAchievementId);
+                                if (dailyMe) {
+                                    dailyMe.image = previewImage.src;
+                                    renderDailyMePage();
+                                    showNotification('Foto Daily Me berhasil diupload!', 'success');
+                                }
                             }
                             
                             setTimeout(() => {
@@ -3597,6 +3505,13 @@
                             achievement.image = null;
                             renderAchievementsPage();
                             showNotification('Foto achievement berhasil dihapus!', 'success');
+                        }
+                    } else if (currentUploadType === 'dailyMe' && currentAchievementId) {
+                        const dailyMe = appData.pages.dailyMe.items.find(d => d.id === currentAchievementId);
+                        if (dailyMe) {
+                            dailyMe.image = null;
+                            renderDailyMePage();
+                            showNotification('Foto Daily Me berhasil dihapus!', 'success');
                         }
                     }
                     
@@ -3658,7 +3573,7 @@
         }
 
         // Open image upload modal
-        function openImageUploadModal(type, achievementId = null) {
+        function openImageUploadModal(type, itemId = null) {
             // PERIKSA APAKAH USER ADALAH ADMIN
             if (!isAdminLoggedIn && !isEditMode) {
                 showNotification('Silakan login sebagai admin untuk mengupload foto', 'error');
@@ -3666,7 +3581,7 @@
             }
             
             currentUploadType = type;
-            currentAchievementId = achievementId;
+            currentAchievementId = itemId;
             
             const modal = document.getElementById('imageUploadModal');
             const modalTitle = document.getElementById('modalTitle');
@@ -3675,15 +3590,25 @@
             const imagePreview = document.getElementById('imagePreview');
             
             let currentImage = null;
+            let itemTitle = '';
             
             if (type === 'profile') {
                 modalTitle.textContent = 'Upload Foto Profile';
                 currentImage = appData.user.profileImage;
-            } else if (type === 'achievement' && achievementId) {
-                const achievement = appData.pages.achievements.items.find(a => a.id === achievementId);
+                itemTitle = 'Profile Picture';
+            } else if (type === 'achievement' && itemId) {
+                const achievement = appData.pages.achievements.items.find(a => a.id === itemId);
                 if (achievement) {
                     modalTitle.textContent = `Upload Foto untuk: ${achievement.title}`;
                     currentImage = achievement.image;
+                    itemTitle = achievement.title;
+                }
+            } else if (type === 'dailyMe' && itemId) {
+                const dailyMe = appData.pages.dailyMe.items.find(d => d.id === itemId);
+                if (dailyMe) {
+                    modalTitle.textContent = `Upload Foto untuk: ${dailyMe.title}`;
+                    currentImage = dailyMe.image;
+                    itemTitle = dailyMe.title;
                 }
             }
             
@@ -3699,6 +3624,32 @@
             modal.classList.add('active');
         }
 
+        // Tambahkan fungsi particles untuk home page
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            particlesContainer.innerHTML = '';
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size and position
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation delay
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
         // Render profile image
         function renderProfileImage() {
             const profileImg = document.getElementById('profileImg');
@@ -3712,6 +3663,48 @@
                 profileImg.style.background = 'var(--gradient-gold)';
                 profileImg.innerHTML = `<div class="profile-img-placeholder"><i class="fas fa-user-tie" id="profileIcon"></i></div>`;
             }
+        }
+
+        // Load data dari localStorage
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('portfolioData');
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    Object.assign(appData, data);
+                } catch (e) {
+                    console.error("Error loading data from localStorage:", e);
+                }
+            }
+        }
+
+        // Save data ke localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('portfolioData', JSON.stringify(appData));
+            showNotification('Data berhasil disimpan!', 'success');
+        }
+
+        // Setup navigation
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const pageId = this.getAttribute('data-page');
+                    
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    changePage(pageId);
+                    
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebar').classList.remove('active');
+                        document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+            });
         }
 
         // Change page
@@ -3751,6 +3744,11 @@
                     renderPage(pageId);
                     document.querySelector('.main-content').scrollTop = 0;
                     setupContentHeight();
+                    
+                    // Buat partikel baru untuk home page
+                    if (pageId === 'home') {
+                        createParticles();
+                    }
                 }
             }, 300);
         }
@@ -3908,110 +3906,117 @@
 
         // Render Daily Me page
         function renderDailyMePage() {
-            renderDailyMeGallery();
-        }
-
-        // Render Daily Me gallery
-        function renderDailyMeGallery() {
             const pageData = appData.pages.dailyMe;
-            const galleryGrid = document.getElementById('dailyMeGalleryGrid');
-            const emptyGallery = document.getElementById('emptyGallery');
-            const filterSelect = document.getElementById('galleryFilter');
-            const sortSelect = document.getElementById('gallerySort');
+            const container = document.getElementById('dailyMeContainer');
             
-            if (!galleryGrid) return;
+            if (!container) return;
             
-            // Filter items
-            let filteredItems = [...pageData.items];
-            const filterValue = filterSelect ? filterSelect.value : 'all';
+            container.innerHTML = '';
             
-            if (filterValue !== 'all') {
-                filteredItems = filteredItems.filter(item => item.category === filterValue);
-            }
-            
-            // Sort items
-            const sortValue = sortSelect ? sortSelect.value : 'newest';
-            filteredItems.sort((a, b) => {
-                const dateA = parseDate(a.date);
-                const dateB = parseDate(b.date);
-                
-                if (sortValue === 'newest') {
-                    return dateB - dateA;
-                } else {
-                    return dateA - dateB;
-                }
-            });
-            
-            // Clear gallery
-            galleryGrid.innerHTML = '';
-            
-            // Show empty message if no items
-            if (filteredItems.length === 0) {
-                if (emptyGallery) emptyGallery.style.display = 'block';
-                return;
-            } else {
-                if (emptyGallery) emptyGallery.style.display = 'none';
-            }
-            
-            // Render gallery items
-            filteredItems.forEach(item => {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item editable';
-                galleryItem.id = item.id;
+            // Render existing items
+            pageData.items.forEach((item) => {
+                const dailyMeElement = document.createElement('div');
+                dailyMeElement.className = 'dailyMe-card editable';
+                dailyMeElement.id = item.id;
                 
                 let imageHTML = '';
                 if (item.image) {
                     imageHTML = `
-                        <div class="gallery-image-container" onclick="openZoom('${item.image}', '${item.title}')">
-                            <img src="${item.image}" alt="${item.title}" class="gallery-image">
-                            <div class="gallery-overlay">
-                                <div style="color: var(--primary); font-weight: 600;">
-                                    <i class="fas fa-search-plus"></i> Klik untuk zoom
+                        <div class="dailyMe-image-container" data-upload="${item.id}">
+                            <img src="${item.image}" alt="${item.title}" class="dailyMe-image" 
+                                 onclick="openZoom('${item.image}', '${item.title}')">
+                            <div class="dailyMe-upload-overlay">
+                                <div>
+                                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                                    ${isAdminLoggedIn || isEditMode ? 'Klik untuk ganti foto' : 'Klik untuk zoom'}
                                 </div>
                             </div>
                         </div>
                     `;
                 } else {
                     imageHTML = `
-                        <div class="gallery-image-container" onclick="showNotification('Tidak ada gambar untuk kegiatan ini', 'info')">
-                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%); display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-image" style="font-size: 3rem; color: rgba(255, 215, 0, 0.3);"></i>
+                        <div class="dailyMe-image-container" data-upload="${item.id}">
+                            <div class="dailyMe-image-placeholder">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="dailyMe-upload-overlay">
+                                <div>
+                                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                                    ${isAdminLoggedIn || isEditMode ? 'Klik untuk upload foto' : 'No image available'}
+                                </div>
                             </div>
                         </div>
                     `;
                 }
                 
-                galleryItem.innerHTML = `
-                    <div class="gallery-category">${item.category}</div>
+                dailyMeElement.innerHTML = `
+                    <div class="dailyMe-category">${item.category}</div>
                     ${imageHTML}
-                    <div class="gallery-content">
-                        <div class="gallery-date">
-                            <i class="far fa-calendar"></i> ${item.date}
-                        </div>
-                        <h3 class="gallery-title">${item.title}</h3>
-                        <p class="gallery-notes">${item.notes}</p>
-                        <div class="gallery-actions">
-                            <button class="action-btn edit" data-edit="${item.id}">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button class="action-btn delete" data-delete="${item.id}" data-type="dailyMe">
-                                <i class="fas fa-trash"></i> Hapus
-                            </button>
-                        </div>
+                    <h3>${item.title}</h3>
+                    <div class="date">
+                        <i class="far fa-calendar"></i> ${item.date}
                     </div>
+                    <p>${item.description || item.notes}</p>
+                    <button class="edit-btn" data-edit="${item.id}">Edit</button>
+                    <button class="delete-btn" data-delete="${item.id}" data-type="dailyMe">Hapus</button>
                 `;
                 
-                galleryGrid.appendChild(galleryItem);
+                container.appendChild(dailyMeElement);
             });
             
-            // Setup event listeners for edit and delete buttons
+            // Add upload card if admin mode
+            const uploadCard = document.createElement('div');
+            uploadCard.className = 'upload-card';
+            uploadCard.id = 'uploadDailyMeCard';
+            uploadCard.innerHTML = `
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">Upload Kegiatan Baru</div>
+                <div class="upload-subtext">Klik untuk menambahkan dokumentasi kegiatan harian baru</div>
+            `;
+            container.appendChild(uploadCard);
+            
+            // Show/hide upload card based on admin mode
+            uploadCard.style.display = (isAdminLoggedIn || isEditMode) ? 'flex' : 'none';
+            
+            // Setup event listeners
             setupDailyMeEventListeners();
+            
+            // Setup event listener untuk upload card
+            if (isAdminLoggedIn || isEditMode) {
+                uploadCard.addEventListener('click', function() {
+                    addDailyMeItem();
+                });
+            }
         }
 
-        // Setup event listeners for Daily Me items
+        // Setup event listeners untuk Daily Me
         function setupDailyMeEventListeners() {
+            // Event listeners untuk upload foto Daily Me
+            document.querySelectorAll('.dailyMe-image-container').forEach(container => {
+                container.addEventListener('click', function(e) {
+                    // Jika klik langsung pada gambar, biarkan fungsi zoom yang menangani
+                    if (e.target.classList.contains('dailyMe-image')) {
+                        return;
+                    }
+                    
+                    if (isAdminLoggedIn || isEditMode) {
+                        const dailyMeId = this.getAttribute('data-upload');
+                        openImageUploadModal('dailyMe', dailyMeId);
+                    } else {
+                        // Jika bukan admin, coba zoom jika ada gambar
+                        const img = this.querySelector('.dailyMe-image');
+                        if (img && img.src) {
+                            const title = this.closest('.dailyMe-card').querySelector('h3').textContent;
+                            openZoom(img.src, title);
+                        }
+                    }
+                });
+            });
+            
             // Edit buttons
-            document.querySelectorAll('.action-btn.edit').forEach(btn => {
+            document.querySelectorAll('.edit-btn[data-edit^="dailyMe"]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const itemId = this.getAttribute('data-edit');
                     editDailyMeItem(itemId);
@@ -4019,21 +4024,12 @@
             });
             
             // Delete buttons
-            document.querySelectorAll('.action-btn.delete[data-type="dailyMe"]').forEach(btn => {
+            document.querySelectorAll('.delete-btn[data-type="dailyMe"]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const itemId = this.getAttribute('data-delete');
                     deleteDailyMeItem(itemId);
                 });
             });
-        }
-
-        // Helper function to parse date string
-        function parseDate(dateStr) {
-            const parts = dateStr.split('/');
-            if (parts.length === 3) {
-                return new Date(parts[2], parts[1] - 1, parts[0]);
-            }
-            return new Date();
         }
 
         // Edit Daily Me item
@@ -4047,19 +4043,48 @@
             const newDate = prompt('Edit tanggal (format: DD/MM/YYYY):', item.date);
             if (newDate === null) return;
             
-            const newCategory = prompt('Edit kategori (Staff Production, Drafter, Achievement, Training, Other):', item.category);
+            const newCategory = prompt('Edit kategori (Staff Production, Drafter, Achievement, Training, Daily Activity):', item.category);
             if (newCategory === null) return;
             
-            const newNotes = prompt('Edit catatan/deskripsi:', item.notes);
-            if (newNotes === null) return;
+            const newDescription = prompt('Edit deskripsi:', item.description);
+            if (newDescription === null) return;
             
             item.title = newTitle;
             item.date = newDate;
             item.category = newCategory;
-            item.notes = newNotes;
+            item.description = newDescription;
             
             renderDailyMePage();
             showNotification('Kegiatan berhasil diperbarui!', 'success');
+        }
+
+        // Add Daily Me item
+        function addDailyMeItem() {
+            const newTitle = prompt('Masukkan judul kegiatan baru:');
+            if (!newTitle) return;
+            
+            const newDate = prompt('Masukkan tanggal (format: DD/MM/YYYY):');
+            if (!newDate) return;
+            
+            const newCategory = prompt('Masukkan kategori (Staff Production, Drafter, Achievement, Training, Daily Activity):');
+            if (!newCategory) return;
+            
+            const newDescription = prompt('Masukkan deskripsi:');
+            if (!newDescription) return;
+            
+            const newId = 'dailyMe' + (appData.pages.dailyMe.items.length + 1);
+            const newItem = {
+                id: newId,
+                title: newTitle,
+                date: newDate,
+                category: newCategory,
+                description: newDescription,
+                image: null
+            };
+            
+            appData.pages.dailyMe.items.push(newItem);
+            renderDailyMePage();
+            showNotification('Kegiatan berhasil ditambahkan!', 'success');
         }
 
         // Delete Daily Me item
@@ -4080,35 +4105,6 @@
                 }
                 hideLoading();
             }, 500);
-        }
-
-        // Add Daily Me item manually
-        function addDailyMeItem() {
-            const newTitle = prompt('Masukkan judul kegiatan baru:');
-            if (!newTitle) return;
-            
-            const newDate = prompt('Masukkan tanggal (format: DD/MM/YYYY):');
-            if (!newDate) return;
-            
-            const newCategory = prompt('Masukkan kategori (Staff Production, Drafter, Achievement, Training, Other):');
-            if (!newCategory) return;
-            
-            const newNotes = prompt('Masukkan catatan/deskripsi:');
-            if (!newNotes) return;
-            
-            const newId = 'dailyMe' + (appData.pages.dailyMe.items.length + 1);
-            const newItem = {
-                id: newId,
-                title: newTitle,
-                date: newDate,
-                category: newCategory,
-                notes: newNotes,
-                image: null
-            };
-            
-            appData.pages.dailyMe.items.push(newItem);
-            renderDailyMePage();
-            showNotification('Kegiatan berhasil ditambahkan!', 'success');
         }
 
         // Render achievements page
@@ -4621,6 +4617,8 @@
                             editContact(elementId);
                         } else if (element.classList.contains('period-section')) {
                             editPeriod(elementId);
+                        } else if (element.classList.contains('dailyMe-card')) {
+                            editDailyMeItem(elementId);
                         } else {
                             editText(elementId);
                         }
@@ -4645,9 +4643,6 @@
                             break;
                         case 'project':
                             addProject();
-                            break;
-                        case 'dailyMe':
-                            addDailyMeItem();
                             break;
                     }
                 });
@@ -4684,6 +4679,12 @@
                     appData.pages.about.sections[0].content = newText;
                 } else if (elementId === 'aboutText2') {
                     appData.pages.about.sections[1].content = newText;
+                } else if (elementId === 'dailyMeIntro') {
+                    // Handle dailyMeIntro edit
+                    const introElement = document.querySelector('#dailyMeIntro h2');
+                    if (introElement) {
+                        introElement.textContent = newText;
+                    }
                 }
                 
                 showNotification('Teks berhasil diperbarui!', 'success');
