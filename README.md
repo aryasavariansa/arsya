@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -759,7 +760,7 @@
             }
         }
 
-        /* ===== DAILY ME PAGE - UPDATED LIKE ACHIEVEMENTS ===== */
+        /* ===== DAILY ME PAGE - DIPERBAIKI SEPERTI ACHIEVEMENTS ===== */
         .dailyMe-intro {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
             border-radius: var(--border-radius);
@@ -800,6 +801,7 @@
             gap: 35px;
             margin-top: 30px;
             margin-bottom: 50px;
+            width: 100%;
         }
 
         .dailyMe-card {
@@ -893,19 +895,6 @@
             display: flex;
         }
 
-        .dailyMe-category {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--gradient-gold);
-            color: #000;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            z-index: 2;
-        }
-
         .dailyMe-card h3 {
             font-size: 1.4rem;
             margin-bottom: 10px;
@@ -933,95 +922,18 @@
             font-size: 1.05rem;
         }
 
-        /* Upload Card untuk Daily Me */
-        .upload-card {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            border: 2px dashed rgba(255, 215, 0, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .upload-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 215, 0, 0.5);
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(26, 26, 26, 0.7) 100%);
-        }
-
-        .upload-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+        /* Category badge */
+        .dailyMe-category {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .upload-text {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
             font-weight: 700;
-        }
-
-        .upload-subtext {
-            color: var(--gray);
-            font-size: 1rem;
-            max-width: 300px;
-        }
-
-        /* Form Input khusus untuk Daily Me Upload */
-        .dailyMe-upload-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .dailyMe-upload-form .form-group {
-            margin-bottom: 0;
-        }
-
-        .dailyMe-upload-form label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .dailyMe-upload-form select {
-            width: 100%;
-            padding: 14px 16px;
-            background: #0f0f0f;
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            font-size: 1rem;
-            color: var(--light);
-            transition: var(--transition);
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffd700'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 20px;
-        }
-
-        .dailyMe-upload-form select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
-        }
-
-        .dailyMe-upload-form textarea {
-            min-height: 100px;
-            resize: vertical;
-            font-family: inherit;
+            z-index: 2;
         }
 
         /* ===== DASHBOARD PAGE - UPDATED ===== */
@@ -1370,27 +1282,6 @@
         .achievement-card p {
             color: var(--gray);
             line-height: 1.7;
-        }
-
-        .upload-btn {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: var(--gradient-gold);
-            color: #000;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 18px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: none;
-            z-index: 10;
-            transition: var(--transition);
-            font-weight: 700;
-        }
-
-        .upload-btn:hover {
-            transform: translateY(-3px);
         }
 
         /* ===== PROJECTS PAGE ===== */
@@ -1842,6 +1733,50 @@
 
         .admin-mode .add-btn {
             display: inline-block;
+        }
+
+        /* Upload Card untuk Daily Me */
+        .upload-card {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.5);
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(26, 26, 26, 0.7) 100%);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .upload-text {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .upload-subtext {
+            color: var(--gray);
+            font-size: 1rem;
+            max-width: 300px;
         }
 
         /* ===== MODAL UPLOAD FOTO ===== */
@@ -2439,7 +2374,7 @@
         <div class="content-header">
             <div class="page-title">
                 <h2 id="currentPageTitle">Home</h2>
-                <p id="currentPageDesc">Daily Me - Dokumentasi Aktivitas Harian</p>
+                <p id="currentPageDesc">Selamat datang di portfolio Arya Savariansah</p>
             </div>
             <div class="edit-status" id="editStatus">
                 <i class="fas fa-edit"></i> Edit Mode Aktif
@@ -2647,7 +2582,7 @@
                 </div>
             </div>
             
-            <!-- Daily Me Page - UPDATED -->
+            <!-- Daily Me Page - DIPERBAIKI SEPERTI ACHIEVEMENTS -->
             <div class="page" id="dailyMePage">
                 <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Daily Me</h2>
                 
@@ -2663,6 +2598,9 @@
                 <div class="dailyMe-grid" id="dailyMeContainer">
                     <!-- Daily Me items akan di-render oleh JavaScript -->
                 </div>
+                
+                <!-- Tombol Add untuk Daily Me -->
+                <button class="add-btn" data-add="dailyMe" id="addDailyMeBtn">+ Tambah Kegiatan Harian</button>
             </div>
             
             <!-- Achievements Page -->
@@ -3016,7 +2954,7 @@
             pages: {
                 home: {
                     title: "Home",
-                    description: "Daily Me - Dokumentasi Aktivitas Harian",
+                    description: "Selamat datang di portfolio Arya Savariansah",
                     badge: "✨ Lulusan SMK Teknik Permesinan ✨",
                     mainTitle: "ARYA SAVARIANSAH",
                     subtitle: "Spesialis Manufaktur & Produksi",
@@ -3212,7 +3150,7 @@
         let isEditMode = false;
         let currentPage = "home";
         let currentUploadType = null; // "profile", "achievement", atau "dailyMe"
-        let currentAchievementId = null;
+        let currentItemId = null;
 
         // DOM Ready
         document.addEventListener('DOMContentLoaded', function() {
@@ -3234,6 +3172,15 @@
             document.getElementById('profileImg').addEventListener('click', function() {
                 if (appData.user.profileImage) {
                     openZoom(appData.user.profileImage, 'Profile Picture');
+                }
+            });
+            
+            // Setup event listener untuk tombol add Daily Me
+            document.getElementById('addDailyMeBtn').addEventListener('click', function() {
+                if (isAdminLoggedIn || isEditMode) {
+                    addDailyMeItem();
+                } else {
+                    showNotification('Silakan login sebagai admin untuk menambah kegiatan', 'error');
                 }
             });
             
@@ -3505,15 +3452,15 @@
                                 appData.user.profileImage = previewImage.src;
                                 renderProfileImage();
                                 showNotification('Foto profile berhasil diupload!', 'success');
-                            } else if (currentUploadType === 'achievement' && currentAchievementId) {
-                                const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementId);
+                            } else if (currentUploadType === 'achievement' && currentItemId) {
+                                const achievement = appData.pages.achievements.items.find(a => a.id === currentItemId);
                                 if (achievement) {
                                     achievement.image = previewImage.src;
                                     renderAchievementsPage();
                                     showNotification('Foto achievement berhasil diupload!', 'success');
                                 }
-                            } else if (currentUploadType === 'dailyMe' && currentAchievementId) {
-                                const dailyMe = appData.pages.dailyMe.items.find(d => d.id === currentAchievementId);
+                            } else if (currentUploadType === 'dailyMe' && currentItemId) {
+                                const dailyMe = appData.pages.dailyMe.items.find(d => d.id === currentItemId);
                                 if (dailyMe) {
                                     dailyMe.image = previewImage.src;
                                     renderDailyMePage();
@@ -3546,15 +3493,15 @@
                         appData.user.profileImage = null;
                         renderProfileImage();
                         showNotification('Foto profile berhasil dihapus!', 'success');
-                    } else if (currentUploadType === 'achievement' && currentAchievementId) {
-                        const achievement = appData.pages.achievements.items.find(a => a.id === currentAchievementId);
+                    } else if (currentUploadType === 'achievement' && currentItemId) {
+                        const achievement = appData.pages.achievements.items.find(a => a.id === currentItemId);
                         if (achievement) {
                             achievement.image = null;
                             renderAchievementsPage();
                             showNotification('Foto achievement berhasil dihapus!', 'success');
                         }
-                    } else if (currentUploadType === 'dailyMe' && currentAchievementId) {
-                        const dailyMe = appData.pages.dailyMe.items.find(d => d.id === currentAchievementId);
+                    } else if (currentUploadType === 'dailyMe' && currentItemId) {
+                        const dailyMe = appData.pages.dailyMe.items.find(d => d.id === currentItemId);
                         if (dailyMe) {
                             dailyMe.image = null;
                             renderDailyMePage();
@@ -3616,7 +3563,7 @@
             previewImage.src = '';
             removeImageBtn.style.display = 'none';
             currentUploadType = null;
-            currentAchievementId = null;
+            currentItemId = null;
         }
 
         // Open image upload modal
@@ -3628,7 +3575,7 @@
             }
             
             currentUploadType = type;
-            currentAchievementId = itemId;
+            currentItemId = itemId;
             
             const modal = document.getElementById('imageUploadModal');
             const modalTitle = document.getElementById('modalTitle');
@@ -3785,13 +3732,7 @@
                     const pageData = appData.pages[pageId];
                     if (pageData) {
                         document.getElementById('currentPageTitle').textContent = pageData.title;
-                        
-                        // Untuk home page, gunakan deskripsi khusus
-                        if (pageId === 'home') {
-                            document.getElementById('currentPageDesc').textContent = 'Daily Me - Dokumentasi Aktivitas Harian';
-                        } else {
-                            document.getElementById('currentPageDesc').textContent = pageData.description;
-                        }
+                        document.getElementById('currentPageDesc').textContent = pageData.description;
                     }
                     
                     renderPage(pageId);
@@ -3957,7 +3898,7 @@
             }
         }
 
-        // Render Daily Me page
+        // Render Daily Me page - DIPERBAIKI
         function renderDailyMePage() {
             const pageData = appData.pages.dailyMe;
             const container = document.getElementById('dailyMeContainer');
@@ -3968,80 +3909,69 @@
             
             // Render existing items
             pageData.items.forEach((item) => {
-                const dailyMeElement = document.createElement('div');
-                dailyMeElement.className = 'dailyMe-card editable';
-                dailyMeElement.id = item.id;
-                
-                let imageHTML = '';
-                if (item.image) {
-                    imageHTML = `
-                        <div class="dailyMe-image-container" data-upload="${item.id}">
-                            <img src="${item.image}" alt="${item.title}" class="dailyMe-image" 
-                                 onclick="openZoom('${item.image}', '${item.title}')">
-                            <div class="dailyMe-upload-overlay">
-                                <div>
-                                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                                    ${isAdminLoggedIn || isEditMode ? 'Klik untuk ganti foto' : 'Klik untuk zoom'}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    imageHTML = `
-                        <div class="dailyMe-image-container" data-upload="${item.id}">
-                            <div class="dailyMe-image-placeholder">
-                                <i class="fas fa-camera"></i>
-                            </div>
-                            <div class="dailyMe-upload-overlay">
-                                <div>
-                                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                                    ${isAdminLoggedIn || isEditMode ? 'Klik untuk upload foto' : 'No image available'}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-                
-                dailyMeElement.innerHTML = `
-                    <div class="dailyMe-category">${item.category}</div>
-                    ${imageHTML}
-                    <h3>${item.title}</h3>
-                    <div class="date">
-                        <i class="far fa-calendar"></i> ${item.date}
-                    </div>
-                    <p>${item.description || item.notes}</p>
-                    <button class="edit-btn" data-edit="${item.id}">Edit</button>
-                    <button class="delete-btn" data-delete="${item.id}" data-type="dailyMe">Hapus</button>
-                `;
-                
+                const dailyMeElement = createDailyMeCard(item);
                 container.appendChild(dailyMeElement);
             });
             
-            // Add upload card if admin mode
-            const uploadCard = document.createElement('div');
-            uploadCard.className = 'upload-card';
-            uploadCard.id = 'uploadDailyMeCard';
-            uploadCard.innerHTML = `
-                <div class="upload-icon">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                </div>
-                <div class="upload-text">Upload Kegiatan Baru</div>
-                <div class="upload-subtext">Klik untuk menambahkan dokumentasi kegiatan harian baru</div>
-            `;
-            container.appendChild(uploadCard);
-            
-            // Show/hide upload card based on admin mode
-            uploadCard.style.display = (isAdminLoggedIn || isEditMode) ? 'flex' : 'none';
+            // Show/hide tombol add berdasarkan admin mode
+            const addBtn = document.getElementById('addDailyMeBtn');
+            if (addBtn) {
+                addBtn.style.display = (isAdminLoggedIn || isEditMode) ? 'inline-block' : 'none';
+            }
             
             // Setup event listeners
             setupDailyMeEventListeners();
+        }
+
+        // Fungsi untuk membuat card Daily Me
+        function createDailyMeCard(item) {
+            const dailyMeElement = document.createElement('div');
+            dailyMeElement.className = 'dailyMe-card editable';
+            dailyMeElement.id = item.id;
             
-            // Setup event listener untuk upload card
-            if (isAdminLoggedIn || isEditMode) {
-                uploadCard.addEventListener('click', function() {
-                    addDailyMeItem();
-                });
+            let imageHTML = '';
+            if (item.image) {
+                imageHTML = `
+                    <div class="dailyMe-image-container" data-upload="${item.id}">
+                        <img src="${item.image}" alt="${item.title}" class="dailyMe-image" 
+                             onclick="openZoom('${item.image}', '${item.title}')">
+                        <div class="dailyMe-upload-overlay">
+                            <div>
+                                <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                                ${isAdminLoggedIn || isEditMode ? 'Klik untuk ganti foto' : 'Klik untuk zoom'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                imageHTML = `
+                    <div class="dailyMe-image-container" data-upload="${item.id}">
+                        <div class="dailyMe-image-placeholder">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="dailyMe-upload-overlay">
+                            <div>
+                                <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                                ${isAdminLoggedIn || isEditMode ? 'Klik untuk upload foto' : 'No image available'}
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
+            
+            dailyMeElement.innerHTML = `
+                <div class="dailyMe-category">${item.category}</div>
+                ${imageHTML}
+                <h3>${item.title}</h3>
+                <div class="date">
+                    <i class="far fa-calendar"></i> ${item.date}
+                </div>
+                <p>${item.description}</p>
+                <button class="edit-btn" data-edit="${item.id}">Edit</button>
+                <button class="delete-btn" data-delete="${item.id}" data-type="dailyMe">Hapus</button>
+            `;
+            
+            return dailyMeElement;
         }
 
         // Setup event listeners untuk Daily Me
@@ -4083,170 +4013,6 @@
                     deleteDailyMeItem(itemId);
                 });
             });
-            
-            // Setup event listener untuk upload card
-            const uploadCard = document.getElementById('uploadDailyMeCard');
-            if (uploadCard && (isAdminLoggedIn || isEditMode)) {
-                uploadCard.addEventListener('click', function() {
-                    addDailyMeItem();
-                });
-            }
-        }
-
-        // Fungsi untuk menampilkan form upload kegiatan baru
-        function showDailyMeUploadForm() {
-            // Buat modal untuk form upload
-            const modalHTML = `
-                <div class="modal" id="dailyMeUploadModal" style="display: flex;">
-                    <div class="modal-content" style="max-width: 600px;">
-                        <h3 class="modal-title">Upload Kegiatan Harian Baru</h3>
-                        
-                        <div class="form-group">
-                            <label for="dailyMeTitle">Judul Kegiatan</label>
-                            <input type="text" id="dailyMeTitle" class="admin-input" placeholder="Contoh: Optimasi Molding Setting">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="dailyMeDate">Tanggal</label>
-                            <input type="text" id="dailyMeDate" class="admin-input" placeholder="DD/MM/YYYY, Contoh: 15/03/2025">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="dailyMeCategory">Kategori</label>
-                            <select id="dailyMeCategory" class="admin-input">
-                                <option value="Staff Production">Staff Production</option>
-                                <option value="Drafter">Drafter</option>
-                                <option value="Achievement">Achievement</option>
-                                <option value="Training">Training</option>
-                                <option value="Daily Activity">Daily Activity</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="dailyMeDescription">Deskripsi</label>
-                            <textarea id="dailyMeDescription" class="admin-input" rows="4" placeholder="Deskripsikan kegiatan Anda..."></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="dailyMeImage">Upload Foto (Opsional)</label>
-                            <input type="file" id="dailyMeImage" class="admin-input" accept="image/*">
-                        </div>
-                        
-                        <div class="image-preview" id="dailyMeImagePreview" style="display: none;">
-                            <img id="dailyMePreviewImage" src="" alt="Preview">
-                        </div>
-                        
-                        <div class="modal-buttons">
-                            <button class="modal-btn primary" id="saveDailyMeBtn">Simpan Kegiatan</button>
-                            <button class="modal-btn secondary" id="cancelDailyMeBtn">Batal</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            // Tambahkan modal ke body
-            document.body.insertAdjacentHTML('beforeend', modalHTML);
-            
-            // Setup event listeners
-            setupDailyMeUploadModal();
-        }
-
-        // Setup modal upload Daily Me
-        function setupDailyMeUploadModal() {
-            const modal = document.getElementById('dailyMeUploadModal');
-            const dailyMeImage = document.getElementById('dailyMeImage');
-            const dailyMePreviewImage = document.getElementById('dailyMePreviewImage');
-            const dailyMeImagePreview = document.getElementById('dailyMeImagePreview');
-            const saveBtn = document.getElementById('saveDailyMeBtn');
-            const cancelBtn = document.getElementById('cancelDailyMeBtn');
-            
-            // Preview gambar
-            if (dailyMeImage) {
-                dailyMeImage.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        if (file.size > 5 * 1024 * 1024) {
-                            showNotification('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
-                            return;
-                        }
-                        
-                        if (!file.type.match('image.*')) {
-                            showNotification('Hanya file gambar yang diperbolehkan.', 'error');
-                            return;
-                        }
-                        
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            dailyMePreviewImage.src = event.target.result;
-                            dailyMeImagePreview.style.display = 'block';
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-            
-            // Save button
-            if (saveBtn) {
-                saveBtn.addEventListener('click', function() {
-                    const title = document.getElementById('dailyMeTitle').value.trim();
-                    const date = document.getElementById('dailyMeDate').value.trim();
-                    const category = document.getElementById('dailyMeCategory').value;
-                    const description = document.getElementById('dailyMeDescription').value.trim();
-                    const imageSrc = dailyMePreviewImage.src;
-                    
-                    if (!title || !date || !description) {
-                        showNotification('Harap lengkapi semua field yang diperlukan!', 'error');
-                        return;
-                    }
-                    
-                    showLoading('Menyimpan kegiatan...');
-                    
-                    setTimeout(() => {
-                        const newId = 'dailyMe' + (appData.pages.dailyMe.items.length + 1);
-                        const newItem = {
-                            id: newId,
-                            title: title,
-                            date: date,
-                            category: category,
-                            description: description,
-                            image: imageSrc || null
-                        };
-                        
-                        appData.pages.dailyMe.items.push(newItem);
-                        saveToLocalStorage();
-                        
-                        // Close modal
-                        modal.remove();
-                        
-                        // Refresh Daily Me page
-                        if (currentPage === 'daily-me') {
-                            renderDailyMePage();
-                        }
-                        
-                        hideLoading();
-                        showNotification('Kegiatan berhasil ditambahkan!', 'success');
-                    }, 500);
-                });
-            }
-            
-            // Cancel button
-            if (cancelBtn) {
-                cancelBtn.addEventListener('click', function() {
-                    modal.remove();
-                });
-            }
-            
-            // Close modal saat klik di luar
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        }
-
-        // Add Daily Me item menggunakan modal form
-        function addDailyMeItem() {
-            showDailyMeUploadForm();
         }
 
         // Edit Daily Me item
@@ -4273,6 +4039,36 @@
             
             renderDailyMePage();
             showNotification('Kegiatan berhasil diperbarui!', 'success');
+        }
+
+        // Add Daily Me item - DIPERBAIKI
+        function addDailyMeItem() {
+            const newTitle = prompt('Masukkan judul kegiatan baru:');
+            if (!newTitle) return;
+            
+            const newDate = prompt('Masukkan tanggal (format: DD/MM/YYYY):');
+            if (!newDate) return;
+            
+            const newCategory = prompt('Masukkan kategori (Staff Production, Drafter, Achievement, Training, Daily Activity):');
+            if (!newCategory) return;
+            
+            const newDescription = prompt('Masukkan deskripsi:');
+            if (!newDescription) return;
+            
+            const newId = 'dailyMe' + (appData.pages.dailyMe.items.length + 1);
+            const newItem = {
+                id: newId,
+                title: newTitle,
+                date: newDate,
+                category: newCategory,
+                description: newDescription,
+                image: null
+            };
+            
+            appData.pages.dailyMe.items.push(newItem);
+            renderDailyMePage();
+            saveToLocalStorage();
+            showNotification('Kegiatan berhasil ditambahkan!', 'success');
         }
 
         // Delete Daily Me item
@@ -4447,6 +4243,7 @@
             
             appData.pages.achievements.items.push(newAchievement);
             renderAchievementsPage();
+            saveToLocalStorage();
             showNotification('Pencapaian berhasil ditambahkan!', 'success');
         }
 
@@ -4751,15 +4548,8 @@
                 if (isEditMode) {
                     setupEditMode();
                 } else {
-                    if (currentPage === 'achievements') {
-                        renderAchievementsPage();
-                    }
-                    if (currentPage === 'projects') {
-                        renderProjectsPage();
-                    }
-                    if (currentPage === 'daily-me') {
-                        renderDailyMePage();
-                    }
+                    // Re-render halaman untuk menghilangkan mode edit
+                    renderPage(currentPage);
                 }
             });
             
@@ -4831,6 +4621,9 @@
                             break;
                         case 'project':
                             addProject();
+                            break;
+                        case 'dailyMe':
+                            addDailyMeItem();
                             break;
                     }
                 });
