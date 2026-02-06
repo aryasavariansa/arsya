@@ -381,6 +381,52 @@
             font-weight: 600;
         }
 
+        /* ===== TOMBOL TAMBAH FOTO DI POJOK KANAN ATAS ===== */
+        .floating-add-btn {
+            position: fixed;
+            top: 100px;
+            right: 40px;
+            background: var(--gradient-gold);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .floating-add-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .floating-add-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* Tampilkan tombol saat admin mode */
+        .admin-mode .floating-add-btn {
+            display: flex;
+        }
+
+        /* Responsif untuk tombol floating */
+        @media (max-width: 768px) {
+            .floating-add-btn {
+                top: auto;
+                bottom: 30px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 0.85rem;
+            }
+        }
+
         /* Body Konten dengan Scroll */
         .content-body {
             padding: 50px;
@@ -851,6 +897,7 @@
             object-fit: cover;
             display: block !important;
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
         .dailyMe-image-container:hover .dailyMe-image {
@@ -873,7 +920,34 @@
             display: block;
         }
 
-        .dailyMe-upload-overlay {
+        .dailyMe-image-zoom {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--primary);
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            gap: 5px;
+            z-index: 5;
+            transition: var(--transition);
+        }
+
+        .dailyMe-image-container:hover .dailyMe-image-zoom {
+            display: flex;
+        }
+
+        .dailyMe-image-zoom:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Admin-only overlay untuk Daily Me cards */
+        .dailyMe-admin-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -881,18 +955,39 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
             display: none;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: var(--primary);
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            padding: 20px;
+            gap: 15px;
             border-radius: 12px;
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .admin-mode .dailyMe-image-container:hover .dailyMe-upload-overlay {
+        .admin-mode .dailyMe-image-container:hover .dailyMe-admin-overlay {
             display: flex;
+            opacity: 1;
+        }
+
+        .dailyMe-admin-btn {
+            background: var(--gradient-gold);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dailyMe-admin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
         }
 
         /* Category badge */
@@ -1778,6 +1873,340 @@
             max-width: 300px;
         }
 
+        /* ===== MODAL UPLOAD BARU ===== */
+        .upload-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+            padding: 20px;
+        }
+
+        .upload-modal.active {
+            display: flex;
+        }
+
+        .upload-modal-content {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.98) 0%, rgba(26, 26, 26, 0.95) 100%);
+            border-radius: var(--border-radius);
+            padding: 50px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 
+                0 40px 100px rgba(255, 215, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            position: relative;
+        }
+
+        .upload-modal-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .upload-modal-title {
+            font-size: 2rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .upload-modal-subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group label i {
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: rgba(15, 15, 15, 0.8);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+            background: rgba(10, 10, 10, 0.9);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        /* Upload Image Area */
+        .upload-image-area {
+            grid-column: span 2;
+            border: 3px dashed rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(15, 15, 15, 0.5);
+            position: relative;
+            overflow: hidden;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .upload-image-area {
+                grid-column: span 1;
+            }
+        }
+
+        .upload-image-area:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(15, 15, 15, 0.7);
+        }
+
+        .upload-image-area.drag-over {
+            border-color: var(--primary);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .upload-image-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .upload-image-text {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .upload-image-subtext {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .upload-image-preview {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+            display: none;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .upload-image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-browse-btn {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--primary);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-browse-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Progress Bar untuk Upload */
+        .upload-progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            height: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .upload-progress-bar {
+            height: 100%;
+            background: var(--gradient-gold);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .upload-percentage {
+            color: var(--primary);
+            font-weight: 700;
+            text-align: center;
+            font-size: 1.1rem;
+            display: none;
+            margin-bottom: 10px;
+        }
+
+        /* Image Actions */
+        .image-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .image-action-btn {
+            background: rgba(30, 30, 30, 0.8);
+            color: var(--primary);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .image-action-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Modal Buttons */
+        .upload-modal-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .upload-modal-buttons {
+                flex-direction: column;
+            }
+        }
+
+        .upload-modal-btn {
+            flex: 1;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            border: none;
+            text-align: center;
+        }
+
+        .upload-modal-btn.primary {
+            background: var(--gradient-gold);
+            color: #000;
+        }
+
+        .upload-modal-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .upload-modal-btn.secondary {
+            background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+            color: var(--light);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .upload-modal-btn.secondary:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        /* Close button */
+        .upload-modal-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--primary);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .upload-modal-close:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: rotate(90deg);
+        }
+
         /* ===== MODAL UPLOAD FOTO ===== */
         .modal {
             display: none;
@@ -2020,7 +2449,7 @@
             transition: width 0.3s ease;
         }
 
-        .upload-percentage {
+        .upload-percentage-old {
             color: var(--primary);
             font-weight: 600;
             margin-bottom: 10px;
@@ -2309,6 +2738,11 @@
         <i class="fas fa-bars"></i>
     </button>
     
+    <!-- Tombol Tambah Foto di Pojok Kanan Atas -->
+    <button class="floating-add-btn" id="floatingAddBtn">
+        <i class="fas fa-plus-circle"></i> Tambah Daily Me
+    </button>
+
     <!-- SIDEBAR ELEGAN (TETAP TANPA SCROLL) -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -2593,7 +3027,7 @@
                     <button class="edit-btn" data-edit="dailyMeIntro">Edit</button>
                 </div>
                 
-                <!-- Daily Me Grid - SAMA SEPERTI ACHIEVEMENTS -->
+                <!-- Daily Me Grid -->
                 <div class="dailyMe-grid" id="dailyMeContainer">
                     <!-- Daily Me items akan di-render oleh JavaScript -->
                 </div>
@@ -2913,6 +3347,92 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Upload Daily Me -->
+    <div class="modal upload-modal" id="dailyMeUploadModal">
+        <div class="upload-modal-content">
+            <button class="upload-modal-close" id="closeUploadModal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="upload-modal-header">
+                <h2 class="upload-modal-title">Tambah Daily Me Baru</h2>
+                <p class="upload-modal-subtitle">Tambahkan dokumentasi kegiatan kerja harian Anda</p>
+            </div>
+            
+            <form class="upload-form" id="dailyMeUploadForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dailyMeTitle"><i class="fas fa-heading"></i> Judul Kegiatan</label>
+                        <input type="text" id="dailyMeTitle" placeholder="Contoh: Standarisasi Molding Setting" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dailyMeDate"><i class="far fa-calendar"></i> Tanggal</label>
+                        <input type="text" id="dailyMeDate" placeholder="DD/MM/YYYY" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dailyMeCategory"><i class="fas fa-tag"></i> Kategori</label>
+                        <select id="dailyMeCategory" required>
+                            <option value="">Pilih Kategori</option>
+                            <option value="Staff Production">Staff Production</option>
+                            <option value="Drafter">Drafter</option>
+                            <option value="Achievement">Achievement</option>
+                            <option value="Training">Training</option>
+                            <option value="Daily Activity">Daily Activity</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dailyMeDescription"><i class="fas fa-align-left"></i> Deskripsi Singkat</label>
+                        <input type="text" id="dailyMeDescription" placeholder="Jelaskan kegiatan ini secara singkat" required>
+                    </div>
+                </div>
+                
+                <div class="upload-image-area" id="imageDropArea">
+                    <div class="upload-image-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-image-text">Upload Foto</div>
+                    <div class="upload-image-subtext">Drag & drop gambar atau klik untuk memilih</div>
+                    <button type="button" class="upload-browse-btn" id="browseImageBtn">
+                        <i class="fas fa-folder-open"></i> Browse Files
+                    </button>
+                    <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
+                    
+                    <div class="upload-progress-container" id="uploadProgressContainer">
+                        <div class="upload-progress-bar" id="uploadProgressBar"></div>
+                    </div>
+                    <div class="upload-percentage" id="uploadPercentage">0%</div>
+                    
+                    <div class="upload-image-preview" id="imagePreviewContainer">
+                        <img id="imagePreview" src="" alt="Preview">
+                    </div>
+                    
+                    <div class="image-actions" id="imageActions" style="display: none;">
+                        <button type="button" class="image-action-btn" id="changeImageBtn">
+                            <i class="fas fa-sync-alt"></i> Ganti Foto
+                        </button>
+                        <button type="button" class="image-action-btn" id="removeImageBtn">
+                            <i class="fas fa-trash-alt"></i> Hapus
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="upload-modal-buttons">
+                    <button type="submit" class="upload-modal-btn primary" id="saveDailyMeBtn">
+                        <i class="fas fa-save"></i> Simpan Daily Me
+                    </button>
+                    <button type="button" class="upload-modal-btn secondary" id="cancelUploadBtn">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     
     <!-- Modal Zoom untuk Gambar -->
     <div class="modal zoom-modal" id="zoomModal">
@@ -2932,7 +3452,7 @@
         <div class="upload-progress" id="uploadProgress">
             <div class="progress-bar" id="progressBar"></div>
         </div>
-        <div class="upload-percentage" id="uploadPercentage">0%</div>
+        <div class="upload-percentage-old" id="uploadPercentageOld">0%</div>
     </div>
     
     <!-- Notification -->
@@ -3189,6 +3709,10 @@
         let currentUploadType = null; // "profile", "achievement", atau "dailyMe"
         let currentItemId = null;
 
+        // Variables untuk modal upload Daily Me
+        let currentImageFile = null;
+        let currentImageUrl = null;
+
         // DOM Ready
         document.addEventListener('DOMContentLoaded', function() {
             loadFromLocalStorage();
@@ -3198,6 +3722,7 @@
             setupContactForm();
             setupMobileMenu();
             setupImageUploadModal();
+            setupDailyMeUploadModal();
             setupZoomModal();
             setupResponsiveBehavior();
             renderPage(currentPage);
@@ -3215,11 +3740,23 @@
             // Setup event listener untuk tombol add Daily Me
             document.getElementById('addDailyMeBtn').addEventListener('click', function() {
                 if (isAdminLoggedIn || isEditMode) {
-                    addDailyMeItem();
+                    openDailyMeUploadModal();
                 } else {
                     showNotification('Silakan login sebagai admin untuk menambah kegiatan', 'error');
                 }
             });
+            
+            // Setup event listener untuk floating add button
+            const floatingAddBtn = document.getElementById('floatingAddBtn');
+            if (floatingAddBtn) {
+                floatingAddBtn.addEventListener('click', function() {
+                    if (isAdminLoggedIn || isEditMode) {
+                        openDailyMeUploadModal();
+                    } else {
+                        showNotification('Silakan login sebagai admin untuk menambah Daily Me', 'error');
+                    }
+                });
+            }
             
             // Buat efek partikel
             createParticles();
@@ -3263,6 +3800,7 @@
                 const sidebar = document.getElementById('sidebar');
                 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
                 const mainContent = document.getElementById('mainContent');
+                const floatingAddBtn = document.getElementById('floatingAddBtn');
                 
                 if (window.innerWidth > 768) {
                     sidebar.classList.remove('active');
@@ -3276,6 +3814,12 @@
                         mainContent.style.left = 'auto';
                         mainContent.style.width = 'calc(100% - ' + (sidebar.offsetWidth || 280) + 'px)';
                     }
+                    // Position floating button
+                    if (floatingAddBtn && isAdminLoggedIn && currentPage === 'daily-me') {
+                        floatingAddBtn.style.top = '100px';
+                        floatingAddBtn.style.right = '40px';
+                        floatingAddBtn.style.bottom = 'auto';
+                    }
                 } else {
                     if (mobileMenuToggle) {
                         mobileMenuToggle.style.display = 'block';
@@ -3285,6 +3829,12 @@
                         mainContent.style.left = '0';
                         mainContent.style.right = '0';
                         mainContent.style.width = '100%';
+                    }
+                    // Position floating button untuk mobile
+                    if (floatingAddBtn && isAdminLoggedIn && currentPage === 'daily-me') {
+                        floatingAddBtn.style.top = 'auto';
+                        floatingAddBtn.style.bottom = '30px';
+                        floatingAddBtn.style.right = '20px';
                     }
                 }
                 
@@ -3383,44 +3933,325 @@
             img.src = imageSrc;
         }
 
-        // Fungsi untuk menampilkan loading
-        function showLoading(text = 'Loading...') {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            const loadingText = document.getElementById('loadingText');
+        // Setup Daily Me Upload Modal
+        function setupDailyMeUploadModal() {
+            const modal = document.getElementById('dailyMeUploadModal');
+            const closeBtn = document.getElementById('closeUploadModal');
+            const cancelBtn = document.getElementById('cancelUploadBtn');
+            const browseBtn = document.getElementById('browseImageBtn');
+            const fileInput = document.getElementById('imageFileInput');
+            const dropArea = document.getElementById('imageDropArea');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const imageActions = document.getElementById('imageActions');
+            const changeImageBtn = document.getElementById('changeImageBtn');
+            const removeImageBtn = document.getElementById('removeImageBtn');
+            const form = document.getElementById('dailyMeUploadForm');
+            const saveBtn = document.getElementById('saveDailyMeBtn');
+            const progressContainer = document.getElementById('uploadProgressContainer');
+            const progressBar = document.getElementById('uploadProgressBar');
+            const percentage = document.getElementById('uploadPercentage');
+
+            // Open modal
+            window.openDailyMeUploadModal = function(editItemId = null) {
+                if (!isAdminLoggedIn && !isEditMode) {
+                    showNotification('Silakan login sebagai admin untuk menambah Daily Me', 'error');
+                    return;
+                }
+                
+                resetUploadForm();
+                
+                // Jika edit mode, isi form dengan data yang ada
+                if (editItemId) {
+                    const item = appData.pages.dailyMe.items.find(i => i.id === editItemId);
+                    if (item) {
+                        document.getElementById('dailyMeTitle').value = item.title;
+                        document.getElementById('dailyMeDate').value = item.date;
+                        document.getElementById('dailyMeCategory').value = item.category;
+                        document.getElementById('dailyMeDescription').value = item.description;
+                        
+                        if (item.image) {
+                            currentImageUrl = item.image;
+                            imagePreview.src = item.image;
+                            previewContainer.style.display = 'block';
+                            imageActions.style.display = 'flex';
+                        }
+                        
+                        // Ubah teks tombol
+                        saveBtn.innerHTML = '<i class="fas fa-save"></i> Update Daily Me';
+                        saveBtn.dataset.editId = editItemId;
+                        
+                        // Update modal title
+                        document.querySelector('.upload-modal-title').textContent = 'Edit Daily Me';
+                        document.querySelector('.upload-modal-subtitle').textContent = 'Edit dokumentasi kegiatan kerja harian';
+                    }
+                } else {
+                    // Reset untuk mode add
+                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Daily Me';
+                    delete saveBtn.dataset.editId;
+                    
+                    // Reset modal title
+                    document.querySelector('.upload-modal-title').textContent = 'Tambah Daily Me Baru';
+                    document.querySelector('.upload-modal-subtitle').textContent = 'Tambahkan dokumentasi kegiatan kerja harian Anda';
+                }
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+
+            // Close modal
+            function closeUploadModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                resetUploadForm();
+            }
+
+            // Close button event
+            closeBtn.addEventListener('click', closeUploadModal);
+            cancelBtn.addEventListener('click', closeUploadModal);
+
+            // Close on outside click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeUploadModal();
+                }
+            });
+
+            // Close on ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeUploadModal();
+                }
+            });
+
+            // Browse button event
+            browseBtn.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            // File input change event
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    handleImageFile(file);
+                }
+            });
+
+            // Drag and drop events
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight() {
+                dropArea.classList.add('drag-over');
+            }
+
+            function unhighlight() {
+                dropArea.classList.remove('drag-over');
+            }
+
+            // Drop event
+            dropArea.addEventListener('drop', function(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length > 0) {
+                    const file = files[0];
+                    if (file.type.match('image.*')) {
+                        handleImageFile(file);
+                    } else {
+                        showNotification('Hanya file gambar yang diperbolehkan', 'error');
+                    }
+                }
+            });
+
+            // Handle image file
+            function handleImageFile(file) {
+                // Validasi file
+                if (file.size > 10 * 1024 * 1024) {
+                    showNotification('Ukuran file terlalu besar. Maksimal 10MB.', 'error');
+                    return;
+                }
+
+                if (!file.type.match('image.*')) {
+                    showNotification('Hanya file gambar yang diperbolehkan.', 'error');
+                    return;
+                }
+
+                currentImageFile = file;
+                
+                // Simulasi upload dengan progress bar
+                simulateUploadWithProgress(file);
+            }
+
+            // Simulate upload with progress
+            function simulateUploadWithProgress(file) {
+                showProgress();
+                
+                const reader = new FileReader();
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 20;
+                    updateProgress(progress);
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        
+                        reader.onload = function(e) {
+                            currentImageUrl = e.target.result;
+                            imagePreview.src = currentImageUrl;
+                            previewContainer.style.display = 'block';
+                            imageActions.style.display = 'flex';
+                            hideProgress();
+                            showNotification('Gambar berhasil diupload!', 'success');
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }, 100);
+            }
+
+            // Change image button
+            changeImageBtn.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            // Remove image button
+            removeImageBtn.addEventListener('click', function() {
+                currentImageFile = null;
+                currentImageUrl = null;
+                previewContainer.style.display = 'none';
+                imageActions.style.display = 'none';
+                fileInput.value = '';
+                showNotification('Gambar berhasil dihapus', 'info');
+            });
+
+            // Form submit
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!isAdminLoggedIn && !isEditMode) {
+                    showNotification('Silakan login sebagai admin untuk menambah Daily Me', 'error');
+                    return;
+                }
+                
+                const title = document.getElementById('dailyMeTitle').value.trim();
+                const date = document.getElementById('dailyMeDate').value.trim();
+                const category = document.getElementById('dailyMeCategory').value;
+                const description = document.getElementById('dailyMeDescription').value.trim();
+                
+                if (!title || !date || !category || !description) {
+                    showNotification('Harap isi semua field yang wajib diisi', 'error');
+                    return;
+                }
+                
+                // Validasi format tanggal
+                const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+                if (!dateRegex.test(date)) {
+                    showNotification('Format tanggal harus DD/MM/YYYY', 'error');
+                    return;
+                }
+                
+                // Tampilkan loading
+                showLoading('Menyimpan Daily Me...');
+                
+                // Simulasi delay untuk efek loading
+                setTimeout(() => {
+                    const editId = saveBtn.dataset.editId;
+                    
+                    if (editId) {
+                        // Edit mode
+                        const item = appData.pages.dailyMe.items.find(i => i.id === editId);
+                        if (item) {
+                            item.title = title;
+                            item.date = date;
+                            item.category = category;
+                            item.description = description;
+                            item.image = currentImageUrl;
+                            
+                            renderDailyMePage();
+                            saveToLocalStorage();
+                            closeUploadModal();
+                            hideLoading();
+                            
+                            showNotification('Daily Me berhasil diperbarui!', 'success');
+                        }
+                    } else {
+                        // Add mode
+                        const newId = 'dailyMe' + (appData.pages.dailyMe.items.length + 1);
+                        const newItem = {
+                            id: newId,
+                            title: title,
+                            date: date,
+                            category: category,
+                            description: description,
+                            image: currentImageUrl
+                        };
+                        
+                        appData.pages.dailyMe.items.unshift(newItem); // Tambah di awal array
+                        
+                        renderDailyMePage();
+                        saveToLocalStorage();
+                        closeUploadModal();
+                        hideLoading();
+                        
+                        // Scroll ke atas untuk melihat item baru
+                        document.querySelector('.main-content').scrollTop = document.getElementById('dailyMePage').offsetTop;
+                        
+                        showNotification('Daily Me berhasil ditambahkan!', 'success');
+                    }
+                }, 1000);
+            });
+
+            // Show progress bar
+            function showProgress() {
+                progressContainer.style.display = 'block';
+                percentage.style.display = 'block';
+                updateProgress(0);
+            }
+
+            // Hide progress bar
+            function hideProgress() {
+                progressContainer.style.display = 'none';
+                percentage.style.display = 'none';
+                updateProgress(0);
+            }
+
+            // Update progress
+            function updateProgress(value) {
+                progressBar.style.width = value + '%';
+                percentage.textContent = Math.round(value) + '%';
+            }
+        }
+
+        // Reset upload form
+        function resetUploadForm() {
+            const form = document.getElementById('dailyMeUploadForm');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const imageActions = document.getElementById('imageActions');
+            const fileInput = document.getElementById('imageFileInput');
             
-            loadingText.textContent = text;
-            loadingOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Fungsi untuk menyembunyikan loading
-        function hideLoading() {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            loadingOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            if (form) form.reset();
+            if (imagePreview) imagePreview.src = '';
+            if (previewContainer) previewContainer.style.display = 'none';
+            if (imageActions) imageActions.style.display = 'none';
+            if (fileInput) fileInput.value = '';
             
-            // Reset progress bar
-            hideProgress();
-        }
-
-        // Fungsi untuk menampilkan progress bar
-        function showProgress() {
-            document.getElementById('uploadProgress').style.display = 'block';
-            document.getElementById('uploadPercentage').style.display = 'block';
-        }
-
-        // Fungsi untuk menyembunyikan progress bar
-        function hideProgress() {
-            document.getElementById('uploadProgress').style.display = 'none';
-            document.getElementById('uploadPercentage').style.display = 'none';
-            document.getElementById('progressBar').style.width = '0%';
-            document.getElementById('uploadPercentage').textContent = '0%';
-        }
-
-        // Fungsi untuk update progress bar
-        function updateProgress(percentage) {
-            document.getElementById('progressBar').style.width = percentage + '%';
-            document.getElementById('uploadPercentage').textContent = Math.round(percentage) + '%';
+            currentImageFile = null;
+            currentImageUrl = null;
         }
 
         // Setup image upload modal
@@ -3776,6 +4607,9 @@
                     document.querySelector('.main-content').scrollTop = 0;
                     setupContentHeight();
                     
+                    // Update floating button visibility
+                    updateAdminUI();
+                    
                     // Buat partikel baru untuk home page
                     if (pageId === 'home') {
                         createParticles();
@@ -3935,7 +4769,7 @@
             }
         }
 
-        // Render Daily Me page - SAMA SEPERTI ACHIEVEMENTS
+        // Render Daily Me page
         function renderDailyMePage() {
             const pageData = appData.pages.dailyMe;
             const container = document.getElementById('dailyMeContainer');
@@ -3944,8 +4778,16 @@
             
             container.innerHTML = '';
             
+            // Sort items by date (newest first)
+            const sortedItems = [...pageData.items].sort((a, b) => {
+                // Convert DD/MM/YYYY to YYYYMMDD for sorting
+                const dateA = a.date.split('/').reverse().join('');
+                const dateB = b.date.split('/').reverse().join('');
+                return dateB.localeCompare(dateA);
+            });
+            
             // Render existing items
-            pageData.items.forEach((item) => {
+            sortedItems.forEach((item) => {
                 const dailyMeElement = createDailyMeCard(item);
                 container.appendChild(dailyMeElement);
             });
@@ -3960,38 +4802,45 @@
             setupDailyMeEventListeners();
         }
 
-        // Fungsi untuk membuat card Daily Me - SAMA SEPERTI ACHIEVEMENTS
+        // Fungsi untuk membuat card Daily Me
         function createDailyMeCard(item) {
             const dailyMeElement = document.createElement('div');
             dailyMeElement.className = 'dailyMe-card editable';
             dailyMeElement.id = item.id;
+            dailyMeElement.dataset.id = item.id;
             
             let imageHTML = '';
             if (item.image) {
                 imageHTML = `
-                    <div class="dailyMe-image-container" data-upload="${item.id}">
-                        <img src="${item.image}" alt="${item.title}" class="dailyMe-image" 
-                             onclick="openZoom('${item.image}', '${item.title}')">
-                        <div class="dailyMe-upload-overlay">
-                            <div>
-                                <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                                ${isAdminLoggedIn || isEditMode ? 'Klik untuk ganti foto' : 'Klik untuk zoom'}
-                            </div>
+                    <div class="dailyMe-image-container">
+                        <img src="${item.image}" alt="${item.title}" class="dailyMe-image">
+                        <button class="dailyMe-image-zoom" onclick="openZoom('${item.image}', '${item.title}')">
+                            <i class="fas fa-search-plus"></i> Zoom
+                        </button>
+                        <div class="dailyMe-admin-overlay">
+                            <button class="dailyMe-admin-btn" onclick="editDailyMeImage('${item.id}')">
+                                <i class="fas fa-camera"></i> Ganti Foto
+                            </button>
+                            <button class="dailyMe-admin-btn" onclick="editDailyMeItem('${item.id}')">
+                                <i class="fas fa-edit"></i> Edit Detail
+                            </button>
                         </div>
                         <div class="dailyMe-category">${item.category}</div>
                     </div>
                 `;
             } else {
                 imageHTML = `
-                    <div class="dailyMe-image-container" data-upload="${item.id}">
+                    <div class="dailyMe-image-container">
                         <div class="dailyMe-image-placeholder">
                             <i class="fas fa-camera"></i>
                         </div>
-                        <div class="dailyMe-upload-overlay">
-                            <div>
-                                <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                                ${isAdminLoggedIn || isEditMode ? 'Klik untuk upload foto' : 'No image available'}
-                            </div>
+                        <div class="dailyMe-admin-overlay">
+                            <button class="dailyMe-admin-btn" onclick="editDailyMeImage('${item.id}')">
+                                <i class="fas fa-camera"></i> Upload Foto
+                            </button>
+                            <button class="dailyMe-admin-btn" onclick="editDailyMeItem('${item.id}')">
+                                <i class="fas fa-edit"></i> Edit Detail
+                            </button>
                         </div>
                         <div class="dailyMe-category">${item.category}</div>
                     </div>
@@ -4005,37 +4854,37 @@
                     <i class="far fa-calendar"></i> ${item.date}
                 </div>
                 <p>${item.description}</p>
-                <button class="edit-btn" data-edit="${item.id}">Edit</button>
-                <button class="delete-btn" data-delete="${item.id}" data-type="dailyMe">Hapus</button>
+                ${isAdminLoggedIn || isEditMode ? `
+                    <button class="edit-btn" data-edit="${item.id}">Edit</button>
+                    <button class="delete-btn" data-delete="${item.id}" data-type="dailyMe">Hapus</button>
+                ` : ''}
             `;
             
             return dailyMeElement;
         }
 
-        // Setup event listeners untuk Daily Me
-        function setupDailyMeEventListeners() {
-            // Event listeners untuk upload foto Daily Me
-            document.querySelectorAll('.dailyMe-image-container').forEach(container => {
-                container.addEventListener('click', function(e) {
-                    // Jika klik langsung pada gambar, biarkan fungsi zoom yang menangani
-                    if (e.target.classList.contains('dailyMe-image')) {
-                        return;
-                    }
-                    
-                    if (isAdminLoggedIn || isEditMode) {
-                        const dailyMeId = this.getAttribute('data-upload');
-                        openImageUploadModal('dailyMe', dailyMeId);
-                    } else {
-                        // Jika bukan admin, coba zoom jika ada gambar
-                        const img = this.querySelector('.dailyMe-image');
-                        if (img && img.src) {
-                            const title = this.closest('.dailyMe-card').querySelector('h3').textContent;
-                            openZoom(img.src, title);
-                        }
-                    }
-                });
-            });
+        // Edit Daily Me image
+        window.editDailyMeImage = function(itemId) {
+            if (!isAdminLoggedIn && !isEditMode) {
+                showNotification('Silakan login sebagai admin untuk mengedit foto', 'error');
+                return;
+            }
             
+            openImageUploadModal('dailyMe', itemId);
+        };
+
+        // Edit Daily Me item
+        window.editDailyMeItem = function(itemId) {
+            if (!isAdminLoggedIn && !isEditMode) {
+                showNotification('Silakan login sebagai admin untuk mengedit kegiatan', 'error');
+                return;
+            }
+            
+            openDailyMeUploadModal(itemId);
+        };
+
+        // Setup Daily Me event listeners
+        function setupDailyMeEventListeners() {
             // Edit buttons
             document.querySelectorAll('.edit-btn[data-edit^="dailyMe"]').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -4051,65 +4900,18 @@
                     deleteDailyMeItem(itemId);
                 });
             });
+            
+            // Zoom gambar saat diklik
+            document.querySelectorAll('.dailyMe-image').forEach(img => {
+                img.addEventListener('click', function() {
+                    const card = this.closest('.dailyMe-card');
+                    const title = card.querySelector('h3').textContent;
+                    openZoom(this.src, title);
+                });
+            });
         }
 
-        // Edit Daily Me item
-        function editDailyMeItem(itemId) {
-            const item = appData.pages.dailyMe.items.find(i => i.id === itemId);
-            if (!item) return;
-            
-            const newTitle = prompt('Edit judul kegiatan:', item.title);
-            if (newTitle === null) return;
-            
-            const newDate = prompt('Edit tanggal (format: DD/MM/YYYY):', item.date);
-            if (newDate === null) return;
-            
-            const newCategory = prompt('Edit kategori (Staff Production, Drafter, Achievement, Training, Daily Activity):', item.category);
-            if (newCategory === null) return;
-            
-            const newDescription = prompt('Edit deskripsi:', item.description);
-            if (newDescription === null) return;
-            
-            item.title = newTitle;
-            item.date = newDate;
-            item.category = newCategory;
-            item.description = newDescription;
-            
-            renderDailyMePage();
-            showNotification('Kegiatan berhasil diperbarui!', 'success');
-        }
-
-        // Add Daily Me item - SAMA SEPERTI ACHIEVEMENTS
-        function addDailyMeItem() {
-            const newTitle = prompt('Masukkan judul kegiatan baru:');
-            if (!newTitle) return;
-            
-            const newDate = prompt('Masukkan tanggal (format: DD/MM/YYYY):');
-            if (!newDate) return;
-            
-            const newCategory = prompt('Masukkan kategori (Staff Production, Drafter, Achievement, Training, Daily Activity):');
-            if (!newCategory) return;
-            
-            const newDescription = prompt('Masukkan deskripsi:');
-            if (!newDescription) return;
-            
-            const newId = 'dailyMe' + (appData.pages.dailyMe.items.length + 1);
-            const newItem = {
-                id: newId,
-                title: newTitle,
-                date: newDate,
-                category: newCategory,
-                description: newDescription,
-                image: null // Kosong dulu, bisa diupload nanti
-            };
-            
-            appData.pages.dailyMe.items.push(newItem);
-            renderDailyMePage();
-            saveToLocalStorage();
-            showNotification('Kegiatan berhasil ditambahkan!', 'success');
-        }
-
-        // Delete Daily Me item
+        // Hapus Daily Me item
         function deleteDailyMeItem(itemId) {
             if (!confirm('Apakah Anda yakin ingin menghapus kegiatan ini?')) {
                 return;
@@ -4661,7 +5463,7 @@
                             addProject();
                             break;
                         case 'dailyMe':
-                            addDailyMeItem();
+                            openDailyMeUploadModal();
                             break;
                     }
                 });
@@ -4952,18 +5754,70 @@
         // Update admin UI
         function updateAdminUI() {
             const adminToggle = document.getElementById('adminToggle');
+            const floatingAddBtn = document.getElementById('floatingAddBtn');
             
             if (isAdminLoggedIn) {
                 adminToggle.innerHTML = '<i class="fas fa-user-check"></i> Admin Mode';
                 adminToggle.style.background = 'var(--gradient-gold)';
                 adminToggle.style.color = '#000';
                 document.body.classList.add('admin-mode');
+                
+                // Tampilkan floating button hanya di halaman Daily Me
+                if (currentPage === 'daily-me') {
+                    floatingAddBtn.style.display = 'flex';
+                } else {
+                    floatingAddBtn.style.display = 'none';
+                }
             } else {
                 adminToggle.innerHTML = '<i class="fas fa-user-lock"></i> Login Admin';
                 adminToggle.style.background = 'linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%)';
                 adminToggle.style.color = 'var(--primary)';
                 document.body.classList.remove('admin-mode');
+                floatingAddBtn.style.display = 'none';
             }
+            
+            // Update edit status
+            document.getElementById('editStatus').style.display = isEditMode ? 'block' : 'none';
+        }
+
+        // Fungsi untuk menampilkan loading
+        function showLoading(text = 'Loading...') {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            
+            loadingText.textContent = text;
+            loadingOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fungsi untuk menyembunyikan loading
+        function hideLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Reset progress bar
+            hideProgress();
+        }
+
+        // Fungsi untuk menampilkan progress bar
+        function showProgress() {
+            document.getElementById('uploadProgress').style.display = 'block';
+            document.getElementById('uploadPercentageOld').style.display = 'block';
+        }
+
+        // Fungsi untuk menyembunyikan progress bar
+        function hideProgress() {
+            document.getElementById('uploadProgress').style.display = 'none';
+            document.getElementById('uploadPercentageOld').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('uploadPercentageOld').textContent = '0%';
+        }
+
+        // Fungsi untuk update progress bar
+        function updateProgress(percentage) {
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('uploadPercentageOld').textContent = Math.round(percentage) + '%';
         }
 
         // Show notification
