@@ -460,7 +460,7 @@
         /* ===== HOME PAGE - UPDATED & MORE AESTHETIC ===== */
         .home-hero {
             position: relative;
-            padding: 80px 60px;
+            padding: 40px 20px;
             background: linear-gradient(135deg, 
                 rgba(10, 10, 10, 0.95) 0%, 
                 rgba(26, 26, 26, 0.9) 50%,
@@ -468,10 +468,11 @@
             border-radius: var(--border-radius);
             margin-bottom: 60px;
             overflow: hidden;
+            height: 70vh; /* Gunakan viewport height */
             min-height: 500px;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: center; /* Pusatkan vertikal */
+            justify-content: center; /* Pusatkan horizontal */
             border: 1px solid rgba(255, 215, 0, 0.15);
             box-shadow: 
                 0 20px 60px rgba(0, 0, 0, 0.5),
@@ -511,16 +512,22 @@
             z-index: 2;
             text-align: center;
             max-width: 900px;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Pusatkan semua item */
+            justify-content: center; /* Pusatkan secara vertikal */
         }
 
         .hero-badge {
             display: inline-block;
             background: var(--gradient-gold);
             color: #000;
-            padding: 14px 28px;
+            padding: 12px 24px;
             border-radius: 50px;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-size: 1.1rem;
             box-shadow: 
                 0 10px 25px rgba(255, 215, 0, 0.3),
@@ -558,44 +565,56 @@
         }
 
         .hero-title {
-            font-size: 4rem;
+            font-size: 3.8rem;
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 800;
             line-height: 1.1;
             text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             position: relative;
             display: inline-block;
+            text-align: center;
+            width: 100%;
         }
 
         .hero-title::after {
             content: '';
             position: absolute;
             bottom: -10px;
-            left: 25%;
-            width: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
             height: 3px;
             background: var(--gradient-gold);
             border-radius: 3px;
         }
 
         .hero-subtitle {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--secondary);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-weight: 600;
             animation: fadeInUp 0.8s ease 0.3s both;
+            text-align: center;
         }
 
         .hero-description {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #ddd;
             max-width: 800px;
-            margin: 0 auto 40px;
+            margin: 0 auto 30px;
             line-height: 1.8;
             animation: fadeInUp 0.8s ease 0.5s both;
+            text-align: center;
+        }
+
+        .hero-actions {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.7s both;
         }
 
         /* Stats Grid Updated */
@@ -2424,6 +2443,7 @@
             .home-hero {
                 padding: 60px 40px;
                 min-height: 450px;
+                height: 60vh;
             }
             
             .hero-title {
@@ -2492,8 +2512,9 @@
             }
             
             .home-hero {
-                padding: 40px 20px;
-                min-height: 380px;
+                padding: 30px 20px;
+                height: 65vh;
+                min-height: 400px;
             }
             
             .hero-title {
@@ -2568,12 +2589,13 @@
 
         @media (max-width: 480px) {
             .home-hero {
-                padding: 30px 15px;
-                min-height: 350px;
+                padding: 20px 15px;
+                height: 60vh;
+                min-height: 380px;
             }
             
             .hero-title {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .hero-badge {
@@ -2738,9 +2760,9 @@
                         </p>
                         <button class="edit-btn" data-edit="homeDescription">Edit</button>
                         
-                        <div style="margin-top: 40px;">
+                        <div class="hero-actions">
                             <button class="upload-btn primary" onclick="changePage('about')" 
-                                    style="padding: 18px 40px; font-size: 1.1rem;">
+                                    style="padding: 15px 35px; font-size: 1rem; background: var(--gradient-gold); color: #000; border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: var(--transition);">
                                 <i class="fas fa-user"></i> Lihat Profil Lengkap
                             </button>
                         </div>
@@ -3622,6 +3644,7 @@
             updateAdminUI();
             setupContentHeight();
             renderProfileImage();
+            centerHeroContent(); // Panggil fungsi untuk center konten
             
             // Tambahkan event listener untuk gambar profile (zoom)
             document.getElementById('profileImg').addEventListener('click', function() {
@@ -3653,7 +3676,31 @@
             
             // Buat efek partikel
             createParticles();
+            
+            // Setup resize untuk center content
+            window.addEventListener('resize', centerHeroContent);
         });
+
+        // Fungsi untuk membuat konten hero tepat di tengah
+        function centerHeroContent() {
+            const homeHero = document.querySelector('.home-hero');
+            const heroContent = document.querySelector('.hero-content');
+            
+            if (homeHero && heroContent) {
+                // Reset margin sebelumnya
+                heroContent.style.marginTop = '0';
+                
+                // Hitung tinggi yang tersedia
+                const heroHeight = homeHero.offsetHeight;
+                const contentHeight = heroContent.offsetHeight;
+                
+                // Jika konten lebih kecil dari container, center kan secara vertikal
+                if (contentHeight < heroHeight) {
+                    const topMargin = Math.max(0, (heroHeight - contentHeight) / 2);
+                    heroContent.style.marginTop = `${topMargin}px`;
+                }
+            }
+        }
 
         // Setup content height adjustment
         function setupContentHeight() {
@@ -3733,6 +3780,8 @@
                 
                 // Recalculate content height
                 setTimeout(setupContentHeight, 100);
+                // Center hero content
+                setTimeout(centerHeroContent, 100);
             }
             
             window.addEventListener('resize', handleResize);
@@ -4506,6 +4555,7 @@
                     // Buat partikel baru untuk home page
                     if (pageId === 'home') {
                         createParticles();
+                        setTimeout(centerHeroContent, 100); // Center konten setelah halaman home dimuat
                     }
                 }
             }, 300);
