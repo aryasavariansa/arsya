@@ -794,7 +794,7 @@
             margin-bottom: 15px;
         }
 
-        /* Daily Me Grid */
+        /* Daily Me Grid - SAMA SEPERTI ACHIEVEMENTS */
         .dailyMe-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -895,6 +895,20 @@
             display: flex;
         }
 
+        /* Category badge */
+        .dailyMe-category {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-gold);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
         .dailyMe-card h3 {
             font-size: 1.4rem;
             margin-bottom: 10px;
@@ -920,20 +934,6 @@
             color: var(--gray);
             line-height: 1.7;
             font-size: 1.05rem;
-        }
-
-        /* Category badge */
-        .dailyMe-category {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--gradient-gold);
-            color: #000;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            z-index: 2;
         }
 
         /* ===== DASHBOARD PAGE - UPDATED ===== */
@@ -1214,7 +1214,6 @@
             background: linear-gradient(135deg, #1e1e1e 0%, #2e2e2e 100%);
         }
 
-        /* PERBAIKAN CSS UNTUK GAMBAR ACHIEVEMENT */
         .achievement-image {
             width: 100%;
             height: 100%;
@@ -2594,7 +2593,7 @@
                     <button class="edit-btn" data-edit="dailyMeIntro">Edit</button>
                 </div>
                 
-                <!-- Daily Me Grid -->
+                <!-- Daily Me Grid - SAMA SEPERTI ACHIEVEMENTS -->
                 <div class="dailyMe-grid" id="dailyMeContainer">
                     <!-- Daily Me items akan di-render oleh JavaScript -->
                 </div>
@@ -3022,27 +3021,51 @@
                     items: [
                         {
                             id: "dailyMe1",
-                            title: "Optimasi Molding Setting",
+                            title: "Standarisasi Molding Setting",
                             date: "15/03/2025",
                             category: "Drafter",
-                            description: "Standarisasi variasi pengaturan molding dari berbagai variasi menjadi 1 standar variasi untuk mengurangi risiko kesalahan setting oleh operator.",
-                            image: null
+                            description: "Menyatukan berbagai variasi pengaturan molding menjadi 1 standar variasi, sehingga mempermudah operator dan menekan risiko kesalahan setting",
+                            image: "https://images.unsplash.com/photo-1579226905180-636c76d14d1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         },
                         {
                             id: "dailyMe2",
                             title: "Monitoring WIP Inventory",
                             date: "20/02/2025",
                             category: "Staff Production",
-                            description: "Membuat sistem monitoring stock WIP dan planning item produksi untuk meningkatkan productivity penggunaan bahan dari 2 Ton menjadi 724,5 kg.",
-                            image: null
+                            description: "Membuat sistem monitoring stock WIP dan planning item produksi untuk meningkatkan productivity penggunaan bahan dari 2 Ton menjadi 724,5 kg",
+                            image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         },
                         {
                             id: "dailyMe3",
                             title: "Reduksi Reject Mesin Spiral",
                             date: "10/01/2025",
                             category: "Staff Production",
-                            description: "Melakukan TFT (Task Force Team) untuk menurunkan reject dari 8% menjadi 3% pada mesin spiral melalui analisis akar masalah dan perbaikan proses.",
-                            image: null
+                            description: "Melakukan TFT (Task Force Team) untuk menurunkan reject dari 8% menjadi 3% pada mesin spiral melalui analisis akar masalah dan perbaikan proses",
+                            image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                        },
+                        {
+                            id: "dailyMe4",
+                            title: "Optimasi Material Management",
+                            date: "05/04/2025",
+                            category: "Training",
+                            description: "Pelatihan manajemen material untuk mengurangi overconsumption dan meningkatkan efisiensi penggunaan bahan produksi",
+                            image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                        },
+                        {
+                            id: "dailyMe5",
+                            title: "Preventive Maintenance System",
+                            date: "25/03/2025",
+                            category: "Drafter",
+                            description: "Implementasi sistem preventive maintenance berdasarkan lifetime usage molding untuk mengurangi downtime produksi",
+                            image: "https://images.unsplash.com/photo-1579226905180-636c76d14d1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                        },
+                        {
+                            id: "dailyMe6",
+                            title: "Daily Production Meeting",
+                            date: "12/04/2025",
+                            category: "Daily Activity",
+                            description: "Rutinitas meeting produksi harian untuk koordinasi tim dan evaluasi progress pekerjaan",
+                            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         }
                     ],
                     categories: ["Staff Production", "Drafter", "Achievement", "Training", "Daily Activity"]
@@ -3056,14 +3079,28 @@
                             title: "Health, Safety, Environment and Quality (HSEQ)",
                             date: "Sertifikasi Profesional",
                             description: "Sertifikasi profesional dalam bidang kesehatan, keselamatan, lingkungan, dan kualitas untuk industri manufaktur",
-                            image: null
+                            image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         },
                         {
                             id: "achievement2",
                             title: "Introduction to Information Security Course",
                             date: "Sertifikasi Keamanan Informasi",
                             description: "Sertifikasi dasar keamanan informasi untuk memahami prinsip-prinsip keamanan data dalam sistem produksi",
-                            image: null
+                            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                        },
+                        {
+                            id: "achievement3",
+                            title: "Lean Manufacturing Workshop",
+                            date: "Workshop 2024",
+                            description: "Workshop implementasi lean manufacturing untuk meningkatkan efisiensi dan mengurangi waste dalam proses produksi",
+                            image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                        },
+                        {
+                            id: "achievement4",
+                            title: "Technical Drawing Excellence Award",
+                            date: "Penghargaan Internal 2025",
+                            description: "Penghargaan untuk detail dan akurasi gambar teknik yang membantu mempercepat proses setup mesin",
+                            image: "https://images.unsplash.com/photo-1579226905180-636c76d14d1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         }
                     ]
                 },
@@ -3898,7 +3935,7 @@
             }
         }
 
-        // Render Daily Me page - DIPERBAIKI
+        // Render Daily Me page - SAMA SEPERTI ACHIEVEMENTS
         function renderDailyMePage() {
             const pageData = appData.pages.dailyMe;
             const container = document.getElementById('dailyMeContainer');
@@ -3923,7 +3960,7 @@
             setupDailyMeEventListeners();
         }
 
-        // Fungsi untuk membuat card Daily Me
+        // Fungsi untuk membuat card Daily Me - SAMA SEPERTI ACHIEVEMENTS
         function createDailyMeCard(item) {
             const dailyMeElement = document.createElement('div');
             dailyMeElement.className = 'dailyMe-card editable';
@@ -3941,6 +3978,7 @@
                                 ${isAdminLoggedIn || isEditMode ? 'Klik untuk ganti foto' : 'Klik untuk zoom'}
                             </div>
                         </div>
+                        <div class="dailyMe-category">${item.category}</div>
                     </div>
                 `;
             } else {
@@ -3955,12 +3993,12 @@
                                 ${isAdminLoggedIn || isEditMode ? 'Klik untuk upload foto' : 'No image available'}
                             </div>
                         </div>
+                        <div class="dailyMe-category">${item.category}</div>
                     </div>
                 `;
             }
             
             dailyMeElement.innerHTML = `
-                <div class="dailyMe-category">${item.category}</div>
                 ${imageHTML}
                 <h3>${item.title}</h3>
                 <div class="date">
@@ -4041,7 +4079,7 @@
             showNotification('Kegiatan berhasil diperbarui!', 'success');
         }
 
-        // Add Daily Me item - DIPERBAIKI
+        // Add Daily Me item - SAMA SEPERTI ACHIEVEMENTS
         function addDailyMeItem() {
             const newTitle = prompt('Masukkan judul kegiatan baru:');
             if (!newTitle) return;
@@ -4062,7 +4100,7 @@
                 date: newDate,
                 category: newCategory,
                 description: newDescription,
-                image: null
+                image: null // Kosong dulu, bisa diupload nanti
             };
             
             appData.pages.dailyMe.items.push(newItem);
