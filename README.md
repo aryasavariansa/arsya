@@ -1464,6 +1464,21 @@
             line-height: 1.7;
         }
 
+        /* Category Badge untuk Work */
+        .category-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-gold);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
         /* ===== DASHBOARD PAGE - UPDATED ===== */
         .dashboard-periods {
             display: grid;
@@ -5043,6 +5058,11 @@
                 
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                
+                // Fokus ke input pertama
+                setTimeout(() => {
+                    document.getElementById('workTitle').focus();
+                }, 100);
             };
 
             // Close modal
@@ -5124,7 +5144,7 @@
                 }
             });
 
-            // Handle image file
+            // Handle image file - OPTIMIZED
             function handleImageFile(file) {
                 // Validasi file
                 if (file.size > 10 * 1024 * 1024) {
@@ -5139,34 +5159,35 @@
 
                 currentImageFile = file;
                 
-                // Simulasi upload dengan progress bar
-                simulateUploadWithProgress(file);
-            }
-
-            // Simulate upload with progress
-            function simulateUploadWithProgress(file) {
+                // Tampilkan progress bar sebentar untuk feedback visual
                 showProgress();
+                updateProgress(30);
                 
                 const reader = new FileReader();
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += 20;
-                    updateProgress(progress);
+                
+                reader.onload = function(e) {
+                    // Langsung ke 100% setelah file dibaca
+                    updateProgress(100);
                     
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                        
-                        reader.onload = function(e) {
-                            currentImageUrl = e.target.result;
-                            imagePreview.src = currentImageUrl;
-                            previewContainer.style.display = 'block';
-                            imageActions.style.display = 'flex';
-                            hideProgress();
-                            showNotification('Gambar berhasil diupload!', 'success');
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }, 100);
+                    currentImageUrl = e.target.result;
+                    imagePreview.src = currentImageUrl;
+                    previewContainer.style.display = 'block';
+                    imageActions.style.display = 'flex';
+                    
+                    // Sembunyikan progress bar setelah 300ms
+                    setTimeout(() => {
+                        hideProgress();
+                    }, 300);
+                    
+                    showNotification('Gambar berhasil diupload!', 'success');
+                };
+                
+                reader.onerror = function() {
+                    hideProgress();
+                    showNotification('Gagal membaca file gambar', 'error');
+                };
+                
+                reader.readAsDataURL(file);
             }
 
             // Change image button
@@ -5184,7 +5205,7 @@
                 showNotification('Gambar berhasil dihapus', 'info');
             });
 
-            // Form submit
+            // Form submit - OPTIMIZED untuk loading cepat
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -5210,10 +5231,10 @@
                     return;
                 }
                 
-                // Tampilkan loading
+                // Tampilkan loading singkat
                 showLoading('Menyimpan Work...');
                 
-                // Simulasi delay untuk efek loading
+                // Simpan TANPA DELAY BERLEBIHAN - langsung proses
                 setTimeout(() => {
                     const editId = saveBtn.dataset.editId;
                     
@@ -5225,7 +5246,7 @@
                             item.date = date;
                             item.category = category;
                             item.description = description;
-                            item.image = currentImageUrl;
+                            if (currentImageUrl) item.image = currentImageUrl;
                             
                             renderWorkPage();
                             saveToLocalStorage();
@@ -5235,8 +5256,8 @@
                             showNotification('Work berhasil diperbarui!', 'success');
                         }
                     } else {
-                        // Add mode
-                        const newId = 'work' + (appData.pages.work.items.length + 1);
+                        // Add mode - gunakan timestamp untuk ID yang unik
+                        const newId = 'work_' + Date.now();
                         const newItem = {
                             id: newId,
                             title: title,
@@ -5253,12 +5274,15 @@
                         closeUploadModal();
                         hideLoading();
                         
-                        // Scroll ke atas untuk melihat item baru
-                        document.querySelector('.main-content').scrollTop = document.getElementById('workPage').offsetTop;
+                        // Scroll ke halaman work untuk melihat item baru
+                        const workPage = document.getElementById('workPage');
+                        if (workPage) {
+                            workPage.scrollIntoView({ behavior: 'smooth' });
+                        }
                         
                         showNotification('Work berhasil ditambahkan!', 'success');
                     }
-                }, 1000);
+                }, 500); // Delay minimal hanya 500ms (bukan 1000ms)
             });
 
             // Show progress bar
@@ -5289,12 +5313,16 @@
             const previewContainer = document.getElementById('imagePreviewContainer');
             const imageActions = document.getElementById('imageActions');
             const fileInput = document.getElementById('imageFileInput');
+            const progressContainer = document.getElementById('uploadProgressContainer');
+            const percentage = document.getElementById('uploadPercentage');
             
             if (form) form.reset();
             if (imagePreview) imagePreview.src = '';
             if (previewContainer) previewContainer.style.display = 'none';
             if (imageActions) imageActions.style.display = 'none';
             if (fileInput) fileInput.value = '';
+            if (progressContainer) progressContainer.style.display = 'none';
+            if (percentage) percentage.style.display = 'none';
             
             currentImageFile = null;
             currentImageUrl = null;
@@ -5835,27 +5863,36 @@
             }
         }
 
-        // Render Work page
+        // Render Work page - OPTIMIZED
         function renderWorkPage() {
             const pageData = appData.pages.work;
             const container = document.getElementById('workContainer');
             
             if (!container) return;
             
+            // Clear container dengan cara yang lebih efisien
             container.innerHTML = '';
             
-            // Sort items by date (newest first)
+            // Sort items by date (newest first) - lebih efisien
             const sortedItems = [...pageData.items].sort((a, b) => {
-                // Convert DD/MM/YYYY to YYYYMMDD for sorting
-                const dateA = a.date.split('/').reverse().join('');
-                const dateB = b.date.split('/').reverse().join('');
-                return dateB.localeCompare(dateA);
+                // Convert DD/MM/YYYY to timestamp untuk sorting
+                const convertToTimestamp = (dateStr) => {
+                    const [day, month, year] = dateStr.split('/').map(Number);
+                    return new Date(year, month - 1, day).getTime();
+                };
+                
+                const timeA = convertToTimestamp(a.date) || 0;
+                const timeB = convertToTimestamp(b.date) || 0;
+                return timeB - timeA;
             });
             
-            // Render existing items
-            sortedItems.forEach((item) => {
+            // Render items dengan batch untuk performa lebih baik
+            sortedItems.forEach((item, index) => {
                 const workElement = createWorkCard(item);
                 container.appendChild(workElement);
+                
+                // Setup event listeners untuk card ini saja
+                setupWorkCardEventListeners(workElement, item.id);
             });
             
             // Show/hide tombol add berdasarkan admin mode
@@ -5863,9 +5900,6 @@
             if (addBtn) {
                 addBtn.style.display = (isAdminLoggedIn || isEditMode) ? 'inline-block' : 'none';
             }
-            
-            // Setup event listeners
-            setupWorkEventListeners();
         }
 
         // Fungsi untuk membuat card Work
@@ -5876,7 +5910,7 @@
             workElement.dataset.id = item.id;
             
             let imageHTML = '';
-            if (item.image) {
+            if (item.image && item.image.trim() !== '') {
                 imageHTML = `
                     <div class="work-image-container">
                         <img src="${item.image}" alt="${item.title}" class="work-image">
@@ -5886,7 +5920,7 @@
                                 ${isAdminLoggedIn || isEditMode ? 'Klik untuk ganti foto' : 'Klik untuk zoom'}
                             </div>
                         </div>
-                        <div style="position: absolute; top: 20px; right: 20px; background: var(--gradient-gold); color: #000; padding: 8px 20px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; z-index: 2;">${item.category}</div>
+                        <div class="category-badge">${item.category || 'Work'}</div>
                     </div>
                 `;
             } else {
@@ -5901,7 +5935,7 @@
                                 ${isAdminLoggedIn || isEditMode ? 'Klik untuk upload foto' : 'No image available'}
                             </div>
                         </div>
-                        <div style="position: absolute; top: 20px; right: 20px; background: var(--gradient-gold); color: #000; padding: 8px 20px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; z-index: 2;">${item.category}</div>
+                        <div class="category-badge">${item.category || 'Work'}</div>
                     </div>
                 `;
             }
@@ -5920,6 +5954,51 @@
             `;
             
             return workElement;
+        }
+
+        // Fungsi untuk setup event listeners per card (lebih efisien)
+        function setupWorkCardEventListeners(element, itemId) {
+            // Edit button
+            const editBtn = element.querySelector('.edit-btn');
+            if (editBtn) {
+                editBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    editWorkItem(itemId);
+                });
+            }
+            
+            // Delete button
+            const deleteBtn = element.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    deleteWorkItem(itemId);
+                });
+            }
+            
+            // Image container untuk upload/zoom
+            const imageContainer = element.querySelector('.work-image-container');
+            if (imageContainer) {
+                imageContainer.addEventListener('click', function(e) {
+                    // Jika klik pada gambar, zoom
+                    if (e.target.classList.contains('work-image')) {
+                        const title = element.querySelector('h3').textContent;
+                        openZoom(e.target.src, title);
+                        return;
+                    }
+                    
+                    if (isAdminLoggedIn || isEditMode) {
+                        editWorkImage(itemId);
+                    } else {
+                        // Jika bukan admin, coba zoom jika ada gambar
+                        const img = this.querySelector('.work-image');
+                        if (img && img.src) {
+                            const title = element.querySelector('h3').textContent;
+                            openZoom(img.src, title);
+                        }
+                    }
+                });
+            }
         }
 
         // Edit Work image
@@ -5942,67 +6021,25 @@
             openWorkUploadModal(itemId);
         };
 
-        // Setup Work event listeners
-        function setupWorkEventListeners() {
-            // Edit buttons
-            document.querySelectorAll('.edit-btn[data-edit^="work"]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const itemId = this.getAttribute('data-edit');
-                    editWorkItem(itemId);
-                });
-            });
-            
-            // Delete buttons
-            document.querySelectorAll('.delete-btn[data-type="work"]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const itemId = this.getAttribute('data-delete');
-                    deleteWorkItem(itemId);
-                });
-            });
-            
-            // Upload overlay dan zoom
-            document.querySelectorAll('.work-image-container').forEach(container => {
-                container.addEventListener('click', function(e) {
-                    // Jika klik langsung pada gambar, biarkan fungsi zoom yang menangani
-                    if (e.target.classList.contains('work-image')) {
-                        const title = this.closest('.work-card').querySelector('h3').textContent;
-                        openZoom(e.target.src, title);
-                        return;
-                    }
-                    
-                    if (isAdminLoggedIn || isEditMode) {
-                        const workId = this.closest('.work-card').id;
-                        editWorkImage(workId);
-                    } else {
-                        // Jika bukan admin, coba zoom jika ada gambar
-                        const img = this.querySelector('.work-image');
-                        if (img && img.src) {
-                            const title = this.closest('.work-card').querySelector('h3').textContent;
-                            openZoom(img.src, title);
-                        }
-                    }
-                });
-            });
-        }
-
-        // Hapus Work item
+        // Hapus Work item - OPTIMIZED
         function deleteWorkItem(itemId) {
             if (!confirm('Apakah Anda yakin ingin menghapus pekerjaan ini?')) {
                 return;
             }
             
-            showLoading('Menghapus pekerjaan...');
+            showLoading('Menghapus...');
             
-            setTimeout(() => {
-                const index = appData.pages.work.items.findIndex(item => item.id === itemId);
-                if (index !== -1) {
-                    appData.pages.work.items.splice(index, 1);
-                    renderWorkPage();
-                    saveToLocalStorage();
-                    showNotification('Pekerjaan berhasil dihapus!', 'success');
-                }
+            // Langsung hapus tanpa delay berlebihan
+            const index = appData.pages.work.items.findIndex(item => item.id === itemId);
+            if (index !== -1) {
+                appData.pages.work.items.splice(index, 1);
+                renderWorkPage();
+                saveToLocalStorage();
                 hideLoading();
-            }, 500);
+                showNotification('Pekerjaan berhasil dihapus!', 'success');
+            } else {
+                hideLoading();
+            }
         }
 
         // Render achievements page
