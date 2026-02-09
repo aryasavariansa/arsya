@@ -6001,25 +6001,25 @@
             }
         }
 
-        // Edit Work image
-        window.editWorkImage = function(itemId) {
+        // Edit Work image - PERBAIKAN: Fungsi ini didefinisikan dengan benar
+        function editWorkImage(itemId) {
             if (!isAdminLoggedIn && !isEditMode) {
                 showNotification('Silakan login sebagai admin untuk mengedit foto', 'error');
                 return;
             }
             
             openImageUploadModal('work', itemId);
-        };
+        }
 
-        // Edit Work item
-        window.editWorkItem = function(itemId) {
+        // Edit Work item - PERBAIKAN: Fungsi ini didefinisikan dengan benar
+        function editWorkItem(itemId) {
             if (!isAdminLoggedIn && !isEditMode) {
                 showNotification('Silakan login sebagai admin untuk mengedit pekerjaan', 'error');
                 return;
             }
             
             openWorkUploadModal(itemId);
-        };
+        }
 
         // Hapus Work item - OPTIMIZED
         function deleteWorkItem(itemId) {
@@ -6127,6 +6127,14 @@
                     deleteAchievement(elementId);
                 });
             });
+            
+            // Setup event listener untuk tombol edit
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const elementId = this.getAttribute('data-edit');
+                    editAchievement(elementId);
+                });
+            });
         }
 
         // Edit achievement
@@ -6148,6 +6156,7 @@
             achievement.description = newDescription;
             
             renderAchievementsPage();
+            saveToLocalStorage();
             showNotification('Pencapaian berhasil diperbarui!', 'success');
         }
 
@@ -6244,6 +6253,14 @@
                     deleteProject(elementId);
                 });
             });
+            
+            // Setup event listener untuk tombol edit
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const elementId = this.getAttribute('data-edit');
+                    editProject(elementId);
+                });
+            });
         }
 
         // Edit project
@@ -6261,6 +6278,7 @@
             project.description = newDescription;
             
             renderProjectsPage();
+            saveToLocalStorage();
             showNotification('Proyek berhasil diperbarui!', 'success');
         }
 
@@ -6396,6 +6414,7 @@
             experience.items = newItemsText.split('\n').filter(item => item.trim() !== '');
             
             renderExperiences();
+            saveToLocalStorage();
             showNotification('Pengalaman berhasil diperbarui!', 'success');
         }
 
@@ -6420,6 +6439,7 @@
             
             appData.pages.about.experiences.push(newExperience);
             renderExperiences();
+            saveToLocalStorage();
             showNotification('Pengalaman berhasil ditambahkan!', 'success');
         }
 
@@ -6579,6 +6599,24 @@
                     }
                 });
             });
+            
+            // Setup event listeners untuk tombol delete yang sudah ada
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const elementId = this.getAttribute('data-delete');
+                    const type = this.getAttribute('data-type');
+                    
+                    if (type === 'experience') {
+                        deleteExperience(elementId);
+                    } else if (type === 'achievement') {
+                        deleteAchievement(elementId);
+                    } else if (type === 'project') {
+                        deleteProject(elementId);
+                    } else if (type === 'work') {
+                        deleteWorkItem(elementId);
+                    }
+                });
+            });
         }
 
         // Edit text element
@@ -6613,6 +6651,7 @@
                     appData.pages.about.sections[1].content = newText;
                 }
                 
+                saveToLocalStorage();
                 showNotification('Teks berhasil diperbarui!', 'success');
             }
         }
@@ -6632,6 +6671,7 @@
             period.date = newDate;
             
             renderDashboardPage();
+            saveToLocalStorage();
             showNotification('Periode berhasil diperbarui!', 'success');
         }
 
@@ -6658,6 +6698,7 @@
                 }
                 
                 renderSkills();
+                saveToLocalStorage();
                 showNotification('Skill berhasil diperbarui!', 'success');
             }
         }
@@ -6675,6 +6716,7 @@
                 }
                 
                 renderSkills();
+                saveToLocalStorage();
                 showNotification('Skill berhasil ditambahkan!', 'success');
             }
         }
@@ -6744,6 +6786,7 @@
                 }
             }
             
+            saveToLocalStorage();
             showNotification('Statistik berhasil diperbarui!', 'success');
         }
 
@@ -6763,6 +6806,7 @@
                     contactElement.querySelector('p').textContent = newValue;
                 }
                 
+                saveToLocalStorage();
                 showNotification('Kontak berhasil diperbarui!', 'success');
             }
         }
