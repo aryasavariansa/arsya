@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -3261,6 +3260,7 @@
                     <button class="admin-btn" id="toggleEditMode">Aktifkan Edit Mode</button>
                     <button class="admin-btn" id="saveAllData">Simpan Semua Data</button>
                     <button class="admin-btn" id="adminLogout">Logout</button>
+                    <button class="admin-btn" id="resetDataBtn">Reset/Import Data</button>
                 </div>
             </div>
         </div>
@@ -3926,8 +3926,10 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // Data aplikasi dengan fitur foto dan Work
-        const appData = {
+        // ============================================
+        // DATA APLIKASI & KONFIGURASI
+        // ============================================
+        let appData = {
             user: {
                 name: "Arya Savariansah",
                 title: "Spesialis Manufaktur",
@@ -3935,7 +3937,8 @@
                 phone: "089520336532",
                 location: "Kosambi, Indonesia",
                 linkedin: "linkedin.com/in/arya-savariansah",
-                profileImage: null
+                profileImage: null,
+                profileImageKey: null
             },
             pages: {
                 home: {
@@ -4005,91 +4008,13 @@
                 work: {
                     title: "Work",
                     description: "Dokumentasi pekerjaan dan proyek",
-                    items: [
-                        {
-                            id: "work1",
-                            title: "Standarisasi Molding Setting",
-                            date: "15/03/2025",
-                            category: "Mechanical Drafting",
-                            description: "Menyatukan berbagai variasi pengaturan molding menjadi 1 standar variasi, sehingga mempermudah operator dan menekan risiko kesalahan setting",
-                            image: "https://images.unsplash.com/photo-1579226905180-636c76d14d1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        },
-                        {
-                            id: "work2",
-                            title: "Monitoring WIP Inventory",
-                            date: "20/02/2025",
-                            category: "Production Work",
-                            description: "Membuat sistem monitoring stock WIP dan planning item produksi untuk meningkatkan productivity penggunaan bahan dari 2 Ton menjadi 724,5 kg",
-                            image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        },
-                        {
-                            id: "work3",
-                            title: "Reduksi Reject Mesin Spiral",
-                            date: "10/01/2025",
-                            category: "Quality Control",
-                            description: "Melakukan TFT (Task Force Team) untuk menurunkan reject dari 8% menjadi 3% pada mesin spiral melalui analisis akar masalah dan perbaikan proses",
-                            image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        },
-                        {
-                            id: "work4",
-                            title: "Optimasi Material Management",
-                            date: "05/04/2025",
-                            category: "Process Improvement",
-                            description: "Pelatihan manajemen material untuk mengurangi overconsumption dan meningkatkan efisiensi penggunaan bahan produksi",
-                            image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        },
-                        {
-                            id: "work5",
-                            title: "Preventive Maintenance System",
-                            date: "25/03/2025",
-                            category: "Maintenance",
-                            description: "Implementasi sistem preventive maintenance berdasarkan lifetime usage molding untuk mengurangi downtime produksi",
-                            image: "https://images.unsplash.com/photo-1579226905180-636c76d14d1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        },
-                        {
-                            id: "work6",
-                            title: "Production Planning Meeting",
-                            date: "12/04/2025",
-                            category: "Production Work",
-                            description: "Rutinitas meeting perencanaan produksi untuk koordinasi tim dan evaluasi progress pekerjaan",
-                            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        }
-                    ],
+                    items: [],
                     categories: ["Mechanical Drafting", "Production Work", "Quality Control", "Process Improvement", "Maintenance"]
                 },
                 achievements: {
                     title: "Achievements",
                     description: "Pencapaian dan sertifikat profesional",
-                    items: [
-                        {
-                            id: "achievement1",
-                            title: "Health, Safety, Environment and Quality (HSEQ)",
-                            date: "Sertifikasi Profesional",
-                            description: "Sertifikasi profesional dalam bidang kesehatan, keselamatan, lingkungan, dan kualitas untuk industri manufaktur",
-                            image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        },
-                        {
-                            id: "achievement2",
-                            title: "Introduction to Information Security Course",
-                            date: "Sertifikasi Keamanan Informasi",
-                            description: "Sertifikasi dasar keamanan informasi untuk memahami prinsip-prinsip keamanan data dalam sistem produksi",
-                            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        },
-                        {
-                            id: "achievement3",
-                            title: "Lean Manufacturing Workshop",
-                            date: "Workshop 2024",
-                            description: "Workshop implementasi lean manufacturing untuk meningkatkan efisiensi dan mengurangi waste dalam proses produksi",
-                            image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        },
-                        {
-                            id: "achievement4",
-                            title: "Technical Drawing Excellence Award",
-                            date: "Penghargaan Internal 2025",
-                            description: "Penghargaan untuk detail dan akurasi gambar teknik yang membantu mempercepat proses setup mesin",
-                            image: "https://images.unsplash.com/photo-1579226905180-636c76d14d1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        }
-                    ]
+                    items: []
                 },
                 projects: {
                     title: "Projects",
@@ -4176,7 +4101,7 @@
         let currentUploadType = null; // "profile", "achievement", atau "work"
         let currentItemId = null;
 
-        // Variables untuk modal upload Work
+        // Variables untuk modal upload
         let currentImageFile = null;
         let currentImageUrl = null;
 
@@ -4184,6 +4109,148 @@
         let rainEffectActive = false;
         let starfallEffectActive = false;
         let currentEffectPage = null;
+
+        // ============================================
+        // FUNGSI UTILITAS
+        // ============================================
+
+        // Fungsi untuk upload gambar ke localStorage
+        function uploadImageToStorage(file, type, itemId = null) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const base64Image = e.target.result;
+                    
+                    // Simpan ke localStorage dengan key yang unik
+                    const imageKey = `${type}_${itemId || 'profile'}_${Date.now()}`;
+                    localStorage.setItem(imageKey, base64Image);
+                    
+                    resolve({
+                        key: imageKey,
+                        dataUrl: base64Image
+                    });
+                };
+                
+                reader.onerror = function() {
+                    reject('Gagal membaca file gambar');
+                };
+                
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Fungsi untuk mengambil gambar dari storage
+        function getImageFromStorage(key) {
+            return localStorage.getItem(key);
+        }
+
+        // Fungsi untuk menghapus gambar dari storage
+        function removeImageFromStorage(key) {
+            localStorage.removeItem(key);
+        }
+
+        // Fungsi untuk membersihkan gambar yang tidak terpakai
+        function cleanupUnusedImages() {
+            const usedImageKeys = new Set();
+            
+            // Kumpulkan semua kunci gambar yang digunakan
+            if (appData.user.profileImageKey) {
+                usedImageKeys.add(appData.user.profileImageKey);
+            }
+            
+            // Kumpulkan dari work items
+            appData.pages.work.items.forEach(item => {
+                if (item.imageKey) {
+                    usedImageKeys.add(item.imageKey);
+                }
+            });
+            
+            // Kumpulkan dari achievement items
+            appData.pages.achievements.items.forEach(item => {
+                if (item.imageKey) {
+                    usedImageKeys.add(item.imageKey);
+                }
+            });
+            
+            // Hapus gambar yang tidak digunakan dari localStorage
+            const allKeys = Object.keys(localStorage);
+            allKeys.forEach(key => {
+                if (key.startsWith('work_') || key.startsWith('achievement_') || key.startsWith('profile_')) {
+                    if (!usedImageKeys.has(key)) {
+                        localStorage.removeItem(key);
+                    }
+                }
+            });
+        }
+
+        // Load data dari localStorage
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('portfolioData');
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    
+                    // Konversi data URL gambar dari string JSON
+                    if (data.user && data.user.profileImage) {
+                        appData.user.profileImage = data.user.profileImage;
+                        appData.user.profileImageKey = data.user.profileImageKey;
+                    }
+                    
+                    // Konversi gambar untuk work
+                    if (data.pages && data.pages.work && data.pages.work.items) {
+                        appData.pages.work.items = data.pages.work.items.map(item => {
+                            return {
+                                ...item,
+                                image: item.image || null,
+                                imageKey: item.imageKey || null
+                            };
+                        });
+                    }
+                    
+                    // Konversi gambar untuk achievements
+                    if (data.pages && data.pages.achievements && data.pages.achievements.items) {
+                        appData.pages.achievements.items = data.pages.achievements.items.map(item => {
+                            return {
+                                ...item,
+                                image: item.image || null,
+                                imageKey: item.imageKey || null
+                            };
+                        });
+                    }
+                    
+                    // Copy data lainnya
+                    Object.keys(data).forEach(key => {
+                        if (key !== 'user' && key !== 'pages') {
+                            appData[key] = data[key];
+                        }
+                    });
+                    
+                    // Copy halaman kecuali work dan achievements
+                    Object.keys(data.pages).forEach(pageKey => {
+                        if (pageKey !== 'work' && pageKey !== 'achievements') {
+                            appData.pages[pageKey] = data.pages[pageKey];
+                        }
+                    });
+                    
+                } catch (e) {
+                    console.error("Error loading data from localStorage:", e);
+                }
+            }
+            
+            // Panggil cleanup setelah load
+            cleanupUnusedImages();
+        }
+
+        // Save data ke localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('portfolioData', JSON.stringify(appData));
+            showNotification('Data berhasil disimpan!', 'success');
+        }
+
+        // ============================================
+        // FUNGSI INISIALISASI
+        // ============================================
 
         // DOM Ready
         document.addEventListener('DOMContentLoaded', function() {
@@ -4201,7 +4268,7 @@
             updateAdminUI();
             setupContentHeight();
             renderProfileImage();
-            centerHeroContent(); // Panggil fungsi untuk center konten
+            centerHeroContent();
             
             // Setup efek
             setupEffects();
@@ -4239,7 +4306,14 @@
             
             // Setup resize untuk center content
             window.addEventListener('resize', centerHeroContent);
+            
+            // Setup cleanup interval
+            setInterval(cleanupUnusedImages, 60000);
         });
+
+        // ============================================
+        // FUNGSI UTAMA
+        // ============================================
 
         // Fungsi untuk membuat konten hero tepat di tengah
         function centerHeroContent() {
@@ -4247,14 +4321,11 @@
             const heroContent = document.querySelector('.hero-content');
             
             if (homeHero && heroContent) {
-                // Reset margin sebelumnya
                 heroContent.style.marginTop = '0';
                 
-                // Hitung tinggi yang tersedia
                 const heroHeight = homeHero.offsetHeight;
                 const contentHeight = heroContent.offsetHeight;
                 
-                // Jika konten lebih kecil dari container, center kan secara vertikal
                 if (contentHeight < heroHeight) {
                     const topMargin = Math.max(0, (heroHeight - contentHeight) / 2);
                     heroContent.style.marginTop = `${topMargin}px`;
@@ -4275,7 +4346,6 @@
                     const windowHeight = window.innerHeight;
                     const pageHeight = activePage.offsetHeight;
                     
-                    // Set minimum height untuk content body
                     contentBody.style.minHeight = Math.max(pageHeight, windowHeight - headerHeight) + 'px';
                 }
             }
@@ -4290,7 +4360,6 @@
                 });
             });
             
-            // Initial adjustment
             adjustContentHeight();
         }
 
@@ -4315,13 +4384,11 @@
                         mainContent.style.left = 'auto';
                         mainContent.style.width = 'calc(100% - ' + (sidebar.offsetWidth || 280) + 'px)';
                     }
-                    // Position floating button
                     if (floatingAddBtn && isAdminLoggedIn && currentPage === 'work') {
                         floatingAddBtn.style.top = '100px';
                         floatingAddBtn.style.right = '40px';
                         floatingAddBtn.style.bottom = 'auto';
                     }
-                    // Position effect button
                     if (effectToggle && (currentPage === 'about' || currentPage === 'chatroom')) {
                         effectToggle.style.bottom = '100px';
                         effectToggle.style.right = '40px';
@@ -4337,13 +4404,11 @@
                         mainContent.style.right = '0';
                         mainContent.style.width = '100%';
                     }
-                    // Position floating button untuk mobile
                     if (floatingAddBtn && isAdminLoggedIn && currentPage === 'work') {
                         floatingAddBtn.style.top = 'auto';
                         floatingAddBtn.style.bottom = '30px';
                         floatingAddBtn.style.right = '20px';
                     }
-                    // Position effect button untuk mobile
                     if (effectToggle && (currentPage === 'about' || currentPage === 'chatroom')) {
                         effectToggle.style.top = 'auto';
                         effectToggle.style.bottom = '80px';
@@ -4351,9 +4416,7 @@
                     }
                 }
                 
-                // Recalculate content height
                 setTimeout(setupContentHeight, 100);
-                // Center hero content
                 setTimeout(centerHeroContent, 100);
             }
             
@@ -4400,7 +4463,6 @@
                 });
             }
             
-            // Setup untuk halaman About
             const aboutPage = document.getElementById('aboutPage');
             if (aboutPage) {
                 aboutPage.addEventListener('mouseenter', function() {
@@ -4416,7 +4478,6 @@
                 });
             }
             
-            // Setup untuk halaman Chat Room
             const chatroomPage = document.getElementById('chatroomPage');
             if (chatroomPage) {
                 chatroomPage.addEventListener('mouseenter', function() {
@@ -4475,12 +4536,10 @@
             const effectText = document.getElementById('effectText');
             
             if (rainEffectActive) {
-                // Matikan efek starfall jika aktif
                 if (starfallEffectActive) {
                     toggleStarfallEffect();
                 }
                 
-                // Aktifkan efek rain
                 rainContainer.style.display = 'block';
                 rainOverlay.style.display = 'block';
                 setTimeout(() => {
@@ -4488,32 +4547,21 @@
                 }, 10);
                 
                 effectText.textContent = 'Matikan Rain Effect';
-                
-                // Buat efek rain yang lebih elegan
                 createElegantRainDrops();
-                
-                // Tambahkan class khusus untuk about page
                 document.getElementById('aboutPage').classList.add('rain-active');
-                
-                // Ubah warna teks dan ikon untuk feedback visual
                 effectToggle.style.background = 'linear-gradient(135deg, #00bcd4 0%, #00ffff 100%)';
                 effectToggle.style.color = '#000';
                 
                 showNotification('Rain Effect diaktifkan! Suasana hujan yang menenangkan.', 'success');
             } else {
-                // Matikan efek rain
                 rainContainer.style.display = 'none';
                 rainOverlay.style.opacity = '0';
                 setTimeout(() => {
                     rainOverlay.style.display = 'none';
                 }, 1000);
                 effectText.textContent = 'Aktifkan Rain Effect';
-                
-                // Reset tombol effect
                 effectToggle.style.background = 'var(--gradient-gold)';
                 effectToggle.style.color = '#000';
-                
-                // Hapus class khusus untuk about page
                 document.getElementById('aboutPage').classList.remove('rain-active');
                 
                 showNotification('Rain Effect dimatikan.', 'info');
@@ -4526,10 +4574,8 @@
             const rainContainer = document.getElementById('rainContainer');
             if (!rainContainer || !rainEffectActive) return;
             
-            // Clear existing rain drops
             rainContainer.innerHTML = '';
             
-            // Tambahkan background glow
             const backgroundGlow = document.createElement('div');
             backgroundGlow.style.position = 'absolute';
             backgroundGlow.style.top = '0';
@@ -4540,7 +4586,6 @@
             backgroundGlow.style.filter = 'blur(20px)';
             rainContainer.appendChild(backgroundGlow);
             
-            // Buat 80 rain drops dengan variasi
             for (let i = 0; i < 80; i++) {
                 setTimeout(() => {
                     if (!rainEffectActive) return;
@@ -4550,7 +4595,6 @@
                 }, i * 30);
             }
             
-            // Buat rain drops secara kontinu
             if (rainEffectActive) {
                 setTimeout(createElegantRainDrops, 5000);
             }
@@ -4563,23 +4607,18 @@
             const rainDrop = document.createElement('div');
             rainDrop.className = 'rain-drop';
             
-            // Random position
             const left = 10 + Math.random() * 80;
             rainDrop.style.left = `${left}%`;
             
-            // Random animation delay
             const delay = Math.random() * 3;
             rainDrop.style.animationDelay = `${delay}s`;
             
-            // Random animation duration
             const duration = 1.5 + Math.random() * 1;
             rainDrop.style.animationDuration = `${duration}s`;
             
-            // Random opacity
             const opacity = 0.5 + Math.random() * 0.5;
             rainDrop.style.opacity = opacity;
             
-            // Random color variation
             const colors = [
                 'rgba(0, 255, 255, 0.8)',
                 'rgba(0, 200, 255, 0.7)',
@@ -4595,12 +4634,9 @@
             
             rainContainer.appendChild(rainDrop);
             
-            // Buat efek ripple saat rain drop "jatuh"
             setTimeout(() => {
                 if (rainEffectActive) {
                     createElegantRipple(left, 90 + Math.random() * 10);
-                    
-                    // Tambahkan efek cahaya kecil
                     createRainLight(left, 90 + Math.random() * 10, randomColor);
                 }
             }, duration * 1000 - 500);
@@ -4617,23 +4653,19 @@
             ripple.style.left = `${left}%`;
             ripple.style.top = `${top}%`;
             
-            // Random size
             const size = 4 + Math.random() * 8;
             ripple.style.width = `${size}px`;
             ripple.style.height = `${size}px`;
             
-            // Random color variation
             const colors = ['rgba(0, 255, 255, 0.4)', 'rgba(0, 200, 255, 0.3)', 'rgba(100, 220, 255, 0.35)'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             ripple.style.borderColor = randomColor;
             
-            // Random animation duration
             const duration = 0.8 + Math.random() * 0.7;
             ripple.style.animationDuration = `${duration}s`;
             
             rainContainer.appendChild(ripple);
             
-            // Hapus ripple setelah animasi selesai
             setTimeout(() => {
                 if (ripple.parentNode) {
                     ripple.parentNode.removeChild(ripple);
@@ -4652,7 +4684,6 @@
             light.style.left = `${left}%`;
             light.style.top = `${top}%`;
             
-            // Extract base color
             light.style.background = `radial-gradient(circle, 
                 ${color.replace('0.8', '0.3').replace('0.7', '0.25').replace('0.6', '0.2')} 0%, 
                 rgba(0, 255, 255, 0.1) 40%,
@@ -4660,7 +4691,6 @@
             
             rainContainer.appendChild(light);
             
-            // Hapus light setelah animasi selesai
             setTimeout(() => {
                 if (light.parentNode) {
                     light.parentNode.removeChild(light);
@@ -4678,12 +4708,10 @@
             const effectText = document.getElementById('effectText');
             
             if (starfallEffectActive) {
-                // Matikan efek rain jika aktif
                 if (rainEffectActive) {
                     toggleRainEffect();
                 }
                 
-                // Aktifkan efek starfall
                 starfallContainer.style.display = 'block';
                 starfallOverlay.style.display = 'block';
                 setTimeout(() => {
@@ -4691,32 +4719,21 @@
                 }, 10);
                 
                 effectText.textContent = 'Matikan Starfall Effect';
-                
-                // Buat efek starfall yang lebih elegan
                 createElegantStars();
-                
-                // Tambahkan class khusus untuk chatroom
                 document.getElementById('chatroomPage').classList.add('starfall-active');
-                
-                // Ubah warna tombol
                 effectToggle.style.background = 'linear-gradient(135deg, #ff9500 0%, #ffcc00 100%)';
                 effectToggle.style.color = '#000';
                 
                 showNotification('Starfall Effect diaktifkan! Galaksi bintang yang memukau.', 'success');
             } else {
-                // Matikan efek starfall
                 starfallContainer.style.display = 'none';
                 starfallOverlay.style.opacity = '0';
                 setTimeout(() => {
                     starfallOverlay.style.display = 'none';
                 }, 1000);
                 effectText.textContent = 'Aktifkan Starfall Effect';
-                
-                // Reset tombol effect
                 effectToggle.style.background = 'var(--gradient-gold)';
                 effectToggle.style.color = '#000';
-                
-                // Hapus class khusus untuk chatroom
                 document.getElementById('chatroomPage').classList.remove('starfall-active');
                 
                 showNotification('Starfall Effect dimatikan.', 'info');
@@ -4729,10 +4746,8 @@
             const starfallContainer = document.getElementById('starfallContainer');
             if (!starfallContainer || !starfallEffectActive) return;
             
-            // Clear existing stars
             starfallContainer.innerHTML = '';
             
-            // Tambahkan background nebula
             const nebula = document.createElement('div');
             nebula.style.position = 'absolute';
             nebula.style.top = '0';
@@ -4747,7 +4762,6 @@
             nebula.style.filter = 'blur(15px)';
             starfallContainer.appendChild(nebula);
             
-            // Buat 40 stars dengan variasi
             for (let i = 0; i < 40; i++) {
                 setTimeout(() => {
                     if (!starfallEffectActive) return;
@@ -4757,183 +4771,9 @@
                 }, i * 100);
             }
             
-            // Buat stars secara kontinu
             if (starfallEffectActive) {
                 setTimeout(createElegantStars, 6000);
             }
-        }
-
-        // Fungsi untuk membuat single star elegan
-        function createSingleStar(index) {
-            const starfallContainer = document.getElementById('starfallContainer');
-            
-            const star = document.createElement('div');
-            star.className = 'star';
-            
-            // Random position
-            const left = Math.random() * 100;
-            star.style.left = `${left}%`;
-            
-            // Random size
-            const size = 2 + Math.random() * 6;
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            
-            // Random animation delay
-            const delay = Math.random() * 5;
-            star.style.animationDelay = `${delay}s`;
-            
-            // Random animation duration
-            const duration = 3 + Math.random() * 4;
-            star.style.animationDuration = `${duration}s`;
-            
-            // Random gradient color
-            const gradients = [
-                'radial-gradient(circle, rgba(255, 215, 0, 0.9) 0%, rgba(255, 200, 0, 0.7) 100%)',
-                'radial-gradient(circle, rgba(255, 100, 0, 0.8) 0%, rgba(255, 150, 0, 0.6) 100%)',
-                'radial-gradient(circle, rgba(255, 255, 200, 0.9) 0%, rgba(255, 255, 150, 0.7) 100%)',
-                'radial-gradient(circle, rgba(200, 255, 255, 0.8) 0%, rgba(150, 255, 255, 0.6) 100%)'
-            ];
-            const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
-            star.style.background = randomGradient;
-            
-            // Random opacity
-            const opacity = 0.6 + Math.random() * 0.4;
-            star.style.opacity = opacity;
-            
-            // Random rotation
-            const rotate = Math.random() * 360;
-            star.style.setProperty('--star-rotation', `${rotate}deg`);
-            
-            starfallContainer.appendChild(star);
-            
-            // Buat efek trail
-            createStarTrail(left, 0, randomGradient);
-            
-            // Buat efek burst saat star "jatuh"
-            setTimeout(() => {
-                if (starfallEffectActive) {
-                    const top = 90 + Math.random() * 10;
-                    createElegantStarBurst(left, top, randomGradient);
-                    
-                    // Hapus star setelah burst
-                    setTimeout(() => {
-                        if (star.parentNode) {
-                            star.parentNode.removeChild(star);
-                        }
-                    }, 500);
-                }
-            }, duration * 1000 - 1000);
-        }
-
-        // Fungsi untuk membuat efek trail bintang
-        function createStarTrail(left, top, gradient) {
-            if (!starfallEffectActive) return;
-            
-            const starfallContainer = document.getElementById('starfallContainer');
-            const trail = document.createElement('div');
-            trail.className = 'star-trail';
-            
-            trail.style.left = `${left}%`;
-            trail.style.top = `${top}%`;
-            
-            // Random angle
-            const angle = -30 + Math.random() * 60;
-            trail.style.setProperty('--trail-angle', `${angle}deg`);
-            
-            // Random length
-            const length = 50 + Math.random() * 100;
-            trail.style.width = `${length}px`;
-            
-            // Color based on gradient
-            let trailColor = 'rgba(255, 215, 0, 0.1)';
-            if (gradient.includes('255, 100, 0')) trailColor = 'rgba(255, 100, 0, 0.08)';
-            if (gradient.includes('255, 255, 200')) trailColor = 'rgba(255, 255, 200, 0.1)';
-            if (gradient.includes('200, 255, 255')) trailColor = 'rgba(200, 255, 255, 0.08)';
-            
-            trail.style.background = `linear-gradient(90deg, 
-                transparent 0%, 
-                ${trailColor} 30%,
-                rgba(255, 215, 0, 0.05) 70%,
-                transparent 100%)`;
-            
-            starfallContainer.appendChild(trail);
-            
-            // Hapus trail setelah animasi selesai
-            setTimeout(() => {
-                if (trail.parentNode) {
-                    trail.parentNode.removeChild(trail);
-                }
-            }, 1000);
-        }
-
-        // Fungsi untuk membuat efek burst yang elegan
-        function createElegantStarBurst(left, top, gradient) {
-            if (!starfallEffectActive) return;
-            
-            const starfallContainer = document.getElementById('starfallContainer');
-            
-            // Buat burst utama
-            const burst = document.createElement('div');
-            burst.className = 'star-burst';
-            
-            burst.style.left = `${left}%`;
-            burst.style.top = `${top}%`;
-            
-            // Extract color dari gradient
-            let burstColor = '#ffd700';
-            if (gradient.includes('255, 100, 0')) burstColor = '#ff6400';
-            else if (gradient.includes('255, 255, 200')) burstColor = '#ffffc8';
-            else if (gradient.includes('200, 255, 255')) burstColor = '#c8ffff';
-            
-            burst.style.color = burstColor;
-            burst.style.background = `radial-gradient(circle, ${burstColor} 0%, transparent 70%)`;
-            
-            // Random size
-            const size = 10 + Math.random() * 20;
-            burst.style.width = `${size}px`;
-            burst.style.height = `${size}px`;
-            
-            starfallContainer.appendChild(burst);
-            
-            // Buat partikel kecil
-            for (let i = 0; i < 12; i++) {
-                setTimeout(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'star-particle';
-                    
-                    particle.style.left = `${left}%`;
-                    particle.style.top = `${top}%`;
-                    
-                    // Random angle untuk partikel
-                    const angle = (i * 30) + Math.random() * 15;
-                    const rad = angle * (Math.PI / 180);
-                    const x = Math.cos(rad);
-                    const y = Math.sin(rad);
-                    
-                    particle.style.setProperty('--particle-x', x);
-                    particle.style.setProperty('--particle-y', y);
-                    
-                    particle.style.background = burstColor;
-                    particle.style.boxShadow = `0 0 5px ${burstColor}`;
-                    
-                    starfallContainer.appendChild(particle);
-                    
-                    // Hapus partikel setelah animasi
-                    setTimeout(() => {
-                        if (particle.parentNode) {
-                            particle.parentNode.removeChild(particle);
-                        }
-                    }, 1000);
-                }, i * 30);
-            }
-            
-            // Hapus burst setelah animasi selesai
-            setTimeout(() => {
-                if (burst.parentNode) {
-                    burst.parentNode.removeChild(burst);
-                }
-            }, 1200);
         }
 
         // Setup modal zoom
@@ -4941,13 +4781,11 @@
             const zoomModal = document.getElementById('zoomModal');
             const closeZoom = document.getElementById('closeZoom');
             
-            // Event listener untuk close zoom
             closeZoom.addEventListener('click', function() {
                 zoomModal.classList.remove('active');
                 document.body.style.overflow = 'auto';
             });
             
-            // Close saat klik di luar gambar
             zoomModal.addEventListener('click', function(e) {
                 if (e.target === zoomModal) {
                     zoomModal.classList.remove('active');
@@ -4955,7 +4793,6 @@
                 }
             });
             
-            // Close dengan ESC key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && zoomModal.classList.contains('active')) {
                     zoomModal.classList.remove('active');
@@ -4974,7 +4811,6 @@
             
             showLoading('Memuat gambar...');
             
-            // Preload gambar
             const img = new Image();
             img.onload = function() {
                 zoomedImage.src = imageSrc;
@@ -5022,7 +4858,6 @@
                 
                 resetUploadForm();
                 
-                // Jika edit mode, isi form dengan data yang ada
                 if (editItemId) {
                     const item = appData.pages.work.items.find(i => i.id === editItemId);
                     if (item) {
@@ -5038,20 +4873,16 @@
                             imageActions.style.display = 'flex';
                         }
                         
-                        // Ubah teks tombol
                         saveBtn.innerHTML = '<i class="fas fa-save"></i> Update Work';
                         saveBtn.dataset.editId = editItemId;
                         
-                        // Update modal title
                         document.querySelector('.upload-modal-title').textContent = 'Edit Work';
                         document.querySelector('.upload-modal-subtitle').textContent = 'Edit dokumentasi pekerjaan';
                     }
                 } else {
-                    // Reset untuk mode add
                     saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Work';
                     delete saveBtn.dataset.editId;
                     
-                    // Reset modal title
                     document.querySelector('.upload-modal-title').textContent = 'Tambah Work Baru';
                     document.querySelector('.upload-modal-subtitle').textContent = 'Tambahkan dokumentasi pekerjaan Anda';
                 }
@@ -5059,7 +4890,6 @@
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 
-                // Fokus ke input pertama
                 setTimeout(() => {
                     document.getElementById('workTitle').focus();
                 }, 100);
@@ -5144,11 +4974,10 @@
                 }
             });
 
-            // Handle image file - OPTIMIZED
+            // Handle image file
             function handleImageFile(file) {
-                // Validasi file
-                if (file.size > 10 * 1024 * 1024) {
-                    showNotification('Ukuran file terlalu besar. Maksimal 10MB.', 'error');
+                if (file.size > 5 * 1024 * 1024) {
+                    showNotification('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
                     return;
                 }
 
@@ -5159,14 +4988,12 @@
 
                 currentImageFile = file;
                 
-                // Tampilkan progress bar sebentar untuk feedback visual
                 showProgress();
                 updateProgress(30);
                 
                 const reader = new FileReader();
                 
                 reader.onload = function(e) {
-                    // Langsung ke 100% setelah file dibaca
                     updateProgress(100);
                     
                     currentImageUrl = e.target.result;
@@ -5174,7 +5001,6 @@
                     previewContainer.style.display = 'block';
                     imageActions.style.display = 'flex';
                     
-                    // Sembunyikan progress bar setelah 300ms
                     setTimeout(() => {
                         hideProgress();
                     }, 300);
@@ -5205,8 +5031,8 @@
                 showNotification('Gambar berhasil dihapus', 'info');
             });
 
-            // Form submit - OPTIMIZED untuk loading cepat
-            form.addEventListener('submit', function(e) {
+            // Form submit
+            form.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 if (!isAdminLoggedIn && !isEditMode) {
@@ -5224,29 +5050,48 @@
                     return;
                 }
                 
-                // Validasi format tanggal
                 const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
                 if (!dateRegex.test(date)) {
                     showNotification('Format tanggal harus DD/MM/YYYY', 'error');
                     return;
                 }
                 
-                // Tampilkan loading singkat
                 showLoading('Menyimpan Work...');
                 
-                // Simpan TANPA DELAY BERLEBIHAN - langsung proses
-                setTimeout(() => {
+                try {
+                    let finalImageUrl = null;
+                    let finalImageKey = null;
+                    
+                    if (currentImageFile) {
+                        showLoading('Mengupload gambar...');
+                        
+                        const uploadResult = await uploadImageToStorage(
+                            currentImageFile, 
+                            'work', 
+                            editId || `work_${Date.now()}`
+                        );
+                        
+                        finalImageUrl = uploadResult.dataUrl;
+                        finalImageKey = uploadResult.key;
+                        showLoading('Menyimpan Work...');
+                    }
+                    
                     const editId = saveBtn.dataset.editId;
                     
                     if (editId) {
-                        // Edit mode
                         const item = appData.pages.work.items.find(i => i.id === editId);
                         if (item) {
                             item.title = title;
                             item.date = date;
                             item.category = category;
                             item.description = description;
-                            if (currentImageUrl) item.image = currentImageUrl;
+                            if (finalImageUrl) {
+                                if (item.imageKey) {
+                                    removeImageFromStorage(item.imageKey);
+                                }
+                                item.image = finalImageUrl;
+                                item.imageKey = finalImageKey;
+                            }
                             
                             renderWorkPage();
                             saveToLocalStorage();
@@ -5256,7 +5101,6 @@
                             showNotification('Work berhasil diperbarui!', 'success');
                         }
                     } else {
-                        // Add mode - gunakan timestamp untuk ID yang unik
                         const newId = 'work_' + Date.now();
                         const newItem = {
                             id: newId,
@@ -5264,17 +5108,17 @@
                             date: date,
                             category: category,
                             description: description,
-                            image: currentImageUrl
+                            image: finalImageUrl,
+                            imageKey: finalImageKey
                         };
                         
-                        appData.pages.work.items.unshift(newItem); // Tambah di awal array
+                        appData.pages.work.items.unshift(newItem);
                         
                         renderWorkPage();
                         saveToLocalStorage();
                         closeUploadModal();
                         hideLoading();
                         
-                        // Scroll ke halaman work untuk melihat item baru
                         const workPage = document.getElementById('workPage');
                         if (workPage) {
                             workPage.scrollIntoView({ behavior: 'smooth' });
@@ -5282,7 +5126,11 @@
                         
                         showNotification('Work berhasil ditambahkan!', 'success');
                     }
-                }, 500); // Delay minimal hanya 500ms (bukan 1000ms)
+                    
+                } catch (error) {
+                    hideLoading();
+                    showNotification('Gagal mengupload gambar: ' + error, 'error');
+                }
             });
 
             // Show progress bar
@@ -5346,7 +5194,6 @@
                     if (isAdminLoggedIn || isEditMode) {
                         openImageUploadModal('profile');
                     } else {
-                        // Jika bukan admin, zoom gambar profile jika ada
                         if (appData.user.profileImage) {
                             openZoom(appData.user.profileImage, 'Profile Picture');
                         }
@@ -5358,7 +5205,6 @@
             imageInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
-                    // Validasi file
                     if (file.size > 5 * 1024 * 1024) {
                         showNotification('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
                         return;
@@ -5369,46 +5215,66 @@
                         return;
                     }
                     
-                    // Simulasi upload dengan progress
                     simulateUploadWithProgress(file, previewImage, imagePreview);
                 }
             });
             
             // Event listener untuk save button
-            saveImageBtn.addEventListener('click', function() {
+            saveImageBtn.addEventListener('click', async function() {
                 if (previewImage.src) {
                     showLoading('Menyimpan gambar...');
                     showProgress();
                     
-                    // Simulasi proses save dengan progress
-                    let progress = 0;
-                    const interval = setInterval(() => {
-                        progress += 10;
-                        updateProgress(progress);
-                        
-                        if (progress >= 100) {
-                            clearInterval(interval);
+                    try {
+                        const imageInput = document.getElementById('imageInput');
+                        if (imageInput.files.length > 0) {
+                            const file = imageInput.files[0];
                             
-                            // Save data
+                            const uploadResult = await uploadImageToStorage(
+                                file, 
+                                currentUploadType, 
+                                currentItemId || 'profile'
+                            );
+                            
                             if (currentUploadType === 'profile') {
-                                appData.user.profileImage = previewImage.src;
+                                if (appData.user.profileImageKey) {
+                                    removeImageFromStorage(appData.user.profileImageKey);
+                                }
+                                
+                                appData.user.profileImage = uploadResult.dataUrl;
+                                appData.user.profileImageKey = uploadResult.key;
                                 renderProfileImage();
                                 showNotification('Foto profile berhasil diupload!', 'success');
+                                
                             } else if (currentUploadType === 'achievement' && currentItemId) {
                                 const achievement = appData.pages.achievements.items.find(a => a.id === currentItemId);
                                 if (achievement) {
-                                    achievement.image = previewImage.src;
+                                    if (achievement.imageKey) {
+                                        removeImageFromStorage(achievement.imageKey);
+                                    }
+                                    
+                                    achievement.image = uploadResult.dataUrl;
+                                    achievement.imageKey = uploadResult.key;
                                     renderAchievementsPage();
                                     showNotification('Foto achievement berhasil diupload!', 'success');
                                 }
+                                
                             } else if (currentUploadType === 'work' && currentItemId) {
                                 const work = appData.pages.work.items.find(d => d.id === currentItemId);
                                 if (work) {
-                                    work.image = previewImage.src;
+                                    if (work.imageKey) {
+                                        removeImageFromStorage(work.imageKey);
+                                    }
+                                    
+                                    work.image = uploadResult.dataUrl;
+                                    work.imageKey = uploadResult.key;
                                     renderWorkPage();
                                     showNotification('Foto Work berhasil diupload!', 'success');
                                 }
                             }
+                            
+                            saveToLocalStorage();
+                            updateProgress(100);
                             
                             setTimeout(() => {
                                 modal.classList.remove('active');
@@ -5416,7 +5282,12 @@
                                 hideLoading();
                             }, 300);
                         }
-                    }, 100);
+                    } catch (error) {
+                        hideLoading();
+                        showNotification('Gagal mengupload gambar: ' + error, 'error');
+                    }
+                } else {
+                    showNotification('Silakan pilih gambar terlebih dahulu', 'error');
                 }
             });
             
@@ -5432,25 +5303,38 @@
                 
                 setTimeout(() => {
                     if (currentUploadType === 'profile') {
+                        if (appData.user.profileImageKey) {
+                            removeImageFromStorage(appData.user.profileImageKey);
+                        }
                         appData.user.profileImage = null;
+                        appData.user.profileImageKey = null;
                         renderProfileImage();
                         showNotification('Foto profile berhasil dihapus!', 'success');
                     } else if (currentUploadType === 'achievement' && currentItemId) {
                         const achievement = appData.pages.achievements.items.find(a => a.id === currentItemId);
                         if (achievement) {
+                            if (achievement.imageKey) {
+                                removeImageFromStorage(achievement.imageKey);
+                            }
                             achievement.image = null;
+                            achievement.imageKey = null;
                             renderAchievementsPage();
                             showNotification('Foto achievement berhasil dihapus!', 'success');
                         }
                     } else if (currentUploadType === 'work' && currentItemId) {
                         const work = appData.pages.work.items.find(d => d.id === currentItemId);
                         if (work) {
+                            if (work.imageKey) {
+                                removeImageFromStorage(work.imageKey);
+                            }
                             work.image = null;
+                            work.imageKey = null;
                             renderWorkPage();
                             showNotification('Foto Work berhasil dihapus!', 'success');
                         }
                     }
                     
+                    saveToLocalStorage();
                     modal.classList.remove('active');
                     resetUploadModal();
                     hideLoading();
@@ -5468,29 +5352,35 @@
 
         // Fungsi untuk simulasi upload dengan progress bar
         function simulateUploadWithProgress(file, previewImage, imagePreview) {
-            showLoading('Mengupload gambar...');
-            showProgress();
-            
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 20;
-                updateProgress(progress);
+            return new Promise((resolve, reject) => {
+                showLoading('Mengupload gambar...');
+                showProgress();
                 
-                if (progress >= 100) {
-                    clearInterval(interval);
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 20;
+                    updateProgress(progress);
                     
-                    // Baca file sebagai Data URL
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        previewImage.src = event.target.result;
-                        imagePreview.style.display = 'block';
-                        removeImageBtn.style.display = 'inline-block';
-                        hideLoading();
-                        showNotification('Gambar berhasil diupload!', 'success');
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }, 100);
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            previewImage.src = event.target.result;
+                            imagePreview.style.display = 'block';
+                            removeImageBtn.style.display = 'inline-block';
+                            hideLoading();
+                            showNotification('Gambar berhasil diupload!', 'success');
+                            resolve(event.target.result);
+                        };
+                        reader.onerror = function() {
+                            hideLoading();
+                            reject('Gagal membaca file gambar');
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }, 100);
+            });
         }
 
         // Reset upload modal
@@ -5510,7 +5400,6 @@
 
         // Open image upload modal
         function openImageUploadModal(type, itemId = null) {
-            // PERIKSA APAKAH USER ADALAH ADMIN
             if (!isAdminLoggedIn && !isEditMode) {
                 showNotification('Silakan login sebagai admin untuk mengupload foto', 'error');
                 return;
@@ -5571,14 +5460,12 @@
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
-                // Random size and position
                 const size = Math.random() * 4 + 2;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 
-                // Random animation delay
                 particle.style.animationDelay = `${Math.random() * 10}s`;
                 particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
                 
@@ -5601,24 +5488,9 @@
             }
         }
 
-        // Load data dari localStorage
-        function loadFromLocalStorage() {
-            const savedData = localStorage.getItem('portfolioData');
-            if (savedData) {
-                try {
-                    const data = JSON.parse(savedData);
-                    Object.assign(appData, data);
-                } catch (e) {
-                    console.error("Error loading data from localStorage:", e);
-                }
-            }
-        }
-
-        // Save data ke localStorage
-        function saveToLocalStorage() {
-            localStorage.setItem('portfolioData', JSON.stringify(appData));
-            showNotification('Data berhasil disimpan!', 'success');
-        }
+        // ============================================
+        // FUNGSI NAVIGASI & RENDER HALAMAN
+        // ============================================
 
         // Setup navigation
         function setupNavigation() {
@@ -5645,7 +5517,6 @@
 
         // Change page
         function changePage(pageId) {
-            // Matikan semua efek saat berpindah halaman
             if (rainEffectActive) {
                 toggleRainEffect();
             }
@@ -5690,16 +5561,13 @@
                     document.querySelector('.main-content').scrollTop = 0;
                     setupContentHeight();
                     
-                    // Update floating button visibility
                     updateAdminUI();
                     
-                    // Buat partikel baru untuk home page
                     if (pageId === 'home') {
                         createParticles();
-                        setTimeout(centerHeroContent, 100); // Center konten setelah halaman home dimuat
+                        setTimeout(centerHeroContent, 100);
                     }
                     
-                    // Setup efek untuk halaman tertentu
                     if (pageId === 'about' || pageId === 'chatroom') {
                         setTimeout(() => {
                             showEffectToggle(
@@ -5834,7 +5702,6 @@
                         timeline.appendChild(expElement);
                     }
                     
-                    // Setup event listeners untuk edit dan delete
                     setupExperienceEventListeners(expElement, exp.id);
                 } else if (expElement) {
                     expElement.querySelector('.experience-title').textContent = exp.title;
@@ -5863,19 +5730,16 @@
             }
         }
 
-        // Render Work page - OPTIMIZED
+        // Render Work page
         function renderWorkPage() {
             const pageData = appData.pages.work;
             const container = document.getElementById('workContainer');
             
             if (!container) return;
             
-            // Clear container dengan cara yang lebih efisien
             container.innerHTML = '';
             
-            // Sort items by date (newest first) - lebih efisien
             const sortedItems = [...pageData.items].sort((a, b) => {
-                // Convert DD/MM/YYYY to timestamp untuk sorting
                 const convertToTimestamp = (dateStr) => {
                     const [day, month, year] = dateStr.split('/').map(Number);
                     return new Date(year, month - 1, day).getTime();
@@ -5886,16 +5750,13 @@
                 return timeB - timeA;
             });
             
-            // Render items dengan batch untuk performa lebih baik
             sortedItems.forEach((item, index) => {
                 const workElement = createWorkCard(item);
                 container.appendChild(workElement);
                 
-                // Setup event listeners untuk card ini saja
                 setupWorkCardEventListeners(workElement, item.id);
             });
             
-            // Show/hide tombol add berdasarkan admin mode
             const addBtn = document.getElementById('addWorkBtn');
             if (addBtn) {
                 addBtn.style.display = (isAdminLoggedIn || isEditMode) ? 'inline-block' : 'none';
@@ -5956,9 +5817,8 @@
             return workElement;
         }
 
-        // Fungsi untuk setup event listeners per card (lebih efisien)
+        // Fungsi untuk setup event listeners per card
         function setupWorkCardEventListeners(element, itemId) {
-            // Edit button
             const editBtn = element.querySelector('.edit-btn');
             if (editBtn) {
                 editBtn.addEventListener('click', function(e) {
@@ -5967,7 +5827,6 @@
                 });
             }
             
-            // Delete button
             const deleteBtn = element.querySelector('.delete-btn');
             if (deleteBtn) {
                 deleteBtn.addEventListener('click', function(e) {
@@ -5976,11 +5835,9 @@
                 });
             }
             
-            // Image container untuk upload/zoom
             const imageContainer = element.querySelector('.work-image-container');
             if (imageContainer) {
                 imageContainer.addEventListener('click', function(e) {
-                    // Jika klik pada gambar, zoom
                     if (e.target.classList.contains('work-image')) {
                         const title = element.querySelector('h3').textContent;
                         openZoom(e.target.src, title);
@@ -5990,7 +5847,6 @@
                     if (isAdminLoggedIn || isEditMode) {
                         editWorkImage(itemId);
                     } else {
-                        // Jika bukan admin, coba zoom jika ada gambar
                         const img = this.querySelector('.work-image');
                         if (img && img.src) {
                             const title = element.querySelector('h3').textContent;
@@ -6001,7 +5857,7 @@
             }
         }
 
-        // Edit Work image - PERBAIKAN: Fungsi ini didefinisikan dengan benar
+        // Edit Work image
         function editWorkImage(itemId) {
             if (!isAdminLoggedIn && !isEditMode) {
                 showNotification('Silakan login sebagai admin untuk mengedit foto', 'error');
@@ -6011,7 +5867,7 @@
             openImageUploadModal('work', itemId);
         }
 
-        // Edit Work item - PERBAIKAN: Fungsi ini didefinisikan dengan benar
+        // Edit Work item
         function editWorkItem(itemId) {
             if (!isAdminLoggedIn && !isEditMode) {
                 showNotification('Silakan login sebagai admin untuk mengedit pekerjaan', 'error');
@@ -6021,7 +5877,7 @@
             openWorkUploadModal(itemId);
         }
 
-        // Hapus Work item - OPTIMIZED
+        // Hapus Work item
         function deleteWorkItem(itemId) {
             if (!confirm('Apakah Anda yakin ingin menghapus pekerjaan ini?')) {
                 return;
@@ -6029,9 +5885,13 @@
             
             showLoading('Menghapus...');
             
-            // Langsung hapus tanpa delay berlebihan
             const index = appData.pages.work.items.findIndex(item => item.id === itemId);
             if (index !== -1) {
+                const item = appData.pages.work.items[index];
+                if (item.imageKey) {
+                    removeImageFromStorage(item.imageKey);
+                }
+                
                 appData.pages.work.items.splice(index, 1);
                 renderWorkPage();
                 saveToLocalStorage();
@@ -6098,10 +5958,8 @@
                 container.appendChild(achievementElement);
             });
             
-            // Setup event listeners untuk upload foto achievements
             document.querySelectorAll('.achievement-image-container').forEach(container => {
                 container.addEventListener('click', function(e) {
-                    // Jika klik langsung pada gambar, biarkan fungsi zoom yang menangani
                     if (e.target.classList.contains('achievement-image')) {
                         return;
                     }
@@ -6110,7 +5968,6 @@
                         const achievementId = this.getAttribute('data-upload');
                         openImageUploadModal('achievement', achievementId);
                     } else {
-                        // Jika bukan admin, coba zoom jika ada gambar
                         const img = this.querySelector('.achievement-image');
                         if (img && img.src) {
                             const title = this.closest('.achievement-card').querySelector('h3').textContent;
@@ -6120,7 +5977,6 @@
                 });
             });
             
-            // Setup event listener untuk tombol delete
             document.querySelectorAll('.delete-btn[data-type="achievement"]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const elementId = this.getAttribute('data-delete');
@@ -6128,7 +5984,6 @@
                 });
             });
             
-            // Setup event listener untuk tombol edit
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const elementId = this.getAttribute('data-edit');
@@ -6168,10 +6023,14 @@
             
             showLoading('Menghapus pencapaian...');
             
-            // Simulasi delay untuk efek loading
             setTimeout(() => {
                 const index = appData.pages.achievements.items.findIndex(item => item.id === achievementId);
                 if (index !== -1) {
+                    const item = appData.pages.achievements.items[index];
+                    if (item.imageKey) {
+                        removeImageFromStorage(item.imageKey);
+                    }
+                    
                     appData.pages.achievements.items.splice(index, 1);
                     renderAchievementsPage();
                     saveToLocalStorage();
@@ -6198,7 +6057,8 @@
                 title: newTitle,
                 date: newDate,
                 description: newDescription,
-                image: null
+                image: null,
+                imageKey: null
             };
             
             appData.pages.achievements.items.push(newAchievement);
@@ -6246,7 +6106,6 @@
                 container.appendChild(projectElement);
             });
             
-            // Setup event listener untuk tombol delete
             document.querySelectorAll('.delete-btn[data-type="project"]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const elementId = this.getAttribute('data-delete');
@@ -6254,7 +6113,6 @@
                 });
             });
             
-            // Setup event listener untuk tombol edit
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const elementId = this.getAttribute('data-edit');
@@ -6312,7 +6170,6 @@
             
             const newId = 'project' + (appData.pages.projects.items.length + 1);
             
-            // Tanya statistik baru
             const stat1Value = prompt('Masukkan nilai statistik 1 (misal: 2 Ton):', '0%');
             const stat1Label = prompt('Masukkan label statistik 1:', 'Sebelum');
             
@@ -6343,14 +6200,12 @@
         function renderDashboardPage() {
             const pageData = appData.pages.dashboard;
             
-            // Render periods
             pageData.periods.forEach(period => {
                 const periodElement = document.getElementById(period.id);
                 if (periodElement) {
                     periodElement.querySelector('.period-title').textContent = period.title;
                     periodElement.querySelector('.period-date').innerHTML = `<i class="far fa-calendar"></i> ${period.date}`;
                     
-                    // Render stats
                     period.stats.forEach(stat => {
                         const statElement = document.getElementById(stat.id);
                         if (statElement) {
@@ -6360,7 +6215,6 @@
                             if (valueElement) valueElement.textContent = stat.value;
                             if (labelElement) labelElement.textContent = stat.label;
                             
-                            // Add appropriate class based on period
                             if (period.id === 'staffPeriod') {
                                 valueElement.classList.add('staff');
                                 valueElement.classList.remove('drafter');
@@ -6455,6 +6309,10 @@
             });
         }
 
+        // ============================================
+        // ADMIN PANEL & EDIT MODE
+        // ============================================
+
         // Setup admin panel
         function setupAdminPanel() {
             const adminToggle = document.getElementById('adminToggle');
@@ -6463,6 +6321,7 @@
             const adminLogout = document.getElementById('adminLogout');
             const toggleEditMode = document.getElementById('toggleEditMode');
             const saveAllData = document.getElementById('saveAllData');
+            const resetDataBtn = document.getElementById('resetDataBtn');
             
             adminToggle.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -6519,7 +6378,6 @@
                 if (isEditMode) {
                     setupEditMode();
                 } else {
-                    // Re-render halaman untuk menghilangkan mode edit
                     renderPage(currentPage);
                 }
             });
@@ -6536,6 +6394,36 @@
                     saveToLocalStorage();
                     hideLoading();
                 }, 500);
+            });
+            
+            resetDataBtn.addEventListener('click', function() {
+                if (!confirm('Reset data akan menghapus semua gambar. Lanjutkan?')) {
+                    return;
+                }
+                
+                showLoading('Mereset data...');
+                
+                const allKeys = Object.keys(localStorage);
+                allKeys.forEach(key => {
+                    if (key.startsWith('work_') || key.startsWith('achievement_') || key.startsWith('profile_')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                
+                const defaultData = { ...appData };
+                
+                defaultData.user.profileImage = null;
+                defaultData.user.profileImageKey = null;
+                
+                defaultData.pages.work.items = [];
+                defaultData.pages.achievements.items = [];
+                
+                appData = defaultData;
+                saveToLocalStorage();
+                
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
             });
         }
 
@@ -6600,7 +6488,6 @@
                 });
             });
             
-            // Setup event listeners untuk tombol delete yang sudah ada
             document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const elementId = this.getAttribute('data-delete');
@@ -6758,7 +6645,6 @@
             numberElement.textContent = newNumber;
             labelElement.textContent = newLabel;
             
-            // Update data based on element type
             if (statId.startsWith('dashboardStat')) {
                 const stat = appData.pages.dashboard.stats.find(s => s.id === statId);
                 if (stat) {
@@ -6773,7 +6659,6 @@
                     appData.pages.home.stats[statIndex].label = newLabel;
                 }
             } else if (statId.startsWith('staffStat') || statId.startsWith('drafterStat')) {
-                // Find the period that contains this stat
                 const period = appData.pages.dashboard.periods.find(p => 
                     p.stats.some(s => s.id === statId)
                 );
@@ -6911,7 +6796,6 @@
                 adminToggle.style.color = '#000';
                 document.body.classList.add('admin-mode');
                 
-                // Tampilkan floating button hanya di halaman Work
                 if (currentPage === 'work') {
                     floatingAddBtn.style.display = 'flex';
                 } else {
@@ -6925,7 +6809,6 @@
                 floatingAddBtn.style.display = 'none';
             }
             
-            // Update edit status
             document.getElementById('editStatus').style.display = isEditMode ? 'block' : 'none';
         }
 
@@ -6945,7 +6828,6 @@
             loadingOverlay.classList.remove('active');
             document.body.style.overflow = 'auto';
             
-            // Reset progress bar
             hideProgress();
         }
 
