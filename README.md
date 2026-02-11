@@ -1,49 +1,160 @@
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arya Savariansah - Portfolio Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* ============================================
+           RESET & VARIABLES CSS - PERBAIKAN BROWSER COMPATIBILITY
+        ============================================ */
         :root {
+            /* Primary Colors - Gold Theme */
             --primary: #ffd700;
             --primary-dark: #ffcc00;
             --primary-light: #fff8e1;
             --secondary: #00ffff;
+            --secondary-dark: #00bcd4;
+            
+            /* Status Colors */
             --danger: #ff4757;
+            --danger-light: #ff6b81;
             --success: #2ed573;
-            --dark: #121212;
-            --dark-light: #1e1e1e;
+            --success-light: #7bed9f;
+            --warning: #ffa502;
+            --warning-light: #ffb142;
+            
+            /* Dark Theme Colors */
+            --dark: #0a0a0a;
+            --dark-light: #1a1a1a;
             --dark-lighter: #2a2a2a;
+            --dark-lightest: #3a3a3a;
+            
+            /* Light Colors */
             --light: #ffffff;
+            --light-gray: #f5f5f5;
             --gray: #8a8a8a;
+            --gray-light: #b0b0b0;
+            --gray-dark: #5a5a5a;
+            
+            /* Layout Variables */
             --sidebar-width: 280px;
             --border-radius: 16px;
+            --border-radius-sm: 12px;
+            --border-radius-lg: 20px;
             --box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            --box-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
+            --box-shadow-sm: 0 5px 20px rgba(0, 0, 0, 0.2);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s ease;
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Gradients */
             --gradient-gold: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            --gradient-gold-dark: linear-gradient(135deg, #ffcc00 0%, #ffdb4d 100%);
             --gradient-cyan: linear-gradient(135deg, #00ffff 0%, #00bcd4 100%);
             --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --gradient-dark-light: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
             --gradient-success: linear-gradient(135deg, #2ed573 0%, #7bed9f 100%);
             --gradient-purple: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+            --gradient-danger: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+            
+            /* Font Variables */
+            --font-primary: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-secondary: 'Montserrat', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            
+            /* Z-index Layers */
+            --z-sidebar: 100;
+            --z-main: 1;
+            --z-modal: 2000;
+            --z-notification: 2001;
+            --z-loader: 2002;
+            --z-floating: 999;
         }
 
+        /* ============================================
+           RESET STYLES - FIX BROWSER INCONSISTENCIES
+        ============================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
         }
 
         body {
-            display: flex;
-            min-height: 100vh;
+            font-family: var(--font-primary);
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: var(--light);
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
         }
 
-        /* ===== SIDEBAR TETAP TANPA SCROLL ===== */
+        /* Fix for mobile tap highlight */
+        a, button, input, textarea {
+            -webkit-tap-highlight-color: transparent;
+            tap-highlight-color: transparent;
+        }
+
+        /* Remove default button styles */
+        button {
+            background: none;
+            border: none;
+            font: inherit;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* Images */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Lists */
+        ul, ol {
+            list-style: none;
+        }
+
+        /* Links */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Inputs */
+        input, textarea, select {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+        }
+
+        /* ============================================
+           LAYOUT STYLES - FIXED SIDEBAR + SCROLLABLE MAIN
+        ============================================ */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ===== SIDEBAR - TETAP DI KIRI ===== */
         .sidebar {
             width: var(--sidebar-width);
             background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
@@ -55,10 +166,30 @@
             display: flex;
             flex-direction: column;
             box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
-            z-index: 100;
-            overflow-y: hidden;
+            z-index: var(--z-sidebar);
+            overflow-y: auto;
             transition: var(--transition);
             border-right: 1px solid rgba(255, 215, 0, 0.1);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Scrollbar styling untuk sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 215, 0, 0.5);
         }
 
         .sidebar-header {
@@ -80,6 +211,7 @@
             position: relative;
             cursor: pointer;
             transition: var(--transition);
+            flex-shrink: 0;
         }
 
         .profile-img-container:hover {
@@ -100,7 +232,6 @@
             border: 3px solid rgba(255, 215, 0, 0.5);
             overflow: hidden;
             object-fit: cover;
-            background-color: #000;
         }
 
         .profile-img-placeholder {
@@ -110,6 +241,7 @@
             align-items: center;
             justify-content: center;
             background: var(--gradient-gold);
+            border-radius: 50%;
         }
 
         .profile-img-upload {
@@ -150,6 +282,7 @@
             margin-bottom: 8px;
             font-weight: 700;
             color: var(--light);
+            font-family: var(--font-secondary);
         }
 
         .profile-info p {
@@ -158,7 +291,7 @@
             font-weight: 500;
         }
 
-        /* Menu Navigasi Sidebar */
+        /* Navigation Menu */
         .nav-menu {
             list-style: none;
             padding: 30px 0;
@@ -181,25 +314,30 @@
             transition: var(--transition);
             font-size: 1rem;
             font-weight: 500;
+            border-left: 3px solid transparent;
         }
 
         .nav-menu a:hover {
             color: var(--light);
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
+            border-left-color: var(--primary);
             transform: translateX(5px);
         }
 
         .nav-menu a.active {
             color: var(--primary);
             background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
+            border-left-color: var(--primary);
         }
 
         .nav-menu a i {
             width: 24px;
             margin-right: 15px;
             font-size: 1.2rem;
+            text-align: center;
         }
 
-        /* Admin Panel di Sidebar */
+        /* Admin Section */
         .admin-section {
             padding: 25px 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -226,6 +364,7 @@
         .admin-toggle:hover {
             transform: translateY(-3px);
             border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
         }
 
         .admin-panel {
@@ -284,10 +423,28 @@
             transition: var(--transition);
             margin-bottom: 10px;
             font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .admin-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .admin-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition-slow);
+        }
+
+        .admin-btn:hover::after {
+            left: 100%;
         }
 
         .sidebar-footer {
@@ -299,24 +456,18 @@
             flex-shrink: 0;
         }
 
-        /* ===== KONTEN UTAMA DENGAN SCROLL DI POJOK KANAN ===== */
+        /* ===== MAIN CONTENT AREA - SCROLLABLE ===== */
         .main-content {
             flex: 1;
             margin-left: var(--sidebar-width);
             min-height: 100vh;
-            padding: 0;
             overflow-y: auto;
             background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 26, 26, 0.98) 100%);
-            height: 100vh;
-            width: calc(100% - var(--sidebar-width));
-            position: fixed;
-            right: 0;
-            top: 0;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary) rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: var(--z-main);
         }
 
-        /* Custom Scrollbar seperti Google/Apps Modern */
+        /* Modern Scrollbar Styling */
         .main-content::-webkit-scrollbar {
             width: 12px;
         }
@@ -324,6 +475,7 @@
         .main-content::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
+            margin: 5px;
         }
 
         .main-content::-webkit-scrollbar-thumb {
@@ -338,7 +490,13 @@
             background-clip: content-box;
         }
 
-        /* Header Konten */
+        /* Firefox scrollbar */
+        .main-content {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) rgba(255, 255, 255, 0.1);
+        }
+
+        /* Content Header */
         .content-header {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(26, 26, 26, 0.95) 100%);
             padding: 30px 50px;
@@ -350,8 +508,8 @@
             top: 0;
             z-index: 99;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
-            width: 100%;
         }
 
         .page-title h2 {
@@ -359,8 +517,10 @@
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 10px;
             font-weight: 800;
+            font-family: var(--font-secondary);
         }
 
         .page-title p {
@@ -378,9 +538,19 @@
             display: none;
             border: 1px solid rgba(255, 215, 0, 0.2);
             font-weight: 600;
+            animation: pulse 2s infinite;
         }
 
-        /* ===== TOMBOL TAMBAH WORK DI POJOK KANAN ATAS ===== */
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
+            }
+        }
+
+        /* ===== FLOATING BUTTONS ===== */
         .floating-add-btn {
             position: fixed;
             top: 100px;
@@ -394,15 +564,16 @@
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-            z-index: 999;
+            z-index: var(--z-floating);
             display: none;
             align-items: center;
             gap: 10px;
             font-size: 0.95rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .floating-add-btn:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
         }
 
@@ -410,452 +581,10 @@
             font-size: 1.1rem;
         }
 
-        /* Tampilkan tombol saat admin mode */
         .admin-mode .floating-add-btn {
             display: flex;
         }
 
-        /* ===== EFEK RAIN ELEGAN UNTUK ABOUT PAGE ===== */
-        .rain-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            display: none;
-            overflow: hidden;
-        }
-
-        .rain-drop {
-            position: absolute;
-            width: 1px;
-            height: 80px;
-            background: linear-gradient(to bottom, 
-                transparent 0%, 
-                rgba(0, 255, 255, 0.8) 30%,
-                rgba(0, 255, 255, 0.6) 70%,
-                transparent 100%);
-            animation: rain-fall 2s linear infinite;
-            filter: blur(0.5px);
-            opacity: 0;
-        }
-
-        .rain-drop::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -1px;
-            width: 3px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            filter: blur(1px);
-        }
-
-        .rain-drop::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: -1px;
-            width: 2px;
-            height: 4px;
-            background: rgba(0, 255, 255, 0.9);
-            border-radius: 50%;
-            filter: blur(0.5px);
-        }
-
-        @keyframes rain-fall {
-            0% {
-                transform: translateY(-100px) translateX(-10px);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.8;
-            }
-            50% {
-                opacity: 0.9;
-            }
-            90% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(100vh) translateX(10px);
-                opacity: 0;
-            }
-        }
-
-        /* Efek ripple yang lebih halus */
-        .rain-ripple {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border: 1px solid rgba(0, 255, 255, 0.4);
-            border-radius: 50%;
-            animation: ripple-elegant 1.5s ease-out;
-            opacity: 0;
-            box-shadow: 
-                0 0 10px rgba(0, 255, 255, 0.3),
-                inset 0 0 5px rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes ripple-elegant {
-            0% {
-                transform: scale(0);
-                opacity: 0.6;
-                border-width: 1px;
-            }
-            50% {
-                opacity: 0.3;
-            }
-            100% {
-                transform: scale(8);
-                opacity: 0;
-                border-width: 0.5px;
-            }
-        }
-
-        /* Efek cahaya dari tetesan hujan */
-        .rain-light {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle, 
-                rgba(0, 255, 255, 0.3) 0%, 
-                rgba(0, 255, 255, 0.1) 40%,
-                transparent 70%);
-            border-radius: 50%;
-            filter: blur(5px);
-            animation: light-fade 0.5s ease-out;
-        }
-
-        @keyframes light-fade {
-            0% {
-                opacity: 0;
-                transform: scale(0);
-            }
-            30% {
-                opacity: 0.6;
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(1.5);
-            }
-        }
-
-        /* ===== EFEK STARFALL ELEGAN UNTUK CHAT ROOM ===== */
-        .starfall-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            display: none;
-            overflow: hidden;
-            background: radial-gradient(ellipse at center, 
-                transparent 0%,
-                rgba(10, 10, 10, 0.1) 40%,
-                rgba(10, 10, 10, 0.3) 100%);
-        }
-
-        .star {
-            position: absolute;
-            border-radius: 50%;
-            animation: star-fall-elegant 4s linear infinite;
-            opacity: 0;
-        }
-
-        .star::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            filter: blur(3px);
-            opacity: 0.7;
-        }
-
-        .star::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200%;
-            height: 200%;
-            background: inherit;
-            filter: blur(10px);
-            opacity: 0.3;
-        }
-
-        @keyframes star-fall-elegant {
-            0% {
-                transform: translateY(-100px) rotate(0deg) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.9;
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
-            30% {
-                opacity: 1;
-            }
-            70% {
-                opacity: 0.8;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(100vh) rotate(180deg) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        /* Efek jejak bintang */
-        .star-trail {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255, 215, 0, 0.1) 30%,
-                rgba(255, 215, 0, 0.05) 70%,
-                transparent 100%);
-            transform-origin: left center;
-            animation: trail-fade 1s ease-out;
-            opacity: 0;
-            filter: blur(2px);
-        }
-
-        @keyframes trail-fade {
-            0% {
-                opacity: 0;
-                transform: scaleX(0) rotate(var(--trail-angle));
-            }
-            30% {
-                opacity: 0.6;
-            }
-            100% {
-                opacity: 0;
-                transform: scaleX(1) rotate(var(--trail-angle));
-            }
-        }
-
-        /* Efek burst yang lebih halus */
-        .star-burst {
-            position: absolute;
-            border-radius: 50%;
-            animation: burst-elegant 1.2s ease-out forwards;
-            opacity: 0;
-            box-shadow: 
-                0 0 20px currentColor,
-                0 0 40px currentColor,
-                0 0 60px currentColor;
-        }
-
-        @keyframes burst-elegant {
-            0% {
-                transform: scale(0);
-                opacity: 0.9;
-                filter: blur(0);
-            }
-            50% {
-                opacity: 1;
-                filter: blur(1px);
-            }
-            100% {
-                transform: scale(5);
-                opacity: 0;
-                filter: blur(3px);
-            }
-        }
-
-        /* Efek partikel kecil setelah burst */
-        .star-particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            border-radius: 50%;
-            animation: particle-scatter 1s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes particle-scatter {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.8;
-            }
-            100% {
-                transform: 
-                    translate(
-                        calc(var(--particle-x) * 50px),
-                        calc(var(--particle-y) * 50px)
-                    ) scale(0);
-                opacity: 0;
-            }
-        }
-
-        /* ===== BACKGROUND OVERLAY ELEGAN ===== */
-        .effect-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-
-        .effect-overlay.active {
-            opacity: 1;
-        }
-
-        /* Background khusus untuk rain effect */
-        .rain-overlay {
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 50, 100, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(0, 100, 150, 0.05) 0%, transparent 50%),
-                linear-gradient(135deg, 
-                    rgba(10, 20, 40, 0.3) 0%,
-                    rgba(15, 30, 60, 0.1) 50%,
-                    rgba(20, 40, 80, 0.2) 100%);
-        }
-
-        /* Background khusus untuk starfall effect */
-        .starfall-overlay {
-            background: 
-                radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 70% 80%, rgba(255, 100, 0, 0.03) 0%, transparent 40%),
-                linear-gradient(135deg, 
-                    rgba(40, 20, 0, 0.2) 0%,
-                    rgba(60, 30, 0, 0.1) 50%,
-                    rgba(80, 40, 0, 0.15) 100%);
-        }
-
-        /* ===== ANIMASI HALUS UNTUK ELEMEN HOVER ===== */
-        #aboutPage.rain-active .experience-item:hover {
-            transform: translateX(10px) scale(1.02);
-            box-shadow: 
-                0 20px 50px rgba(0, 255, 255, 0.2),
-                0 0 30px rgba(0, 255, 255, 0.1),
-                inset 0 0 20px rgba(0, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        #aboutPage.rain-active .skill-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 15px 30px rgba(0, 255, 255, 0.15),
-                0 0 20px rgba(0, 255, 255, 0.1);
-            background: linear-gradient(135deg, 
-                rgba(0, 255, 255, 0.2) 0%, 
-                rgba(0, 200, 255, 0.15) 100%);
-        }
-
-        #chatroomPage.starfall-active .message:hover {
-            transform: translateX(5px) scale(1.03);
-            box-shadow: 
-                0 20px 50px rgba(255, 215, 0, 0.25),
-                0 0 30px rgba(255, 215, 0, 0.15),
-                inset 0 0 20px rgba(255, 255, 255, 0.1);
-        }
-
-        #chatroomPage.starfall-active .chatroom-header {
-            background: linear-gradient(135deg, 
-                rgba(255, 215, 0, 0.8) 0%,
-                rgba(255, 200, 0, 0.6) 50%,
-                rgba(255, 185, 0, 0.4) 100%);
-            animation: golden-shimmer 3s infinite alternate;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #chatroomPage.starfall-active .chatroom-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent);
-            animation: header-shine 3s infinite;
-        }
-
-        @keyframes header-shine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        @keyframes golden-shimmer {
-            0%, 100% {
-                background-position: 0% 50%;
-                box-shadow: 
-                    0 10px 40px rgba(255, 215, 0, 0.3),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            }
-            50% {
-                background-position: 100% 50%;
-                box-shadow: 
-                    0 15px 50px rgba(255, 215, 0, 0.4),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            }
-        }
-
-        #chatroomPage.starfall-active .message.user {
-            background: linear-gradient(135deg, 
-                rgba(255, 215, 0, 0.85) 0%,
-                rgba(255, 200, 0, 0.7) 100%);
-            animation: golden-pulse 3s infinite;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #chatroomPage.starfall-active .message.user::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg,
-                transparent,
-                rgba(255, 255, 255, 0.2),
-                transparent);
-            animation: message-shine 4s infinite;
-        }
-
-        @keyframes message-shine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        @keyframes golden-pulse {
-            0%, 100% {
-                box-shadow: 
-                    0 10px 40px rgba(255, 215, 0, 0.25),
-                    0 0 20px rgba(255, 215, 0, 0.15);
-            }
-            50% {
-                box-shadow: 
-                    0 15px 50px rgba(255, 215, 0, 0.35),
-                    0 0 30px rgba(255, 215, 0, 0.25);
-            }
-        }
-
-        /* ===== TOMBOL TOGGLE EFEK ===== */
         .effect-toggle {
             position: fixed;
             bottom: 100px;
@@ -869,16 +598,16 @@
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
-            z-index: 100;
+            z-index: var(--z-floating);
             display: none;
             align-items: center;
             gap: 10px;
             font-size: 0.9rem;
-            z-index: 999;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .effect-toggle:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.05);
             box-shadow: 0 12px 35px rgba(255, 215, 0, 0.4);
         }
 
@@ -886,78 +615,16 @@
             font-size: 1.1rem;
         }
 
-        /* Responsif untuk tombol efek */
-        @media (max-width: 768px) {
-            .effect-toggle {
-                bottom: 80px;
-                right: 20px;
-                padding: 10px 20px;
-                font-size: 0.8rem;
-            }
-        }
-
-        /* Update posisi tombol floating-add-btn dan effect-toggle */
-        .floating-add-btn {
-            position: fixed;
-            top: 100px;
-            right: 40px;
-        }
-
-        .effect-toggle {
-            position: fixed;
-            bottom: 100px;
-            right: 40px;
-        }
-
-        /* Atur posisi untuk mobile */
-        @media (max-width: 768px) {
-            .floating-add-btn {
-                top: auto;
-                bottom: 30px;
-                right: 20px;
-            }
-            
-            .effect-toggle {
-                bottom: 80px;
-                right: 20px;
-            }
-        }
-
-        /* Jika kedua tombol tampil bersamaan (admin mode + efek aktif) */
-        .admin-mode .floating-add-btn.active + .effect-toggle {
-            bottom: 180px;
-        }
-
-        @media (max-width: 768px) {
-            .admin-mode .floating-add-btn.active + .effect-toggle {
-                bottom: 130px;
-            }
-        }
-
-        /* Responsif untuk tombol floating */
-        @media (max-width: 768px) {
-            .floating-add-btn {
-                top: auto;
-                bottom: 30px;
-                right: 20px;
-                padding: 12px 20px;
-                font-size: 0.85rem;
-            }
-        }
-
-        /* Body Konten dengan Scroll */
+        /* ===== CONTENT BODY ===== */
         .content-body {
             padding: 50px;
             min-height: calc(100vh - 140px);
-            width: 100%;
         }
 
-        /* Page Container */
         .page {
             display: none;
             animation: fadeInUp 0.6s ease;
             padding-bottom: 100px;
-            width: 100%;
         }
 
         @keyframes fadeInUp {
@@ -975,22 +642,21 @@
             display: block;
         }
 
-        /* ===== HOME PAGE - UPDATED & MORE AESTHETIC ===== */
+        /* ===== HOME PAGE - IMPROVED DESIGN ===== */
         .home-hero {
             position: relative;
-            padding: 40px 20px;
+            padding: 80px 40px;
             background: linear-gradient(135deg, 
                 rgba(10, 10, 10, 0.95) 0%, 
                 rgba(26, 26, 26, 0.9) 50%,
                 rgba(40, 40, 40, 0.8) 100%);
-            border-radius: var(--border-radius);
+            border-radius: var(--border-radius-lg);
             margin-bottom: 60px;
             overflow: hidden;
-            height: 70vh; /* Gunakan viewport height */
             min-height: 500px;
             display: flex;
-            align-items: center; /* Pusatkan vertikal */
-            justify-content: center; /* Pusatkan horizontal */
+            align-items: center;
+            justify-content: center;
             border: 1px solid rgba(255, 215, 0, 0.15);
             box-shadow: 
                 0 20px 60px rgba(0, 0, 0, 0.5),
@@ -1032,10 +698,6 @@
             max-width: 900px;
             width: 100%;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Pusatkan semua item */
-            justify-content: center; /* Pusatkan secara vertikal */
         }
 
         .hero-badge {
@@ -1087,14 +749,14 @@
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 15px;
             font-weight: 800;
             line-height: 1.1;
             text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             position: relative;
             display: inline-block;
-            text-align: center;
-            width: 100%;
+            font-family: var(--font-secondary);
         }
 
         .hero-title::after {
@@ -1115,7 +777,6 @@
             margin-bottom: 25px;
             font-weight: 600;
             animation: fadeInUp 0.8s ease 0.3s both;
-            text-align: center;
         }
 
         .hero-description {
@@ -1125,17 +786,48 @@
             margin: 0 auto 30px;
             line-height: 1.8;
             animation: fadeInUp 0.8s ease 0.5s both;
-            text-align: center;
         }
 
         .hero-actions {
             margin-top: 30px;
             display: flex;
             justify-content: center;
+            gap: 20px;
             animation: fadeInUp 0.8s ease 0.7s both;
         }
 
-        /* Stats Grid Updated */
+        .hero-btn {
+            padding: 15px 35px;
+            font-size: 1rem;
+            background: var(--gradient-gold);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
+        }
+
+        .hero-btn.secondary {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
+            color: var(--primary);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .hero-btn.secondary:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+        }
+
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1178,33 +870,13 @@
             background: var(--gradient-gold);
         }
 
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                135deg,
-                transparent,
-                rgba(255, 215, 0, 0.03),
-                transparent
-            );
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .stat-card:hover::after {
-            opacity: 1;
-        }
-
         .stat-number {
             font-size: 3.5rem;
             font-weight: 900;
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 15px;
             line-height: 1;
             position: relative;
@@ -1232,7 +904,7 @@
             padding: 0 10px;
         }
 
-        /* Quick Links Section */
+        /* Quick Links */
         .quick-links {
             margin-top: 80px;
             padding-top: 60px;
@@ -1246,7 +918,9 @@
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-weight: 700;
+            font-family: var(--font-secondary);
         }
 
         .links-grid {
@@ -1294,6 +968,7 @@
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .link-card h4 {
@@ -1309,282 +984,18 @@
             line-height: 1.5;
         }
 
-        /* Floating particles efek */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            background: var(--gradient-gold);
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: floatParticle 15s infinite linear;
-        }
-
-        @keyframes floatParticle {
-            0%, 100% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(50px, 50px);
-            }
-            50% {
-                transform: translate(0, 100px);
-            }
-            75% {
-                transform: translate(-50px, 50px);
-            }
-        }
-
-        /* ===== WORK PAGE - DUPLIKAT DARI ACHIEVEMENTS ===== */
-        .work-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 35px;
-            margin-top: 30px;
-            margin-bottom: 50px;
-            width: 100%;
-        }
-
-        .work-card {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            padding: 35px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .work-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: rgba(255, 215, 0, 0.3);
-        }
-
-        .work-image-container {
-            width: 100%;
-            height: 250px;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 25px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed rgba(255, 215, 0, 0.2);
-            cursor: pointer;
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .admin-mode .work-image-container {
-            cursor: pointer;
-        }
-
-        .work-image-container:hover {
-            border-color: rgba(255, 215, 0, 0.3);
-            background: linear-gradient(135deg, #1e1e1e 0%, #2e2e2e 100%);
-        }
-
-        .work-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block !important;
-            transition: transform 0.3s ease;
-        }
-
-        .work-image-container:hover .work-image {
-            transform: scale(1.05);
-        }
-
-        .work-image-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            font-size: 4rem;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .work-image-placeholder i {
-            display: block;
-        }
-
-        .work-upload-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        .admin-mode .work-image-container:hover .work-upload-overlay {
-            display: flex;
-        }
-
-        .work-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .work-card .date {
-            color: var(--secondary);
-            font-weight: 600;
-            margin-bottom: 20px;
-            font-size: 1rem;
-        }
-
-        .work-card p {
-            color: var(--gray);
-            line-height: 1.7;
-        }
-
-        /* Category Badge untuk Work */
-        .category-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--gradient-gold);
-            color: #000;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            z-index: 2;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        /* ===== DASHBOARD PAGE - UPDATED ===== */
-        .dashboard-periods {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        .period-section {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(26, 26, 26, 0.7) 100%);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .period-section::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 8px;
-            height: 100%;
-            background: var(--gradient-gold);
-        }
-
-        .period-header {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.1);
-        }
-
-        .period-title {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .period-date {
-            color: var(--secondary);
-            font-size: 1.1rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .period-date i {
-            font-size: 1rem;
-        }
-
-        .period-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 25px;
-        }
-
-        .period-stat {
-            text-align: center;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(40, 40, 40, 0.8) 0%, rgba(30, 30, 30, 0.6) 100%);
-            border-radius: 12px;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 215, 0, 0.05);
-        }
-
-        .period-stat:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 215, 0, 0.2);
-        }
-
-        .period-stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            line-height: 1;
-        }
-
-        .period-stat-value.staff {
-            background: var(--gradient-success);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .period-stat-value.drafter {
-            background: var(--gradient-purple);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .period-stat-label {
-            color: var(--gray);
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
         /* ===== ABOUT PAGE ===== */
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
             margin-bottom: 50px;
-            min-height: 500px;
-            width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
         }
 
         .about-text p {
@@ -1600,7 +1011,12 @@
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
             margin-top: 40px;
-            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .skill-category {
@@ -1639,10 +1055,14 @@
             font-weight: 500;
         }
 
+        .skill-item:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
+        }
+
         /* Experience */
         .experience-timeline {
             margin-top: 40px;
-            width: 100%;
         }
 
         .experience-item {
@@ -1703,6 +1123,127 @@
         .experience-content li {
             margin-bottom: 12px;
             line-height: 1.6;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .experience-content li::before {
+            content: '▸';
+            color: var(--primary);
+            position: absolute;
+            left: -15px;
+        }
+
+        /* ===== WORK PAGE ===== */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 35px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .work-card {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
+            border-radius: var(--border-radius);
+            padding: 35px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .work-image-container {
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(255, 215, 0, 0.2);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .work-image-container:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, #1e1e1e 0%, #2e2e2e 100%);
+        }
+
+        .work-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .work-image-container:hover .work-image {
+            transform: scale(1.05);
+        }
+
+        .work-image-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 4rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-gold);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .work-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .work-card .date {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .work-card p {
+            color: var(--gray);
+            line-height: 1.7;
         }
 
         /* ===== ACHIEVEMENTS PAGE ===== */
@@ -1712,7 +1253,12 @@
             gap: 35px;
             margin-top: 30px;
             margin-bottom: 50px;
-            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .achievement-card {
@@ -1747,63 +1293,15 @@
             transition: var(--transition);
         }
 
-        .admin-mode .achievement-image-container {
-            cursor: pointer;
-        }
-
-        .achievement-image-container:hover {
-            border-color: rgba(255, 215, 0, 0.3);
-            background: linear-gradient(135deg, #1e1e1e 0%, #2e2e2e 100%);
-        }
-
         .achievement-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block !important;
             transition: transform 0.3s ease;
         }
 
         .achievement-image-container:hover .achievement-image {
             transform: scale(1.05);
-        }
-
-        .achievement-image-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            font-size: 4rem;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .achievement-image-placeholder i {
-            display: block;
-        }
-
-        .achievement-upload-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        .admin-mode .achievement-image-container:hover .achievement-upload-overlay {
-            display: flex;
         }
 
         .achievement-card h3 {
@@ -1832,7 +1330,12 @@
             gap: 35px;
             margin-top: 30px;
             margin-bottom: 50px;
-            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .project-card {
@@ -1875,6 +1378,7 @@
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-size: 1.8rem;
         }
 
@@ -1896,6 +1400,13 @@
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
 
+        @media (max-width: 576px) {
+            .project-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
         .stat {
             text-align: center;
             flex: 1;
@@ -1914,6 +1425,12 @@
             background: linear-gradient(to bottom, transparent, rgba(255, 215, 0, 0.2), transparent);
         }
 
+        @media (max-width: 576px) {
+            .stat:not(:last-child)::after {
+                display: none;
+            }
+        }
+
         .stat-value {
             display: block;
             font-size: 2.2rem;
@@ -1926,17 +1443,122 @@
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .stat-value.reduction {
-            background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+            background: var(--gradient-danger);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .stat-label {
             font-size: 0.9rem;
             color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* ===== DASHBOARD PAGE ===== */
+        .dashboard-periods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-periods {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .period-section {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(26, 26, 26, 0.7) 100%);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .period-section::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 8px;
+            height: 100%;
+            background: var(--gradient-gold);
+        }
+
+        .period-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .period-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .period-date {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .period-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 25px;
+        }
+
+        .period-stat {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.8) 0%, rgba(30, 30, 30, 0.6) 100%);
+            border-radius: 12px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 215, 0, 0.05);
+        }
+
+        .period-stat:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .period-stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .period-stat-value.staff {
+            background: var(--gradient-success);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .period-stat-value.drafter {
+            background: var(--gradient-purple);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .period-stat-label {
+            color: var(--gray);
+            font-size: 0.95rem;
             font-weight: 500;
         }
 
@@ -1947,11 +1569,15 @@
             overflow: hidden;
             border: 1px solid rgba(255, 215, 0, 0.1);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            margin: 0 auto;
             height: 70vh;
             display: flex;
             flex-direction: column;
+        }
+
+        @media (max-width: 768px) {
+            .chatroom-container {
+                height: 60vh;
+            }
         }
 
         .chatroom-header {
@@ -1965,6 +1591,7 @@
             font-size: 1.8rem;
             margin-bottom: 10px;
             font-weight: 800;
+            font-family: var(--font-secondary);
         }
 
         .chatroom-messages {
@@ -2017,6 +1644,12 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        @media (max-width: 576px) {
+            .chatroom-input {
+                flex-direction: column;
+            }
+        }
+
         .chatroom-input input {
             flex: 1;
             padding: 16px 25px;
@@ -2056,14 +1689,24 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
-            min-height: 500px;
-            width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
         }
 
         .contact-info {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
         }
 
         .contact-card {
@@ -2089,6 +1732,7 @@
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .contact-card h3 {
@@ -2184,47 +1828,35 @@
             border-color: var(--primary);
         }
 
-        .edit-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--gradient-gold);
-            color: #000;
-            border: none;
+        .edit-btn, .delete-btn, .add-btn {
+            position: relative;
+            z-index: 5;
+            transition: var(--transition);
+            font-weight: 700;
             border-radius: 8px;
             padding: 8px 15px;
             font-size: 0.85rem;
             cursor: pointer;
             display: none;
-            z-index: 5;
-            transition: var(--transition);
-            font-weight: 700;
+            margin: 5px;
+            border: 2px solid transparent;
+        }
+
+        .edit-btn {
+            background: var(--gradient-gold);
+            color: #000;
+            border-color: rgba(255, 215, 0, 0.3);
         }
 
         .edit-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
         }
 
-        .admin-mode .edit-btn {
-            display: block;
-        }
-
-        /* Tombol Delete */
         .delete-btn {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+            background: var(--gradient-danger);
             color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 15px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: none;
-            z-index: 5;
-            transition: var(--transition);
-            font-weight: 700;
+            border-color: rgba(255, 71, 87, 0.3);
         }
 
         .delete-btn:hover {
@@ -2232,96 +1864,28 @@
             box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
         }
 
-        .admin-mode .delete-btn {
-            display: block;
-        }
-
-        /* Susunan tombol edit dan delete */
-        .editable {
-            position: relative;
-            padding-bottom: 50px;
-        }
-
-        .edit-btn {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-        }
-
-        .delete-btn {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-        }
-
         .add-btn {
-            background: var(--gradient-gold);
-            color: #000;
-            border: none;
-            border-radius: 12px;
+            background: var(--gradient-success);
+            color: #fff;
+            border-color: rgba(46, 213, 115, 0.3);
             padding: 15px 25px;
             margin: 25px 0;
-            cursor: pointer;
-            display: none;
-            font-weight: 700;
-            transition: var(--transition);
             font-size: 1rem;
         }
 
         .add-btn:hover {
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 213, 115, 0.4);
         }
 
+        .admin-mode .edit-btn,
+        .admin-mode .delete-btn,
         .admin-mode .add-btn {
             display: inline-block;
         }
 
-        /* Upload Card untuk Work */
-        .upload-card {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            border: 2px dashed rgba(255, 215, 0, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .upload-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 215, 0, 0.5);
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(26, 26, 26, 0.7) 100%);
-        }
-
-        .upload-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .upload-text {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .upload-subtext {
-            color: var(--gray);
-            font-size: 1rem;
-            max-width: 300px;
-        }
-
-        /* ===== MODAL UPLOAD BARU ===== */
-        .upload-modal {
+        /* ===== MODAL STYLES ===== */
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -2329,7 +1893,8 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
-            z-index: 2001;
+            -webkit-backdrop-filter: blur(10px);
+            z-index: var(--z-modal);
             display: none;
             align-items: center;
             justify-content: center;
@@ -2337,11 +1902,16 @@
             padding: 20px;
         }
 
-        .upload-modal.active {
+        .modal.active {
             display: flex;
         }
 
-        .upload-modal-content {
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.98) 0%, rgba(26, 26, 26, 0.95) 100%);
             border-radius: var(--border-radius);
             padding: 50px;
@@ -2356,281 +1926,28 @@
             position: relative;
         }
 
-        .upload-modal-header {
+        .modal-header {
             text-align: center;
             margin-bottom: 40px;
         }
 
-        .upload-modal-title {
+        .modal-title {
             font-size: 2rem;
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 15px;
             font-weight: 800;
+            font-family: var(--font-secondary);
         }
 
-        .upload-modal-subtitle {
+        .modal-subtitle {
             color: var(--gray);
             font-size: 1.1rem;
         }
 
-        .upload-form {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 12px;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .form-group label i {
-            font-size: 0.9rem;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            background: rgba(15, 15, 15, 0.8);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 12px;
-            padding: 16px 20px;
-            color: var(--light);
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
-            background: rgba(10, 10, 10, 0.9);
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-            font-family: inherit;
-        }
-
-        /* Upload Image Area */
-        .upload-image-area {
-            grid-column: span 2;
-            border: 3px dashed rgba(255, 215, 0, 0.3);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            background: rgba(15, 15, 15, 0.5);
-            position: relative;
-            overflow: hidden;
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @media (max-width: 768px) {
-            .upload-image-area {
-                grid-column: span 1;
-            }
-        }
-
-        .upload-image-area:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            background: rgba(15, 15, 15, 0.7);
-        }
-
-        .upload-image-area.drag-over {
-            border-color: var(--primary);
-            background: rgba(255, 215, 0, 0.1);
-        }
-
-        .upload-image-icon {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .upload-image-text {
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .upload-image-subtext {
-            color: var(--gray);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
-
-        .upload-image-preview {
-            width: 100%;
-            max-height: 300px;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-top: 20px;
-            display: none;
-            border: 2px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .upload-image-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .upload-browse-btn {
-            background: rgba(255, 215, 0, 0.1);
-            color: var(--primary);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .upload-browse-btn:hover {
-            background: rgba(255, 215, 0, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Progress Bar untuk Upload */
-        .upload-progress-container {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            height: 8px;
-            margin: 20px 0;
-            overflow: hidden;
-            display: none;
-        }
-
-        .upload-progress-bar {
-            height: 100%;
-            background: var(--gradient-gold);
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .upload-percentage {
-            color: var(--primary);
-            font-weight: 700;
-            text-align: center;
-            font-size: 1.1rem;
-            display: none;
-            margin-bottom: 10px;
-        }
-
-        /* Image Actions */
-        .image-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            justify-content: center;
-        }
-
-        .image-action-btn {
-            background: rgba(30, 30, 30, 0.8);
-            color: var(--primary);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            padding: 8px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .image-action-btn:hover {
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* Modal Buttons */
-        .upload-modal-buttons {
-            display: flex;
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .upload-modal-buttons {
-                flex-direction: column;
-            }
-        }
-
-        .upload-modal-btn {
-            flex: 1;
-            padding: 18px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-            border: none;
-            text-align: center;
-        }
-
-        .upload-modal-btn.primary {
-            background: var(--gradient-gold);
-            color: #000;
-        }
-
-        .upload-modal-btn.primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-        }
-
-        .upload-modal-btn.secondary {
-            background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
-            color: var(--light);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .upload-modal-btn.secondary:hover {
-            transform: translateY(-3px);
-            border-color: var(--primary);
-        }
-
-        /* Close button */
-        .upload-modal-close {
+        .modal-close {
             position: absolute;
             top: 25px;
             right: 25px;
@@ -2649,193 +1966,12 @@
             z-index: 10;
         }
 
-        .upload-modal-close:hover {
+        .modal-close:hover {
             background: rgba(255, 215, 0, 0.2);
             transform: rotate(90deg);
         }
 
-        /* ===== MODAL UPLOAD FOTO ===== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(26, 26, 26, 0.98) 100%);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 30px 80px rgba(255, 215, 0, 0.2);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .modal-title {
-            margin-bottom: 25px;
-            color: var(--primary);
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .image-preview {
-            width: 100%;
-            max-height: 320px;
-            border-radius: 12px;
-            overflow: hidden;
-            margin: 20px 0;
-            display: none;
-            border: 2px dashed rgba(255, 215, 0, 0.3);
-            position: relative;
-        }
-
-        .image-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .modal-btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: var(--transition);
-            font-size: 1rem;
-        }
-
-        .modal-btn.primary {
-            background: var(--gradient-gold);
-            color: #000;
-        }
-
-        .modal-btn.primary:hover {
-            transform: translateY(-3px);
-        }
-
-        .modal-btn.secondary {
-            background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
-            color: var(--light);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .modal-btn.secondary:hover {
-            transform: translateY(-3px);
-        }
-
-        /* Modal Zoom untuk Gambar */
-        .zoom-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            backdrop-filter: blur(10px);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .zoom-modal.active {
-            display: flex;
-        }
-
-        .zoom-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            animation: zoomIn 0.4s ease;
-        }
-
-        @keyframes zoomIn {
-            from {
-                opacity: 0;
-                transform: scale(0.7);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .zoomed-image {
-            max-width: 100%;
-            max-height: 85vh;
-            border-radius: 10px;
-            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
-            border: 2px solid var(--primary);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .zoomed-image.loaded {
-            opacity: 1;
-        }
-
-        .close-zoom {
-            position: absolute;
-            top: -50px;
-            right: 0;
-            background: var(--gradient-gold);
-            color: #000;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            z-index: 10000;
-        }
-
-        .close-zoom:hover {
-            transform: scale(1.1);
-        }
-
-        .zoom-caption {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--primary);
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        /* Loading Overlay */
+        /* ===== LOADING OVERLAY ===== */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -2846,8 +1982,9 @@
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 9998;
+            z-index: var(--z-loader);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             flex-direction: column;
         }
 
@@ -2876,33 +2013,6 @@
             font-weight: 600;
         }
 
-        /* Progress Bar untuk Upload */
-        .upload-progress {
-            width: 80%;
-            max-width: 400px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            height: 6px;
-            margin: 20px 0;
-            overflow: hidden;
-            display: none;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: var(--gradient-gold);
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .upload-percentage-old {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: none;
-        }
-
         /* ===== NOTIFICATION ===== */
         .notification {
             position: fixed;
@@ -2913,11 +2023,12 @@
             padding: 20px 30px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            z-index: 1002;
+            z-index: var(--z-notification);
             display: none;
             animation: slideInRight 0.3s ease;
             max-width: 350px;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 215, 0, 0.3);
             font-weight: 700;
         }
@@ -2946,54 +2057,45 @@
             padding: 15px;
             font-size: 1.4rem;
             cursor: pointer;
-            z-index: 1004;
+            z-index: calc(var(--z-sidebar) + 1);
             transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .mobile-menu-toggle:hover {
+            transform: scale(1.1);
         }
 
         /* ===== RESPONSIVE STYLES ===== */
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
             .sidebar {
                 width: 250px;
             }
             
             .main-content {
                 margin-left: 250px;
-                width: calc(100% - 250px);
-            }
-            
-            .projects-grid {
-                grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
             }
             
             .content-body {
                 padding: 30px;
             }
             
-            .content-header {
-                padding: 25px 30px;
-            }
-            
-            .home-hero {
-                padding: 60px 40px;
-                min-height: 450px;
-                height: 60vh;
-            }
-            
             .hero-title {
                 font-size: 3.2rem;
             }
-            
-            .chatroom-container {
-                height: 65vh;
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
             }
             
-            .dashboard-periods {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .projects-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .work-grid,
-            .achievements-grid {
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             }
         }
 
@@ -3003,12 +2105,6 @@
                 max-width: 320px;
                 transform: translateX(-100%);
                 transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100vh;
-                z-index: 1000;
-                overflow-y: auto;
             }
             
             .sidebar.active {
@@ -3018,10 +2114,6 @@
             .main-content {
                 margin-left: 0;
                 width: 100%;
-                height: 100vh;
-                position: fixed;
-                left: 0;
-                right: 0;
             }
             
             .mobile-menu-toggle {
@@ -3041,12 +2133,10 @@
             
             .content-body {
                 padding: 20px;
-                min-height: calc(100vh - 120px);
             }
             
             .home-hero {
-                padding: 30px 20px;
-                height: 65vh;
+                padding: 40px 20px;
                 min-height: 400px;
             }
             
@@ -3062,8 +2152,9 @@
                 font-size: 1.1rem;
             }
             
-            .projects-grid {
+            .stats-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
             
             .work-grid,
@@ -3071,59 +2162,33 @@
                 grid-template-columns: 1fr;
             }
             
-            .about-content {
+            .dashboard-periods {
                 grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-            
-            .stat-card {
-                padding: 30px 20px;
-            }
-            
-            .stat-number {
-                font-size: 2.8rem;
-            }
-            
-            .contact-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
             }
             
             .contact-info {
                 grid-template-columns: 1fr;
             }
             
-            .chatroom-container {
-                height: 60vh;
+            .floating-add-btn {
+                top: auto;
+                bottom: 30px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 0.85rem;
             }
             
-            .message {
-                max-width: 85%;
-            }
-            
-            .chatroom-input {
-                flex-direction: column;
-            }
-            
-            .zoom-caption {
-                font-size: 1rem;
-            }
-            
-            .close-zoom {
-                top: -40px;
-                right: 10px;
+            .effect-toggle {
+                bottom: 80px;
+                right: 20px;
+                padding: 10px 20px;
+                font-size: 0.8rem;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 576px) {
             .home-hero {
-                padding: 20px 15px;
-                height: 60vh;
+                padding: 30px 15px;
                 min-height: 380px;
             }
             
@@ -3144,8 +2209,14 @@
                 font-size: 1rem;
             }
             
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .hero-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero-btn {
+                width: 100%;
+                justify-content: center;
             }
             
             .work-image-container,
@@ -3153,31 +2224,51 @@
                 height: 200px;
             }
             
-            .skill-item {
-                font-size: 0.9rem;
-                padding: 10px 18px;
+            .modal-content {
+                padding: 30px 20px;
             }
             
-            .content-body {
-                padding: 15px;
-                min-height: calc(100vh - 110px);
+            .modal-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            .sidebar,
+            .floating-add-btn,
+            .effect-toggle,
+            .mobile-menu-toggle,
+            .admin-section,
+            .edit-btn,
+            .delete-btn,
+            .add-btn {
+                display: none !important;
             }
             
-            .zoom-caption {
-                font-size: 0.9rem;
-                margin-top: 10px;
+            .main-content {
+                margin-left: 0;
+                width: 100%;
             }
             
-            .period-section {
-                padding: 25px;
+            .content-header {
+                position: static;
+                box-shadow: none;
+                border-bottom: 2px solid #000;
             }
             
-            .period-stat {
-                padding: 15px;
+            .page {
+                page-break-inside: avoid;
             }
             
-            .period-stat-value {
-                font-size: 2rem;
+            body {
+                background: #fff !important;
+                color: #000 !important;
+            }
+            
+            .hero-title {
+                -webkit-text-fill-color: #000 !important;
+                background: none !important;
             }
         }
     </style>
@@ -3211,704 +2302,657 @@
     <!-- Overlay untuk efek starfall -->
     <div class="effect-overlay starfall-overlay" id="starfallOverlay" style="display: none;"></div>
 
-    <!-- SIDEBAR ELEGAN (TETAP TANPA SCROLL) -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="profile-section">
-                <div class="profile-img-container" id="profileImgContainer">
-                    <div class="profile-img" id="profileImg">
-                        <div class="profile-img-placeholder">
-                            <i class="fas fa-user-tie" id="profileIcon"></i>
+    <div class="app-container">
+        <!-- SIDEBAR ELEGAN (TETAP DI KIRI) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="profile-section">
+                    <div class="profile-img-container" id="profileImgContainer">
+                        <div class="profile-img" id="profileImg">
+                            <div class="profile-img-placeholder">
+                                <i class="fas fa-user-tie" id="profileIcon"></i>
+                            </div>
                         </div>
+                        <button class="profile-img-upload" id="profileUploadBtn" title="Upload Foto Profile">
+                            <i class="fas fa-camera"></i>
+                        </button>
                     </div>
-                    <button class="profile-img-upload" id="profileUploadBtn" title="Upload Foto Profile">
-                        <i class="fas fa-camera"></i>
-                    </button>
-                </div>
-                <div class="profile-info">
-                    <h2>Arya Savariansah</h2>
-                    <p>Spesialis Manufaktur</p>
+                    <div class="profile-info">
+                        <h2>Arya Savariansah</h2>
+                        <p>Spesialis Manufaktur</p>
+                    </div>
                 </div>
             </div>
-        </div>
+            
+            <!-- Menu Navigasi -->
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#about" class="nav-link" data-page="about"><i class="fas fa-user"></i> About Me</a></li>
+                <li><a href="#work" class="nav-link" data-page="work"><i class="fas fa-briefcase"></i> Work</a></li>
+                <li><a href="#achievements" class="nav-link" data-page="achievements"><i class="fas fa-trophy"></i> Achievements</a></li>
+                <li><a href="#projects" class="nav-link" data-page="projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="#dashboard" class="nav-link" data-page="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="#chatroom" class="nav-link" data-page="chatroom"><i class="fas fa-comments"></i> Chat Room</a></li>
+                <li><a href="#contact" class="nav-link" data-page="contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            
+            <!-- Admin Panel -->
+            <div class="admin-section">
+                <button class="admin-toggle" id="adminToggle">
+                    <i class="fas fa-user-lock"></i> Login Admin
+                </button>
+                
+                <div class="admin-panel" id="adminPanel">
+                    <h3>Login Admin</h3>
+                    <input type="password" id="adminPassword" class="admin-input" placeholder="Password Admin">
+                    <button class="admin-btn" id="adminLogin">Login</button>
+                    
+                    <div id="adminControls" style="display: none;">
+                        <h3>Edit Mode</h3>
+                        <button class="admin-btn" id="toggleEditMode">Aktifkan Edit Mode</button>
+                        <button class="admin-btn" id="saveAllData">Simpan Semua Data</button>
+                        <button class="admin-btn" id="adminLogout">Logout</button>
+                        <button class="admin-btn" id="resetDataBtn">Reset/Import Data</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <p>© 2026 Arya Savariansah. All rights reserved.</p>
+            </div>
+        </aside>
         
-        <!-- Menu Navigasi -->
-        <ul class="nav-menu">
-            <li><a href="#home" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="#about" class="nav-link" data-page="about"><i class="fas fa-user"></i> About Me</a></li>
-            <li><a href="#work" class="nav-link" data-page="work"><i class="fas fa-briefcase"></i> Work</a></li>
-            <li><a href="#achievements" class="nav-link" data-page="achievements"><i class="fas fa-trophy"></i> Achievements</a></li>
-            <li><a href="#projects" class="nav-link" data-page="projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
-            <li><a href="#dashboard" class="nav-link" data-page="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-            <li><a href="#chatroom" class="nav-link" data-page="chatroom"><i class="fas fa-comments"></i> Chat Room</a></li>
-            <li><a href="#contact" class="nav-link" data-page="contact"><i class="fas fa-envelope"></i> Contact</a></li>
-        </ul>
-        
-        <!-- Admin Panel -->
-        <div class="admin-section">
-            <button class="admin-toggle" id="adminToggle">
-                <i class="fas fa-user-lock"></i> Login Admin
-            </button>
-            
-            <div class="admin-panel" id="adminPanel">
-                <h3>Login Admin</h3>
-                <input type="password" id="adminPassword" class="admin-input" placeholder="Password Admin">
-                <button class="admin-btn" id="adminLogin">Login</button>
-                
-                <div id="adminControls" style="display: none;">
-                    <h3>Edit Mode</h3>
-                    <button class="admin-btn" id="toggleEditMode">Aktifkan Edit Mode</button>
-                    <button class="admin-btn" id="saveAllData">Simpan Semua Data</button>
-                    <button class="admin-btn" id="adminLogout">Logout</button>
-                    <button class="admin-btn" id="resetDataBtn">Reset/Import Data</button>
+        <!-- KONTEN UTAMA DENGAN SCROLL -->
+        <main class="main-content" id="mainContent">
+            <!-- Content Header -->
+            <div class="content-header">
+                <div class="page-title">
+                    <h2 id="currentPageTitle">Home</h2>
+                    <p id="currentPageDesc">Selamat datang di portfolio Arya Savariansah</p>
                 </div>
-            </div>
-        </div>
-        
-        <div class="sidebar-footer">
-            <p>© 2026 Arya Savariansah. All rights reserved.</p>
-        </div>
-    </aside>
-    
-    <!-- KONTEN UTAMA DENGAN SCROLL DI POJOK KANAN -->
-    <main class="main-content" id="mainContent">
-        <!-- Content Header -->
-        <div class="content-header">
-            <div class="page-title">
-                <h2 id="currentPageTitle">Home</h2>
-                <p id="currentPageDesc">Selamat datang di portfolio Arya Savariansah</p>
-            </div>
-            <div class="edit-status" id="editStatus">
-                <i class="fas fa-edit"></i> Edit Mode Aktif
-            </div>
-        </div>
-        
-        <!-- Content Body - Pages (SCROLLABLE PENUH) -->
-        <div class="content-body" id="contentBody">
-            <!-- Home Page - UPDATED -->
-            <div class="page active" id="homePage">
-                <div class="home-hero">
-                    <div class="particles" id="particles"></div>
-                    <div class="hero-content">
-                        <div class="hero-badge editable">
-                            <span id="homeBadge">✨ Lulusan SMK Teknik Permesinan ✨</span>
-                            <button class="edit-btn" data-edit="homeBadge">Edit</button>
-                        </div>
-                        
-                        <h1 class="hero-title editable" id="homeTitle">ARYA SAVARIANSAH</h1>
-                        <button class="edit-btn" data-edit="homeTitle">Edit</button>
-                        
-                        <div class="hero-subtitle editable" id="homeSubtitle">
-                            <i class="fas fa-star" style="color: var(--primary); margin-right: 10px;"></i>
-                            Spesialis Manufaktur & Produksi
-                            <i class="fas fa-star" style="color: var(--primary); margin-left: 10px;"></i>
-                        </div>
-                        <button class="edit-btn" data-edit="homeSubtitle">Edit</button>
-                        
-                        <p class="hero-description editable" id="homeDescription">
-                            Lulusan SMK Teknik Permesinan dengan pengalaman di bidang manufaktur dan produksi. 
-                            Terbiasa menangani perencanaan produksi, quality control, manajemen stok & distribusi, 
-                            hingga mechanical drafting.
-                        </p>
-                        <button class="edit-btn" data-edit="homeDescription">Edit</button>
-                        
-                        <div class="hero-actions">
-                            <button class="upload-btn primary" onclick="changePage('about')" 
-                                    style="padding: 15px 35px; font-size: 1rem; background: var(--gradient-gold); color: #000; border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: var(--transition);">
-                                <i class="fas fa-user"></i> Lihat Profil Lengkap
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card editable">
-                        <div class="stat-number" id="stat1Number">15%</div>
-                        <div class="stat-label" id="stat1Label">Pengurangan Waktu Setup</div>
-                        <button class="edit-btn" data-edit="stat1Number">Edit</button>
-                        <button class="edit-btn" data-edit="stat1Label">Edit</button>
-                    </div>
-                    
-                    <div class="stat-card editable">
-                        <div class="stat-number" id="stat2Number">60%</div>
-                        <div class="stat-label" id="stat2Label">Penurunan Reject Material</div>
-                        <button class="edit-btn" data-edit="stat2Number">Edit</button>
-                        <button class="edit-btn" data-edit="stat2Label">Edit</button>
-                    </div>
-                    
-                    <div class="stat-card editable">
-                        <div class="stat-number" id="stat3Number">20%</div>
-                        <div class="stat-label" id="stat3Label">Peningkatan Efisiensi</div>
-                        <button class="edit-btn" data-edit="stat3Number">Edit</button>
-                        <button class="edit-btn" data-edit="stat3Label">Edit</button>
-                    </div>
-                    
-                    <div class="stat-card editable">
-                        <div class="stat-number" id="stat4Number">67%</div>
-                        <div class="stat-label" id="stat4Label">Pengurangan Lead Time</div>
-                        <button class="edit-btn" data-edit="stat4Number">Edit</button>
-                        <button class="edit-btn" data-edit="stat4Label">Edit</button>
-                    </div>
-                </div>
-                
-                <div class="quick-links">
-                    <h3>Akses Cepat</h3>
-                    <div class="links-grid">
-                        <div class="link-card" onclick="changePage('work')">
-                            <div class="link-icon">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <h4>Work</h4>
-                            <p>Dokumentasi pekerjaan dan proyek yang telah dikerjakan</p>
-                        </div>
-                        
-                        <div class="link-card" onclick="changePage('projects')">
-                            <div class="link-icon">
-                                <i class="fas fa-project-diagram"></i>
-                            </div>
-                            <h4>Projects</h4>
-                            <p>Proyek dan portofolio pekerjaan terbaik</p>
-                        </div>
-                        
-                        <div class="link-card" onclick="changePage('achievements')">
-                            <div class="link-icon">
-                                <i class="fas fa-trophy"></i>
-                            </div>
-                            <h4>Achievements</h4>
-                            <p>Sertifikat dan pencapaian profesional</p>
-                        </div>
-                        
-                        <div class="link-card" onclick="changePage('contact')">
-                            <div class="link-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <h4>Contact</h4>
-                            <p>Hubungi saya untuk kolaborasi dan kerja sama</p>
-                        </div>
-                    </div>
+                <div class="edit-status" id="editStatus">
+                    <i class="fas fa-edit"></i> Edit Mode Aktif
                 </div>
             </div>
             
-            <!-- About Me Page -->
-            <div class="page" id="aboutPage">
-                <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Tentang Saya</h2>
-                
-                <div class="about-content">
-                    <div>
-                        <div class="editable" id="aboutText1">
-                            <p>Lulusan SMK Teknik Permesinan dengan pengalaman di bidang manufaktur dan produksi. 
-                            Terbiasa menangani perencanaan produksi, quality control, manajemen stok & distribusi, 
-                            hingga mechanical drafting.</p>
+            <!-- Content Body - Pages -->
+            <div class="content-body" id="contentBody">
+                <!-- Home Page -->
+                <div class="page active" id="homePage">
+                    <div class="home-hero">
+                        <div class="hero-content">
+                            <div class="hero-badge editable">
+                                <span id="homeBadge">✨ Lulusan SMK Teknik Permesinan ✨</span>
+                                <button class="edit-btn" data-edit="homeBadge">Edit</button>
+                            </div>
+                            
+                            <h1 class="hero-title editable" id="homeTitle">ARYA SAVARIANSAH</h1>
+                            <button class="edit-btn" data-edit="homeTitle">Edit</button>
+                            
+                            <div class="hero-subtitle editable" id="homeSubtitle">
+                                <i class="fas fa-star" style="color: var(--primary); margin-right: 10px;"></i>
+                                Spesialis Manufaktur & Produksi
+                                <i class="fas fa-star" style="color: var(--primary); margin-left: 10px;"></i>
+                            </div>
+                            <button class="edit-btn" data-edit="homeSubtitle">Edit</button>
+                            
+                            <p class="hero-description editable" id="homeDescription">
+                                Lulusan SMK Teknik Permesinan dengan pengalaman di bidang manufaktur dan produksi. 
+                                Terbiasa menangani perencanaan produksi, quality control, manajemen stok & distribusi, 
+                                hingga mechanical drafting.
+                            </p>
+                            <button class="edit-btn" data-edit="homeDescription">Edit</button>
+                            
+                            <div class="hero-actions">
+                                <button class="hero-btn" onclick="changePage('about')">
+                                    <i class="fas fa-user"></i> Lihat Profil Lengkap
+                                </button>
+                                <button class="hero-btn secondary" onclick="changePage('contact')">
+                                    <i class="fas fa-envelope"></i> Hubungi Saya
+                                </button>
+                            </div>
                         </div>
-                        <button class="edit-btn" data-edit="aboutText1">Edit</button>
-                        
-                        <div class="editable" id="aboutText2">
-                            <p>Memiliki kemampuan dalam meningkatkan efisiensi produksi, menurunkan tingkat reject, 
-                            serta mendukung kelancaran proses manufaktur melalui desain teknis dan perencanaan 
-                            yang sistematis.</p>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card editable">
+                            <div class="stat-number" id="stat1Number">15%</div>
+                            <div class="stat-label" id="stat1Label">Pengurangan Waktu Setup</div>
+                            <button class="edit-btn" data-edit="stat1Number">Edit</button>
+                            <button class="edit-btn" data-edit="stat1Label">Edit</button>
                         </div>
-                        <button class="edit-btn" data-edit="aboutText2">Edit</button>
                         
-                        <div class="skills-grid">
-                            <div class="skill-category editable" id="technicalSkills">
-                                <h3>Keahlian Teknis</h3>
-                                <div class="skill-items">
-                                    <div class="skill-item">AutoCAD</div>
-                                    <div class="skill-item">SolidWorks (2D & 3D Drafting)</div>
-                                    <div class="skill-item">Membaca & Membuat Gambar Teknik</div>
-                                    <div class="skill-item">Bubut, Milling, Molding, Assembly</div>
-                                    <div class="skill-item">Production Planning & Stock Monitoring</div>
-                                    <div class="skill-item">Quality Control & Problem Solving</div>
-                                    <div class="skill-item">Preventive Maintenance & Mold Management</div>
-                                    <div class="skill-item">Microsoft Office (Excel, Word, PowerPoint)</div>
-                                    <div class="skill-item">Basic ERP / Sistem Monitoring Produksi</div>
+                        <div class="stat-card editable">
+                            <div class="stat-number" id="stat2Number">60%</div>
+                            <div class="stat-label" id="stat2Label">Penurunan Reject Material</div>
+                            <button class="edit-btn" data-edit="stat2Number">Edit</button>
+                            <button class="edit-btn" data-edit="stat2Label">Edit</button>
+                        </div>
+                        
+                        <div class="stat-card editable">
+                            <div class="stat-number" id="stat3Number">20%</div>
+                            <div class="stat-label" id="stat3Label">Peningkatan Efisiensi</div>
+                            <button class="edit-btn" data-edit="stat3Number">Edit</button>
+                            <button class="edit-btn" data-edit="stat3Label">Edit</button>
+                        </div>
+                        
+                        <div class="stat-card editable">
+                            <div class="stat-number" id="stat4Number">67%</div>
+                            <div class="stat-label" id="stat4Label">Pengurangan Lead Time</div>
+                            <button class="edit-btn" data-edit="stat4Number">Edit</button>
+                            <button class="edit-btn" data-edit="stat4Label">Edit</button>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-links">
+                        <h3>Akses Cepat</h3>
+                        <div class="links-grid">
+                            <div class="link-card" onclick="changePage('work')">
+                                <div class="link-icon">
+                                    <i class="fas fa-briefcase"></i>
                                 </div>
-                                <button class="add-btn" data-add="technicalSkills">+ Tambah Skill</button>
+                                <h4>Work</h4>
+                                <p>Dokumentasi pekerjaan dan proyek yang telah dikerjakan</p>
                             </div>
                             
-                            <div class="skill-category editable" id="personalSkills">
-                                <h3>Keahlian Personal</h3>
-                                <div class="skill-items">
-                                    <div class="skill-item">Problem Solving & Berpikir Analitis</div>
-                                    <div class="skill-item">Teamwork & Koordinasi Lintas Departemen</div>
-                                    <div class="skill-item">Manajemen Waktu & Efisiensi Proses</div>
-                                    <div class="skill-item">Detail-Oriented & Teliti dalam pekerjaan</div>
-                                    <div class="skill-item">Disiplin & Tanggung Jawab</div>
-                                    <div class="skill-item">Proaktif dan Cepat Beradaptasi</div>
-                                    <div class="skill-item">Komunikasi Efektif</div>
+                            <div class="link-card" onclick="changePage('projects')">
+                                <div class="link-icon">
+                                    <i class="fas fa-project-diagram"></i>
                                 </div>
-                                <button class="add-btn" data-add="personalSkills">+ Tambah Skill</button>
+                                <h4>Projects</h4>
+                                <p>Proyek dan portofolio pekerjaan terbaik</p>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <h3 style="margin-bottom: 30px; font-size: 1.8rem; color: var(--primary);">Pengalaman Kerja</h3>
-                        
-                        <div class="experience-timeline">
-                            <div class="experience-item editable" id="experience1">
-                                <div class="experience-header">
-                                    <h3 class="experience-title">Mechanical Drafter Manufacturing</h3>
-                                    <div class="experience-date">Jun 2025 - Sekarang</div>
+                            
+                            <div class="link-card" onclick="changePage('achievements')">
+                                <div class="link-icon">
+                                    <i class="fas fa-trophy"></i>
                                 </div>
-                                <div class="experience-content">
-                                    <ul>
-                                        <li>Membuat sistem pendataan molding beserta jangka waktu pakai (lifetime usage) untuk mendukung preventive maintenance dan mengurangi downtime produksi</li>
-                                        <li>Menyatukan berbagai variasi pengaturan molding menjadi 1 standar variasi, sehingga mempermudah operator dan menekan risiko kesalahan setting</li>
-                                        <li>Berhasil mempercepat proses kerja operator bubut dengan membuat drawing detail yang lebih jelas, sehingga mengurangi waktu setup hingga 15% lebih cepat</li>
-                                    </ul>
+                                <h4>Achievements</h4>
+                                <p>Sertifikat dan pencapaian profesional</p>
+                            </div>
+                            
+                            <div class="link-card" onclick="changePage('contact')">
+                                <div class="link-icon">
+                                    <i class="fas fa-envelope"></i>
                                 </div>
-                                <button class="edit-btn" data-edit="experience1">Edit</button>
-                                <button class="delete-btn" data-delete="experience1" data-type="experience">Hapus</button>
+                                <h4>Contact</h4>
+                                <p>Hubungi saya untuk kolaborasi dan kerja sama</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- About Me Page -->
+                <div class="page" id="aboutPage">
+                    <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Tentang Saya</h2>
+                    
+                    <div class="about-content">
+                        <div>
+                            <div class="editable" id="aboutText1">
+                                <p>Lulusan SMK Teknik Permesinan dengan pengalaman di bidang manufaktur dan produksi. 
+                                Terbiasa menangani perencanaan produksi, quality control, manajemen stok & distribusi, 
+                                hingga mechanical drafting.</p>
+                            </div>
+                            <button class="edit-btn" data-edit="aboutText1">Edit</button>
                             
-                            <div class="experience-item editable" id="experience2">
-                                <div class="experience-header">
-                                    <h3 class="experience-title">Staff Produksi</h3>
-                                    <div class="experience-date">Jun 2024 - Jun 2025</div>
+                            <div class="editable" id="aboutText2">
+                                <p>Memiliki kemampuan dalam meningkatkan efisiensi produksi, menurunkan tingkat reject, 
+                                serta mendukung kelancaran proses manufaktur melalui desain teknis dan perencanaan 
+                                yang sistematis.</p>
+                            </div>
+                            <button class="edit-btn" data-edit="aboutText2">Edit</button>
+                            
+                            <div class="skills-grid">
+                                <div class="skill-category editable" id="technicalSkills">
+                                    <h3>Keahlian Teknis</h3>
+                                    <div class="skill-items">
+                                        <div class="skill-item">AutoCAD</div>
+                                        <div class="skill-item">SolidWorks (2D & 3D Drafting)</div>
+                                        <div class="skill-item">Membaca & Membuat Gambar Teknik</div>
+                                        <div class="skill-item">Bubut, Milling, Molding, Assembly</div>
+                                        <div class="skill-item">Production Planning & Stock Monitoring</div>
+                                        <div class="skill-item">Quality Control & Problem Solving</div>
+                                        <div class="skill-item">Preventive Maintenance & Mold Management</div>
+                                        <div class="skill-item">Microsoft Office (Excel, Word, PowerPoint)</div>
+                                        <div class="skill-item">Basic ERP / Sistem Monitoring Produksi</div>
+                                    </div>
+                                    <button class="add-btn" data-add="technicalSkills">+ Tambah Skill</button>
                                 </div>
-                                <div class="experience-content">
-                                    <ul>
-                                        <li>Menganalisis dan menurunkan tingkat overconsumption material melalui evaluasi data penggunaan bahan, identifikasi penyebab pemborosan, dan koordinasi dengan tim terkait untuk perbaikan proses</li>
-                                        <li>Menurunkan non-conformance bahan Div. Produksi dengan cara melakukan monitoring bahan</li>
-                                        <li>Meningkatkan productivity penggunaan bahan WIP dari 2 Ton menjadi 724,5 kg dalam kurun waktu Desember 2024-Maret 2025 dengan cara membuat monitoring Stock WIP dan planning item Produksi</li>
-                                        <li>Menurunkan reject Div. Produksi pada mesin spiral dari 8% menjadi 3% dengan cara melakukan TFT (Task force Team)</li>
-                                    </ul>
+                                
+                                <div class="skill-category editable" id="personalSkills">
+                                    <h3>Keahlian Personal</h3>
+                                    <div class="skill-items">
+                                        <div class="skill-item">Problem Solving & Berpikir Analitis</div>
+                                        <div class="skill-item">Teamwork & Koordinasi Lintas Departemen</div>
+                                        <div class="skill-item">Manajemen Waktu & Efisiensi Proses</div>
+                                        <div class="skill-item">Detail-Oriented & Teliti dalam pekerjaan</div>
+                                        <div class="skill-item">Disiplin & Tanggung Jawab</div>
+                                        <div class="skill-item">Proaktif dan Cepat Beradaptasi</div>
+                                        <div class="skill-item">Komunikasi Efektif</div>
+                                    </div>
+                                    <button class="add-btn" data-add="personalSkills">+ Tambah Skill</button>
                                 </div>
-                                <button class="edit-btn" data-edit="experience2">Edit</button>
-                                <button class="delete-btn" data-delete="experience2" data-type="experience">Hapus</button>
                             </div>
                         </div>
-                        <button class="add-btn" data-add="experience">+ Tambah Pengalaman</button>
+                        
+                        <div>
+                            <h3 style="margin-bottom: 30px; font-size: 1.8rem; color: var(--primary);">Pengalaman Kerja</h3>
+                            
+                            <div class="experience-timeline">
+                                <div class="experience-item editable" id="experience1">
+                                    <div class="experience-header">
+                                        <h3 class="experience-title">Mechanical Drafter Manufacturing</h3>
+                                        <div class="experience-date">Jun 2025 - Sekarang</div>
+                                    </div>
+                                    <div class="experience-content">
+                                        <ul>
+                                            <li>Membuat sistem pendataan molding beserta jangka waktu pakai (lifetime usage) untuk mendukung preventive maintenance dan mengurangi downtime produksi</li>
+                                            <li>Menyatukan berbagai variasi pengaturan molding menjadi 1 standar variasi, sehingga mempermudah operator dan menekan risiko kesalahan setting</li>
+                                            <li>Berhasil mempercepat proses kerja operator bubut dengan membuat drawing detail yang lebih jelas, sehingga mengurangi waktu setup hingga 15% lebih cepat</li>
+                                        </ul>
+                                    </div>
+                                    <button class="edit-btn" data-edit="experience1">Edit</button>
+                                    <button class="delete-btn" data-delete="experience1" data-type="experience">Hapus</button>
+                                </div>
+                                
+                                <div class="experience-item editable" id="experience2">
+                                    <div class="experience-header">
+                                        <h3 class="experience-title">Staff Produksi</h3>
+                                        <div class="experience-date">Jun 2024 - Jun 2025</div>
+                                    </div>
+                                    <div class="experience-content">
+                                        <ul>
+                                            <li>Menganalisis dan menurunkan tingkat overconsumption material melalui evaluasi data penggunaan bahan, identifikasi penyebab pemborosan, dan koordinasi dengan tim terkait untuk perbaikan proses</li>
+                                            <li>Menurunkan non-conformance bahan Div. Produksi dengan cara melakukan monitoring bahan</li>
+                                            <li>Meningkatkan productivity penggunaan bahan WIP dari 2 Ton menjadi 724,5 kg dalam kurun waktu Desember 2024-Maret 2025 dengan cara membuat monitoring Stock WIP dan planning item Produksi</li>
+                                            <li>Menurunkan reject Div. Produksi pada mesin spiral dari 8% menjadi 3% dengan cara melakukan TFT (Task force Team)</li>
+                                        </ul>
+                                    </div>
+                                    <button class="edit-btn" data-edit="experience2">Edit</button>
+                                    <button class="delete-btn" data-delete="experience2" data-type="experience">Hapus</button>
+                                </div>
+                            </div>
+                            <button class="add-btn" data-add="experience">+ Tambah Pengalaman</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Work Page - DUPLIKAT DARI ACHIEVEMENTS -->
-            <div class="page" id="workPage">
-                <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Work</h2>
                 
-                <div style="background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%); border-radius: var(--border-radius); padding: 40px; margin-bottom: 40px; border: 1px solid rgba(255, 215, 0, 0.1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden;">
-                    <h2 style="color: var(--primary); margin-bottom: 15px; font-size: 1.8rem;">Dokumentasi Pekerjaan</h2>
-                    <p style="color: var(--gray); line-height: 1.7; margin-bottom: 15px;">Koleksi foto dokumentasi pekerjaan dan proyek yang telah dikerjakan sebagai Mechanical Drafter dan Staff Produksi.</p>
-                    <p style="color: var(--gray); line-height: 1.7;"><strong>Kategori:</strong> Mechanical Drafting, Production Work, Quality Control, Process Improvement</p>
-                </div>
-                
-                <!-- Work Grid -->
-                <div class="work-grid" id="workContainer">
-                    <!-- Work items akan di-render oleh JavaScript -->
-                </div>
-                
-                <!-- Tombol Add untuk Work -->
-                <button class="add-btn" data-add="work" id="addWorkBtn">+ Tambah Work</button>
-            </div>
-            
-            <!-- Achievements Page -->
-            <div class="page" id="achievementsPage">
-                <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Pencapaian & Sertifikat</h2>
-                
-                <div class="achievements-grid" id="achievementsContainer">
-                    <!-- Achievement cards akan di-render oleh JavaScript -->
-                </div>
-                <button class="add-btn" data-add="achievement">+ Tambah Pencapaian</button>
-            </div>
-            
-            <!-- Projects Page -->
-            <div class="page" id="projectsPage">
-                <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Proyek & Portofolio</h2>
-                
-                <div class="projects-grid" id="projectsContainer">
-                    <div class="project-card editable" id="project1">
-                        <h3><i class="fas fa-drafting-compass"></i> Sistem Pendataan Molding</h3>
-                        <p>Membuat sistem pendataan molding beserta jangka waktu pakai (lifetime usage) untuk mendukung preventive maintenance dan mengurangi downtime produksi</p>
-                        
-                        <div class="project-stats">
-                            <div class="stat">
-                                <span class="stat-value">100%</span>
-                                <span class="stat-label">Data Manual</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value improvement">↓ 40%</span>
-                                <span class="stat-label">Downtime</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value">15%</span>
-                                <span class="stat-label">Setup Time ↓</span>
-                            </div>
-                        </div>
-                        <button class="edit-btn" data-edit="project1">Edit</button>
-                        <button class="delete-btn" data-delete="project1" data-type="project">Hapus</button>
+                <!-- Work Page -->
+                <div class="page" id="workPage">
+                    <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Work</h2>
+                    
+                    <div style="background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%); border-radius: var(--border-radius); padding: 40px; margin-bottom: 40px; border: 1px solid rgba(255, 215, 0, 0.1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden;">
+                        <h2 style="color: var(--primary); margin-bottom: 15px; font-size: 1.8rem;">Dokumentasi Pekerjaan</h2>
+                        <p style="color: var(--gray); line-height: 1.7; margin-bottom: 15px;">Koleksi foto dokumentasi pekerjaan dan proyek yang telah dikerjakan sebagai Mechanical Drafter dan Staff Produksi.</p>
+                        <p style="color: var(--gray); line-height: 1.7;"><strong>Kategori:</strong> Mechanical Drafting, Production Work, Quality Control, Process Improvement</p>
                     </div>
                     
-                    <div class="project-card editable" id="project2">
-                        <h3><i class="fas fa-chart-line"></i> Optimasi Produksi WIP</h3>
-                        <p>Meningkatkan productivity penggunaan bahan WIP dari 2 Ton menjadi 724,5 kg dengan monitoring Stock WIP dan planning item Produksi</p>
-                        
-                        <div class="project-stats">
-                            <div class="stat">
-                                <span class="stat-value">2 Ton</span>
-                                <span class="stat-label">Sebelum</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value improvement">↓ 63.8%</span>
-                                <span class="stat-label">Pengurangan</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value">724.5 kg</span>
-                                <span class="stat-label">Sesudah</span>
-                            </div>
-                        </div>
-                        <button class="edit-btn" data-edit="project2">Edit</button>
-                        <button class="delete-btn" data-delete="project2" data-type="project">Hapus</button>
+                    <!-- Work Grid -->
+                    <div class="work-grid" id="workContainer">
+                        <!-- Work items akan di-render oleh JavaScript -->
                     </div>
                     
-                    <div class="project-card editable" id="project3">
-                        <h3><i class="fas fa-cogs"></i> Reduksi Reject Mesin Spiral</h3>
-                        <p>Menurunkan reject Div. Produksi pada mesin spiral dari 8% menjadi 3% dengan cara melakukan TFT (Task force Team)</p>
-                        
-                        <div class="project-stats">
-                            <div class="stat">
-                                <span class="stat-value">8%</span>
-                                <span class="stat-label">Sebelum</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value reduction">↓ 62.5%</span>
-                                <span class="stat-label">Penurunan</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value">3%</span>
-                                <span class="stat-label">Sesudah</span>
-                            </div>
-                        </div>
-                        <button class="edit-btn" data-edit="project3">Edit</button>
-                        <button class="delete-btn" data-delete="project3" data-type="project">Hapus</button>
-                    </div>
-                </div>
-                <button class="add-btn" data-add="project">+ Tambah Proyek</button>
-            </div>
-            
-            <!-- Dashboard Page -->
-            <div class="page" id="dashboardPage">
-                <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Dashboard Statistik</h2>
-                
-                <div class="dashboard-periods">
-                    <!-- Staff Production Period -->
-                    <div class="period-section editable" id="staffPeriod">
-                        <div class="period-header">
-                            <h2 class="period-title">Staff Production</h2>
-                            <div class="period-date">
-                                <i class="far fa-calendar"></i> Jun 2024 - Jun 2025
-                            </div>
-                        </div>
-                        
-                        <div class="period-stats">
-                            <div class="period-stat editable" id="staffStat1">
-                                <div class="period-stat-value staff">60%</div>
-                                <div class="period-stat-label">Penurunan Reject Material</div>
-                                <button class="edit-btn" data-edit="staffStat1">Edit</button>
-                            </div>
-                            
-                            <div class="period-stat editable" id="staffStat2">
-                                <div class="period-stat-value staff">63.8%</div>
-                                <div class="period-stat-label">Pengurangan WIP Inventory</div>
-                                <button class="edit-btn" data-edit="staffStat2">Edit</button>
-                            </div>
-                            
-                            <div class="period-stat editable" id="staffStat3">
-                                <div class="period-stat-value staff">62.5%</div>
-                                <div class="period-stat-label">Penurunan Reject Mesin Spiral</div>
-                                <button class="edit-btn" data-edit="staffStat3">Edit</button>
-                            </div>
-                            
-                            <div class="period-stat editable" id="staffStat4">
-                                <div class="period-stat-value staff">90%</div>
-                                <div class="period-stat-label">Kesesuaian Dokumen (KPH)</div>
-                                <button class="edit-btn" data-edit="staffStat4">Edit</button>
-                            </div>
-                        </div>
-                        <button class="edit-btn" data-edit="staffPeriod">Edit</button>
-                    </div>
-                    
-                    <!-- Drafter Period -->
-                    <div class="period-section editable" id="drafterPeriod">
-                        <div class="period-header">
-                            <h2 class="period-title">Mechanical Drafter</h2>
-                            <div class="period-date">
-                                <i class="far fa-calendar"></i> Jun 2025 - Sekarang
-                            </div>
-                        </div>
-                        
-                        <div class="period-stats">
-                            <div class="period-stat editable" id="drafterStat1">
-                                <div class="period-stat-value drafter">15%</div>
-                                <div class="period-stat-label">Pengurangan Waktu Setup</div>
-                                <button class="edit-btn" data-edit="drafterStat1">Edit</button>
-                            </div>
-                            
-                            <div class="period-stat editable" id="drafterStat2">
-                                <div class="period-stat-value drafter">40%</div>
-                                <div class="period-stat-label">Pengurangan Downtime</div>
-                                <button class="edit-btn" data-edit="drafterStat2">Edit</button>
-                            </div>
-                            
-                            <div class="period-stat editable" id="drafterStat3">
-                                <div class="period-stat-value drafter">67%</div>
-                                <div class="period-stat-label">Pengurangan Lead Time</div>
-                                <button class="edit-btn" data-edit="drafterStat3">Edit</button>
-                            </div>
-                            
-                            <div class="period-stat editable" id="drafterStat4">
-                                <div class="period-stat-value drafter">100%</div>
-                                <div class="period-stat-label">Standarisasi Molding Setting</div>
-                                <button class="edit-btn" data-edit="drafterStat4">Edit</button>
-                            </div>
-                        </div>
-                        <button class="edit-btn" data-edit="drafterPeriod">Edit</button>
-                    </div>
+                    <!-- Tombol Add untuk Work -->
+                    <button class="add-btn" data-add="work" id="addWorkBtn">+ Tambah Work</button>
                 </div>
                 
-                <div class="dashboard-chart editable" id="dashboardChart">
-                    <h3>Grafik Perbandingan Performa</h3>
-                    <div style="height: 350px; background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%); border-radius: 12px; display: flex; align-items: flex-end; padding: 25px; border: 1px solid rgba(255, 215, 0, 0.1);">
-                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 180px; width: 50px; background: var(--gradient-success); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
-                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Staff</div>
-                        </div>
-                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 220px; width: 50px; background: var(--gradient-purple); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
-                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Drafter</div>
-                        </div>
-                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                            <div style="height: 280px; width: 50px; background: var(--gradient-gold); margin: 0 15px; border-radius: 8px 8px 0 0;"></div>
-                            <div style="margin-top: 15px; color: var(--primary); font-weight: 600;">Total</div>
-                        </div>
+                <!-- Achievements Page -->
+                <div class="page" id="achievementsPage">
+                    <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Pencapaian & Sertifikat</h2>
+                    
+                    <div class="achievements-grid" id="achievementsContainer">
+                        <!-- Achievement cards akan di-render oleh JavaScript -->
                     </div>
-                    <button class="edit-btn" data-edit="dashboardChart">Edit</button>
+                    <button class="add-btn" data-add="achievement">+ Tambah Pencapaian</button>
                 </div>
-            </div>
-            
-            <!-- Chatroom Page -->
-            <div class="page" id="chatroomPage">
-                <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center;">Chat Room</h2>
-                <p style="text-align: center; margin-bottom: 50px; color: var(--gray); max-width: 800px; margin-left: auto; margin-right: auto; font-size: 1.2rem; line-height: 1.6;">
-                    Feel free to share your thoughts, suggestions, questions, or anything else!
-                </p>
                 
-                <div class="chatroom-container">
-                    <div class="chatroom-header">
-                        <h3>Live Chat Room</h3>
-                        <p>Join the conversation with other visitors</p>
-                    </div>
+                <!-- Projects Page -->
+                <div class="page" id="projectsPage">
+                    <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Proyek & Portofolio</h2>
                     
-                    <div class="chatroom-messages" id="chatMessages">
-                        <div class="message">
-                            <div class="message-info">
-                                <span class="message-user">Vernita Chesnauer</span>
-                                <span class="message-time">01/04/2025, 14:00</span>
+                    <div class="projects-grid" id="projectsContainer">
+                        <div class="project-card editable" id="project1">
+                            <h3><i class="fas fa-drafting-compass"></i> Sistem Pendataan Molding</h3>
+                            <p>Membuat sistem pendataan molding beserta jangka waktu pakai (lifetime usage) untuk mendukung preventive maintenance dan mengurangi downtime produksi</p>
+                            
+                            <div class="project-stats">
+                                <div class="stat">
+                                    <span class="stat-value">100%</span>
+                                    <span class="stat-label">Data Manual</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value improvement">↓ 40%</span>
+                                    <span class="stat-label">Downtime</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">15%</span>
+                                    <span class="stat-label">Setup Time ↓</span>
+                                </div>
                             </div>
-                            <div class="message-content">
-                                Hahnyuga! Love the design of this portfolio!
+                            <button class="edit-btn" data-edit="project1">Edit</button>
+                            <button class="delete-btn" data-delete="project1" data-type="project">Hapus</button>
+                        </div>
+                        
+                        <div class="project-card editable" id="project2">
+                            <h3><i class="fas fa-chart-line"></i> Optimasi Produksi WIP</h3>
+                            <p>Meningkatkan productivity penggunaan bahan WIP dari 2 Ton menjadi 724,5 kg dengan monitoring Stock WIP dan planning item Produksi</p>
+                            
+                            <div class="project-stats">
+                                <div class="stat">
+                                    <span class="stat-value">2 Ton</span>
+                                    <span class="stat-label">Sebelum</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value improvement">↓ 63.8%</span>
+                                    <span class="stat-label">Pengurangan</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">724.5 kg</span>
+                                    <span class="stat-label">Sesudah</span>
+                                </div>
+                            </div>
+                            <button class="edit-btn" data-edit="project2">Edit</button>
+                            <button class="delete-btn" data-delete="project2" data-type="project">Hapus</button>
+                        </div>
+                        
+                        <div class="project-card editable" id="project3">
+                            <h3><i class="fas fa-cogs"></i> Reduksi Reject Mesin Spiral</h3>
+                            <p>Menurunkan reject Div. Produksi pada mesin spiral dari 8% menjadi 3% dengan cara melakukan TFT (Task force Team)</p>
+                            
+                            <div class="project-stats">
+                                <div class="stat">
+                                    <span class="stat-value">8%</span>
+                                    <span class="stat-label">Sebelum</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value reduction">↓ 62.5%</span>
+                                    <span class="stat-label">Penurunan</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">3%</span>
+                                    <span class="stat-label">Sesudah</span>
+                                </div>
+                            </div>
+                            <button class="edit-btn" data-edit="project3">Edit</button>
+                            <button class="delete-btn" data-delete="project3" data-type="project">Hapus</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" data-add="project">+ Tambah Proyek</button>
+                </div>
+                
+                <!-- Dashboard Page -->
+                <div class="page" id="dashboardPage">
+                    <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Dashboard Statistik</h2>
+                    
+                    <div class="dashboard-periods">
+                        <!-- Staff Production Period -->
+                        <div class="period-section editable" id="staffPeriod">
+                            <div class="period-header">
+                                <h2 class="period-title">Staff Production</h2>
+                                <div class="period-date">
+                                    <i class="far fa-calendar"></i> Jun 2024 - Jun 2025
+                                </div>
+                            </div>
+                            
+                            <div class="period-stats">
+                                <div class="period-stat editable" id="staffStat1">
+                                    <div class="period-stat-value staff">60%</div>
+                                    <div class="period-stat-label">Penurunan Reject Material</div>
+                                    <button class="edit-btn" data-edit="staffStat1">Edit</button>
+                                </div>
+                                
+                                <div class="period-stat editable" id="staffStat2">
+                                    <div class="period-stat-value staff">63.8%</div>
+                                    <div class="period-stat-label">Pengurangan WIP Inventory</div>
+                                    <button class="edit-btn" data-edit="staffStat2">Edit</button>
+                                </div>
+                                
+                                <div class="period-stat editable" id="staffStat3">
+                                    <div class="period-stat-value staff">62.5%</div>
+                                    <div class="period-stat-label">Penurunan Reject Mesin Spiral</div>
+                                    <button class="edit-btn" data-edit="staffStat3">Edit</button>
+                                </div>
+                                
+                                <div class="period-stat editable" id="staffStat4">
+                                    <div class="period-stat-value staff">90%</div>
+                                    <div class="period-stat-label">Kesesuaian Dokumen (KPH)</div>
+                                    <button class="edit-btn" data-edit="staffStat4">Edit</button>
+                                </div>
+                            </div>
+                            <button class="edit-btn" data-edit="staffPeriod">Edit</button>
+                        </div>
+                        
+                        <!-- Drafter Period -->
+                        <div class="period-section editable" id="drafterPeriod">
+                            <div class="period-header">
+                                <h2 class="period-title">Mechanical Drafter</h2>
+                                <div class="period-date">
+                                    <i class="far fa-calendar"></i> Jun 2025 - Sekarang
+                                </div>
+                            </div>
+                            
+                            <div class="period-stats">
+                                <div class="period-stat editable" id="drafterStat1">
+                                    <div class="period-stat-value drafter">15%</div>
+                                    <div class="period-stat-label">Pengurangan Waktu Setup</div>
+                                    <button class="edit-btn" data-edit="drafterStat1">Edit</button>
+                                </div>
+                                
+                                <div class="period-stat editable" id="drafterStat2">
+                                    <div class="period-stat-value drafter">40%</div>
+                                    <div class="period-stat-label">Pengurangan Downtime</div>
+                                    <button class="edit-btn" data-edit="drafterStat2">Edit</button>
+                                </div>
+                                
+                                <div class="period-stat editable" id="drafterStat3">
+                                    <div class="period-stat-value drafter">67%</div>
+                                    <div class="period-stat-label">Pengurangan Lead Time</div>
+                                    <button class="edit-btn" data-edit="drafterStat3">Edit</button>
+                                </div>
+                                
+                                <div class="period-stat editable" id="drafterStat4">
+                                    <div class="period-stat-value drafter">100%</div>
+                                    <div class="period-stat-label">Standarisasi Molding Setting</div>
+                                    <button class="edit-btn" data-edit="drafterStat4">Edit</button>
+                                </div>
+                            </div>
+                            <button class="edit-btn" data-edit="drafterPeriod">Edit</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chatroom Page -->
+                <div class="page" id="chatroomPage">
+                    <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center;">Chat Room</h2>
+                    <p style="text-align: center; margin-bottom: 50px; color: var(--gray); max-width: 800px; margin-left: auto; margin-right: auto; font-size: 1.2rem; line-height: 1.6;">
+                        Feel free to share your thoughts, suggestions, questions, or anything else!
+                    </p>
+                    
+                    <div class="chatroom-container">
+                        <div class="chatroom-header">
+                            <h3>Live Chat Room</h3>
+                            <p>Join the conversation with other visitors</p>
+                        </div>
+                        
+                        <div class="chatroom-messages" id="chatMessages">
+                            <div class="message">
+                                <div class="message-info">
+                                    <span class="message-user">Vernita Chesnauer</span>
+                                    <span class="message-time">01/04/2025, 14:00</span>
+                                </div>
+                                <div class="message-content">
+                                    Hahnyuga! Love the design of this portfolio!
+                                </div>
+                            </div>
+                            
+                            <div class="message">
+                                <div class="message-info">
+                                    <span class="message-user">Rufa Resto Ramadhani</span>
+                                    <span class="message-time">01/04/2025, 14:37</span>
+                                </div>
+                                <div class="message-content">
+                                    Halo mas! Awesome portfolio website!
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="message">
-                            <div class="message-info">
-                                <span class="message-user">Rufa Resto Ramadhani</span>
-                                <span class="message-time">01/04/2025, 14:37</span>
-                            </div>
-                            <div class="message-content">
-                                Halo mas! Awesome portfolio website!
-                            </div>
+                        <div class="chatroom-input">
+                            <input type="text" id="chatInput" placeholder="Type your message here...">
+                            <button id="sendMessage">Send</button>
                         </div>
                     </div>
-                    
-                    <div class="chatroom-input">
-                        <input type="text" id="chatInput" placeholder="Type your message here...">
-                        <button id="sendMessage">Send</button>
+                </div>
+                
+                <!-- Contact Page -->
+                <div class="page" id="contactPage">
+                    <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Hubungi Saya</h2>
+                    <div class="contact-content">
+                        <div class="contact-info">
+                            <div class="contact-card editable" id="contactEmail">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <h3>Email</h3>
+                                <p>aryasavarinasah@gmail.com</p>
+                                <button class="edit-btn" data-edit="contactEmail">Edit</button>
+                            </div>
+                            
+                            <div class="contact-card editable" id="contactPhone">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <h3>Telepon</h3>
+                                <p>089520336532</p>
+                                <button class="edit-btn" data-edit="contactPhone">Edit</button>
+                            </div>
+                            
+                            <div class="contact-card editable" id="contactLocation">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <h3>Lokasi</h3>
+                                <p>Kosambi, Indonesia</p>
+                                <button class="edit-btn" data-edit="contactLocation">Edit</button>
+                            </div>
+                            
+                            <div class="contact-card editable" id="contactLinkedin">
+                                <div class="contact-icon">
+                                    <i class="fab fa-linkedin"></i>
+                                </div>
+                                <h3>LinkedIn</h3>
+                                <p>linkedin.com/in/arya-savariansah</p>
+                                <button class="edit-btn" data-edit="contactLinkedin">Edit</button>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-form">
+                            <h3>Kirim Pesan</h3>
+                            <form id="contactForm">
+                                <div class="form-group">
+                                    <label for="name">Nama</label>
+                                    <input type="text" id="name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="message">Pesan</label>
+                                    <textarea id="message" required></textarea>
+                                </div>
+                                
+                                <button type="submit" class="submit-btn">Kirim Pesan</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Contact Page -->
-            <div class="page" id="contactPage">
-                <h2 style="margin-bottom: 40px; font-size: 2.5rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hubungi Saya</h2>
-                <div class="contact-content">
-                    <div class="contact-info">
-                        <div class="contact-card editable" id="contactEmail">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <h3>Email</h3>
-                            <p>aryasavarinasah@gmail.com</p>
-                            <button class="edit-btn" data-edit="contactEmail">Edit</button>
-                        </div>
-                        
-                        <div class="contact-card editable" id="contactPhone">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <h3>Telepon</h3>
-                            <p>089520336532</p>
-                            <button class="edit-btn" data-edit="contactPhone">Edit</button>
-                        </div>
-                        
-                        <div class="contact-card editable" id="contactLocation">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <h3>Lokasi</h3>
-                            <p>Kosambi, Indonesia</p>
-                            <button class="edit-btn" data-edit="contactLocation">Edit</button>
-                        </div>
-                        
-                        <div class="contact-card editable" id="contactLinkedin">
-                            <div class="contact-icon">
-                                <i class="fab fa-linkedin"></i>
-                            </div>
-                            <h3>LinkedIn</h3>
-                            <p>linkedin.com/in/arya-savariansah</p>
-                            <button class="edit-btn" data-edit="contactLinkedin">Edit</button>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-form">
-                        <h3>Kirim Pesan</h3>
-                        <form id="contactForm">
-                            <div class="form-group">
-                                <label for="name">Nama</label>
-                                <input type="text" id="name" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="message">Pesan</label>
-                                <textarea id="message" required></textarea>
-                            </div>
-                            
-                            <button type="submit" class="submit-btn">Kirim Pesan</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+        </main>
+    </div>
     
     <!-- Modal untuk Upload Foto -->
     <div class="modal" id="imageUploadModal">
         <div class="modal-content">
-            <h3 class="modal-title" id="modalTitle">Upload Foto</h3>
+            <button class="modal-close" id="closeImageModal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Upload Foto</h2>
+                <p class="modal-subtitle">Pilih foto yang ingin diupload</p>
+            </div>
+            
             <div class="form-group">
                 <input type="file" id="imageInput" accept="image/*" class="admin-input">
             </div>
+            
             <div class="image-preview" id="imagePreview">
                 <img id="previewImage" src="" alt="Preview">
             </div>
-            <div class="modal-buttons">
-                <button class="modal-btn primary" id="saveImageBtn">Simpan Foto</button>
-                <button class="modal-btn secondary" id="cancelImageBtn">Batal</button>
-                <button class="modal-btn secondary" id="removeImageBtn" style="display: none;">Hapus Foto</button>
+            
+            <div class="modal-buttons" style="display: flex; gap: 15px; margin-top: 30px;">
+                <button class="admin-btn" id="saveImageBtn">Simpan Foto</button>
+                <button class="admin-btn" style="background: var(--gradient-dark);" id="cancelImageBtn">Batal</button>
+                <button class="admin-btn" style="background: var(--gradient-danger); display: none;" id="removeImageBtn">Hapus Foto</button>
             </div>
         </div>
     </div>
 
     <!-- Modal Upload Work -->
-    <div class="modal upload-modal" id="workUploadModal">
-        <div class="upload-modal-content">
-            <button class="upload-modal-close" id="closeUploadModal">
+    <div class="modal" id="workUploadModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeWorkModal">
                 <i class="fas fa-times"></i>
             </button>
             
-            <div class="upload-modal-header">
-                <h2 class="upload-modal-title">Tambah Work Baru</h2>
-                <p class="upload-modal-subtitle">Tambahkan dokumentasi pekerjaan Anda</p>
+            <div class="modal-header">
+                <h2 class="modal-title">Tambah Work Baru</h2>
+                <p class="modal-subtitle">Tambahkan dokumentasi pekerjaan Anda</p>
             </div>
             
-            <form class="upload-form" id="workUploadForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="workTitle"><i class="fas fa-heading"></i> Judul Pekerjaan</label>
-                        <input type="text" id="workTitle" placeholder="Contoh: Standarisasi Molding Setting" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="workDate"><i class="far fa-calendar"></i> Tanggal</label>
-                        <input type="text" id="workDate" placeholder="DD/MM/YYYY" required>
+            <form id="workUploadForm">
+                <div class="form-group">
+                    <label for="workTitle">Judul Pekerjaan</label>
+                    <input type="text" id="workTitle" class="admin-input" placeholder="Contoh: Standarisasi Molding Setting" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workDate">Tanggal</label>
+                    <input type="text" id="workDate" class="admin-input" placeholder="DD/MM/YYYY" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workCategory">Kategori</label>
+                    <select id="workCategory" class="admin-input" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="Mechanical Drafting">Mechanical Drafting</option>
+                        <option value="Production Work">Production Work</option>
+                        <option value="Quality Control">Quality Control</option>
+                        <option value="Process Improvement">Process Improvement</option>
+                        <option value="Maintenance">Maintenance</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="workDescription">Deskripsi Singkat</label>
+                    <textarea id="workDescription" class="admin-input" placeholder="Jelaskan pekerjaan ini secara singkat" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Foto Pekerjaan</label>
+                    <input type="file" id="workImageInput" accept="image/*" class="admin-input">
+                    <div class="image-preview" id="workImagePreview" style="margin-top: 10px;">
+                        <img id="workPreviewImage" src="" alt="Preview">
                     </div>
                 </div>
                 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="workCategory"><i class="fas fa-tag"></i> Kategori</label>
-                        <select id="workCategory" required>
-                            <option value="">Pilih Kategori</option>
-                            <option value="Mechanical Drafting">Mechanical Drafting</option>
-                            <option value="Production Work">Production Work</option>
-                            <option value="Quality Control">Quality Control</option>
-                            <option value="Process Improvement">Process Improvement</option>
-                            <option value="Maintenance">Maintenance</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="workDescription"><i class="fas fa-align-left"></i> Deskripsi Singkat</label>
-                        <input type="text" id="workDescription" placeholder="Jelaskan pekerjaan ini secara singkat" required>
-                    </div>
-                </div>
-                
-                <div class="upload-image-area" id="imageDropArea">
-                    <div class="upload-image-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
-                    <div class="upload-image-text">Upload Foto</div>
-                    <div class="upload-image-subtext">Drag & drop gambar atau klik untuk memilih</div>
-                    <button type="button" class="upload-browse-btn" id="browseImageBtn">
-                        <i class="fas fa-folder-open"></i> Browse Files
-                    </button>
-                    <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
-                    
-                    <div class="upload-progress-container" id="uploadProgressContainer">
-                        <div class="upload-progress-bar" id="uploadProgressBar"></div>
-                    </div>
-                    <div class="upload-percentage" id="uploadPercentage">0%</div>
-                    
-                    <div class="upload-image-preview" id="imagePreviewContainer">
-                        <img id="imagePreview" src="" alt="Preview">
-                    </div>
-                    
-                    <div class="image-actions" id="imageActions" style="display: none;">
-                        <button type="button" class="image-action-btn" id="changeImageBtn">
-                            <i class="fas fa-sync-alt"></i> Ganti Foto
-                        </button>
-                        <button type="button" class="image-action-btn" id="removeImageBtn">
-                            <i class="fas fa-trash-alt"></i> Hapus
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="upload-modal-buttons">
-                    <button type="submit" class="upload-modal-btn primary" id="saveWorkBtn">
-                        <i class="fas fa-save"></i> Simpan Work
-                    </button>
-                    <button type="button" class="upload-modal-btn secondary" id="cancelUploadBtn">
-                        <i class="fas fa-times"></i> Batal
-                    </button>
+                <div class="modal-buttons" style="display: flex; gap: 15px; margin-top: 30px;">
+                    <button type="submit" class="admin-btn" id="saveWorkBtn">Simpan Work</button>
+                    <button type="button" class="admin-btn" style="background: var(--gradient-dark);" id="cancelWorkBtn">Batal</button>
                 </div>
             </form>
-        </div>
-    </div>
-    
-    <!-- Modal Zoom untuk Gambar -->
-    <div class="modal zoom-modal" id="zoomModal">
-        <button class="close-zoom" id="closeZoom">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="zoom-content">
-            <img id="zoomedImage" class="zoomed-image" src="" alt="Zoomed Image">
-            <div class="zoom-caption" id="zoomCaption"></div>
         </div>
     </div>
     
@@ -3916,10 +2960,6 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
         <div class="loading-text" id="loadingText">Loading...</div>
-        <div class="upload-progress" id="uploadProgress">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-        <div class="upload-percentage-old" id="uploadPercentageOld">0%</div>
     </div>
     
     <!-- Notification -->
@@ -4098,10 +3138,8 @@
         let isAdminLoggedIn = false;
         let isEditMode = false;
         let currentPage = "home";
-        let currentUploadType = null; // "profile", "achievement", atau "work"
+        let currentUploadType = null;
         let currentItemId = null;
-
-        // Variables untuk modal upload
         let currentImageFile = null;
         let currentImageUrl = null;
 
@@ -4114,16 +3152,42 @@
         // FUNGSI UTILITAS
         // ============================================
 
-        // Fungsi untuk upload gambar ke localStorage
+        // Load data dari localStorage
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('portfolioData');
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    
+                    // Merge dengan data default
+                    appData = { ...appData, ...data };
+                    
+                    // Ensure arrays exist
+                    if (!appData.pages.work.items) appData.pages.work.items = [];
+                    if (!appData.pages.achievements.items) appData.pages.achievements.items = [];
+                    
+                } catch (e) {
+                    console.error("Error loading data from localStorage:", e);
+                }
+            }
+        }
+
+        // Save data ke localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('portfolioData', JSON.stringify(appData));
+            showNotification('Data berhasil disimpan!', 'success');
+        }
+
+        // Upload gambar ke localStorage
         function uploadImageToStorage(file, type, itemId = null) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 
                 reader.onload = function(e) {
                     const base64Image = e.target.result;
-                    
-                    // Simpan ke localStorage dengan key yang unik
                     const imageKey = `${type}_${itemId || 'profile'}_${Date.now()}`;
+                    
+                    // Simpan di localStorage
                     localStorage.setItem(imageKey, base64Image);
                     
                     resolve({
@@ -4140,119 +3204,15 @@
             });
         }
 
-        // Fungsi untuk mengambil gambar dari storage
-        function getImageFromStorage(key) {
-            return localStorage.getItem(key);
-        }
-
-        // Fungsi untuk menghapus gambar dari storage
+        // Hapus gambar dari storage
         function removeImageFromStorage(key) {
             localStorage.removeItem(key);
-        }
-
-        // Fungsi untuk membersihkan gambar yang tidak terpakai
-        function cleanupUnusedImages() {
-            const usedImageKeys = new Set();
-            
-            // Kumpulkan semua kunci gambar yang digunakan
-            if (appData.user.profileImageKey) {
-                usedImageKeys.add(appData.user.profileImageKey);
-            }
-            
-            // Kumpulkan dari work items
-            appData.pages.work.items.forEach(item => {
-                if (item.imageKey) {
-                    usedImageKeys.add(item.imageKey);
-                }
-            });
-            
-            // Kumpulkan dari achievement items
-            appData.pages.achievements.items.forEach(item => {
-                if (item.imageKey) {
-                    usedImageKeys.add(item.imageKey);
-                }
-            });
-            
-            // Hapus gambar yang tidak digunakan dari localStorage
-            const allKeys = Object.keys(localStorage);
-            allKeys.forEach(key => {
-                if (key.startsWith('work_') || key.startsWith('achievement_') || key.startsWith('profile_')) {
-                    if (!usedImageKeys.has(key)) {
-                        localStorage.removeItem(key);
-                    }
-                }
-            });
-        }
-
-        // Load data dari localStorage
-        function loadFromLocalStorage() {
-            const savedData = localStorage.getItem('portfolioData');
-            if (savedData) {
-                try {
-                    const data = JSON.parse(savedData);
-                    
-                    // Konversi data URL gambar dari string JSON
-                    if (data.user && data.user.profileImage) {
-                        appData.user.profileImage = data.user.profileImage;
-                        appData.user.profileImageKey = data.user.profileImageKey;
-                    }
-                    
-                    // Konversi gambar untuk work
-                    if (data.pages && data.pages.work && data.pages.work.items) {
-                        appData.pages.work.items = data.pages.work.items.map(item => {
-                            return {
-                                ...item,
-                                image: item.image || null,
-                                imageKey: item.imageKey || null
-                            };
-                        });
-                    }
-                    
-                    // Konversi gambar untuk achievements
-                    if (data.pages && data.pages.achievements && data.pages.achievements.items) {
-                        appData.pages.achievements.items = data.pages.achievements.items.map(item => {
-                            return {
-                                ...item,
-                                image: item.image || null,
-                                imageKey: item.imageKey || null
-                            };
-                        });
-                    }
-                    
-                    // Copy data lainnya
-                    Object.keys(data).forEach(key => {
-                        if (key !== 'user' && key !== 'pages') {
-                            appData[key] = data[key];
-                        }
-                    });
-                    
-                    // Copy halaman kecuali work dan achievements
-                    Object.keys(data.pages).forEach(pageKey => {
-                        if (pageKey !== 'work' && pageKey !== 'achievements') {
-                            appData.pages[pageKey] = data.pages[pageKey];
-                        }
-                    });
-                    
-                } catch (e) {
-                    console.error("Error loading data from localStorage:", e);
-                }
-            }
-            
-            // Panggil cleanup setelah load
-            cleanupUnusedImages();
-        }
-
-        // Save data ke localStorage
-        function saveToLocalStorage() {
-            localStorage.setItem('portfolioData', JSON.stringify(appData));
-            showNotification('Data berhasil disimpan!', 'success');
         }
 
         // ============================================
         // FUNGSI INISIALISASI
         // ============================================
 
-        // DOM Ready
         document.addEventListener('DOMContentLoaded', function() {
             loadFromLocalStorage();
             setupNavigation();
@@ -4260,779 +3220,283 @@
             setupChat();
             setupContactForm();
             setupMobileMenu();
-            setupImageUploadModal();
-            setupWorkUploadModal();
-            setupZoomModal();
-            setupResponsiveBehavior();
+            setupModals();
+            setupEffects();
             renderPage(currentPage);
             updateAdminUI();
-            setupContentHeight();
-            renderProfileImage();
-            centerHeroContent();
+            setupResponsiveBehavior();
             
-            // Setup efek
-            setupEffects();
+            // Setup event listeners
+            document.getElementById('addWorkBtn').addEventListener('click', openWorkUploadModal);
+            document.getElementById('floatingAddBtn').addEventListener('click', openWorkUploadModal);
             
-            // Tambahkan event listener untuk gambar profile (zoom)
+            // Profile image click
             document.getElementById('profileImg').addEventListener('click', function() {
                 if (appData.user.profileImage) {
-                    openZoom(appData.user.profileImage, 'Profile Picture');
+                    openImagePreview(appData.user.profileImage, 'Profile Picture');
                 }
             });
             
-            // Setup event listener untuk tombol add Work
-            document.getElementById('addWorkBtn').addEventListener('click', function() {
-                if (isAdminLoggedIn || isEditMode) {
-                    openWorkUploadModal();
-                } else {
-                    showNotification('Silakan login sebagai admin untuk menambah work', 'error');
-                }
-            });
-            
-            // Setup event listener untuk floating add button
-            const floatingAddBtn = document.getElementById('floatingAddBtn');
-            if (floatingAddBtn) {
-                floatingAddBtn.addEventListener('click', function() {
-                    if (isAdminLoggedIn || isEditMode) {
-                        openWorkUploadModal();
-                    } else {
-                        showNotification('Silakan login sebagai admin untuk menambah Work', 'error');
-                    }
-                });
-            }
-            
-            // Buat efek partikel
-            createParticles();
-            
-            // Setup resize untuk center content
-            window.addEventListener('resize', centerHeroContent);
+            // Initial render
+            renderProfileImage();
             
             // Setup cleanup interval
             setInterval(cleanupUnusedImages, 60000);
         });
 
-        // ============================================
-        // FUNGSI UTAMA
-        // ============================================
-
-        // Fungsi untuk membuat konten hero tepat di tengah
-        function centerHeroContent() {
-            const homeHero = document.querySelector('.home-hero');
-            const heroContent = document.querySelector('.hero-content');
+        // Setup modals
+        function setupModals() {
+            // Image Upload Modal
+            const imageModal = document.getElementById('imageUploadModal');
+            const imageInput = document.getElementById('imageInput');
+            const previewImage = document.getElementById('previewImage');
+            const imagePreview = document.getElementById('imagePreview');
+            const saveImageBtn = document.getElementById('saveImageBtn');
+            const cancelImageBtn = document.getElementById('cancelImageBtn');
+            const removeImageBtn = document.getElementById('removeImageBtn');
+            const closeImageModal = document.getElementById('closeImageModal');
             
-            if (homeHero && heroContent) {
-                heroContent.style.marginTop = '0';
-                
-                const heroHeight = homeHero.offsetHeight;
-                const contentHeight = heroContent.offsetHeight;
-                
-                if (contentHeight < heroHeight) {
-                    const topMargin = Math.max(0, (heroHeight - contentHeight) / 2);
-                    heroContent.style.marginTop = `${topMargin}px`;
+            // Profile upload button
+            document.getElementById('profileUploadBtn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isAdminLoggedIn || isEditMode) {
+                    openImageUploadModal('profile');
                 }
-            }
-        }
-
-        // Setup content height adjustment
-        function setupContentHeight() {
-            function adjustContentHeight() {
-                const mainContent = document.querySelector('.main-content');
-                const contentBody = document.querySelector('.content-body');
-                const activePage = document.querySelector('.page.active');
-                const contentHeader = document.querySelector('.content-header');
-                
-                if (mainContent && contentBody && activePage && contentHeader) {
-                    const headerHeight = contentHeader.offsetHeight;
-                    const windowHeight = window.innerHeight;
-                    const pageHeight = activePage.offsetHeight;
-                    
-                    contentBody.style.minHeight = Math.max(pageHeight, windowHeight - headerHeight) + 'px';
-                }
-            }
-            
-            setTimeout(adjustContentHeight, 300);
-            window.addEventListener('resize', adjustContentHeight);
-            
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    setTimeout(adjustContentHeight, 500);
-                });
             });
             
-            adjustContentHeight();
-        }
-
-        // Setup responsive behavior
-        function setupResponsiveBehavior() {
-            function handleResize() {
-                const sidebar = document.getElementById('sidebar');
-                const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-                const mainContent = document.getElementById('mainContent');
-                const floatingAddBtn = document.getElementById('floatingAddBtn');
-                const effectToggle = document.getElementById('effectToggle');
-                
-                if (window.innerWidth > 768) {
-                    sidebar.classList.remove('active');
-                    sidebar.style.transform = 'translateX(0)';
-                    if (mobileMenuToggle) {
-                        mobileMenuToggle.style.display = 'none';
+            // Image input change
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 5 * 1024 * 1024) {
+                        showNotification('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
+                        return;
                     }
-                    if (mainContent) {
-                        mainContent.style.position = 'fixed';
-                        mainContent.style.right = '0';
-                        mainContent.style.left = 'auto';
-                        mainContent.style.width = 'calc(100% - ' + (sidebar.offsetWidth || 280) + 'px)';
+                    
+                    if (!file.type.match('image.*')) {
+                        showNotification('Hanya file gambar yang diperbolehkan.', 'error');
+                        return;
                     }
-                    if (floatingAddBtn && isAdminLoggedIn && currentPage === 'work') {
-                        floatingAddBtn.style.top = '100px';
-                        floatingAddBtn.style.right = '40px';
-                        floatingAddBtn.style.bottom = 'auto';
-                    }
-                    if (effectToggle && (currentPage === 'about' || currentPage === 'chatroom')) {
-                        effectToggle.style.bottom = '100px';
-                        effectToggle.style.right = '40px';
-                        effectToggle.style.top = 'auto';
-                    }
-                } else {
-                    if (mobileMenuToggle) {
-                        mobileMenuToggle.style.display = 'block';
-                    }
-                    if (mainContent) {
-                        mainContent.style.position = 'fixed';
-                        mainContent.style.left = '0';
-                        mainContent.style.right = '0';
-                        mainContent.style.width = '100%';
-                    }
-                    if (floatingAddBtn && isAdminLoggedIn && currentPage === 'work') {
-                        floatingAddBtn.style.top = 'auto';
-                        floatingAddBtn.style.bottom = '30px';
-                        floatingAddBtn.style.right = '20px';
-                    }
-                    if (effectToggle && (currentPage === 'about' || currentPage === 'chatroom')) {
-                        effectToggle.style.top = 'auto';
-                        effectToggle.style.bottom = '80px';
-                        effectToggle.style.right = '20px';
-                    }
+                    
+                    currentImageFile = file;
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        currentImageUrl = event.target.result;
+                        previewImage.src = currentImageUrl;
+                        imagePreview.style.display = 'block';
+                        removeImageBtn.style.display = 'inline-block';
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Save image
+            saveImageBtn.addEventListener('click', async function() {
+                if (!currentImageFile && !currentImageUrl) {
+                    showNotification('Silakan pilih gambar terlebih dahulu', 'error');
+                    return;
                 }
                 
-                setTimeout(setupContentHeight, 100);
-                setTimeout(centerHeroContent, 100);
-            }
-            
-            window.addEventListener('resize', handleResize);
-            handleResize();
-        }
-
-        // Setup mobile menu toggle
-        function setupMobileMenu() {
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const sidebar = document.getElementById('sidebar');
-            
-            if (mobileMenuToggle && sidebar) {
-                mobileMenuToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('active');
-                    
-                    if (sidebar.classList.contains('active')) {
-                        this.innerHTML = '<i class="fas fa-times"></i>';
-                    } else {
-                        this.innerHTML = '<i class="fas fa-bars"></i>';
-                    }
-                });
+                showLoading('Mengupload gambar...');
                 
-                document.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 768) {
-                        if (!sidebar.contains(e.target) && 
-                            !mobileMenuToggle.contains(e.target) &&
-                            sidebar.classList.contains('active')) {
-                            sidebar.classList.remove('active');
-                            mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                try {
+                    let finalImageUrl = currentImageUrl;
+                    let finalImageKey = null;
+                    
+                    if (currentImageFile) {
+                        const uploadResult = await uploadImageToStorage(
+                            currentImageFile, 
+                            currentUploadType, 
+                            currentItemId || 'profile'
+                        );
+                        
+                        finalImageUrl = uploadResult.dataUrl;
+                        finalImageKey = uploadResult.key;
+                    }
+                    
+                    if (currentUploadType === 'profile') {
+                        // Hapus gambar lama jika ada
+                        if (appData.user.profileImageKey) {
+                            removeImageFromStorage(appData.user.profileImageKey);
+                        }
+                        
+                        appData.user.profileImage = finalImageUrl;
+                        appData.user.profileImageKey = finalImageKey;
+                        renderProfileImage();
+                        showNotification('Foto profile berhasil diupload!', 'success');
+                        
+                    } else if (currentUploadType === 'achievement' && currentItemId) {
+                        const achievement = appData.pages.achievements.items.find(a => a.id === currentItemId);
+                        if (achievement) {
+                            if (achievement.imageKey) {
+                                removeImageFromStorage(achievement.imageKey);
+                            }
+                            
+                            achievement.image = finalImageUrl;
+                            achievement.imageKey = finalImageKey;
+                            renderAchievementsPage();
+                            showNotification('Foto achievement berhasil diupload!', 'success');
+                        }
+                    } else if (currentUploadType === 'work' && currentItemId) {
+                        const work = appData.pages.work.items.find(d => d.id === currentItemId);
+                        if (work) {
+                            if (work.imageKey) {
+                                removeImageFromStorage(work.imageKey);
+                            }
+                            
+                            work.image = finalImageUrl;
+                            work.imageKey = finalImageKey;
+                            renderWorkPage();
+                            showNotification('Foto Work berhasil diupload!', 'success');
                         }
                     }
-                });
-            }
-        }
-
-        // Setup efek
-        function setupEffects() {
-            const effectToggle = document.getElementById('effectToggle');
-            
-            if (effectToggle) {
-                effectToggle.addEventListener('click', function() {
-                    toggleEffects();
-                });
-            }
-            
-            const aboutPage = document.getElementById('aboutPage');
-            if (aboutPage) {
-                aboutPage.addEventListener('mouseenter', function() {
-                    if (currentPage === 'about' && !rainEffectActive) {
-                        showEffectToggle('Rain Effect', 'fas fa-cloud-rain');
-                    }
-                });
-                
-                aboutPage.addEventListener('mouseleave', function() {
-                    if (!rainEffectActive) {
-                        hideEffectToggle();
-                    }
-                });
-            }
-            
-            const chatroomPage = document.getElementById('chatroomPage');
-            if (chatroomPage) {
-                chatroomPage.addEventListener('mouseenter', function() {
-                    if (currentPage === 'chatroom' && !starfallEffectActive) {
-                        showEffectToggle('Starfall Effect', 'fas fa-star');
-                    }
-                });
-                
-                chatroomPage.addEventListener('mouseleave', function() {
-                    if (!starfallEffectActive) {
-                        hideEffectToggle();
-                    }
-                });
-            }
-        }
-
-        // Fungsi untuk menampilkan tombol efek
-        function showEffectToggle(text, iconClass) {
-            const effectToggle = document.getElementById('effectToggle');
-            const effectText = document.getElementById('effectText');
-            const effectIcon = document.getElementById('effectIcon');
-            
-            if (effectToggle && effectText && effectIcon) {
-                effectText.textContent = text;
-                effectIcon.className = iconClass;
-                effectToggle.style.display = 'flex';
-                currentEffectPage = currentPage;
-            }
-        }
-
-        // Fungsi untuk menyembunyikan tombol efek
-        function hideEffectToggle() {
-            const effectToggle = document.getElementById('effectToggle');
-            if (effectToggle) {
-                effectToggle.style.display = 'none';
-                currentEffectPage = null;
-            }
-        }
-
-        // Fungsi untuk toggle efek
-        function toggleEffects() {
-            if (currentEffectPage === 'about') {
-                toggleRainEffect();
-            } else if (currentEffectPage === 'chatroom') {
-                toggleStarfallEffect();
-            }
-        }
-
-        // Fungsi untuk toggle efek rain
-        function toggleRainEffect() {
-            rainEffectActive = !rainEffectActive;
-            const rainContainer = document.getElementById('rainContainer');
-            const rainOverlay = document.getElementById('rainOverlay');
-            const starfallOverlay = document.getElementById('starfallOverlay');
-            const effectToggle = document.getElementById('effectToggle');
-            const effectText = document.getElementById('effectText');
-            
-            if (rainEffectActive) {
-                if (starfallEffectActive) {
-                    toggleStarfallEffect();
-                }
-                
-                rainContainer.style.display = 'block';
-                rainOverlay.style.display = 'block';
-                setTimeout(() => {
-                    rainOverlay.style.opacity = '1';
-                }, 10);
-                
-                effectText.textContent = 'Matikan Rain Effect';
-                createElegantRainDrops();
-                document.getElementById('aboutPage').classList.add('rain-active');
-                effectToggle.style.background = 'linear-gradient(135deg, #00bcd4 0%, #00ffff 100%)';
-                effectToggle.style.color = '#000';
-                
-                showNotification('Rain Effect diaktifkan! Suasana hujan yang menenangkan.', 'success');
-            } else {
-                rainContainer.style.display = 'none';
-                rainOverlay.style.opacity = '0';
-                setTimeout(() => {
-                    rainOverlay.style.display = 'none';
-                }, 1000);
-                effectText.textContent = 'Aktifkan Rain Effect';
-                effectToggle.style.background = 'var(--gradient-gold)';
-                effectToggle.style.color = '#000';
-                document.getElementById('aboutPage').classList.remove('rain-active');
-                
-                showNotification('Rain Effect dimatikan.', 'info');
-                hideEffectToggle();
-            }
-        }
-
-        // Fungsi untuk membuat rain drops yang lebih elegan
-        function createElegantRainDrops() {
-            const rainContainer = document.getElementById('rainContainer');
-            if (!rainContainer || !rainEffectActive) return;
-            
-            rainContainer.innerHTML = '';
-            
-            const backgroundGlow = document.createElement('div');
-            backgroundGlow.style.position = 'absolute';
-            backgroundGlow.style.top = '0';
-            backgroundGlow.style.left = '0';
-            backgroundGlow.style.width = '100%';
-            backgroundGlow.style.height = '100%';
-            backgroundGlow.style.background = 'radial-gradient(circle at center, rgba(0, 100, 200, 0.05) 0%, transparent 70%)';
-            backgroundGlow.style.filter = 'blur(20px)';
-            rainContainer.appendChild(backgroundGlow);
-            
-            for (let i = 0; i < 80; i++) {
-                setTimeout(() => {
-                    if (!rainEffectActive) return;
                     
-                    createSingleRainDrop(i);
-                    
-                }, i * 30);
-            }
-            
-            if (rainEffectActive) {
-                setTimeout(createElegantRainDrops, 5000);
-            }
-        }
-
-        // Fungsi untuk membuat single rain drop elegan
-        function createSingleRainDrop(index) {
-            const rainContainer = document.getElementById('rainContainer');
-            
-            const rainDrop = document.createElement('div');
-            rainDrop.className = 'rain-drop';
-            
-            const left = 10 + Math.random() * 80;
-            rainDrop.style.left = `${left}%`;
-            
-            const delay = Math.random() * 3;
-            rainDrop.style.animationDelay = `${delay}s`;
-            
-            const duration = 1.5 + Math.random() * 1;
-            rainDrop.style.animationDuration = `${duration}s`;
-            
-            const opacity = 0.5 + Math.random() * 0.5;
-            rainDrop.style.opacity = opacity;
-            
-            const colors = [
-                'rgba(0, 255, 255, 0.8)',
-                'rgba(0, 200, 255, 0.7)',
-                'rgba(0, 150, 255, 0.6)',
-                'rgba(100, 200, 255, 0.7)'
-            ];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            rainDrop.style.background = `linear-gradient(to bottom, 
-                transparent 0%, 
-                ${randomColor} 30%,
-                rgba(0, 255, 255, 0.5) 70%,
-                transparent 100%)`;
-            
-            rainContainer.appendChild(rainDrop);
-            
-            setTimeout(() => {
-                if (rainEffectActive) {
-                    createElegantRipple(left, 90 + Math.random() * 10);
-                    createRainLight(left, 90 + Math.random() * 10, randomColor);
-                }
-            }, duration * 1000 - 500);
-        }
-
-        // Fungsi untuk membuat efek ripple yang elegan
-        function createElegantRipple(left, top) {
-            if (!rainEffectActive) return;
-            
-            const rainContainer = document.getElementById('rainContainer');
-            const ripple = document.createElement('div');
-            ripple.className = 'rain-ripple';
-            
-            ripple.style.left = `${left}%`;
-            ripple.style.top = `${top}%`;
-            
-            const size = 4 + Math.random() * 8;
-            ripple.style.width = `${size}px`;
-            ripple.style.height = `${size}px`;
-            
-            const colors = ['rgba(0, 255, 255, 0.4)', 'rgba(0, 200, 255, 0.3)', 'rgba(100, 220, 255, 0.35)'];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            ripple.style.borderColor = randomColor;
-            
-            const duration = 0.8 + Math.random() * 0.7;
-            ripple.style.animationDuration = `${duration}s`;
-            
-            rainContainer.appendChild(ripple);
-            
-            setTimeout(() => {
-                if (ripple.parentNode) {
-                    ripple.parentNode.removeChild(ripple);
-                }
-            }, duration * 1000);
-        }
-
-        // Fungsi untuk membuat efek cahaya rain
-        function createRainLight(left, top, color) {
-            if (!rainEffectActive) return;
-            
-            const rainContainer = document.getElementById('rainContainer');
-            const light = document.createElement('div');
-            light.className = 'rain-light';
-            
-            light.style.left = `${left}%`;
-            light.style.top = `${top}%`;
-            
-            light.style.background = `radial-gradient(circle, 
-                ${color.replace('0.8', '0.3').replace('0.7', '0.25').replace('0.6', '0.2')} 0%, 
-                rgba(0, 255, 255, 0.1) 40%,
-                transparent 70%)`;
-            
-            rainContainer.appendChild(light);
-            
-            setTimeout(() => {
-                if (light.parentNode) {
-                    light.parentNode.removeChild(light);
-                }
-            }, 500);
-        }
-
-        // Fungsi untuk toggle efek starfall yang lebih elegan
-        function toggleStarfallEffect() {
-            starfallEffectActive = !starfallEffectActive;
-            const starfallContainer = document.getElementById('starfallContainer');
-            const starfallOverlay = document.getElementById('starfallOverlay');
-            const rainOverlay = document.getElementById('rainOverlay');
-            const effectToggle = document.getElementById('effectToggle');
-            const effectText = document.getElementById('effectText');
-            
-            if (starfallEffectActive) {
-                if (rainEffectActive) {
-                    toggleRainEffect();
-                }
-                
-                starfallContainer.style.display = 'block';
-                starfallOverlay.style.display = 'block';
-                setTimeout(() => {
-                    starfallOverlay.style.opacity = '1';
-                }, 10);
-                
-                effectText.textContent = 'Matikan Starfall Effect';
-                createElegantStars();
-                document.getElementById('chatroomPage').classList.add('starfall-active');
-                effectToggle.style.background = 'linear-gradient(135deg, #ff9500 0%, #ffcc00 100%)';
-                effectToggle.style.color = '#000';
-                
-                showNotification('Starfall Effect diaktifkan! Galaksi bintang yang memukau.', 'success');
-            } else {
-                starfallContainer.style.display = 'none';
-                starfallOverlay.style.opacity = '0';
-                setTimeout(() => {
-                    starfallOverlay.style.display = 'none';
-                }, 1000);
-                effectText.textContent = 'Aktifkan Starfall Effect';
-                effectToggle.style.background = 'var(--gradient-gold)';
-                effectToggle.style.color = '#000';
-                document.getElementById('chatroomPage').classList.remove('starfall-active');
-                
-                showNotification('Starfall Effect dimatikan.', 'info');
-                hideEffectToggle();
-            }
-        }
-
-        // Fungsi untuk membuat stars yang lebih elegan
-        function createElegantStars() {
-            const starfallContainer = document.getElementById('starfallContainer');
-            if (!starfallContainer || !starfallEffectActive) return;
-            
-            starfallContainer.innerHTML = '';
-            
-            const nebula = document.createElement('div');
-            nebula.style.position = 'absolute';
-            nebula.style.top = '0';
-            nebula.style.left = '0';
-            nebula.style.width = '100%';
-            nebula.style.height = '100%';
-            nebula.style.background = `
-                radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(255, 100, 0, 0.02) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(200, 150, 0, 0.01) 0%, transparent 50%)
-            `;
-            nebula.style.filter = 'blur(15px)';
-            starfallContainer.appendChild(nebula);
-            
-            for (let i = 0; i < 40; i++) {
-                setTimeout(() => {
-                    if (!starfallEffectActive) return;
-                    
-                    createSingleStar(i);
-                    
-                }, i * 100);
-            }
-            
-            if (starfallEffectActive) {
-                setTimeout(createElegantStars, 6000);
-            }
-        }
-
-        // Setup modal zoom
-        function setupZoomModal() {
-            const zoomModal = document.getElementById('zoomModal');
-            const closeZoom = document.getElementById('closeZoom');
-            
-            closeZoom.addEventListener('click', function() {
-                zoomModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-            
-            zoomModal.addEventListener('click', function(e) {
-                if (e.target === zoomModal) {
-                    zoomModal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-            
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && zoomModal.classList.contains('active')) {
-                    zoomModal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
-
-        // Fungsi universal untuk membuka zoom
-        function openZoom(imageSrc, caption = '') {
-            if (!imageSrc) return;
-            
-            const zoomModal = document.getElementById('zoomModal');
-            const zoomedImage = document.getElementById('zoomedImage');
-            const zoomCaption = document.getElementById('zoomCaption');
-            
-            showLoading('Memuat gambar...');
-            
-            const img = new Image();
-            img.onload = function() {
-                zoomedImage.src = imageSrc;
-                zoomCaption.textContent = caption;
-                zoomedImage.classList.add('loaded');
-                
-                setTimeout(() => {
-                    zoomModal.classList.add('active');
+                    saveToLocalStorage();
                     hideLoading();
-                    document.body.style.overflow = 'hidden';
-                }, 300);
-            };
-            img.onerror = function() {
-                hideLoading();
-                showNotification('Gagal memuat gambar', 'error');
-            };
-            img.src = imageSrc;
-        }
-
-        // Setup Work Upload Modal
-        function setupWorkUploadModal() {
-            const modal = document.getElementById('workUploadModal');
-            const closeBtn = document.getElementById('closeUploadModal');
-            const cancelBtn = document.getElementById('cancelUploadBtn');
-            const browseBtn = document.getElementById('browseImageBtn');
-            const fileInput = document.getElementById('imageFileInput');
-            const dropArea = document.getElementById('imageDropArea');
-            const imagePreview = document.getElementById('imagePreview');
-            const previewContainer = document.getElementById('imagePreviewContainer');
-            const imageActions = document.getElementById('imageActions');
-            const changeImageBtn = document.getElementById('changeImageBtn');
-            const removeImageBtn = document.getElementById('removeImageBtn');
-            const form = document.getElementById('workUploadForm');
-            const saveBtn = document.getElementById('saveWorkBtn');
-            const progressContainer = document.getElementById('uploadProgressContainer');
-            const progressBar = document.getElementById('uploadProgressBar');
-            const percentage = document.getElementById('uploadPercentage');
-
-            // Open modal
-            window.openWorkUploadModal = function(editItemId = null) {
+                    closeModal(imageModal);
+                    resetImageModal();
+                    
+                } catch (error) {
+                    hideLoading();
+                    showNotification('Gagal mengupload gambar: ' + error, 'error');
+                }
+            });
+            
+            // Remove image
+            removeImageBtn.addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin menghapus gambar ini?')) {
+                    showLoading('Menghapus gambar...');
+                    
+                    setTimeout(() => {
+                        if (currentUploadType === 'profile') {
+                            if (appData.user.profileImageKey) {
+                                removeImageFromStorage(appData.user.profileImageKey);
+                            }
+                            appData.user.profileImage = null;
+                            appData.user.profileImageKey = null;
+                            renderProfileImage();
+                            showNotification('Foto profile berhasil dihapus!', 'success');
+                        } else if (currentUploadType === 'achievement' && currentItemId) {
+                            const achievement = appData.pages.achievements.items.find(a => a.id === currentItemId);
+                            if (achievement) {
+                                if (achievement.imageKey) {
+                                    removeImageFromStorage(achievement.imageKey);
+                                }
+                                achievement.image = null;
+                                achievement.imageKey = null;
+                                renderAchievementsPage();
+                                showNotification('Foto achievement berhasil dihapus!', 'success');
+                            }
+                        } else if (currentUploadType === 'work' && currentItemId) {
+                            const work = appData.pages.work.items.find(d => d.id === currentItemId);
+                            if (work) {
+                                if (work.imageKey) {
+                                    removeImageFromStorage(work.imageKey);
+                                }
+                                work.image = null;
+                                work.imageKey = null;
+                                renderWorkPage();
+                                showNotification('Foto Work berhasil dihapus!', 'success');
+                            }
+                        }
+                        
+                        saveToLocalStorage();
+                        hideLoading();
+                        closeModal(imageModal);
+                        resetImageModal();
+                    }, 500);
+                }
+            });
+            
+            // Cancel/Close buttons
+            cancelImageBtn.addEventListener('click', function() {
+                closeModal(imageModal);
+                resetImageModal();
+            });
+            
+            closeImageModal.addEventListener('click', function() {
+                closeModal(imageModal);
+                resetImageModal();
+            });
+            
+            // Work Upload Modal
+            const workModal = document.getElementById('workUploadModal');
+            const workForm = document.getElementById('workUploadForm');
+            const workImageInput = document.getElementById('workImageInput');
+            const workPreviewImage = document.getElementById('workPreviewImage');
+            const workImagePreview = document.getElementById('workImagePreview');
+            const saveWorkBtn = document.getElementById('saveWorkBtn');
+            const cancelWorkBtn = document.getElementById('cancelWorkBtn');
+            const closeWorkModal = document.getElementById('closeWorkModal');
+            
+            let editingWorkId = null;
+            
+            // Open work modal
+            window.openWorkUploadModal = function(editId = null) {
                 if (!isAdminLoggedIn && !isEditMode) {
                     showNotification('Silakan login sebagai admin untuk menambah work', 'error');
                     return;
                 }
                 
-                resetUploadForm();
+                resetWorkModal();
                 
-                if (editItemId) {
-                    const item = appData.pages.work.items.find(i => i.id === editItemId);
-                    if (item) {
-                        document.getElementById('workTitle').value = item.title;
-                        document.getElementById('workDate').value = item.date;
-                        document.getElementById('workCategory').value = item.category;
-                        document.getElementById('workDescription').value = item.description;
+                if (editId) {
+                    editingWorkId = editId;
+                    const work = appData.pages.work.items.find(w => w.id === editId);
+                    if (work) {
+                        document.getElementById('workTitle').value = work.title;
+                        document.getElementById('workDate').value = work.date;
+                        document.getElementById('workCategory').value = work.category;
+                        document.getElementById('workDescription').value = work.description;
                         
-                        if (item.image) {
-                            currentImageUrl = item.image;
-                            imagePreview.src = item.image;
-                            previewContainer.style.display = 'block';
-                            imageActions.style.display = 'flex';
+                        if (work.image) {
+                            workPreviewImage.src = work.image;
+                            workImagePreview.style.display = 'block';
                         }
                         
-                        saveBtn.innerHTML = '<i class="fas fa-save"></i> Update Work';
-                        saveBtn.dataset.editId = editItemId;
-                        
-                        document.querySelector('.upload-modal-title').textContent = 'Edit Work';
-                        document.querySelector('.upload-modal-subtitle').textContent = 'Edit dokumentasi pekerjaan';
+                        saveWorkBtn.textContent = 'Update Work';
+                        document.querySelector('#workUploadModal .modal-title').textContent = 'Edit Work';
                     }
                 } else {
-                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Work';
-                    delete saveBtn.dataset.editId;
-                    
-                    document.querySelector('.upload-modal-title').textContent = 'Tambah Work Baru';
-                    document.querySelector('.upload-modal-subtitle').textContent = 'Tambahkan dokumentasi pekerjaan Anda';
+                    editingWorkId = null;
+                    saveWorkBtn.textContent = 'Simpan Work';
+                    document.querySelector('#workUploadModal .modal-title').textContent = 'Tambah Work Baru';
                 }
                 
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                setTimeout(() => {
-                    document.getElementById('workTitle').focus();
-                }, 100);
+                openModal(workModal);
             };
-
-            // Close modal
-            function closeUploadModal() {
-                modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-                resetUploadForm();
-            }
-
-            // Close button event
-            closeBtn.addEventListener('click', closeUploadModal);
-            cancelBtn.addEventListener('click', closeUploadModal);
-
-            // Close on outside click
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    closeUploadModal();
-                }
-            });
-
-            // Close on ESC key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeUploadModal();
-                }
-            });
-
-            // Browse button event
-            browseBtn.addEventListener('click', function() {
-                fileInput.click();
-            });
-
-            // File input change event
-            fileInput.addEventListener('change', function(e) {
+            
+            // Work image input
+            workImageInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
-                    handleImageFile(file);
-                }
-            });
-
-            // Drag and drop events
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, preventDefaults, false);
-            });
-
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropArea.addEventListener(eventName, highlight, false);
-            });
-
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, unhighlight, false);
-            });
-
-            function highlight() {
-                dropArea.classList.add('drag-over');
-            }
-
-            function unhighlight() {
-                dropArea.classList.remove('drag-over');
-            }
-
-            // Drop event
-            dropArea.addEventListener('drop', function(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
-                
-                if (files.length > 0) {
-                    const file = files[0];
-                    if (file.type.match('image.*')) {
-                        handleImageFile(file);
-                    } else {
-                        showNotification('Hanya file gambar yang diperbolehkan', 'error');
+                    if (file.size > 5 * 1024 * 1024) {
+                        showNotification('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
+                        return;
                     }
+                    
+                    if (!file.type.match('image.*')) {
+                        showNotification('Hanya file gambar yang diperbolehkan.', 'error');
+                        return;
+                    }
+                    
+                    currentImageFile = file;
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        currentImageUrl = event.target.result;
+                        workPreviewImage.src = currentImageUrl;
+                        workImagePreview.style.display = 'block';
+                    };
+                    
+                    reader.readAsDataURL(file);
                 }
             });
-
-            // Handle image file
-            function handleImageFile(file) {
-                if (file.size > 5 * 1024 * 1024) {
-                    showNotification('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
-                    return;
-                }
-
-                if (!file.type.match('image.*')) {
-                    showNotification('Hanya file gambar yang diperbolehkan.', 'error');
-                    return;
-                }
-
-                currentImageFile = file;
-                
-                showProgress();
-                updateProgress(30);
-                
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    updateProgress(100);
-                    
-                    currentImageUrl = e.target.result;
-                    imagePreview.src = currentImageUrl;
-                    previewContainer.style.display = 'block';
-                    imageActions.style.display = 'flex';
-                    
-                    setTimeout(() => {
-                        hideProgress();
-                    }, 300);
-                    
-                    showNotification('Gambar berhasil diupload!', 'success');
-                };
-                
-                reader.onerror = function() {
-                    hideProgress();
-                    showNotification('Gagal membaca file gambar', 'error');
-                };
-                
-                reader.readAsDataURL(file);
-            }
-
-            // Change image button
-            changeImageBtn.addEventListener('click', function() {
-                fileInput.click();
-            });
-
-            // Remove image button
-            removeImageBtn.addEventListener('click', function() {
-                currentImageFile = null;
-                currentImageUrl = null;
-                previewContainer.style.display = 'none';
-                imageActions.style.display = 'none';
-                fileInput.value = '';
-                showNotification('Gambar berhasil dihapus', 'info');
-            });
-
-            // Form submit
-            form.addEventListener('submit', async function(e) {
+            
+            // Work form submit
+            workForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 if (!isAdminLoggedIn && !isEditMode) {
@@ -5056,53 +3520,45 @@
                     return;
                 }
                 
-                showLoading('Menyimpan Work...');
+                showLoading(editingWorkId ? 'Memperbarui Work...' : 'Menyimpan Work...');
                 
                 try {
-                    let finalImageUrl = null;
+                    let finalImageUrl = currentImageUrl;
                     let finalImageKey = null;
                     
                     if (currentImageFile) {
-                        showLoading('Mengupload gambar...');
-                        
                         const uploadResult = await uploadImageToStorage(
                             currentImageFile, 
                             'work', 
-                            editId || `work_${Date.now()}`
+                            editingWorkId || `work_${Date.now()}`
                         );
                         
                         finalImageUrl = uploadResult.dataUrl;
                         finalImageKey = uploadResult.key;
-                        showLoading('Menyimpan Work...');
                     }
                     
-                    const editId = saveBtn.dataset.editId;
-                    
-                    if (editId) {
-                        const item = appData.pages.work.items.find(i => i.id === editId);
-                        if (item) {
-                            item.title = title;
-                            item.date = date;
-                            item.category = category;
-                            item.description = description;
-                            if (finalImageUrl) {
-                                if (item.imageKey) {
-                                    removeImageFromStorage(item.imageKey);
-                                }
-                                item.image = finalImageUrl;
-                                item.imageKey = finalImageKey;
+                    if (editingWorkId) {
+                        // Update existing work
+                        const work = appData.pages.work.items.find(w => w.id === editingWorkId);
+                        if (work) {
+                            // Hapus gambar lama jika diganti
+                            if (currentImageFile && work.imageKey) {
+                                removeImageFromStorage(work.imageKey);
                             }
                             
-                            renderWorkPage();
-                            saveToLocalStorage();
-                            closeUploadModal();
-                            hideLoading();
-                            
-                            showNotification('Work berhasil diperbarui!', 'success');
+                            work.title = title;
+                            work.date = date;
+                            work.category = category;
+                            work.description = description;
+                            if (currentImageFile) {
+                                work.image = finalImageUrl;
+                                work.imageKey = finalImageKey;
+                            }
                         }
                     } else {
+                        // Add new work
                         const newId = 'work_' + Date.now();
-                        const newItem = {
+                        const newWork = {
                             id: newId,
                             title: title,
                             date: date,
@@ -5112,299 +3568,93 @@
                             imageKey: finalImageKey
                         };
                         
-                        appData.pages.work.items.unshift(newItem);
-                        
-                        renderWorkPage();
-                        saveToLocalStorage();
-                        closeUploadModal();
-                        hideLoading();
-                        
-                        const workPage = document.getElementById('workPage');
-                        if (workPage) {
-                            workPage.scrollIntoView({ behavior: 'smooth' });
-                        }
-                        
-                        showNotification('Work berhasil ditambahkan!', 'success');
+                        appData.pages.work.items.unshift(newWork);
                     }
+                    
+                    renderWorkPage();
+                    saveToLocalStorage();
+                    hideLoading();
+                    closeModal(workModal);
+                    resetWorkModal();
+                    
+                    showNotification(
+                        editingWorkId ? 'Work berhasil diperbarui!' : 'Work berhasil ditambahkan!',
+                        'success'
+                    );
                     
                 } catch (error) {
                     hideLoading();
                     showNotification('Gagal mengupload gambar: ' + error, 'error');
                 }
             });
-
-            // Show progress bar
-            function showProgress() {
-                progressContainer.style.display = 'block';
-                percentage.style.display = 'block';
-                updateProgress(0);
-            }
-
-            // Hide progress bar
-            function hideProgress() {
-                progressContainer.style.display = 'none';
-                percentage.style.display = 'none';
-                updateProgress(0);
-            }
-
-            // Update progress
-            function updateProgress(value) {
-                progressBar.style.width = value + '%';
-                percentage.textContent = Math.round(value) + '%';
-            }
+            
+            // Cancel/Close work modal
+            cancelWorkBtn.addEventListener('click', function() {
+                closeModal(workModal);
+                resetWorkModal();
+            });
+            
+            closeWorkModal.addEventListener('click', function() {
+                closeModal(workModal);
+                resetWorkModal();
+            });
+            
+            // Close modal on outside click
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeModal(modal);
+                        if (modal === imageModal) resetImageModal();
+                        if (modal === workModal) resetWorkModal();
+                    }
+                });
+            });
+            
+            // Close modal on ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal.active').forEach(modal => {
+                        closeModal(modal);
+                        if (modal === imageModal) resetImageModal();
+                        if (modal === workModal) resetWorkModal();
+                    });
+                }
+            });
         }
 
-        // Reset upload form
-        function resetUploadForm() {
-            const form = document.getElementById('workUploadForm');
-            const imagePreview = document.getElementById('imagePreview');
-            const previewContainer = document.getElementById('imagePreviewContainer');
-            const imageActions = document.getElementById('imageActions');
-            const fileInput = document.getElementById('imageFileInput');
-            const progressContainer = document.getElementById('uploadProgressContainer');
-            const percentage = document.getElementById('uploadPercentage');
-            
-            if (form) form.reset();
-            if (imagePreview) imagePreview.src = '';
-            if (previewContainer) previewContainer.style.display = 'none';
-            if (imageActions) imageActions.style.display = 'none';
-            if (fileInput) fileInput.value = '';
-            if (progressContainer) progressContainer.style.display = 'none';
-            if (percentage) percentage.style.display = 'none';
-            
+        // Modal helper functions
+        function openModal(modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function resetImageModal() {
+            document.getElementById('imageInput').value = '';
+            document.getElementById('previewImage').src = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('removeImageBtn').style.display = 'none';
+            currentUploadType = null;
+            currentItemId = null;
             currentImageFile = null;
             currentImageUrl = null;
         }
 
-        // Setup image upload modal
-        function setupImageUploadModal() {
-            const profileUploadBtn = document.getElementById('profileUploadBtn');
-            const imageInput = document.getElementById('imageInput');
-            const imagePreview = document.getElementById('imagePreview');
-            const previewImage = document.getElementById('previewImage');
-            const saveImageBtn = document.getElementById('saveImageBtn');
-            const cancelImageBtn = document.getElementById('cancelImageBtn');
-            const removeImageBtn = document.getElementById('removeImageBtn');
-            const modal = document.getElementById('imageUploadModal');
-            
-            // Event listener untuk upload foto profile
-            if (profileUploadBtn) {
-                profileUploadBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    if (isAdminLoggedIn || isEditMode) {
-                        openImageUploadModal('profile');
-                    } else {
-                        if (appData.user.profileImage) {
-                            openZoom(appData.user.profileImage, 'Profile Picture');
-                        }
-                    }
-                });
-            }
-            
-            // Event listener untuk file input change
-            imageInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    if (file.size > 5 * 1024 * 1024) {
-                        showNotification('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
-                        return;
-                    }
-                    
-                    if (!file.type.match('image.*')) {
-                        showNotification('Hanya file gambar yang diperbolehkan.', 'error');
-                        return;
-                    }
-                    
-                    simulateUploadWithProgress(file, previewImage, imagePreview);
-                }
-            });
-            
-            // Event listener untuk save button
-            saveImageBtn.addEventListener('click', async function() {
-                if (previewImage.src) {
-                    showLoading('Menyimpan gambar...');
-                    showProgress();
-                    
-                    try {
-                        const imageInput = document.getElementById('imageInput');
-                        if (imageInput.files.length > 0) {
-                            const file = imageInput.files[0];
-                            
-                            const uploadResult = await uploadImageToStorage(
-                                file, 
-                                currentUploadType, 
-                                currentItemId || 'profile'
-                            );
-                            
-                            if (currentUploadType === 'profile') {
-                                if (appData.user.profileImageKey) {
-                                    removeImageFromStorage(appData.user.profileImageKey);
-                                }
-                                
-                                appData.user.profileImage = uploadResult.dataUrl;
-                                appData.user.profileImageKey = uploadResult.key;
-                                renderProfileImage();
-                                showNotification('Foto profile berhasil diupload!', 'success');
-                                
-                            } else if (currentUploadType === 'achievement' && currentItemId) {
-                                const achievement = appData.pages.achievements.items.find(a => a.id === currentItemId);
-                                if (achievement) {
-                                    if (achievement.imageKey) {
-                                        removeImageFromStorage(achievement.imageKey);
-                                    }
-                                    
-                                    achievement.image = uploadResult.dataUrl;
-                                    achievement.imageKey = uploadResult.key;
-                                    renderAchievementsPage();
-                                    showNotification('Foto achievement berhasil diupload!', 'success');
-                                }
-                                
-                            } else if (currentUploadType === 'work' && currentItemId) {
-                                const work = appData.pages.work.items.find(d => d.id === currentItemId);
-                                if (work) {
-                                    if (work.imageKey) {
-                                        removeImageFromStorage(work.imageKey);
-                                    }
-                                    
-                                    work.image = uploadResult.dataUrl;
-                                    work.imageKey = uploadResult.key;
-                                    renderWorkPage();
-                                    showNotification('Foto Work berhasil diupload!', 'success');
-                                }
-                            }
-                            
-                            saveToLocalStorage();
-                            updateProgress(100);
-                            
-                            setTimeout(() => {
-                                modal.classList.remove('active');
-                                resetUploadModal();
-                                hideLoading();
-                            }, 300);
-                        }
-                    } catch (error) {
-                        hideLoading();
-                        showNotification('Gagal mengupload gambar: ' + error, 'error');
-                    }
-                } else {
-                    showNotification('Silakan pilih gambar terlebih dahulu', 'error');
-                }
-            });
-            
-            // Event listener untuk cancel button
-            cancelImageBtn.addEventListener('click', function() {
-                modal.classList.remove('active');
-                resetUploadModal();
-            });
-            
-            // Event listener untuk remove button
-            removeImageBtn.addEventListener('click', function() {
-                showLoading('Menghapus gambar...');
-                
-                setTimeout(() => {
-                    if (currentUploadType === 'profile') {
-                        if (appData.user.profileImageKey) {
-                            removeImageFromStorage(appData.user.profileImageKey);
-                        }
-                        appData.user.profileImage = null;
-                        appData.user.profileImageKey = null;
-                        renderProfileImage();
-                        showNotification('Foto profile berhasil dihapus!', 'success');
-                    } else if (currentUploadType === 'achievement' && currentItemId) {
-                        const achievement = appData.pages.achievements.items.find(a => a.id === currentItemId);
-                        if (achievement) {
-                            if (achievement.imageKey) {
-                                removeImageFromStorage(achievement.imageKey);
-                            }
-                            achievement.image = null;
-                            achievement.imageKey = null;
-                            renderAchievementsPage();
-                            showNotification('Foto achievement berhasil dihapus!', 'success');
-                        }
-                    } else if (currentUploadType === 'work' && currentItemId) {
-                        const work = appData.pages.work.items.find(d => d.id === currentItemId);
-                        if (work) {
-                            if (work.imageKey) {
-                                removeImageFromStorage(work.imageKey);
-                            }
-                            work.image = null;
-                            work.imageKey = null;
-                            renderWorkPage();
-                            showNotification('Foto Work berhasil dihapus!', 'success');
-                        }
-                    }
-                    
-                    saveToLocalStorage();
-                    modal.classList.remove('active');
-                    resetUploadModal();
-                    hideLoading();
-                }, 500);
-            });
-            
-            // Event listener untuk klik di luar modal
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    resetUploadModal();
-                }
-            });
-        }
-
-        // Fungsi untuk simulasi upload dengan progress bar
-        function simulateUploadWithProgress(file, previewImage, imagePreview) {
-            return new Promise((resolve, reject) => {
-                showLoading('Mengupload gambar...');
-                showProgress();
-                
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += 20;
-                    updateProgress(progress);
-                    
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                        
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            previewImage.src = event.target.result;
-                            imagePreview.style.display = 'block';
-                            removeImageBtn.style.display = 'inline-block';
-                            hideLoading();
-                            showNotification('Gambar berhasil diupload!', 'success');
-                            resolve(event.target.result);
-                        };
-                        reader.onerror = function() {
-                            hideLoading();
-                            reject('Gagal membaca file gambar');
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }, 100);
-            });
-        }
-
-        // Reset upload modal
-        function resetUploadModal() {
-            const imageInput = document.getElementById('imageInput');
-            const imagePreview = document.getElementById('imagePreview');
-            const previewImage = document.getElementById('previewImage');
-            const removeImageBtn = document.getElementById('removeImageBtn');
-            
-            imageInput.value = '';
-            imagePreview.style.display = 'none';
-            previewImage.src = '';
-            removeImageBtn.style.display = 'none';
-            currentUploadType = null;
-            currentItemId = null;
+        function resetWorkModal() {
+            document.getElementById('workUploadForm').reset();
+            document.getElementById('workPreviewImage').src = '';
+            document.getElementById('workImagePreview').style.display = 'none';
+            currentImageFile = null;
+            currentImageUrl = null;
+            editingWorkId = null;
         }
 
         // Open image upload modal
         function openImageUploadModal(type, itemId = null) {
-            if (!isAdminLoggedIn && !isEditMode) {
-                showNotification('Silakan login sebagai admin untuk mengupload foto', 'error');
-                return;
-            }
-            
             currentUploadType = type;
             currentItemId = itemId;
             
@@ -5415,25 +3665,21 @@
             const imagePreview = document.getElementById('imagePreview');
             
             let currentImage = null;
-            let itemTitle = '';
             
             if (type === 'profile') {
                 modalTitle.textContent = 'Upload Foto Profile';
                 currentImage = appData.user.profileImage;
-                itemTitle = 'Profile Picture';
             } else if (type === 'achievement' && itemId) {
                 const achievement = appData.pages.achievements.items.find(a => a.id === itemId);
                 if (achievement) {
                     modalTitle.textContent = `Upload Foto untuk: ${achievement.title}`;
                     currentImage = achievement.image;
-                    itemTitle = achievement.title;
                 }
             } else if (type === 'work' && itemId) {
                 const work = appData.pages.work.items.find(d => d.id === itemId);
                 if (work) {
                     modalTitle.textContent = `Upload Foto untuk: ${work.title}`;
                     currentImage = work.image;
-                    itemTitle = work.title;
                 }
             }
             
@@ -5446,46 +3692,72 @@
                 removeImageBtn.style.display = 'none';
             }
             
-            modal.classList.add('active');
+            openModal(modal);
         }
 
-        // Tambahkan fungsi particles untuk home page
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            if (!particlesContainer) return;
-            
-            particlesContainer.innerHTML = '';
-            
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const size = Math.random() * 4 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                particle.style.animationDelay = `${Math.random() * 10}s`;
-                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
+        // Open image preview
+        function openImagePreview(imageSrc, caption = '') {
+            // Simple image preview (bisa dikembangkan jadi modal zoom)
+            const newWindow = window.open();
+            newWindow.document.write(`
+                <html>
+                    <head>
+                        <title>${caption}</title>
+                        <style>
+                            body { margin: 0; padding: 20px; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+                            img { max-width: 90vw; max-height: 90vh; border: 2px solid #ffd700; border-radius: 10px; }
+                        </style>
+                    </head>
+                    <body>
+                        <img src="${imageSrc}" alt="${caption}">
+                    </body>
+                </html>
+            `);
         }
 
-        // Render profile image
-        function renderProfileImage() {
-            const profileImg = document.getElementById('profileImg');
-            const profileIcon = document.getElementById('profileIcon');
-            
-            if (appData.user.profileImage) {
-                profileImg.style.background = 'none';
-                profileImg.innerHTML = `<img src="${appData.user.profileImage}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">`;
-                profileIcon.style.display = 'none';
-            } else {
-                profileImg.style.background = 'var(--gradient-gold)';
-                profileImg.innerHTML = `<div class="profile-img-placeholder"><i class="fas fa-user-tie" id="profileIcon"></i></div>`;
+        // Setup responsive behavior
+        function setupResponsiveBehavior() {
+            function handleResize() {
+                const sidebar = document.getElementById('sidebar');
+                const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+                const mainContent = document.getElementById('mainContent');
+                
+                if (window.innerWidth <= 768) {
+                    mobileMenuToggle.style.display = 'block';
+                    mainContent.style.marginLeft = '0';
+                } else {
+                    mobileMenuToggle.style.display = 'none';
+                    sidebar.classList.remove('active');
+                    mainContent.style.marginLeft = sidebar.offsetWidth + 'px';
+                }
             }
+            
+            window.addEventListener('resize', handleResize);
+            handleResize();
+        }
+
+        // Setup mobile menu
+        function setupMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                this.innerHTML = sidebar.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && 
+                    !sidebar.contains(e.target) && 
+                    !mobileMenuToggle.contains(e.target) &&
+                    sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                    mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
         }
 
         // ============================================
@@ -5507,6 +3779,7 @@
                     
                     changePage(pageId);
                     
+                    // Close sidebar on mobile
                     if (window.innerWidth <= 768) {
                         document.getElementById('sidebar').classList.remove('active');
                         document.getElementById('mobileMenuToggle').innerHTML = '<i class="fas fa-bars"></i>';
@@ -5517,67 +3790,52 @@
 
         // Change page
         function changePage(pageId) {
-            if (rainEffectActive) {
-                toggleRainEffect();
-            }
-            if (starfallEffectActive) {
-                toggleStarfallEffect();
-            }
+            // Reset efek jika ada
+            if (rainEffectActive) toggleRainEffect();
+            if (starfallEffectActive) toggleStarfallEffect();
             hideEffectToggle();
             
+            // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
-                if (page.classList.contains('active')) {
-                    page.style.opacity = '0';
-                    page.style.transform = 'translateY(30px)';
-                    setTimeout(() => {
-                        page.classList.remove('active');
-                        page.style.opacity = '';
-                        page.style.transform = '';
-                    }, 300);
-                }
+                page.classList.remove('active');
+                page.style.animation = 'none';
+                setTimeout(() => {
+                    page.style.animation = '';
+                }, 10);
             });
             
-            setTimeout(() => {
-                const pageElement = document.getElementById(pageId + 'Page');
-                if (pageElement) {
-                    pageElement.style.opacity = '0';
-                    pageElement.style.transform = 'translateY(30px)';
-                    pageElement.classList.add('active');
-                    
-                    setTimeout(() => {
-                        pageElement.style.opacity = '1';
-                        pageElement.style.transform = 'translateY(0)';
-                    }, 50);
-                    
-                    currentPage = pageId;
-                    
-                    const pageData = appData.pages[pageId];
-                    if (pageData) {
-                        document.getElementById('currentPageTitle').textContent = pageData.title;
-                        document.getElementById('currentPageDesc').textContent = pageData.description;
-                    }
-                    
-                    renderPage(pageId);
-                    document.querySelector('.main-content').scrollTop = 0;
-                    setupContentHeight();
-                    
-                    updateAdminUI();
-                    
-                    if (pageId === 'home') {
-                        createParticles();
-                        setTimeout(centerHeroContent, 100);
-                    }
-                    
-                    if (pageId === 'about' || pageId === 'chatroom') {
-                        setTimeout(() => {
-                            showEffectToggle(
-                                pageId === 'about' ? 'Rain Effect' : 'Starfall Effect',
-                                pageId === 'about' ? 'fas fa-cloud-rain' : 'fas fa-star'
-                            );
-                        }, 500);
-                    }
+            // Show selected page
+            const pageElement = document.getElementById(pageId + 'Page');
+            if (pageElement) {
+                pageElement.classList.add('active');
+                currentPage = pageId;
+                
+                // Update page title and description
+                const pageData = appData.pages[pageId];
+                if (pageData) {
+                    document.getElementById('currentPageTitle').textContent = pageData.title;
+                    document.getElementById('currentPageDesc').textContent = pageData.description;
                 }
-            }, 300);
+                
+                // Render page content
+                renderPage(pageId);
+                
+                // Scroll to top
+                document.querySelector('.main-content').scrollTop = 0;
+                
+                // Update admin UI
+                updateAdminUI();
+                
+                // Show effect toggle for specific pages
+                if (pageId === 'about' || pageId === 'chatroom') {
+                    setTimeout(() => {
+                        showEffectToggle(
+                            pageId === 'about' ? 'Rain Effect' : 'Starfall Effect',
+                            pageId === 'about' ? 'fas fa-cloud-rain' : 'fas fa-star'
+                        );
+                    }, 500);
+                }
+            }
         }
 
         // Render page content
@@ -5669,11 +3927,13 @@
             
             if (!timeline) return;
             
+            // Clear existing experiences (keep the first two)
             const existingExperiences = timeline.querySelectorAll('.experience-item');
             for (let i = 2; i < existingExperiences.length; i++) {
                 existingExperiences[i].remove();
             }
             
+            // Render experiences
             pageData.experiences.forEach((exp, index) => {
                 let expElement = document.getElementById(exp.id);
                 
@@ -5701,8 +3961,6 @@
                     } else {
                         timeline.appendChild(expElement);
                     }
-                    
-                    setupExperienceEventListeners(expElement, exp.id);
                 } else if (expElement) {
                     expElement.querySelector('.experience-title').textContent = exp.title;
                     expElement.querySelector('.experience-date').textContent = exp.date;
@@ -5710,27 +3968,12 @@
                         exp.items.map(item => `<li>${item}</li>`).join('');
                 }
             });
+            
+            // Setup event listeners
+            setupEditModeListeners();
         }
 
-        // Setup event listeners untuk experience
-        function setupExperienceEventListeners(element, experienceId) {
-            const editBtn = element.querySelector('.edit-btn');
-            const deleteBtn = element.querySelector('.delete-btn');
-            
-            if (editBtn) {
-                editBtn.addEventListener('click', function() {
-                    editExperience(experienceId);
-                });
-            }
-            
-            if (deleteBtn) {
-                deleteBtn.addEventListener('click', function() {
-                    deleteExperience(experienceId);
-                });
-            }
-        }
-
-        // Render Work page
+        // Render work page
         function renderWorkPage() {
             const pageData = appData.pages.work;
             const container = document.getElementById('workContainer');
@@ -5739,6 +3982,7 @@
             
             container.innerHTML = '';
             
+            // Sort by date (newest first)
             const sortedItems = [...pageData.items].sort((a, b) => {
                 const convertToTimestamp = (dateStr) => {
                     const [day, month, year] = dateStr.split('/').map(Number);
@@ -5750,155 +3994,50 @@
                 return timeB - timeA;
             });
             
-            sortedItems.forEach((item, index) => {
-                const workElement = createWorkCard(item);
-                container.appendChild(workElement);
+            sortedItems.forEach((item) => {
+                const workElement = document.createElement('div');
+                workElement.className = 'work-card editable';
+                workElement.id = item.id;
                 
-                setupWorkCardEventListeners(workElement, item.id);
+                let imageHTML = '';
+                if (item.image) {
+                    imageHTML = `
+                        <div class="work-image-container" onclick="openImagePreview('${item.image}', '${item.title}')">
+                            <img src="${item.image}" alt="${item.title}" class="work-image">
+                            <div class="category-badge">${item.category}</div>
+                        </div>
+                    `;
+                } else {
+                    imageHTML = `
+                        <div class="work-image-container" onclick="editWorkImage('${item.id}')">
+                            <div class="work-image-placeholder">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="category-badge">${item.category}</div>
+                        </div>
+                    `;
+                }
+                
+                workElement.innerHTML = `
+                    ${imageHTML}
+                    <h3>${item.title}</h3>
+                    <div class="date">
+                        <i class="far fa-calendar"></i> ${item.date}
+                    </div>
+                    <p>${item.description}</p>
+                    ${(isAdminLoggedIn || isEditMode) ? `
+                        <button class="edit-btn" onclick="editWork('${item.id}')">Edit</button>
+                        <button class="delete-btn" onclick="deleteWork('${item.id}')">Hapus</button>
+                    ` : ''}
+                `;
+                
+                container.appendChild(workElement);
             });
             
+            // Show/hide add button
             const addBtn = document.getElementById('addWorkBtn');
             if (addBtn) {
                 addBtn.style.display = (isAdminLoggedIn || isEditMode) ? 'inline-block' : 'none';
-            }
-        }
-
-        // Fungsi untuk membuat card Work
-        function createWorkCard(item) {
-            const workElement = document.createElement('div');
-            workElement.className = 'work-card editable';
-            workElement.id = item.id;
-            workElement.dataset.id = item.id;
-            
-            let imageHTML = '';
-            if (item.image && item.image.trim() !== '') {
-                imageHTML = `
-                    <div class="work-image-container">
-                        <img src="${item.image}" alt="${item.title}" class="work-image">
-                        <div class="work-upload-overlay">
-                            <div>
-                                <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                                ${isAdminLoggedIn || isEditMode ? 'Klik untuk ganti foto' : 'Klik untuk zoom'}
-                            </div>
-                        </div>
-                        <div class="category-badge">${item.category || 'Work'}</div>
-                    </div>
-                `;
-            } else {
-                imageHTML = `
-                    <div class="work-image-container">
-                        <div class="work-image-placeholder">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                        <div class="work-upload-overlay">
-                            <div>
-                                <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                                ${isAdminLoggedIn || isEditMode ? 'Klik untuk upload foto' : 'No image available'}
-                            </div>
-                        </div>
-                        <div class="category-badge">${item.category || 'Work'}</div>
-                    </div>
-                `;
-            }
-            
-            workElement.innerHTML = `
-                ${imageHTML}
-                <h3>${item.title}</h3>
-                <div class="date">
-                    <i class="far fa-calendar"></i> ${item.date}
-                </div>
-                <p>${item.description}</p>
-                ${isAdminLoggedIn || isEditMode ? `
-                    <button class="edit-btn" data-edit="${item.id}">Edit</button>
-                    <button class="delete-btn" data-delete="${item.id}" data-type="work">Hapus</button>
-                ` : ''}
-            `;
-            
-            return workElement;
-        }
-
-        // Fungsi untuk setup event listeners per card
-        function setupWorkCardEventListeners(element, itemId) {
-            const editBtn = element.querySelector('.edit-btn');
-            if (editBtn) {
-                editBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    editWorkItem(itemId);
-                });
-            }
-            
-            const deleteBtn = element.querySelector('.delete-btn');
-            if (deleteBtn) {
-                deleteBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    deleteWorkItem(itemId);
-                });
-            }
-            
-            const imageContainer = element.querySelector('.work-image-container');
-            if (imageContainer) {
-                imageContainer.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('work-image')) {
-                        const title = element.querySelector('h3').textContent;
-                        openZoom(e.target.src, title);
-                        return;
-                    }
-                    
-                    if (isAdminLoggedIn || isEditMode) {
-                        editWorkImage(itemId);
-                    } else {
-                        const img = this.querySelector('.work-image');
-                        if (img && img.src) {
-                            const title = element.querySelector('h3').textContent;
-                            openZoom(img.src, title);
-                        }
-                    }
-                });
-            }
-        }
-
-        // Edit Work image
-        function editWorkImage(itemId) {
-            if (!isAdminLoggedIn && !isEditMode) {
-                showNotification('Silakan login sebagai admin untuk mengedit foto', 'error');
-                return;
-            }
-            
-            openImageUploadModal('work', itemId);
-        }
-
-        // Edit Work item
-        function editWorkItem(itemId) {
-            if (!isAdminLoggedIn && !isEditMode) {
-                showNotification('Silakan login sebagai admin untuk mengedit pekerjaan', 'error');
-                return;
-            }
-            
-            openWorkUploadModal(itemId);
-        }
-
-        // Hapus Work item
-        function deleteWorkItem(itemId) {
-            if (!confirm('Apakah Anda yakin ingin menghapus pekerjaan ini?')) {
-                return;
-            }
-            
-            showLoading('Menghapus...');
-            
-            const index = appData.pages.work.items.findIndex(item => item.id === itemId);
-            if (index !== -1) {
-                const item = appData.pages.work.items[index];
-                if (item.imageKey) {
-                    removeImageFromStorage(item.imageKey);
-                }
-                
-                appData.pages.work.items.splice(index, 1);
-                renderWorkPage();
-                saveToLocalStorage();
-                hideLoading();
-                showNotification('Pekerjaan berhasil dihapus!', 'success');
-            } else {
-                hideLoading();
             }
         }
 
@@ -5919,28 +4058,15 @@
                 let imageHTML = '';
                 if (item.image) {
                     imageHTML = `
-                        <div class="achievement-image-container" data-upload="${item.id}">
-                            <img src="${item.image}" alt="${item.title}" class="achievement-image" 
-                                 onclick="openZoom('${item.image}', '${item.title}')">
-                            <div class="achievement-upload-overlay">
-                                <div>
-                                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                                    ${isAdminLoggedIn || isEditMode ? 'Klik untuk ganti foto' : 'Klik untuk zoom'}
-                                </div>
-                            </div>
+                        <div class="achievement-image-container" onclick="openImagePreview('${item.image}', '${item.title}')">
+                            <img src="${item.image}" alt="${item.title}" class="achievement-image">
                         </div>
                     `;
                 } else {
                     imageHTML = `
-                        <div class="achievement-image-container" data-upload="${item.id}">
+                        <div class="achievement-image-container" onclick="editAchievementImage('${item.id}')">
                             <div class="achievement-image-placeholder">
                                 <i class="fas fa-trophy"></i>
-                            </div>
-                            <div class="achievement-upload-overlay">
-                                <div>
-                                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                                    ${isAdminLoggedIn || isEditMode ? 'Klik untuk upload foto' : 'No image available'}
-                                </div>
                             </div>
                         </div>
                     `;
@@ -5951,120 +4077,14 @@
                     <h3>${item.title}</h3>
                     <div class="date">${item.date}</div>
                     <p>${item.description}</p>
-                    <button class="edit-btn" data-edit="${item.id}">Edit</button>
-                    <button class="delete-btn" data-delete="${item.id}" data-type="achievement">Hapus</button>
+                    ${(isAdminLoggedIn || isEditMode) ? `
+                        <button class="edit-btn" onclick="editAchievement('${item.id}')">Edit</button>
+                        <button class="delete-btn" onclick="deleteAchievement('${item.id}')">Hapus</button>
+                    ` : ''}
                 `;
                 
                 container.appendChild(achievementElement);
             });
-            
-            document.querySelectorAll('.achievement-image-container').forEach(container => {
-                container.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('achievement-image')) {
-                        return;
-                    }
-                    
-                    if (isAdminLoggedIn || isEditMode) {
-                        const achievementId = this.getAttribute('data-upload');
-                        openImageUploadModal('achievement', achievementId);
-                    } else {
-                        const img = this.querySelector('.achievement-image');
-                        if (img && img.src) {
-                            const title = this.closest('.achievement-card').querySelector('h3').textContent;
-                            openZoom(img.src, title);
-                        }
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.delete-btn[data-type="achievement"]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const elementId = this.getAttribute('data-delete');
-                    deleteAchievement(elementId);
-                });
-            });
-            
-            document.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const elementId = this.getAttribute('data-edit');
-                    editAchievement(elementId);
-                });
-            });
-        }
-
-        // Edit achievement
-        function editAchievement(achievementId) {
-            const achievement = appData.pages.achievements.items.find(item => item.id === achievementId);
-            if (!achievement) return;
-            
-            const newTitle = prompt('Edit judul pencapaian:', achievement.title);
-            if (newTitle === null) return;
-            
-            const newDate = prompt('Edit tanggal:', achievement.date);
-            if (newDate === null) return;
-            
-            const newDescription = prompt('Edit deskripsi:', achievement.description);
-            if (newDescription === null) return;
-            
-            achievement.title = newTitle;
-            achievement.date = newDate;
-            achievement.description = newDescription;
-            
-            renderAchievementsPage();
-            saveToLocalStorage();
-            showNotification('Pencapaian berhasil diperbarui!', 'success');
-        }
-
-        // Fungsi untuk menghapus achievement
-        function deleteAchievement(achievementId) {
-            if (!confirm('Apakah Anda yakin ingin menghapus pencapaian ini?')) {
-                return;
-            }
-            
-            showLoading('Menghapus pencapaian...');
-            
-            setTimeout(() => {
-                const index = appData.pages.achievements.items.findIndex(item => item.id === achievementId);
-                if (index !== -1) {
-                    const item = appData.pages.achievements.items[index];
-                    if (item.imageKey) {
-                        removeImageFromStorage(item.imageKey);
-                    }
-                    
-                    appData.pages.achievements.items.splice(index, 1);
-                    renderAchievementsPage();
-                    saveToLocalStorage();
-                    showNotification('Pencapaian berhasil dihapus!', 'success');
-                }
-                hideLoading();
-            }, 500);
-        }
-
-        // Add achievement
-        function addAchievement() {
-            const newTitle = prompt('Masukkan judul pencapaian baru:');
-            if (!newTitle) return;
-            
-            const newDate = prompt('Masukkan tanggal:');
-            if (!newDate) return;
-            
-            const newDescription = prompt('Masukkan deskripsi:');
-            if (!newDescription) return;
-            
-            const newId = 'achievement' + (appData.pages.achievements.items.length + 1);
-            const newAchievement = {
-                id: newId,
-                title: newTitle,
-                date: newDate,
-                description: newDescription,
-                image: null,
-                imageKey: null
-            };
-            
-            appData.pages.achievements.items.push(newAchievement);
-            renderAchievementsPage();
-            saveToLocalStorage();
-            showNotification('Pencapaian berhasil ditambahkan!', 'success');
         }
 
         // Render projects page
@@ -6099,101 +4119,14 @@
                     <h3><i class="fas fa-project-diagram"></i> ${item.title}</h3>
                     <p>${item.description}</p>
                     ${statsHTML}
-                    <button class="edit-btn" data-edit="${item.id}">Edit</button>
-                    <button class="delete-btn" data-delete="${item.id}" data-type="project">Hapus</button>
+                    ${(isAdminLoggedIn || isEditMode) ? `
+                        <button class="edit-btn" onclick="editProject('${item.id}')">Edit</button>
+                        <button class="delete-btn" onclick="deleteProject('${item.id}')">Hapus</button>
+                    ` : ''}
                 `;
                 
                 container.appendChild(projectElement);
             });
-            
-            document.querySelectorAll('.delete-btn[data-type="project"]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const elementId = this.getAttribute('data-delete');
-                    deleteProject(elementId);
-                });
-            });
-            
-            document.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const elementId = this.getAttribute('data-edit');
-                    editProject(elementId);
-                });
-            });
-        }
-
-        // Edit project
-        function editProject(projectId) {
-            const project = appData.pages.projects.items.find(item => item.id === projectId);
-            if (!project) return;
-            
-            const newTitle = prompt('Edit judul proyek:', project.title);
-            if (newTitle === null) return;
-            
-            const newDescription = prompt('Edit deskripsi:', project.description);
-            if (newDescription === null) return;
-            
-            project.title = newTitle;
-            project.description = newDescription;
-            
-            renderProjectsPage();
-            saveToLocalStorage();
-            showNotification('Proyek berhasil diperbarui!', 'success');
-        }
-
-        // Fungsi untuk menghapus project
-        function deleteProject(projectId) {
-            if (!confirm('Apakah Anda yakin ingin menghapus proyek ini?')) {
-                return;
-            }
-            
-            showLoading('Menghapus proyek...');
-            
-            setTimeout(() => {
-                const index = appData.pages.projects.items.findIndex(item => item.id === projectId);
-                if (index !== -1) {
-                    appData.pages.projects.items.splice(index, 1);
-                    renderProjectsPage();
-                    saveToLocalStorage();
-                    showNotification('Proyek berhasil dihapus!', 'success');
-                }
-                hideLoading();
-            }, 500);
-        }
-
-        // Add project
-        function addProject() {
-            const newTitle = prompt('Masukkan judul proyek baru:');
-            if (!newTitle) return;
-            
-            const newDescription = prompt('Masukkan deskripsi:');
-            if (!newDescription) return;
-            
-            const newId = 'project' + (appData.pages.projects.items.length + 1);
-            
-            const stat1Value = prompt('Masukkan nilai statistik 1 (misal: 2 Ton):', '0%');
-            const stat1Label = prompt('Masukkan label statistik 1:', 'Sebelum');
-            
-            const stat2Value = prompt('Masukkan nilai statistik 2 (misal: ↓ 0%):', '↓ 0%');
-            const stat2Label = prompt('Masukkan label statistik 2:', 'Perubahan');
-            
-            const stat3Value = prompt('Masukkan nilai statistik 3 (misal: 0%):', '0%');
-            const stat3Label = prompt('Masukkan label statistik 3:', 'Sesudah');
-            
-            const newProject = {
-                id: newId,
-                title: newTitle,
-                description: newDescription,
-                stats: [
-                    { value: stat1Value, label: stat1Label },
-                    { value: stat2Value, label: stat2Label, type: "improvement" },
-                    { value: stat3Value, label: stat3Label }
-                ]
-            };
-            
-            appData.pages.projects.items.push(newProject);
-            renderProjectsPage();
-            saveToLocalStorage();
-            showNotification('Proyek berhasil ditambahkan!', 'success');
         }
 
         // Render dashboard page
@@ -6228,24 +4161,156 @@
             });
         }
 
-        // Fungsi untuk menghapus experience
-        function deleteExperience(experienceId) {
-            if (!confirm('Apakah Anda yakin ingin menghapus pengalaman ini?')) {
-                return;
-            }
+        // Render contact page
+        function renderContactPage() {
+            const pageData = appData.pages.contact;
             
-            showLoading('Menghapus pengalaman...');
-            
-            setTimeout(() => {
-                const index = appData.pages.about.experiences.findIndex(exp => exp.id === experienceId);
-                if (index !== -1) {
-                    appData.pages.about.experiences.splice(index, 1);
-                    renderExperiences();
-                    saveToLocalStorage();
-                    showNotification('Pengalaman berhasil dihapus!', 'success');
+            pageData.items.forEach(item => {
+                const element = document.getElementById(item.id);
+                if (element) {
+                    element.querySelector('p').textContent = item.value;
                 }
-                hideLoading();
-            }, 500);
+            });
+        }
+
+        // Render profile image
+        function renderProfileImage() {
+            const profileImg = document.getElementById('profileImg');
+            const profileIcon = document.getElementById('profileIcon');
+            
+            if (appData.user.profileImage) {
+                profileImg.style.background = 'none';
+                profileImg.innerHTML = `<img src="${appData.user.profileImage}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">`;
+                profileIcon.style.display = 'none';
+            } else {
+                profileImg.style.background = 'var(--gradient-gold)';
+                profileImg.innerHTML = `<div class="profile-img-placeholder"><i class="fas fa-user-tie" id="profileIcon"></i></div>`;
+            }
+        }
+
+        // ============================================
+        // FUNGSI EDIT & DELETE
+        // ============================================
+
+        // Setup edit mode listeners
+        function setupEditModeListeners() {
+            // Edit buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                if (!btn.onclick) {
+                    btn.addEventListener('click', function() {
+                        const elementId = this.getAttribute('data-edit');
+                        editElement(elementId);
+                    });
+                }
+            });
+            
+            // Delete buttons
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                if (!btn.onclick) {
+                    btn.addEventListener('click', function() {
+                        const elementId = this.getAttribute('data-delete');
+                        const type = this.getAttribute('data-type');
+                        deleteElement(elementId, type);
+                    });
+                }
+            });
+            
+            // Add buttons
+            document.querySelectorAll('.add-btn').forEach(btn => {
+                if (!btn.onclick) {
+                    btn.addEventListener('click', function() {
+                        const type = this.getAttribute('data-add');
+                        addElement(type);
+                    });
+                }
+            });
+        }
+
+        // Edit element
+        function editElement(elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            // Handle different element types
+            if (element.classList.contains('skill-category')) {
+                editSkills(elementId);
+            } else if (element.classList.contains('experience-item')) {
+                editExperience(elementId);
+            } else if (elementId.startsWith('stat')) {
+                editStat(elementId);
+            } else if (element.classList.contains('contact-card')) {
+                editContact(elementId);
+            } else if (element.classList.contains('period-section')) {
+                editPeriod(elementId);
+            } else {
+                editText(elementId);
+            }
+        }
+
+        // Edit text
+        function editText(elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const currentText = element.textContent;
+            const newText = prompt('Edit teks:', currentText);
+            
+            if (newText !== null && newText !== currentText) {
+                element.textContent = newText;
+                
+                // Update data structure based on element ID
+                if (elementId.startsWith('stat')) {
+                    const statIndex = parseInt(elementId.replace('stat', '').replace('Number', '').replace('Label', '')) - 1;
+                    if (elementId.includes('Number')) {
+                        appData.pages.home.stats[statIndex].number = newText;
+                    } else {
+                        appData.pages.home.stats[statIndex].label = newText;
+                    }
+                } else if (elementId === 'homeBadge') {
+                    appData.pages.home.badge = newText;
+                } else if (elementId === 'homeTitle') {
+                    appData.pages.home.mainTitle = newText;
+                } else if (elementId === 'homeSubtitle') {
+                    appData.pages.home.subtitle = newText;
+                } else if (elementId === 'homeDescription') {
+                    appData.pages.home.descriptionText = newText;
+                } else if (elementId === 'aboutText1') {
+                    appData.pages.about.sections[0].content = newText;
+                } else if (elementId === 'aboutText2') {
+                    appData.pages.about.sections[1].content = newText;
+                }
+                
+                saveToLocalStorage();
+                showNotification('Teks berhasil diperbarui!', 'success');
+            }
+        }
+
+        // Edit skills
+        function editSkills(elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const isTechnical = elementId === 'technicalSkills';
+            const currentSkills = isTechnical ? 
+                appData.pages.about.skills.technical : 
+                appData.pages.about.skills.personal;
+            
+            const skillsText = currentSkills.join('\n');
+            const newSkillsText = prompt('Edit skill (satu per baris):', skillsText);
+            
+            if (newSkillsText !== null && newSkillsText !== skillsText) {
+                const newSkills = newSkillsText.split('\n').filter(skill => skill.trim() !== '');
+                
+                if (isTechnical) {
+                    appData.pages.about.skills.technical = newSkills;
+                } else {
+                    appData.pages.about.skills.personal = newSkills;
+                }
+                
+                renderSkills();
+                saveToLocalStorage();
+                showNotification('Skill berhasil diperbarui!', 'success');
+            }
         }
 
         // Edit experience
@@ -6272,45 +4337,353 @@
             showNotification('Pengalaman berhasil diperbarui!', 'success');
         }
 
-        // Add experience
-        function addExperience() {
-            const newTitle = prompt('Masukkan judul pengalaman baru:');
-            if (!newTitle) return;
+        // Edit stat
+        function editStat(statId) {
+            const element = document.getElementById(statId);
+            if (!element) return;
             
-            const newDate = prompt('Masukkan periode:');
-            if (!newDate) return;
+            let numberElement, labelElement;
             
-            const itemsText = prompt('Masukkan poin-poin (satu per baris):');
-            if (!itemsText) return;
+            if (element.classList.contains('period-stat')) {
+                numberElement = element.querySelector('.period-stat-value');
+                labelElement = element.querySelector('.period-stat-label');
+            } else if (element.classList.contains('stat-card')) {
+                numberElement = element.querySelector('.stat-number');
+                labelElement = element.querySelector('.stat-label');
+            }
             
-            const newId = 'experience' + (appData.pages.about.experiences.length + 1);
-            const newExperience = {
-                id: newId,
-                title: newTitle,
-                date: newDate,
-                items: itemsText.split('\n').filter(item => item.trim() !== '')
-            };
+            if (!numberElement || !labelElement) return;
             
-            appData.pages.about.experiences.push(newExperience);
-            renderExperiences();
+            const currentNumber = numberElement.textContent;
+            const currentLabel = labelElement.textContent;
+            
+            const newNumber = prompt('Edit angka:', currentNumber);
+            if (newNumber === null) return;
+            
+            const newLabel = prompt('Edit label:', currentLabel);
+            if (newLabel === null) return;
+            
+            numberElement.textContent = newNumber;
+            labelElement.textContent = newLabel;
+            
+            // Update data structure
+            if (statId.startsWith('staffStat') || statId.startsWith('drafterStat')) {
+                const period = appData.pages.dashboard.periods.find(p => 
+                    p.stats.some(s => s.id === statId)
+                );
+                if (period) {
+                    const stat = period.stats.find(s => s.id === statId);
+                    if (stat) {
+                        stat.value = newNumber;
+                        stat.label = newLabel;
+                    }
+                }
+            }
+            
             saveToLocalStorage();
-            showNotification('Pengalaman berhasil ditambahkan!', 'success');
+            showNotification('Statistik berhasil diperbarui!', 'success');
         }
 
-        // Render contact page
-        function renderContactPage() {
-            const pageData = appData.pages.contact;
+        // Edit contact
+        function editContact(contactId) {
+            const contact = appData.pages.contact.items.find(item => item.id === contactId);
+            if (!contact) return;
             
-            pageData.items.forEach(item => {
-                const element = document.getElementById(item.id);
-                if (element) {
-                    element.querySelector('p').textContent = item.value;
+            const currentValue = contact.value;
+            const newValue = prompt(`Edit ${contact.label}:`, currentValue);
+            
+            if (newValue !== null && newValue !== currentValue) {
+                contact.value = newValue;
+                
+                const contactElement = document.getElementById(contactId);
+                if (contactElement) {
+                    contactElement.querySelector('p').textContent = newValue;
                 }
-            });
+                
+                saveToLocalStorage();
+                showNotification('Kontak berhasil diperbarui!', 'success');
+            }
+        }
+
+        // Edit period
+        function editPeriod(periodId) {
+            const period = appData.pages.dashboard.periods.find(p => p.id === periodId);
+            if (!period) return;
+            
+            const newTitle = prompt('Edit judul periode:', period.title);
+            if (newTitle === null) return;
+            
+            const newDate = prompt('Edit rentang tanggal:', period.date);
+            if (newDate === null) return;
+            
+            period.title = newTitle;
+            period.date = newDate;
+            
+            renderDashboardPage();
+            saveToLocalStorage();
+            showNotification('Periode berhasil diperbarui!', 'success');
+        }
+
+        // Delete element
+        function deleteElement(elementId, type) {
+            if (!confirm('Apakah Anda yakin ingin menghapus ini?')) {
+                return;
+            }
+            
+            showLoading('Menghapus...');
+            
+            setTimeout(() => {
+                switch(type) {
+                    case 'experience':
+                        const expIndex = appData.pages.about.experiences.findIndex(exp => exp.id === elementId);
+                        if (expIndex !== -1) {
+                            appData.pages.about.experiences.splice(expIndex, 1);
+                            renderExperiences();
+                        }
+                        break;
+                        
+                    case 'project':
+                        const projIndex = appData.pages.projects.items.findIndex(p => p.id === elementId);
+                        if (projIndex !== -1) {
+                            appData.pages.projects.items.splice(projIndex, 1);
+                            renderProjectsPage();
+                        }
+                        break;
+                }
+                
+                saveToLocalStorage();
+                hideLoading();
+                showNotification('Berhasil dihapus!', 'success');
+            }, 500);
+        }
+
+        // Add element
+        function addElement(type) {
+            switch(type) {
+                case 'technicalSkills':
+                case 'personalSkills':
+                    const newSkill = prompt('Masukkan skill baru:');
+                    if (newSkill && newSkill.trim() !== '') {
+                        const isTechnical = type === 'technicalSkills';
+                        if (isTechnical) {
+                            appData.pages.about.skills.technical.push(newSkill.trim());
+                        } else {
+                            appData.pages.about.skills.personal.push(newSkill.trim());
+                        }
+                        renderSkills();
+                        saveToLocalStorage();
+                        showNotification('Skill berhasil ditambahkan!', 'success');
+                    }
+                    break;
+                    
+                case 'experience':
+                    const newTitle = prompt('Masukkan judul pengalaman baru:');
+                    if (!newTitle) return;
+                    
+                    const newDate = prompt('Masukkan periode:');
+                    if (!newDate) return;
+                    
+                    const itemsText = prompt('Masukkan poin-poin (satu per baris):');
+                    if (!itemsText) return;
+                    
+                    const newId = 'experience' + (appData.pages.about.experiences.length + 1);
+                    const newExperience = {
+                        id: newId,
+                        title: newTitle,
+                        date: newDate,
+                        items: itemsText.split('\n').filter(item => item.trim() !== '')
+                    };
+                    
+                    appData.pages.about.experiences.push(newExperience);
+                    renderExperiences();
+                    saveToLocalStorage();
+                    showNotification('Pengalaman berhasil ditambahkan!', 'success');
+                    break;
+                    
+                case 'achievement':
+                    const achTitle = prompt('Masukkan judul pencapaian:');
+                    if (!achTitle) return;
+                    
+                    const achDate = prompt('Masukkan tanggal:');
+                    if (!achDate) return;
+                    
+                    const achDesc = prompt('Masukkan deskripsi:');
+                    if (!achDesc) return;
+                    
+                    const achId = 'achievement' + (appData.pages.achievements.items.length + 1);
+                    const newAchievement = {
+                        id: achId,
+                        title: achTitle,
+                        date: achDate,
+                        description: achDesc,
+                        image: null,
+                        imageKey: null
+                    };
+                    
+                    appData.pages.achievements.items.push(newAchievement);
+                    renderAchievementsPage();
+                    saveToLocalStorage();
+                    showNotification('Pencapaian berhasil ditambahkan!', 'success');
+                    break;
+                    
+                case 'project':
+                    const projTitle = prompt('Masukkan judul proyek:');
+                    if (!projTitle) return;
+                    
+                    const projDesc = prompt('Masukkan deskripsi:');
+                    if (!projDesc) return;
+                    
+                    const projId = 'project' + (appData.pages.projects.items.length + 1);
+                    const newProject = {
+                        id: projId,
+                        title: projTitle,
+                        description: projDesc,
+                        stats: [
+                            { value: "0%", label: "Statistik 1" },
+                            { value: "↓ 0%", label: "Statistik 2", type: "improvement" },
+                            { value: "0%", label: "Statistik 3" }
+                        ]
+                    };
+                    
+                    appData.pages.projects.items.push(newProject);
+                    renderProjectsPage();
+                    saveToLocalStorage();
+                    showNotification('Proyek berhasil ditambahkan!', 'success');
+                    break;
+            }
+        }
+
+        // Work specific functions
+        function editWork(workId) {
+            openWorkUploadModal(workId);
+        }
+
+        function deleteWork(workId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus pekerjaan ini?')) {
+                return;
+            }
+            
+            showLoading('Menghapus...');
+            
+            const index = appData.pages.work.items.findIndex(w => w.id === workId);
+            if (index !== -1) {
+                const work = appData.pages.work.items[index];
+                if (work.imageKey) {
+                    removeImageFromStorage(work.imageKey);
+                }
+                
+                appData.pages.work.items.splice(index, 1);
+                renderWorkPage();
+                saveToLocalStorage();
+                showNotification('Pekerjaan berhasil dihapus!', 'success');
+            }
+            
+            hideLoading();
+        }
+
+        function editWorkImage(workId) {
+            if (!isAdminLoggedIn && !isEditMode) {
+                showNotification('Silakan login sebagai admin untuk mengedit foto', 'error');
+                return;
+            }
+            
+            openImageUploadModal('work', workId);
+        }
+
+        // Achievement specific functions
+        function editAchievement(achievementId) {
+            const achievement = appData.pages.achievements.items.find(a => a.id === achievementId);
+            if (!achievement) return;
+            
+            const newTitle = prompt('Edit judul pencapaian:', achievement.title);
+            if (newTitle === null) return;
+            
+            const newDate = prompt('Edit tanggal:', achievement.date);
+            if (newDate === null) return;
+            
+            const newDescription = prompt('Edit deskripsi:', achievement.description);
+            if (newDescription === null) return;
+            
+            achievement.title = newTitle;
+            achievement.date = newDate;
+            achievement.description = newDescription;
+            
+            renderAchievementsPage();
+            saveToLocalStorage();
+            showNotification('Pencapaian berhasil diperbarui!', 'success');
+        }
+
+        function deleteAchievement(achievementId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus pencapaian ini?')) {
+                return;
+            }
+            
+            showLoading('Menghapus...');
+            
+            const index = appData.pages.achievements.items.findIndex(a => a.id === achievementId);
+            if (index !== -1) {
+                const achievement = appData.pages.achievements.items[index];
+                if (achievement.imageKey) {
+                    removeImageFromStorage(achievement.imageKey);
+                }
+                
+                appData.pages.achievements.items.splice(index, 1);
+                renderAchievementsPage();
+                saveToLocalStorage();
+                showNotification('Pencapaian berhasil dihapus!', 'success');
+            }
+            
+            hideLoading();
+        }
+
+        function editAchievementImage(achievementId) {
+            if (!isAdminLoggedIn && !isEditMode) {
+                showNotification('Silakan login sebagai admin untuk mengedit foto', 'error');
+                return;
+            }
+            
+            openImageUploadModal('achievement', achievementId);
+        }
+
+        // Project specific functions
+        function editProject(projectId) {
+            const project = appData.pages.projects.items.find(p => p.id === projectId);
+            if (!project) return;
+            
+            const newTitle = prompt('Edit judul proyek:', project.title);
+            if (newTitle === null) return;
+            
+            const newDescription = prompt('Edit deskripsi:', project.description);
+            if (newDescription === null) return;
+            
+            project.title = newTitle;
+            project.description = newDescription;
+            
+            renderProjectsPage();
+            saveToLocalStorage();
+            showNotification('Proyek berhasil diperbarui!', 'success');
+        }
+
+        function deleteProject(projectId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus proyek ini?')) {
+                return;
+            }
+            
+            showLoading('Menghapus...');
+            
+            const index = appData.pages.projects.items.findIndex(p => p.id === projectId);
+            if (index !== -1) {
+                appData.pages.projects.items.splice(index, 1);
+                renderProjectsPage();
+                saveToLocalStorage();
+                showNotification('Proyek berhasil dihapus!', 'success');
+            }
+            
+            hideLoading();
         }
 
         // ============================================
-        // ADMIN PANEL & EDIT MODE
+        // ADMIN PANEL FUNCTIONS
         // ============================================
 
         // Setup admin panel
@@ -6376,10 +4749,11 @@
                 toggleEditMode.textContent = isEditMode ? 'Nonaktifkan Edit Mode' : 'Aktifkan Edit Mode';
                 
                 if (isEditMode) {
-                    setupEditMode();
-                } else {
-                    renderPage(currentPage);
+                    setupEditModeListeners();
                 }
+                
+                // Re-render current page to show/hide edit buttons
+                renderPage(currentPage);
             });
             
             saveAllData.addEventListener('click', function() {
@@ -6397,304 +4771,47 @@
             });
             
             resetDataBtn.addEventListener('click', function() {
-                if (!confirm('Reset data akan menghapus semua gambar. Lanjutkan?')) {
+                if (!confirm('Reset data akan menghapus semua data yang tersimpan. Lanjutkan?')) {
                     return;
                 }
                 
                 showLoading('Mereset data...');
                 
-                const allKeys = Object.keys(localStorage);
-                allKeys.forEach(key => {
-                    if (key.startsWith('work_') || key.startsWith('achievement_') || key.startsWith('profile_')) {
-                        localStorage.removeItem(key);
-                    }
-                });
-                
-                const defaultData = { ...appData };
-                
-                defaultData.user.profileImage = null;
-                defaultData.user.profileImageKey = null;
-                
-                defaultData.pages.work.items = [];
-                defaultData.pages.achievements.items = [];
-                
-                appData = defaultData;
-                saveToLocalStorage();
-                
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
+                localStorage.clear();
+                location.reload();
             });
         }
 
-        // Setup edit mode
-        function setupEditMode() {
-            document.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const elementId = this.getAttribute('data-edit');
-                    const element = document.getElementById(elementId);
-                    
-                    if (element) {
-                        if (element.classList.contains('skill-category')) {
-                            editSkills(elementId);
-                        } else if (element.classList.contains('experience-item')) {
-                            editExperience(elementId);
-                        } else if (element.classList.contains('achievement-card')) {
-                            editAchievement(elementId);
-                        } else if (element.classList.contains('project-card')) {
-                            editProject(elementId);
-                        } else if (element.classList.contains('dashboard-card') || 
-                                   element.classList.contains('stat-card') || 
-                                   element.id.startsWith('dashboardStat') || 
-                                   element.id.startsWith('stat') ||
-                                   element.id.startsWith('staffStat') ||
-                                   element.id.startsWith('drafterStat')) {
-                            editStat(elementId);
-                        } else if (element.classList.contains('contact-card')) {
-                            editContact(elementId);
-                        } else if (element.classList.contains('period-section')) {
-                            editPeriod(elementId);
-                        } else if (element.classList.contains('work-card')) {
-                            editWorkItem(elementId);
-                        } else {
-                            editText(elementId);
-                        }
-                    }
-                });
-            });
+        // Update admin UI
+        function updateAdminUI() {
+            const adminToggle = document.getElementById('adminToggle');
+            const floatingAddBtn = document.getElementById('floatingAddBtn');
             
-            document.querySelectorAll('.add-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const type = this.getAttribute('data-add');
-                    
-                    switch(type) {
-                        case 'technicalSkills':
-                        case 'personalSkills':
-                            addSkill(type);
-                            break;
-                        case 'experience':
-                            addExperience();
-                            break;
-                        case 'achievement':
-                            addAchievement();
-                            break;
-                        case 'project':
-                            addProject();
-                            break;
-                        case 'work':
-                            openWorkUploadModal();
-                            break;
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const elementId = this.getAttribute('data-delete');
-                    const type = this.getAttribute('data-type');
-                    
-                    if (type === 'experience') {
-                        deleteExperience(elementId);
-                    } else if (type === 'achievement') {
-                        deleteAchievement(elementId);
-                    } else if (type === 'project') {
-                        deleteProject(elementId);
-                    } else if (type === 'work') {
-                        deleteWorkItem(elementId);
-                    }
-                });
-            });
-        }
-
-        // Edit text element
-        function editText(elementId) {
-            const element = document.getElementById(elementId);
-            if (!element) return;
-            
-            const currentText = element.textContent;
-            const newText = prompt('Edit teks:', currentText);
-            
-            if (newText !== null && newText !== currentText) {
-                element.textContent = newText;
+            if (isAdminLoggedIn) {
+                adminToggle.innerHTML = '<i class="fas fa-user-check"></i> Admin Mode';
+                adminToggle.style.background = 'var(--gradient-gold)';
+                adminToggle.style.color = '#000';
+                document.body.classList.add('admin-mode');
                 
-                if (elementId.startsWith('stat')) {
-                    const statIndex = parseInt(elementId.replace('stat', '').replace('Number', '').replace('Label', '')) - 1;
-                    if (elementId.includes('Number')) {
-                        appData.pages.home.stats[statIndex].number = newText;
-                    } else {
-                        appData.pages.home.stats[statIndex].label = newText;
-                    }
-                } else if (elementId === 'homeBadge') {
-                    appData.pages.home.badge = newText;
-                } else if (elementId === 'homeTitle') {
-                    appData.pages.home.mainTitle = newText;
-                } else if (elementId === 'homeSubtitle') {
-                    appData.pages.home.subtitle = newText;
-                } else if (elementId === 'homeDescription') {
-                    appData.pages.home.descriptionText = newText;
-                } else if (elementId === 'aboutText1') {
-                    appData.pages.about.sections[0].content = newText;
-                } else if (elementId === 'aboutText2') {
-                    appData.pages.about.sections[1].content = newText;
-                }
-                
-                saveToLocalStorage();
-                showNotification('Teks berhasil diperbarui!', 'success');
-            }
-        }
-
-        // Edit period (dashboard)
-        function editPeriod(periodId) {
-            const period = appData.pages.dashboard.periods.find(p => p.id === periodId);
-            if (!period) return;
-            
-            const newTitle = prompt('Edit judul periode:', period.title);
-            if (newTitle === null) return;
-            
-            const newDate = prompt('Edit rentang tanggal:', period.date);
-            if (newDate === null) return;
-            
-            period.title = newTitle;
-            period.date = newDate;
-            
-            renderDashboardPage();
-            saveToLocalStorage();
-            showNotification('Periode berhasil diperbarui!', 'success');
-        }
-
-        // Edit skills
-        function editSkills(elementId) {
-            const element = document.getElementById(elementId);
-            if (!element) return;
-            
-            const isTechnical = elementId === 'technicalSkills';
-            const currentSkills = isTechnical ? 
-                appData.pages.about.skills.technical : 
-                appData.pages.about.skills.personal;
-            
-            const skillsText = currentSkills.join('\n');
-            const newSkillsText = prompt('Edit skill (satu per baris):', skillsText);
-            
-            if (newSkillsText !== null && newSkillsText !== skillsText) {
-                const newSkills = newSkillsText.split('\n').filter(skill => skill.trim() !== '');
-                
-                if (isTechnical) {
-                    appData.pages.about.skills.technical = newSkills;
+                if (currentPage === 'work') {
+                    floatingAddBtn.style.display = 'flex';
                 } else {
-                    appData.pages.about.skills.personal = newSkills;
+                    floatingAddBtn.style.display = 'none';
                 }
-                
-                renderSkills();
-                saveToLocalStorage();
-                showNotification('Skill berhasil diperbarui!', 'success');
+            } else {
+                adminToggle.innerHTML = '<i class="fas fa-user-lock"></i> Login Admin';
+                adminToggle.style.background = 'linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%)';
+                adminToggle.style.color = 'var(--primary)';
+                document.body.classList.remove('admin-mode');
+                floatingAddBtn.style.display = 'none';
             }
+            
+            document.getElementById('editStatus').style.display = isEditMode ? 'block' : 'none';
         }
 
-        // Add skill
-        function addSkill(type) {
-            const isTechnical = type === 'technicalSkills';
-            const newSkill = prompt('Masukkan skill baru:');
-            
-            if (newSkill && newSkill.trim() !== '') {
-                if (isTechnical) {
-                    appData.pages.about.skills.technical.push(newSkill.trim());
-                } else {
-                    appData.pages.about.skills.personal.push(newSkill.trim());
-                }
-                
-                renderSkills();
-                saveToLocalStorage();
-                showNotification('Skill berhasil ditambahkan!', 'success');
-            }
-        }
-
-        // Edit stat
-        function editStat(statId) {
-            const element = document.getElementById(statId);
-            if (!element) return;
-            
-            let numberElement, labelElement;
-            
-            if (element.classList.contains('dashboard-card') || 
-                element.classList.contains('stat-card') ||
-                element.classList.contains('period-stat')) {
-                
-                if (element.classList.contains('period-stat')) {
-                    numberElement = element.querySelector('.period-stat-value');
-                    labelElement = element.querySelector('.period-stat-label');
-                } else if (element.classList.contains('dashboard-card')) {
-                    numberElement = element.querySelector('.dashboard-number');
-                    labelElement = element.querySelector('.dashboard-label');
-                } else if (element.classList.contains('stat-card')) {
-                    numberElement = element.querySelector('.stat-number');
-                    labelElement = element.querySelector('.stat-label');
-                }
-            }
-            
-            if (!numberElement || !labelElement) return;
-            
-            const currentNumber = numberElement.textContent;
-            const currentLabel = labelElement.textContent;
-            
-            const newNumber = prompt('Edit angka:', currentNumber);
-            if (newNumber === null) return;
-            
-            const newLabel = prompt('Edit label:', currentLabel);
-            if (newLabel === null) return;
-            
-            numberElement.textContent = newNumber;
-            labelElement.textContent = newLabel;
-            
-            if (statId.startsWith('dashboardStat')) {
-                const stat = appData.pages.dashboard.stats.find(s => s.id === statId);
-                if (stat) {
-                    stat.number = newNumber;
-                    stat.label = newLabel;
-                }
-            } else if (statId.startsWith('stat')) {
-                const statIndex = parseInt(statId.replace('stat', '').replace('Number', '').replace('Label', '')) - 1;
-                if (statId.includes('Number')) {
-                    appData.pages.home.stats[statIndex].number = newNumber;
-                } else {
-                    appData.pages.home.stats[statIndex].label = newLabel;
-                }
-            } else if (statId.startsWith('staffStat') || statId.startsWith('drafterStat')) {
-                const period = appData.pages.dashboard.periods.find(p => 
-                    p.stats.some(s => s.id === statId)
-                );
-                if (period) {
-                    const stat = period.stats.find(s => s.id === statId);
-                    if (stat) {
-                        stat.value = newNumber;
-                        stat.label = newLabel;
-                    }
-                }
-            }
-            
-            saveToLocalStorage();
-            showNotification('Statistik berhasil diperbarui!', 'success');
-        }
-
-        // Edit contact
-        function editContact(contactId) {
-            const contact = appData.pages.contact.items.find(item => item.id === contactId);
-            if (!contact) return;
-            
-            const currentValue = contact.value;
-            const newValue = prompt(`Edit ${contact.label}:`, currentValue);
-            
-            if (newValue !== null && newValue !== currentValue) {
-                contact.value = newValue;
-                
-                const contactElement = document.getElementById(contactId);
-                if (contactElement) {
-                    contactElement.querySelector('p').textContent = newValue;
-                }
-                
-                saveToLocalStorage();
-                showNotification('Kontak berhasil diperbarui!', 'success');
-            }
-        }
+        // ============================================
+        // CHAT & CONTACT FUNCTIONS
+        // ============================================
 
         // Setup chat
         function setupChat() {
@@ -6736,6 +4853,7 @@
                 
                 chatMessages.scrollTop = chatMessages.scrollHeight;
                 
+                // Auto reply
                 setTimeout(() => {
                     const replies = [
                         "Thanks for your message!",
@@ -6785,34 +4903,174 @@
             }
         }
 
-        // Update admin UI
-        function updateAdminUI() {
-            const adminToggle = document.getElementById('adminToggle');
-            const floatingAddBtn = document.getElementById('floatingAddBtn');
+        // ============================================
+        // EFFECTS FUNCTIONS
+        // ============================================
+
+        // Setup effects
+        function setupEffects() {
+            const effectToggle = document.getElementById('effectToggle');
             
-            if (isAdminLoggedIn) {
-                adminToggle.innerHTML = '<i class="fas fa-user-check"></i> Admin Mode';
-                adminToggle.style.background = 'var(--gradient-gold)';
-                adminToggle.style.color = '#000';
-                document.body.classList.add('admin-mode');
-                
-                if (currentPage === 'work') {
-                    floatingAddBtn.style.display = 'flex';
-                } else {
-                    floatingAddBtn.style.display = 'none';
-                }
-            } else {
-                adminToggle.innerHTML = '<i class="fas fa-user-lock"></i> Login Admin';
-                adminToggle.style.background = 'linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%)';
-                adminToggle.style.color = 'var(--primary)';
-                document.body.classList.remove('admin-mode');
-                floatingAddBtn.style.display = 'none';
+            if (effectToggle) {
+                effectToggle.addEventListener('click', toggleEffects);
             }
             
-            document.getElementById('editStatus').style.display = isEditMode ? 'block' : 'none';
+            // Show effect toggle on specific pages
+            const aboutPage = document.getElementById('aboutPage');
+            if (aboutPage) {
+                aboutPage.addEventListener('mouseenter', function() {
+                    if (currentPage === 'about' && !rainEffectActive) {
+                        showEffectToggle('Rain Effect', 'fas fa-cloud-rain');
+                    }
+                });
+            }
+            
+            const chatroomPage = document.getElementById('chatroomPage');
+            if (chatroomPage) {
+                chatroomPage.addEventListener('mouseenter', function() {
+                    if (currentPage === 'chatroom' && !starfallEffectActive) {
+                        showEffectToggle('Starfall Effect', 'fas fa-star');
+                    }
+                });
+            }
         }
 
-        // Fungsi untuk menampilkan loading
+        // Show effect toggle
+        function showEffectToggle(text, iconClass) {
+            const effectToggle = document.getElementById('effectToggle');
+            const effectText = document.getElementById('effectText');
+            const effectIcon = document.getElementById('effectIcon');
+            
+            if (effectToggle && effectText && effectIcon) {
+                effectText.textContent = text;
+                effectIcon.className = iconClass;
+                effectToggle.style.display = 'flex';
+                currentEffectPage = currentPage;
+            }
+        }
+
+        // Hide effect toggle
+        function hideEffectToggle() {
+            const effectToggle = document.getElementById('effectToggle');
+            if (effectToggle) {
+                effectToggle.style.display = 'none';
+                currentEffectPage = null;
+            }
+        }
+
+        // Toggle effects
+        function toggleEffects() {
+            if (currentEffectPage === 'about') {
+                toggleRainEffect();
+            } else if (currentEffectPage === 'chatroom') {
+                toggleStarfallEffect();
+            }
+        }
+
+        // Toggle rain effect
+        function toggleRainEffect() {
+            rainEffectActive = !rainEffectActive;
+            const rainContainer = document.getElementById('rainContainer');
+            const effectToggle = document.getElementById('effectToggle');
+            const effectText = document.getElementById('effectText');
+            
+            if (rainEffectActive) {
+                // Disable other effect
+                if (starfallEffectActive) {
+                    toggleStarfallEffect();
+                }
+                
+                rainContainer.style.display = 'block';
+                effectText.textContent = 'Matikan Rain Effect';
+                createRainDrops();
+                effectToggle.style.background = 'var(--gradient-cyan)';
+                effectToggle.style.color = '#000';
+                
+                showNotification('Rain Effect diaktifkan!', 'success');
+            } else {
+                rainContainer.style.display = 'none';
+                effectText.textContent = 'Aktifkan Rain Effect';
+                effectToggle.style.background = 'var(--gradient-gold)';
+                effectToggle.style.color = '#000';
+                
+                showNotification('Rain Effect dimatikan.', 'info');
+                hideEffectToggle();
+            }
+        }
+
+        // Create rain drops
+        function createRainDrops() {
+            const rainContainer = document.getElementById('rainContainer');
+            if (!rainContainer || !rainEffectActive) return;
+            
+            rainContainer.innerHTML = '';
+            
+            for (let i = 0; i < 50; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'rain-drop';
+                drop.style.left = Math.random() * 100 + '%';
+                drop.style.animationDelay = Math.random() * 2 + 's';
+                drop.style.animationDuration = (0.5 + Math.random() * 0.5) + 's';
+                rainContainer.appendChild(drop);
+            }
+        }
+
+        // Toggle starfall effect
+        function toggleStarfallEffect() {
+            starfallEffectActive = !starfallEffectActive;
+            const starfallContainer = document.getElementById('starfallContainer');
+            const effectToggle = document.getElementById('effectToggle');
+            const effectText = document.getElementById('effectText');
+            
+            if (starfallEffectActive) {
+                // Disable other effect
+                if (rainEffectActive) {
+                    toggleRainEffect();
+                }
+                
+                starfallContainer.style.display = 'block';
+                effectText.textContent = 'Matikan Starfall Effect';
+                createStars();
+                effectToggle.style.background = 'var(--gradient-purple)';
+                effectToggle.style.color = '#fff';
+                
+                showNotification('Starfall Effect diaktifkan!', 'success');
+            } else {
+                starfallContainer.style.display = 'none';
+                effectText.textContent = 'Aktifkan Starfall Effect';
+                effectToggle.style.background = 'var(--gradient-gold)';
+                effectToggle.style.color = '#000';
+                
+                showNotification('Starfall Effect dimatikan.', 'info');
+                hideEffectToggle();
+            }
+        }
+
+        // Create stars
+        function createStars() {
+            const starfallContainer = document.getElementById('starfallContainer');
+            if (!starfallContainer || !starfallEffectActive) return;
+            
+            starfallContainer.innerHTML = '';
+            
+            for (let i = 0; i < 30; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (1 + Math.random() * 2) + 's';
+                star.style.width = star.style.height = (2 + Math.random() * 3) + 'px';
+                star.style.background = '#fff';
+                star.style.boxShadow = '0 0 5px #fff';
+                starfallContainer.appendChild(star);
+            }
+        }
+
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+
+        // Show loading
         function showLoading(text = 'Loading...') {
             const loadingOverlay = document.getElementById('loadingOverlay');
             const loadingText = document.getElementById('loadingText');
@@ -6822,33 +5080,11 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Fungsi untuk menyembunyikan loading
+        // Hide loading
         function hideLoading() {
             const loadingOverlay = document.getElementById('loadingOverlay');
             loadingOverlay.classList.remove('active');
             document.body.style.overflow = 'auto';
-            
-            hideProgress();
-        }
-
-        // Fungsi untuk menampilkan progress bar
-        function showProgress() {
-            document.getElementById('uploadProgress').style.display = 'block';
-            document.getElementById('uploadPercentageOld').style.display = 'block';
-        }
-
-        // Fungsi untuk menyembunyikan progress bar
-        function hideProgress() {
-            document.getElementById('uploadProgress').style.display = 'none';
-            document.getElementById('uploadPercentageOld').style.display = 'none';
-            document.getElementById('progressBar').style.width = '0%';
-            document.getElementById('uploadPercentageOld').textContent = '0%';
-        }
-
-        // Fungsi untuk update progress bar
-        function updateProgress(percentage) {
-            document.getElementById('progressBar').style.width = percentage + '%';
-            document.getElementById('uploadPercentageOld').textContent = Math.round(percentage) + '%';
         }
 
         // Show notification
@@ -6860,7 +5096,7 @@
                 notification.style.background = 'var(--gradient-gold)';
                 notification.style.color = '#000';
             } else if (type === 'error') {
-                notification.style.background = 'linear-gradient(135deg, #ff4757 0%, #ff6b81 100%)';
+                notification.style.background = 'var(--gradient-danger)';
                 notification.style.color = '#fff';
             } else if (type === 'warning') {
                 notification.style.background = 'linear-gradient(135deg, #ffa502 0%, #ffb142 100%)';
@@ -6875,6 +5111,38 @@
             setTimeout(() => {
                 notification.style.display = 'none';
             }, 3000);
+        }
+
+        // Cleanup unused images
+        function cleanupUnusedImages() {
+            const usedImageKeys = new Set();
+            
+            // Collect used image keys
+            if (appData.user.profileImageKey) {
+                usedImageKeys.add(appData.user.profileImageKey);
+            }
+            
+            appData.pages.work.items.forEach(item => {
+                if (item.imageKey) {
+                    usedImageKeys.add(item.imageKey);
+                }
+            });
+            
+            appData.pages.achievements.items.forEach(item => {
+                if (item.imageKey) {
+                    usedImageKeys.add(item.imageKey);
+                }
+            });
+            
+            // Remove unused images
+            const allKeys = Object.keys(localStorage);
+            allKeys.forEach(key => {
+                if (key.startsWith('work_') || key.startsWith('achievement_') || key.startsWith('profile_')) {
+                    if (!usedImageKeys.has(key)) {
+                        localStorage.removeItem(key);
+                    }
+                }
+            });
         }
     </script>
 </body>
