@@ -1,0 +1,65 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head id="Head1"><title>
+	Ujian Universitas Gunadarma
+</title><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" /><meta name="Description" /><meta name="author" content="ers" /><meta name="keywords" /><link rel="icon" href="assets/img/brand/favicon.ico" type="image/x-icon" /><link href="assets/css/all.min.css" rel="stylesheet" /><script type="text/javascript"> document.onkeydown = function (e) { return 123 != event.keyCode && ((!e.ctrlKey || !e.shiftKey || e.keyCode != "I".charCodeAt(0)) && ((!e.ctrlKey || !e.shiftKey || e.keyCode != "C".charCodeAt(0)) && ((!e.ctrlKey || !e.shiftKey || e.keyCode != "J".charCodeAt(0)) && ((!e.ctrlKey || e.keyCode != "U".charCodeAt(0)) && void 0)))) }, document.layers ? (document.captureEvents(Event.MOUSEDOWN), document.onmousedown = function () { return !1 }) : document.onmouseup = function (e) { if (null !== e && "mouseup" === e.type && (2 === e.which || 3 === e.which)) return !1 }, document.oncontextmenu = function () { return !1 }, document.oncopy = function () { return !1 }, document.onselectstart = function () { return !1 }, document.body.contentEditable = "false", document.designMode = "off"; function readCookie(t) { for (var e = t + "=", n = document.cookie.split(";"), r = 0; r < n.length; r++) { for (var o = n[r]; " " == o.charAt(0);)o = o.substring(1, o.length); if (0 == o.indexOf(e)) return o.substring(e.length, o.length) } return 20 } function OnInit() { UpdateTime() } function OnTick(t, e) { UpdateTime() } function formatCountdown(t) { var e = 0, n = 0, r = 0; t > 0 && (e = Math.floor(t / 3600), n = Math.floor(t % 3600 / 60), r = Math.floor(t % 60)); var o = ""; return o += e > 0 ? e + " jam : " + n + " menit : " + r + " detik" : n + " menit : " + r + " detik" } function UpdateTime() { var t = lblSec.Get("timer"); if (t -= 1, lblSec.Set("timer", t), document.getElementById("lblTime").innerHTML = formatCountdown(t), null == document.getElementById("lblTime")) tmrStartUjian.SetEnabled(!1); else { document.getElementById("lblTime").innerHTML = formatCountdown(t); var e = document.getElementById("lblStorage").innerHTML; if (t <= 0) { tmrStartUjian.SetEnabled(!1); var n = lblURL.Get("url") + "&iblok=" + e; document.location.replace(n) } } } </script></head><body class="main-body light-theme"><form method="post" action="./home.aspx" id="frmHome">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="17rXvK/5VdEWZDhksLPAOwead+lGu2PE4ufdI8lBCd+Ezlx8DVhM72wYTk8sZkH6wyqbnj6IHzTEWJmfYBajIkPCw628kCVlTc2rfUX7NBKHHVYEe5rEIqSg3BCvReiOBxVzFQNqikIHdSHtFL7ktMmdcLxCU7pjvTDkJeFbIf77lEbuAR1tHPjpXivriZToFbHWTTU5T3vX0Wzg2ITqc6+htDvKII99hqJ/mmqrFuid+oF2n7v2c9Kg5kNblypl+FGOfYbsoDjtdcteoboE+YLl8V7JwziKqHdHOFiOtYx6/2rOPuy3qfv9Sa9RSZasLB5ACfr0fI6lXTtPikP2ulyjPsJYE6LwFUUx9Cpgm+46j8oLmNmrFm2K51leveQHRO5kwhbV5s11kM26lopY4NkPWHk+iYyO6Uvoof9ZKfMZzn2p/e0bWfiTZCYgm5fmRcfMMZ1nEqEQf5ABSJb5YoKK5Q6Karqwlizm7X/oVlSSPd7FKBED7O7Cmj7+/KQIFluaX/peF8N9QGQhQd2OXI3HtiZwV/9FDcPxOCcb3pjKNDIayzZVZaUEyt/03fdsV7TPGupAtpP6GNONB3B9XgBfrvCyujGKaJ4bIXfbY42b9su/noLQMgI/aNeI8UUWLQ32DIoSHIUKyEtIws0GKwAkQXXtVMIk7WgiO/AI4kxxGC8yBTY62mvbGwdSewp7oO17x5RO1XZOHDKPZy6uRR/u1gxQdBQJCA+q7BSvCwRdPg7Aa3m8LETdFnr9GHbiFTXZet7M6uF/H8G2YMwx/RCi37zWEW5T8X6OzDhoNGFnjJL0o8rVy3/fVMKSilGMzk3cHslbbIzgX9NQLZcSA+7AFSVZeKhjqVSLk8z6b9SDOR49bT4ytYJ3m4Mpdvq09mDZNqJbBnkwDnJKlgWLqCoWaEOTK4b8hxrsiDBS1AH78rrpx7/fhMZugVKRhkN3FqV7ZL2W0Vyw56gCfPQcesapbuUkR0SgSpXG0dCLn9qkiwUe6KaMGOZzhmjrUlRcj4KT6B5YJ+MYtrn0JAc8B1a5VIyBWt3WVYNd7XT0NUcOHzJ8OvblHI1vfBuuXrj3u8w2Yw7UDg0iyy3eMBodgY0fuRyCa50G77NZuZc9b1KGqqxtG1xaYabz8CBXGM7ldTAWXfNkDTKtHebr5Ads8kE9k6VgLgBxXIrwXp7oMBDexxml6uIlOFUp0ORbI+VdZJlfm5TPLnoap0sPZ79boKfhvskdLwUPFm+T0sNmS2YQYWDDuksUjSY5J3DvhYideSrtedwN8NBN8P2YWnwN6XdjAeS+rJcqaYtlpEr/nt9f6N/2jYqAI8JPZh5c/ECabH08l0syBYKlUTRfObOwFS5RK7OLuCNwRTbql1g0Th45h/xetzZV6lVmhFZFDAKpRjSWvrlyYs//Wm4enXe+afkxEF5D+vH7e70MYOAZCFzlvMMJdenIiChU8Du0q/5f" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['frmHome'];
+if (!theForm) {
+    theForm = document.frmHome;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZOaot2TJ24F01AGzaHw6VjULJGY8wY5-IJq7HBaOZLP-JZRwuVWNRmckNu8Yhq7BBQ2&amp;t=638901788248157332" type="text/javascript"></script>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8D0E13E6" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="UhcmY0cUaHIFI9guDEcCAaOaJuQIVByvBn7fulfagnw04KaUn1itprNEwCtazIYQsKoZmgpiSK+8TGahYGLCZBN9S2ogxg0l2l1gIwEkKdtt0Un3s41EcwTqxqsrY09UVGpSRDJ5yNCsUdDqWHtISmPtvn5CPnowcHY8arIAQr8=" />
+</div><script id="dxis_295733231" src="/DXR.axd?r=1_9,1_10,1_253,1_21,1_62,1_11,1_12,1_13,1_30,1_42-B8t4u"></script><input type="hidden" id="lblSec" name="lblSec" value="" /><script id="dxss_821584574">
+<!--
+ASPx.createControl(ASPxClientHiddenField,'lblSec','',{'callBack':function(arg) { WebForm_DoCallback('lblSec',arg,ASPx.Callback,'lblSec',ASPx.CallbackError,true); },'properties':{'dxptimer':'6000'}});
+
+//-->
+</script><div class="main-header"><div class="container"><div class="main-header-left"><div><a class="main-logo desktop-logo" href="#"><img src="assets/img/brand/logoUGSmall.png" alt="logo" /></a><a class="main-logo mobile-logo" href="#"><img src="assets/img/brand/logoUGSmall.png" alt="logo"/></a></div></div><div style="visibility:hidden;"><span id="lblStorage" class="text-info"></span></div><div class="main-header-right ml-auto"><div class="main-header-fullscreen fullscreen-button"><a href="#" class="header-link"><i class="fa fa-expand-arrows-alt" data-eva="expand-outline"></i></a></div><div class="dropdown main-profile-menu"><a class="main-img-user" href="#"><img id="imgUser" src="assets/img/users/male.jpg" /></a><div class="dropdown-menu"><div class="main-header-profile"><h6><span id="lblNama">ARYA SAVARIANSAH</span></h6><span><span id="lblNPM">50425153</span></span></div><a id="lnkHasil" class="dropdown-item" href="javascript:__doPostBack(&#39;lnkHasil&#39;,&#39;&#39;)"><span class='fa fa-book-open'></span>&nbsp;&nbsp;&nbsp;&nbsp;Hasil Ujian </a><a class="dropdown-item" href="page_logout.aspx"><i class="fa fa-power-off"></i>Log Out</a></div></div></div></div></div><div class="main-content" style="margin-top:40px;"><div class="container"><div class="row row-sm"><div class="col-12"><div class="card mg-b-5 overflow-hidden"><div class="card-body"><div class="row"><div class="col-3 col-sm-2 col-md-1"><div class="text-left"><div class="feature"><img id="imgFoto" src="akademik_image.ashx?key=ZrXy[8]8SCjwbMuCQy3L6exhUESZYm8hjtuh6AckE4[2]Nb715tT3DaXWaivDXPLM1rCOVVBS5IddntG7mvfFFBo7Ro[8]onpDIcFGPBmVo8qfD0R[2]11c[8]YCS9uoEQaWslweyY[8]lByEPTdweO[8]aIvokLzF1m0lREDXR3dHAfXpcPNz6v[2]riNiv3bhSLfmrihKyKIu8" style="height:70px;width:60px;" /></div></div></div><div class="col-9 col-sm-10 col-md-11"><div class="text-right"><p class="mb-1 text-muted"><span id="lblKDMK">IT045220</span></p><h6 class="mb-1"><span id="lblMK">Peng. Teknologi Komp. & Informatika **</span></h6><p class="mb-0 text-muted"> Jumlah Soal : <strong><span id="lblJumlahSoal">0</span></strong></p></div></div></div></div></div></div></div><div id="pnlInfo">
+	<div class="row row-sm"><div class="col-lg-12 col-md-12"><div class="card mg-b-5 overflow-hidden"><div class="card-body"><div class="form-group"><span class="d-block tx-18 text-center text-purple "><span id="lblInfoUjian">Ujian Matakuliah ini sudah selesai.</span></span></div></div></div></div></div>
+</div><div id="pnlKonfirmasi">
+	<div class="row row-sm"><div class="col-lg-12 col-md-12"><div class="card mg-b-5 overflow-hidden"><div class="card-body"><span class="main-content-label mb-1"><span id="lblKonfirmasi">Pakta Integritas sudah dikonfirmasi</span></span></div></div></div></div>
+</div><div id="pnlJadwal">
+	<div class="row row-sm"><div class="col-lg-12 d-block mx-auto"><div class="card mg-b-5 overflow-hidden"><div class="card-body"><div class="row"><div class="col-12"><div class="text-center"><label class="main-content-label mb-1"> JADWAL UJIAN <br /><br /><span id="lblJadwal" style="font-family:Courier New;font-size:12pt;">Kamis, 19 Februari 2026, Shift 2, Waktu 09.15 - 10.15 WIB</span></label><hr /><span class="text-danger"><span id="lblInfoClose">Peserta Ujian tidak dapat mengikuti ujian jika melakukan login lebih dari 30 menit setelah waktu ujian dimulai. Batas waktu pelaksanaan ujian juga harus dilaksanakan sesuai dengan jadwal dan jam diatas. Lewat dari batas ini, pelaksanaan ujian tidak dapat dilakukan.</span></span></div></div></div></div></div></div></div>
+</div><input type="hidden" id="lblURL" name="lblURL" value="" /><script id="dxss_908141574">
+<!--
+ASPx.createControl(ASPxClientHiddenField,'lblURL','',{'callBack':function(arg) { WebForm_DoCallback('lblURL',arg,ASPx.Callback,'lblURL',ASPx.CallbackError,true); },'properties':{'dxpurl':'ujian_start.aspx?key=9mj5Qc91h0wzI34r3yaw6VCMMGDadiDLmEjRPEKYPP3cntJQXj2FQN9V8lG7Wm[2]kfF0LtV0pVI01w2A7YhmCiA[7][7]'}});
+
+//-->
+</script><div class="row row-sm"><div class="col-lg-12 d-block mx-auto"><div class="card box-shadow-0 mb-xl-0"><div class="card-body d-flex pb-0 text-justify"><div class="form-horizontal"><div class="form-group "><p class="d-block tx-16">Peserta ujian harus mempersiapkan perangkat dan koneksi internet stabil selama waktu ujian.</p><p class="d-block tx-16">Peserta ujian harus menggunakan browser yang sama dalam satu ujian. Jika menggunakan beberapa browser, sistem akan otomatis menolak ujian yang sedang dikerjakan di browser lain.</p><div id="pnlSoalPG">
+	<p class="d-block tx-16">Jumlah soal yang ditampilkan di aplikasi dibagi menjadi <strong><span id="lblJumlahBlok">10</span></strong> bagian dengan masing-masing bagian berjumlah 10 soal, setiap bagian mendapatkan waktu <strong><span id="lblWaktuBlok">6</span></strong> menit untuk menjawab. Setelah menyelesaikan satu bagian, peserta tidak dapat kembali ke bagian sebelumnya.</p>
+</div></div></div></div></div></div></div></div></div><script id="dxss_664806212">
+<!--
+ASPx.createControl(ASPxClientTimer,'tmrStartUjian','',{'clientEnabled':false,'interval':1000},{'Init':function(s, e) { OnInit(); },'Tick':function(s, e) { OnTick(); }});
+
+//-->
+</script><div class="main-footer mg-t-auto"><div class="container"><span>Copyright &copy; 2020-2026&nbsp;<a href="https://www.gunadarma.ac.id" target="_blank">Universitas Gunadarma</a>.&nbsp;All rights reserved.</span></div></div><script src="assets/js/all.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+
+WebForm_InitCallback();//]]>
+</script>
+</form><script type="text/javascript"> function SessionStorage() { if (window.sessionStorage) { var e = sessionStorage.getItem("mykey"); null == e && (e = "0"), e.length < 40 && (e = e.padEnd(40, "0")), document.getElementById("lblStorage").innerHTML = e } 0 == document.getElementById("lblStorage").innerHTML.length && document.location.replace("https://www.sistemakademik.com") } window.addEventListener ? window.addEventListener("load", SessionStorage, !1) : window.attachEvent ? window.attachEvent("onload", SessionStorage) : window.onload = SessionStorage; </script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"8ffdadf825c24c87837c259422b1f7a4","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body></html>
